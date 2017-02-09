@@ -34,6 +34,8 @@ public class FirstPage extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+
+            String test = "UploadChange";
             return true;
         }
 
