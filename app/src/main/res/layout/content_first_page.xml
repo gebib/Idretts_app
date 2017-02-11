@@ -9,14 +9,4 @@
     tools:context="com.example.gruppe43.idretts_app.application.activities.FirstPage"
     tools:showIn="@layout/activity_first_page">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="This is our first page (GEBI)"
-        android:background="?attr/colorButtonNormal"
-        android:layout_centerVertical="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
-        android:textStyle="normal|bold"
-        android:gravity="center" />
 </RelativeLayout>
