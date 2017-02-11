@@ -1,18 +1,17 @@
 package com.example.gruppe43.idretts_app.application.activities;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-
 import com.example.gruppe43.idretts_app.R;
+import com.example.gruppe43.idretts_app.application.helpers.AppActivity;
 
 
-public class Login extends AppCompatActivity implements View.OnClickListener{
+public class Login extends AppActivity {
 
     private static final String TAG = "testRun";
 

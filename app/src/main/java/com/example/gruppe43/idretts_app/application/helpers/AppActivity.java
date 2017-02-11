@@ -1,0 +1,13 @@
+package com.example.gruppe43.idretts_app.application.helpers;
+
+import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+
+/**
+ * Created by W7-Stdnt on 11.02.2017.
+ */
+
+//this is the super class of the application, that will contain a common ressources
+public abstract class AppActivity extends AppCompatActivity implements View.OnClickListener {
+
+}
