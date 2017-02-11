@@ -12,7 +12,7 @@ import android.widget.Button;
 import com.example.gruppe43.idretts_app.R;
 
 
-public class LoginActivity extends AppCompatActivity implements View.OnClickListener{
+public class Login extends AppCompatActivity implements View.OnClickListener{
 
     private static final String TAG = "testRun";
 
