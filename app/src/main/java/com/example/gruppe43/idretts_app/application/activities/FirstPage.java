@@ -1,14 +1,15 @@
 package com.example.gruppe43.idretts_app.application.activities;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.example.gruppe43.idretts_app.R;
+import com.example.gruppe43.idretts_app.application.helpers.AppActivity;
 
-public class FirstPage extends AppCompatActivity {
+public class FirstPage extends AppActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,5 +41,10 @@ public class FirstPage extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onClick(View v) {
+
     }
 }
