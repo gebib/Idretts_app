@@ -1,5 +1,6 @@
 package com.example.gruppe43.idretts_app.application.helpers;
 
+import android.app.Activity;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
@@ -9,5 +10,5 @@ import android.view.View;
 
 //this is the super class of the application, that will contain a common ressources
 public abstract class AppActivity extends AppCompatActivity implements View.OnClickListener {
-
+    protected boolean isCoach,isPlayer,isFamily;
 }

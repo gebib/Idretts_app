@@ -1,22 +1,38 @@
 package com.example.gruppe43.idretts_app.application.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.Toast;
 
 import com.example.gruppe43.idretts_app.R;
 import com.example.gruppe43.idretts_app.application.helpers.AppActivity;
 
 public class FirstPage extends AppActivity {
-
+    Button coachButtonBT,playerButtonBT,familyButtoonBT;
+    Intent loginIntent;
+    private static final String TAG = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_first_page);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+
+         coachButtonBT = (Button) findViewById(R.id.coachBT);
+         playerButtonBT = (Button) findViewById(R.id.playerBT);
+         familyButtoonBT = (Button) findViewById(R.id.familyBT);
+
+        coachButtonBT.setOnClickListener(this);
+        playerButtonBT.setOnClickListener(this);
+        familyButtoonBT.setOnClickListener(this);
+    }
+
+    @Override
+    protected void onPostResume() {
+        super.onPostResume();
+        isCoach = isPlayer = isFamily = false;
     }
 
     @Override
@@ -43,8 +59,30 @@ public class FirstPage extends AppActivity {
         return super.onOptionsItemSelected(item);
     }
 
+
     @Override
     public void onClick(View v) {
+            switch (v.getId()){
+                case R.id.coachBT:
+                    isCoach = true;
+                    Toast.makeText(this,"coach OK!", Toast.LENGTH_LONG).show();
+                    break;
+                case R.id.playerBT:
+                    isPlayer = true;
+                    Toast.makeText(this,"player OK!", Toast.LENGTH_LONG).show();
+                    break;
+                case R.id.familyBT:
+                    isFamily = true;
+                    Toast.makeText(this,"family OK!", Toast.LENGTH_LONG).show();
+                    break;
+                default:
+                    break;
+            }
+                if(isCoach || isPlayer || isFamily){
+                    loginIntent = new Intent(FirstPage.super.getBaseContext(), Login.class);
+                    startActivity(loginIntent);
 
-    }
+                }
+        }
+
 }

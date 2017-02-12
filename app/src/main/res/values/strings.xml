@@ -6,4 +6,8 @@
     <string name="password_login">Password</string>
     <string name="login_BT">Sign in</string>
     <string name="registration_BT">Register</string>
+    <string name="i_m_a_coach">I\'m a Coach</string>
+    <string name="i_m_player">I\'m player</string>
+    <string name="i_m_family">Family</string>
+    <string name="please_select_one_of_the_following_options">Please select one of the following options</string>
 </resources>
