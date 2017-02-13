@@ -1,5 +1,6 @@
 package com.example.gruppe43.idretts_app.application.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -25,6 +26,8 @@ public class Login extends AppActivity {
         Button registrationBT = (Button) findViewById(R.id.registrationBT);
         registrationBT.setOnClickListener(this);
     }
+    /*android REST web service*//*android REST web service*//*android REST web service*//*android REST web service*//*android REST web service*//*android REST web service*/
+    //create android database app chat app
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -53,6 +56,13 @@ public class Login extends AppActivity {
         switch (v.getId()){
             case R.id.loginBT:
                 Log.i(TAG, "debuggingtekst i stedet for intent-> home");
+
+
+                /*/////////////////////////bare for test!///////////////////////////////*/
+                Intent homeIntent = new Intent(Login.super.getBaseContext(), Home.class);
+                startActivity(homeIntent);
+                /*////////////////////////////////////////////////////////////////////*/
+
                 //Sett inn kode
                 break;
 

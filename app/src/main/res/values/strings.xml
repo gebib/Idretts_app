@@ -10,4 +10,10 @@
     <string name="i_m_player">I\'m player</string>
     <string name="i_m_family">Family</string>
     <string name="please_select_one_of_the_following_options">Please select one of the following options</string>
+    <string name="title_activity_home">Home</string>
+    <string name="section_format">kommer mer ting:: side: %1$d</string>
+    <string name="trainerTabName">Trainer</string>
+    <string name="playerTabName">Players</string>
+    <string name="teamTabName">Team</string>
+
 </resources>

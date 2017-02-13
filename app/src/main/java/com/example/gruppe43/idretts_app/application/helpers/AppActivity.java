@@ -1,6 +1,4 @@
 package com.example.gruppe43.idretts_app.application.helpers;
-
-import android.app.Activity;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 

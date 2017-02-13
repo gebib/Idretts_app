@@ -13,7 +13,6 @@ import com.example.gruppe43.idretts_app.application.helpers.AppActivity;
 
 public class FirstPage extends AppActivity {
     Button coachButtonBT,playerButtonBT,familyButtoonBT;
-    Intent loginIntent;
     private static final String TAG = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,7 +78,7 @@ public class FirstPage extends AppActivity {
                     break;
             }
                 if(isCoach || isPlayer || isFamily){
-                    loginIntent = new Intent(FirstPage.super.getBaseContext(), Login.class);
+                   Intent loginIntent = new Intent(FirstPage.super.getBaseContext(), Login.class);
                     startActivity(loginIntent);
 
                 }
