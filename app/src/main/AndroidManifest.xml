@@ -26,12 +26,13 @@
             android:name=".application.activities.Home"
             android:label="@string/title_activity_home"
             android:theme="@style/AppTheme.NoActionBar" />
-
+        <activity
+            android:name=".application.activities.Registrate"/>
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
 
-        <activity android:name=".application.activities.Registrate"></activity>
-    </application>
+
+        </application>
 
 </manifest>

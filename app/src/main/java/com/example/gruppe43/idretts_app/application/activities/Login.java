@@ -71,8 +71,11 @@ public class Login extends AppActivity {
                 Log.i(TAG, "debuggingtekst i stedet for intent-> registrering");
 
                 /*-------------TEST AV REGISTRERING---------------------*/
-                Intent regIntent = new Intent(Login.super.getBaseContext(), Registrate.class);
+                Intent regIntent = new Intent(Login.this, Registrate.class);
+                regIntent.setFlags(regIntent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(regIntent);
+
+                break;
 
             default:
                 break;
