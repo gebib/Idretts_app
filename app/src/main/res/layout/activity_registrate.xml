@@ -15,6 +15,6 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <include layout="@layout/content_registration" />
+    <include layout="@layout/content_registrate" />
 
 </android.support.design.widget.CoordinatorLayout>

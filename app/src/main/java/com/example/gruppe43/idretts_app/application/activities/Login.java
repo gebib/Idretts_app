@@ -69,10 +69,10 @@ public class Login extends AppActivity {
 
             case R.id.registrationBT:
                 Log.i(TAG, "debuggingtekst i stedet for intent-> registrering");
+
                 /*-------------TEST AV REGISTRERING---------------------*/
-                Intent regIntent = new Intent(Login.super.getBaseContext(),Registration.class);
+                Intent regIntent = new Intent(Login.super.getBaseContext(), Registrate.class);
                 startActivity(regIntent);
-                break;
 
             default:
                 break;
