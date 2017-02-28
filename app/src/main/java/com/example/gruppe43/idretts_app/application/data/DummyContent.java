@@ -1,4 +1,4 @@
-package com.example.gruppe43.idretts_app.application.activities;
+package com.example.gruppe43.idretts_app.application.data;
 
 import java.util.ArrayList;
 import java.util.HashMap;

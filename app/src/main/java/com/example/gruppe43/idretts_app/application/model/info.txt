@@ -1,0 +1,5 @@
+
+
+
+
+this is the MODEL of the MVC structure... all calasses related to model should be in here.

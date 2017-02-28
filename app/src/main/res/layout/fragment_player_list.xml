@@ -9,5 +9,5 @@
     android:layout_marginLeft="16dp"
     android:layout_marginRight="16dp"
     app:layoutManager="LinearLayoutManager"
-    tools:context="com.example.gruppe43.idretts_app.application.activities.PlayerFragment"
+    tools:context="com.example.gruppe43.idretts_app.application.fragments.PlayerFragment"
     tools:listitem="@layout/fragment_player" />

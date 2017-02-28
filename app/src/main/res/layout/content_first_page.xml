@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.example.gruppe43.idretts_app.application.activities.FirstPage"
+    tools:context="com.example.gruppe43.idretts_app.application.view.FirstPage"
     tools:showIn="@layout/activity_first_page"
     android:background="#ffffff">
 

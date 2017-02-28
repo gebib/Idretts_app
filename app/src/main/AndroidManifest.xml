@@ -9,7 +9,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".application.activities.FirstPage"
+            android:name=".application.view.FirstPage"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -19,11 +19,11 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".application.activities.Login"
+            android:name=".application.view.Login"
             android:label="@string/title_activity_login"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".application.activities.Home"
+            android:name=".application.view.Home"
             android:label="@string/title_activity_home"
             android:theme="@style/AppTheme.NoActionBar" />
 

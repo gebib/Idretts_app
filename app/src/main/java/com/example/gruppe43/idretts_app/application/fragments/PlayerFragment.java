@@ -1,4 +1,4 @@
-package com.example.gruppe43.idretts_app.application.activities;
+package com.example.gruppe43.idretts_app.application.fragments;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -11,7 +11,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.gruppe43.idretts_app.R;
-import com.example.gruppe43.idretts_app.application.activities.DummyContent.DummyItem;
+import com.example.gruppe43.idretts_app.application.data.DummyContent;
+import com.example.gruppe43.idretts_app.application.data.DummyContent.DummyItem;
+import com.example.gruppe43.idretts_app.application.adapter.MyPlayerRecyclerViewAdapter;
 
 /**
  * A fragment representing a list of Items.

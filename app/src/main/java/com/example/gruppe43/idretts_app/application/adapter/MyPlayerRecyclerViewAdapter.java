@@ -1,4 +1,4 @@
-package com.example.gruppe43.idretts_app.application.activities;
+package com.example.gruppe43.idretts_app.application.adapter;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -7,8 +7,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.gruppe43.idretts_app.R;
-import com.example.gruppe43.idretts_app.application.activities.TrainerFragment.OnListFragmentInteractionListener;
-import com.example.gruppe43.idretts_app.application.activities.DummyContent.DummyItem;
+import com.example.gruppe43.idretts_app.application.fragments.PlayerFragment.OnListFragmentInteractionListener;
+import com.example.gruppe43.idretts_app.application.data.DummyContent.DummyItem;
 
 import java.util.List;
 
@@ -17,12 +17,12 @@ import java.util.List;
  * specified {@link OnListFragmentInteractionListener}.
  * TODO: Replace the implementation with code for your data type.
  */
-public class MyTrainerRecyclerViewAdapter extends RecyclerView.Adapter<MyTrainerRecyclerViewAdapter.ViewHolder> {
+public class MyPlayerRecyclerViewAdapter extends RecyclerView.Adapter<MyPlayerRecyclerViewAdapter.ViewHolder> {
 
     private final List<DummyItem> mValues;
     private final OnListFragmentInteractionListener mListener;
 
-    public MyTrainerRecyclerViewAdapter(List<DummyItem> items, OnListFragmentInteractionListener listener) {
+    public MyPlayerRecyclerViewAdapter(List<DummyItem> items, OnListFragmentInteractionListener listener) {
         mValues = items;
         mListener = listener;
     }
@@ -30,7 +30,7 @@ public class MyTrainerRecyclerViewAdapter extends RecyclerView.Adapter<MyTrainer
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.fragment_trainer, parent, false);
+                .inflate(R.layout.fragment_player, parent, false);
         return new ViewHolder(view);
     }
 

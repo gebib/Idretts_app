@@ -1,4 +1,4 @@
-package com.example.gruppe43.idretts_app.application.activities;
+package com.example.gruppe43.idretts_app.application.view;
 
 import android.content.Intent;
 import android.os.Bundle;

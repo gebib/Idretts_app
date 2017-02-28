@@ -1,4 +1,4 @@
-package com.example.gruppe43.idretts_app.application.activities;
+package com.example.gruppe43.idretts_app.application.fragments;
 
 import android.content.Context;
 import android.net.Uri;

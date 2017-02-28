@@ -1,4 +1,4 @@
-package com.example.gruppe43.idretts_app.application.activities;
+package com.example.gruppe43.idretts_app.application.view;
 
 import android.net.Uri;
 import android.support.design.widget.TabLayout;
