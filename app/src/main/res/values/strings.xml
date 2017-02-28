@@ -15,5 +15,10 @@
     <string name="trainerTabName">Trainer</string>
     <string name="playerTabName">Players</string>
     <string name="teamTabName">Team</string>
+    <string name="title_activity_registration">Registration</string>
+    <string name="last_name">Last name</string>
+    <string name="first_name">First name</string>
+    <string name="register_BT">Register</string>
+    <string name="age">Age</string>
 
 </resources>

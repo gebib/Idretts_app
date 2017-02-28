@@ -12,18 +12,19 @@ import com.example.gruppe43.idretts_app.application.helpers.AppActivity;
 
 
 public class Login extends AppActivity {
-
+    Button loginBT,registrationBT;
     private static final String TAG = "testRun";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        Button loginBT = (Button) findViewById(R.id.loginBT);
-        loginBT.setOnClickListener(this);
+        loginBT = (Button) findViewById(R.id.loginBT);
+        registrationBT = (Button) findViewById(R.id.registrationBT);
 
-        Button registrationBT = (Button) findViewById(R.id.registrationBT);
+        loginBT.setOnClickListener(this);
         registrationBT.setOnClickListener(this);
     }
     /*android REST web service*//*android REST web service*//*android REST web service*//*android REST web service*//*android REST web service*//*android REST web service*/
@@ -68,7 +69,9 @@ public class Login extends AppActivity {
 
             case R.id.registrationBT:
                 Log.i(TAG, "debuggingtekst i stedet for intent-> registrering");
-                //Sett inn kode her
+                /*-------------TEST AV REGISTRERING---------------------*/
+                Intent regIntent = new Intent(Login.super.getBaseContext(),Registration.class);
+                startActivity(regIntent);
                 break;
 
             default:

@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/content_registration"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingRight="16dp"
+    android:paddingLeft="16dp"
+    android:paddingBottom="16dp"
+    android:paddingTop="16dp"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.example.gruppe43.idretts_app.application.activities.Registration"
+    tools:showIn="@layout/activity_registration"
+    android:background="#FF409CFF">
+
+
+
+    <TextView
+        android:text="@string/first_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/firstname"
+        android:textcolor="#000000"
+        android:textSize="18dp"
+        android:gravity="center"
+        android:textStyle="bold"
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="5dp"
+         />
+    <TextView
+        android:text="@string/last_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/surname"
+        android:textcolor="#000000"
+        android:textSize="18sp"
+        android:gravity="center"
+        android:textStyle="bold"
+        android:layout_below="@+id/firstnameET"
+        android:layout_marginBottom="5dp"/>
+    <TextView
+        android:text="@string/age"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/age"
+        android:textcolor="#000000"
+        android:textSize="18sp"
+        android:gravity="center"
+        android:textStyle="bold"
+        android:layout_below="@+id/surnameET"
+        android:layout_marginBottom="5dp"/>
+    <TextView
+        android:text="User name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/username"
+        android:textcolor="#000000"
+        android:textSize="18sp"
+        android:gravity="center"
+        android:textStyle="bold"
+        android:layout_below="@+id/ageET"
+        android:layout_marginBottom="5dp"/>
+    <TextView
+        android:text="E-mail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/emailRegistration"
+        android:textcolor="#000000"
+        android:textSize="18sp"
+        android:gravity="center"
+        android:textStyle="bold"
+        android:layout_below="@+id/usernameET"
+        android:layout_marginBottom="5dp"/>
+    <TextView
+        android:text="Password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/passwordRegistration"
+        android:textcolor="#000000"
+        android:textSize="18sp"
+        android:gravity="center"
+        android:textStyle="bold"
+        android:layout_below="@+id/emailET"
+        android:layout_marginBottom="5dp"/>
+
+    <Button
+        android:text="@string/register_BT"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/registerBT" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:text=""
+        android:ems="10"
+        android:layout_below="@+id/surname"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/surnameET"
+        android:backgroundTint="@android:color/holo_red_light"
+        android:layout_marginBottom="5dp"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="text"
+        android:text=""
+        android:ems="10"
+        android:layout_below="@+id/username"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/usernameET"
+        android:backgroundTint="@android:color/holo_red_light"
+        android:layout_marginBottom="5dp"/>
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textEmailAddress"
+        android:text=""
+        android:ems="10"
+        android:layout_below="@+id/emailRegistration"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/emailET"
+        android:backgroundTint="@android:color/holo_red_light"
+        android:layout_marginBottom="5dp"/>
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:text=""
+        android:ems="10"
+        android:layout_below="@+id/passwordRegistration"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/passwordET"
+        android:backgroundTint="@android:color/holo_red_light"
+        android:layout_marginBottom="5dp"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:text=""
+        android:ems="10"
+        android:id="@+id/firstnameET"
+        android:backgroundTint="@android:color/holo_red_light"
+        android:layout_below="@+id/firstname"
+        android:layout_alignParentStart="true" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="none"
+        android:focusable="false"
+        android:text=""
+        android:ems="10"
+        android:id="@+id/ageET"
+        android:backgroundTint="@android:color/holo_red_light"
+        android:layout_below="@+id/age"
+        android:layout_alignParentStart="true"
+        android:contextClickable="false" />
+
+
+</RelativeLayout>
