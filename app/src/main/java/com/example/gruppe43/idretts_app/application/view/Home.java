@@ -18,9 +18,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-
-import android.widget.Button;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.gruppe43.idretts_app.R;
@@ -51,6 +48,8 @@ public class Home extends AppActivity {
      */
     private GoogleApiClient client;
 
+    FloatingActionButton floatingButton;
+
     @Override
     public void onClick(View v) {
     }
@@ -72,19 +71,29 @@ public class Home extends AppActivity {
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
+        homeActivity = this;
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
+        floatingButton = (FloatingActionButton) findViewById(R.id.fab);
+        floatingButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "skal vi ha noe her!", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                if(isCoach){
+                    Toast.makeText(homeActivity, "Coach clicked add", Toast.LENGTH_LONG).show();
+                }else if(isPlayer){
+                    Toast.makeText(homeActivity, "Player clicked add", Toast.LENGTH_LONG).show();
+                }else if(isFamily){
+                    floatingButton.hide();
+                }
+                Toast.makeText(homeActivity, "temp clicked", Toast.LENGTH_LONG).show();
             }
         });
 
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
+
+        //drawbar option
+
     }
 
 

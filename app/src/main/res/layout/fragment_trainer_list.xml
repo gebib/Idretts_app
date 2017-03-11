@@ -1,13 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/list"
-    android:name="com.example.gruppe43.idretts_app.application.activities.TrainerFragment"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/cont_item_root"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_marginLeft="16dp"
-    android:layout_marginRight="16dp"
-    app:layoutManager="LinearLayoutManager"
-    tools:context="com.example.gruppe43.idretts_app.application.fragments.TrainerFragment"
-    tools:listitem="@layout/fragment_trainer" />
+    android:layout_height="56dp"
+    android:gravity="center_vertical|left"
+    android:orientation="horizontal"
+    android:paddingLeft="16dp">
+
+    <ImageView
+        android:id="@+id/iv_ite_icon"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:src="@android:drawable/ic_menu_edit"
+        android:tint="@color/colorPrimary" />
+
+    <TextView
+        android:id="@+id/lbl_item"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        android:text="text here" />
+
+</LinearLayout>
