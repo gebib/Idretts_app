@@ -3,7 +3,6 @@ package com.example.gruppe43.idretts_app.application.view;
 import android.net.Uri;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.PagerAdapter;
 import android.support.v7.widget.Toolbar;
@@ -84,16 +83,12 @@ public class Home extends AppActivity {
                 }else if(isFamily){
                     floatingButton.hide();
                 }
-                Toast.makeText(homeActivity, "temp clicked", Toast.LENGTH_LONG).show();
             }
         });
 
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
-
-        //drawbar option
-
     }
 
 
