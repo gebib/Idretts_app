@@ -9,7 +9,7 @@ import android.view.View;
  */
 
 //this is the super class of the application, that will contain a common ressources
-public abstract class AppActivity extends AppCompatActivity implements View.OnClickListener {
+public abstract class AppCommonRessources extends AppCompatActivity implements View.OnClickListener {
     protected boolean isCoach,isPlayer,isFamily;
     protected Activity homeActivity;
 }
