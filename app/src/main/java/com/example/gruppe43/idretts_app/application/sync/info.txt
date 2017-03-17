@@ -1,6 +1,0 @@
-
-
-
-
-
- her skal vi ha synkroniserings klasser som bakgrun service klasser osv.

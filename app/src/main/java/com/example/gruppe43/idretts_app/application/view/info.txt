@@ -1,6 +1,0 @@
-
-
-
-
-
-this is the VIEW of the MVC structure, all ui related classes should be in here.

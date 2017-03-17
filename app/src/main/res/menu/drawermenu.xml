@@ -1,0 +1,74 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_home"
+            android:icon="@drawable/ic_home_black_24dp"
+            android:title="Home" />
+        <item
+            android:id="@+id/nav_messages"
+            android:icon="@drawable/ic_local_post_office_black_24dp"
+            android:title="Messages" />
+
+    </group>
+    <item android:title="Vi kan diskutere ting som skal her!">
+        <menu>
+            <item
+                android:id="@+id/nav_trainer"
+                android:icon="@drawable/ic_today_black_24dp"
+                android:title="Trainer" />
+            <item
+                android:id="@+id/navn_player"
+                android:icon="@drawable/ic_today_black_24dp"
+                android:title="Player" />
+            <item
+                android:id="@+id/nav_Team"
+                android:icon="@drawable/ic_group_black_24dp"
+                android:title="Team" />
+            <item
+                android:id="@+id/nav_exit"
+                android:icon="@drawable/ic_exit_to_app_black_24dp"
+                android:title="Exit" />
+        </menu>
+    </item>
+    <!-- alt nedenfor: DETTE SLETTER VI men hjelper oss under utvikling for å navigere!!-->
+    <item android:title="midlertidige navigasjoner!">
+        <menu>
+        <item
+            android:id="@+id/firstpage"
+            android:title="firstpage" />
+
+        <item
+            android:id="@+id/logginPage"
+            android:title="loggin" />
+        <item
+            android:id="@+id/registrationPage"
+            android:title="registration" />
+        <item
+            android:id="@+id/homePage"
+            android:title="homePage" />
+        <item
+            android:id="@+id/profilePage"
+            android:title="profilePage" />
+        <item
+            android:id="@+id/activityInformationPage"
+            android:title="activityInformation" />
+        <item
+            android:id="@+id/newActivityRegistrationPage"
+            android:title="newActivityRegistrationPage" />
+        <item
+            android:id="@+id/showPlayersPage"
+            android:title="showPlayersPage" />
+        <item
+            android:id="@+id/showTeamPage"
+            android:title="showTeamPage" />
+        <item
+            android:id="@+id/messegesListPage"
+            android:title="messegesListPage" />
+        <item
+            android:id="@+id/messegesEditgPage"
+            android:title="messegesEditPage" />
+        </menu>
+    </item>
+    <!-- /////////////////////////////////////////////////////////////////////////////////-->
+
+</menu>
