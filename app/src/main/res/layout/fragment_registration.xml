@@ -1,111 +1,137 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:background="#ffffff"
-    android:layout_height="match_parent">
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:fitsSystemWindows="true">
 
-
-    <EditText
-        android:id="@+id/regName"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="52dp"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:text="Name"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true" />
+        android:paddingTop="1dp"
+        android:paddingLeft="24dp"
+        android:paddingRight="24dp">
 
-    <EditText
-        android:id="@+id/regSurName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/regName"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:text="Surname" />
+        <ImageView android:src="@drawable/ia_logo"
+            android:layout_width="160dp"
+            android:layout_height="160dp"
+            android:layout_marginBottom="1dp"
+            android:layout_gravity="center_horizontal" />
 
-    <EditText
-        android:id="@+id/regAge"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="number"
-        android:text="Age"
-        android:layout_below="@+id/regSurName"
-        android:layout_alignParentStart="true" />
+        <!-- Name Label -->
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp">
+            <EditText android:id="@+id/input_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPersonName"
+                android:hint="Name" />
+        </android.support.design.widget.TextInputLayout>
 
-    <EditText
-        android:id="@+id/regUserName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/regAge"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:text="Username" />
+        <!-- Address Label -->
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp">
+            <EditText android:id="@+id/input_address"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPostalAddress"
+                android:hint="Address" />
+        </android.support.design.widget.TextInputLayout>
 
-    <EditText
-        android:id="@+id/regEmail"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/regUserName"
-        android:ems="10"
-        android:inputType="textEmailAddress"
-        android:text="E-Mail" />
 
-    <EditText
-        android:id="@+id/regPassWord"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textPassword"
-        android:text="Password"
-        android:layout_below="@+id/regEmail"
-        android:layout_alignParentStart="true"
-        android:layout_alignEnd="@+id/regCoachCode" />
 
-    <EditText
-        android:id="@+id/regCoachCode"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="numberPassword"
-        tools:text="Coach-Code"
-        android:layout_below="@+id/regPassWord"
-        android:layout_alignParentStart="true" />
+        <!--  Email Label -->
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp">
+            <EditText android:id="@+id/input_email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textEmailAddress"
+                android:hint="Email" />
+        </android.support.design.widget.TextInputLayout>
 
-    <CheckBox
-        android:id="@+id/regFamilyCheck"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Family have checked and approved"
-        android:layout_below="@+id/regCoachCode"
-        android:layout_alignParentStart="true" />
 
-    <Button
-        android:id="@+id/regRegisterBT"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:text="Register"
-        android:layout_toEndOf="@+id/button3" />
+        <!-- mobile number -->
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp">
+            <EditText android:id="@+id/input_mobile"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:hint="Mobile Number" />
+        </android.support.design.widget.TextInputLayout>
 
-    <Button
-        android:id="@+id/button3"
-        android:layout_width="wrap_content"
-        android:layout_weight="1"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true"
-        android:text="Back"
-        android:layout_alignEnd="@+id/regCoachCode" />
-</RelativeLayout>
+        <!-- Password Label -->
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp">
+            <EditText android:id="@+id/input_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword"
+                android:hint="Password"/>
+        </android.support.design.widget.TextInputLayout>
+
+        <!-- Password Re-enter Label -->
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp">
+            <EditText android:id="@+id/input_reEnterPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword"
+                android:hint="Re-enter Password"/>
+        </android.support.design.widget.TextInputLayout>
+
+        <!-- Signup Button -->
+        <CheckBox
+            android:id="@+id/familyApproveCB"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/jumbo"
+            android:text="Accept terms and conditions" />
+
+        <EditText
+            android:id="@+id/coachCode"
+            android:hint="Administration ID"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="numberPassword" />
+
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/createAccountBT"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:layout_marginBottom="24dp"
+            android:padding="12dp"
+            android:text="Create Account"/>
+
+        <TextView android:id="@+id/linkLoginTV"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
+            android:text="Already a member? Login"
+            android:gravity="center"
+            android:textSize="16dip"/>
+
+    </LinearLayout>
+</ScrollView>
