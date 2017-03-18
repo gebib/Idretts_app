@@ -2,8 +2,19 @@
 <resources>
 
 
-    <color name="blue_sky">#42B4FF</color>
+    <color name="primary">#68C3FC</color>
+    <color name="primary_dark">#45B8FF</color>
+    <color name="primary_darker">#009DFF</color>
+    <color name="accent">#FFFFFF</color>
+
     <color name="black">#000000</color>
-    <color name="green">#3FA654</color>
+    <color name="jet">#222222</color>
+    <color name="oil">#333333</color>
+    <color name="monsoon">#777777</color>
+    <color name="jumbo">#888888</color>
+    <color name="aluminum">#999999</color>
+    <color name="base">#AAAAAA</color>
+    <color name="iron">#CCCCCC</color>
+    <color name="white">#FFFFFF</color>
 
 </resources>

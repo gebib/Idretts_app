@@ -27,7 +27,7 @@
         android:paddingLeft="16dp"
         android:paddingBottom="16dp"
         android:paddingTop="16dp"
-        android:background="@color/blue_sky"
+        android:background="@color/primary"
         android:gravity="center"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true">

@@ -1,20 +1,111 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical" android:layout_width="match_parent"
     android:background="#ffffff"
     android:layout_height="match_parent">
 
-    <TextView
+
+    <EditText
+        android:id="@+id/regName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        android:textSize="30sp"
-        android:gravity="center"
-        android:id="@+id/textView"
-        android:layout_centerHorizontal="true"
-        android:textColor="@color/green"
-        android:text="Registrerings side"/>
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="52dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Name"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true" />
 
+    <EditText
+        android:id="@+id/regSurName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/regName"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Surname" />
 
+    <EditText
+        android:id="@+id/regAge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="number"
+        android:text="Age"
+        android:layout_below="@+id/regSurName"
+        android:layout_alignParentStart="true" />
 
+    <EditText
+        android:id="@+id/regUserName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/regAge"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Username" />
+
+    <EditText
+        android:id="@+id/regEmail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/regUserName"
+        android:ems="10"
+        android:inputType="textEmailAddress"
+        android:text="E-Mail" />
+
+    <EditText
+        android:id="@+id/regPassWord"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPassword"
+        android:text="Password"
+        android:layout_below="@+id/regEmail"
+        android:layout_alignParentStart="true"
+        android:layout_alignEnd="@+id/regCoachCode" />
+
+    <EditText
+        android:id="@+id/regCoachCode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="numberPassword"
+        tools:text="Coach-Code"
+        android:layout_below="@+id/regPassWord"
+        android:layout_alignParentStart="true" />
+
+    <CheckBox
+        android:id="@+id/regFamilyCheck"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Family have checked and approved"
+        android:layout_below="@+id/regCoachCode"
+        android:layout_alignParentStart="true" />
+
+    <Button
+        android:id="@+id/regRegisterBT"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:text="Register"
+        android:layout_toEndOf="@+id/button3" />
+
+    <Button
+        android:id="@+id/button3"
+        android:layout_width="wrap_content"
+        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:text="Back"
+        android:layout_alignEnd="@+id/regCoachCode" />
 </RelativeLayout>
