@@ -84,7 +84,7 @@ public class MainActivity extends AppCommonResources{
                      System.exit(1);
                 }
 
-                /*MIDLERTIDIG navigasjon////////////////////////////////////////////////////////*/
+                /*MIDLERTIDIG navigasjon///////////////////////////////////////////////////////*/
                 if (menuItem.getItemId() == R.id.firstpage) {
                     FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
                     fragmentTransaction.replace(R.id.containerView,new FirstPage()).commit();
