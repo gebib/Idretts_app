@@ -1,20 +1,109 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:background="#ffffff"
-    android:layout_height="match_parent">
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:fitsSystemWindows="true">
 
-    <TextView
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        android:textSize="30sp"
-        android:gravity="center"
-        android:id="@+id/textView"
-        android:layout_centerHorizontal="true"
-        android:textColor="@color/black"
-        android:text="Dette skal vare aktivitet opprettelses siden"/>
+        android:paddingTop="5dp"
+        android:paddingLeft="24dp"
+        android:paddingRight="24dp"
+        android:weightSum="1">
 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:padding="5dp"
+            android:background="@drawable/shape_line"
+            android:layout_height="wrap_content">
 
+            <Spinner
+                android:id="@+id/spinnerActivityType"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentTop="true" />
 
-</RelativeLayout>
+            <EditText
+                android:id="@+id/editText3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/spinnerActivityType"
+                android:ems="10"
+                android:hint="Date"
+                android:inputType="date"
+                android:layout_alignParentEnd="true" />
+
+            <EditText
+                android:id="@+id/editText5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/editText3"
+                android:ems="10"
+                android:hint="Time from"
+                android:inputType="time"
+                android:layout_alignParentEnd="true" />
+
+            <EditText
+                android:id="@+id/editText6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/editText8"
+                android:ems="10"
+                android:hint="Location"
+                android:inputType="time"
+                android:layout_alignParentEnd="true" />
+
+            <EditText
+                android:id="@+id/editText8"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/editText5"
+                android:ems="10"
+                android:hint="Time to"
+                android:inputType="time" />
+
+            <Spinner
+                android:id="@+id/spinnerIntensity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/editText6"
+                android:layout_centerHorizontal="true" />
+
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="match_parent"
+                android:paddingTop="5dp"
+                android:paddingBottom="2dp"
+                android:gravity="center"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:background="@color/primary_dark"
+                android:text="Activity Details"
+                android:layout_height="wrap_content"
+                android:id="@+id/textView5" />
+            <TextView
+                android:id="@+id/activityTextInfo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/shape_line"
+                android:lineSpacingExtra="4dp"
+                android:padding="5dp"
+                android:text="@string/tempLorem"
+                android:textColor="@color/black"
+                android:layout_below="@+id/textView5"
+                android:layout_alignParentStart="true" />
+        </RelativeLayout>
+
+    </LinearLayout>
+</ScrollView>
