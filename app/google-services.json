@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "1094372225605",
+    "firebase_url": "https://idretts-applikasjon.firebaseio.com",
+    "project_id": "idretts-applikasjon",
+    "storage_bucket": "idretts-applikasjon.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1094372225605:android:770d3838d30ea0f9",
+        "android_client_info": {
+          "package_name": "com.example.gruppe43.idretts_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1094372225605-oht18muj1g46bcvhsvjgta9a4t7rh5di.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.gruppe43.idretts_app",
+            "certificate_hash": "705ac6b9dff6c3f3a5bf7a79ef2dab10f7acd285"
+          }
+        },
+        {
+          "client_id": "1094372225605-lud7m3mo5il4epb211hkvv79ha38ebr9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBWb2SfAo8xwRADuGv_3X6gw7-WyN83Bfw"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1094372225605-lud7m3mo5il4epb211hkvv79ha38ebr9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
