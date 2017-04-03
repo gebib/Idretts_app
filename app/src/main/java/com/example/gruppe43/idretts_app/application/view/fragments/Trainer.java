@@ -35,9 +35,9 @@ public class Trainer extends Fragment {
     public static List<TrainerDummyData>getData(){
         List<TrainerDummyData> data = new ArrayList<>();
 
-        int[] icons = {R.drawable.activity_logo,R.drawable.activity_training,R.drawable.activity_logo,R.drawable.activity_logo,
-                R.drawable.activity_logo,R.drawable.activity_logo,R.drawable.activity_training,R.drawable.activity_logo};
-        String[] tittles = {"hardt intesift kollen fem","Stafett fram og tilbake","Football kamp med bor",
+        int[] icons = {R.drawable.training24dp,R.drawable.game24dp,R.drawable.training24dp,R.drawable.meeting24dp,
+                R.drawable.training24dp,R.drawable.training24dp,R.drawable.theory,R.drawable.training24dp};
+        String[] tittles = {"hardt intesift kollen  fdsfs fsd sdf dfs sdfs dfsdf sdfsdf fem","Stafett fram og tilbake","Football kamp med bor",
                 "Samling og teoritid i salen"," intesift kollen fem","Stafett fram og tilbake","Football kamp med bor","Samling og teoritid i salen",};
 
         //create list of dummydata objects to display.
