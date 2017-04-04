@@ -96,7 +96,7 @@ public class Login extends Fragment implements View.OnClickListener {
 
     //sign in
     public void signIn() {
-
+        //TODO sign in method to implement her.
     }
 
     //popup message
