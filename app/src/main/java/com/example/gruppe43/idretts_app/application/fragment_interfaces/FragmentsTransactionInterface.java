@@ -5,4 +5,5 @@ package com.example.gruppe43.idretts_app.application.fragment_interfaces;
  */
 
 public interface FragmentsTransactionInterface {
+    public void backToLoginLink();
 }
