@@ -33,4 +33,6 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="alertTextRegisterFailure">Please make sure to fill all the fields and accept terms and conditions, and make sure to type in matching password.</string>
     <string name="registrationFailureAlertTittle">Registration</string>
+    <string name="loginFailureTitle">Login</string>
+    <string name="loginFailureMessage">Please make sure to fill out both fields with valid credential to sign in. Or Register as new user if you dont have an account.</string>
 </resources>

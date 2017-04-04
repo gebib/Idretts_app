@@ -21,14 +21,13 @@ public class Registration extends Fragment implements View.OnClickListener {
 
     private EditText nameET;
     private EditText surNameET;
-    private EditText tlfET;
     private EditText ageET;
     private EditText passET;
     private EditText rePassET;
     private CheckBox acceptTermsCB;
 
 
-    private String name, lastName, tlf, age, pss, rPss, adminId;
+    private String name, lastName, age, pss, rPss;
     private Boolean checkBox;
 
     private TextView loginLink;
@@ -49,7 +48,6 @@ public class Registration extends Fragment implements View.OnClickListener {
 
         nameET = (EditText) view.findViewById(R.id.input_email);
         surNameET = (EditText) view.findViewById(R.id.input_surname);
-        tlfET = (EditText) view.findViewById(R.id.input_email);
         ageET = (EditText) view.findViewById(R.id.input_age);
         passET = (EditText) view.findViewById(R.id.input_password);
         rePassET = (EditText) view.findViewById(R.id.input_reEnterPassword);
@@ -66,7 +64,6 @@ public class Registration extends Fragment implements View.OnClickListener {
         //do what you want to do when button is clicked
         name = nameET.getText().toString().trim();
         lastName = surNameET.getText().toString().trim();
-        tlf = tlfET.getText().toString().trim();
         age = ageET.getText().toString().trim();
         pss = passET.getText().toString().trim();
         rPss = rePassET.getText().toString().trim();
@@ -77,6 +74,7 @@ public class Registration extends Fragment implements View.OnClickListener {
             case R.id.createAccountBT:
                 if (checkRegistrationValidity()) {
 
+                    registerUser();
                     Toast.makeText(getActivity(), "You are registered!", Toast.LENGTH_LONG).show();
 
                 }else{
@@ -103,14 +101,7 @@ public class Registration extends Fragment implements View.OnClickListener {
         Boolean isValidInfo;
         String nameRegex = "^[a-zA-Z\\s]+";
         boolean isNumber, isNumberB;
-        int tlfNrLength = tlf.length();
         int ageLenth = age.length();
-        try {
-            Long.parseLong(tlf);
-            isNumber = true;
-        } catch (Exception e) {
-            isNumber = false;
-        }
         try {
             Integer.parseInt(age);
             isNumberB = true;
@@ -119,7 +110,6 @@ public class Registration extends Fragment implements View.OnClickListener {
         }
         Boolean nameOk = name.matches(nameRegex);
         Boolean lastNameOk = lastName.matches(nameRegex);
-        Boolean tlfOk = tlfNrLength == 8 && isNumber;
         Boolean ageOk = ageLenth == 2 && isNumberB;
 
         Boolean passOk = pss.length() > 3 ;
@@ -144,12 +134,12 @@ public class Registration extends Fragment implements View.OnClickListener {
             acceptTermsCB.setBackgroundColor(Color.parseColor("#68C3FC"));
         }
 
-        if(nameOk && lastNameOk && tlfOk && ageOk && completePassOk && checkBox){
+        if(nameOk && lastNameOk && ageOk && completePassOk && checkBox){
             isValidInfo = true;
         }else{
             isValidInfo = false;
-            EditText values[] = {nameET,surNameET,tlfET,ageET};
-            Boolean isValids[] = {nameOk,lastNameOk,tlfOk,ageOk};
+            EditText values[] = {nameET,surNameET,ageET};
+            Boolean isValids[] = {nameOk,lastNameOk,ageOk};
             for (int i = 0; i < values.length; i++) {
                 if(!isValids[i]) {
                     values[i].setBackgroundColor(Color.parseColor("#009DFF"));

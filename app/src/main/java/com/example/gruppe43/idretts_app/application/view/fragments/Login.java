@@ -1,6 +1,8 @@
 package com.example.gruppe43.idretts_app.application.view.fragments;
 
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -16,9 +18,9 @@ import com.example.gruppe43.idretts_app.R;
 
 
 public class Login extends Fragment implements View.OnClickListener {
-    private TextView signUp;
-    private Button loginButton;
-    private EditText emailAdress;
+    private TextView signUpTV;
+    private Button loginButtonBT;
+    private EditText emailAdressET;
     private EditText passwordET;
 
 
@@ -30,12 +32,12 @@ public class Login extends Fragment implements View.OnClickListener {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_login, container, false);
-        signUp = (TextView) view.findViewById(R.id.link_signup);
-        loginButton = (Button) view.findViewById(R.id.loginBT);
-        emailAdress = (EditText) view.findViewById(R.id.input_email);
+        signUpTV = (TextView) view.findViewById(R.id.link_signup);
+        loginButtonBT = (Button) view.findViewById(R.id.loginBT);
+        emailAdressET = (EditText) view.findViewById(R.id.input_email);
         passwordET = (EditText) view.findViewById(R.id.input_password);
-        loginButton.setOnClickListener(this);
-        signUp.setOnClickListener(this);
+        loginButtonBT.setOnClickListener(this);
+        signUpTV.setOnClickListener(this);
         // Inflate the layout for this fragment
         return view;
     }
@@ -43,38 +45,71 @@ public class Login extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(final View v) {
         //do what you want to do when button is clicked
+        Boolean emailNotEmpty = false;
+        Boolean paswordNotEmpty = false;
         switch (v.getId()) {
             case R.id.link_signup:
                 Toast.makeText(getActivity(), "signUplink!", Toast.LENGTH_LONG).show();
                 break;
             case R.id.loginBT:
-                String mobileNumber, password;
-                mobileNumber = emailAdress.getText().toString().trim();
+                String eMail, password;
+                eMail = emailAdressET.getText().toString().trim();
                 password = passwordET.getText().toString().trim();
-                if (emailAdress.getText().toString().trim().equals("")) {
-                    emailAdress.setBackgroundColor(Color.parseColor("#009DFF"));
-                    emailAdress.setTextColor(Color.RED);
-                } else {
-                    emailAdress.setBackgroundColor(Color.parseColor("#68C3FC"));
-                    emailAdress.setTextColor(Color.BLACK);
-                }
-                if (passwordET.getText().toString().trim().equals("")) {
+
+                if (eMail.equals("") && password.equals("")) {
+                    emailAdressET.setBackgroundColor(Color.parseColor("#009DFF"));
+                    emailAdressET.setTextColor(Color.RED);
                     passwordET.setBackgroundColor(Color.parseColor("#009DFF"));
                     passwordET.setTextColor(Color.RED);
-                } else {
+                    emailNotEmpty = false;
+                    paswordNotEmpty = false;
+                }
+                if (eMail.equals("")) {
+                    emailAdressET.setBackgroundColor(Color.parseColor("#009DFF"));
+                    emailAdressET.setTextColor(Color.RED);
+                    emailNotEmpty = false;
+                }
+                if (!eMail.equals("")) {
+                    emailAdressET.setBackgroundColor(Color.parseColor("#68C3FC"));
+                    emailAdressET.setTextColor(Color.BLACK);
+                    emailNotEmpty = true;
+                }
+                if (password.equals("")) {
+                    passwordET.setBackgroundColor(Color.parseColor("#009DFF"));
+                    passwordET.setTextColor(Color.RED);
+                    paswordNotEmpty = false;
+                }
+                if (!password.equals("")) {
                     passwordET.setBackgroundColor(Color.parseColor("#68C3FC"));
                     passwordET.setTextColor(Color.BLACK);
-                }
-                if (mobileNumber.length() > 7 && !password.equals("")) {
-                    Toast.makeText(getActivity(), "in!", Toast.LENGTH_LONG).show();
-                    signIn();
+                    paswordNotEmpty = true;
                 }
                 break;
+        }
+        if (emailNotEmpty && paswordNotEmpty) {
+            signIn();
+            Toast.makeText(getActivity(), "signInOK!", Toast.LENGTH_LONG).show();
+        } else {
+            popUpDialog();
         }
     }
 
     //sign in
-    public void signIn(){
+    public void signIn() {
 
+    }
+
+    //popup message
+    public void popUpDialog() {
+        AlertDialog.Builder builder1 = new AlertDialog.Builder(getActivity());
+        builder1.setTitle(R.string.loginFailureTitle);
+        builder1.setMessage(R.string.loginFailureMessage);
+        builder1.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                //ingen action.
+            }
+        });
+        AlertDialog alert11 = builder1.create();
+        alert11.show();
     }
 }
