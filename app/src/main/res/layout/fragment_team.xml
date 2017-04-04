@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:background="@color/primary"
+    android:background="@drawable/gradient_bg"
     android:padding="3dp"
     android:layout_height="match_parent">
 
@@ -13,14 +13,13 @@
         android:layout_width="match_parent"
         android:id="@+id/teamTopInfo"
         android:padding="10dp"
-        android:background="@color/primary_darker"
+        android:background="@drawable/gradient_bg"
         android:layout_height="50dp">
 
         <TextView
             android:id="@+id/textView7"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
             android:text="Team: Idrets App team"
             android:layout_alignParentBottom="true"
             android:layout_alignParentStart="true" />
@@ -47,9 +46,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="5dp"
-        android:layout_alignParentStart="true"
+        android:text="Trainer: Abdir Abdirahman"
         android:layout_alignParentTop="true"
-        android:text="Trainer: Abdir Abdirahman" />
+        android:layout_alignParentStart="true" />
 
     <TextView
         android:id="@+id/textView9"
