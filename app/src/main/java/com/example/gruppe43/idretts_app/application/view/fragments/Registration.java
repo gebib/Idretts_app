@@ -1,5 +1,8 @@
 package com.example.gruppe43.idretts_app.application.view.fragments;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -16,7 +19,6 @@ import com.example.gruppe43.idretts_app.R;
 
 public class Registration extends Fragment implements View.OnClickListener {
 
-
     private EditText nameET;
     private EditText surNameET;
     private EditText tlfET;
@@ -24,10 +26,10 @@ public class Registration extends Fragment implements View.OnClickListener {
     private EditText passET;
     private EditText rePassET;
     private CheckBox acceptTermsCB;
-    private EditText adminIdET;
 
-    private String a, b, c, d, e, f, h;
-    private Boolean g;
+
+    private String name, lastName, tlf, age, pss, rPss, adminId;
+    private Boolean checkBox;
 
     private TextView loginLink;
     private Button createAccount;
@@ -54,7 +56,7 @@ public class Registration extends Fragment implements View.OnClickListener {
 
         acceptTermsCB = (CheckBox) view.findViewById(R.id.familyApproveCB);
 
-        adminIdET = (EditText) view.findViewById(R.id.coachCode);
+
         // Inflate the layout for this fragment
         return view;
     }
@@ -62,23 +64,32 @@ public class Registration extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(final View v) {
         //do what you want to do when button is clicked
+        name = nameET.getText().toString().trim();
+        lastName = surNameET.getText().toString().trim();
+        tlf = tlfET.getText().toString().trim();
+        age = ageET.getText().toString().trim();
+        pss = passET.getText().toString().trim();
+        rPss = rePassET.getText().toString().trim();
+        checkBox = acceptTermsCB.isChecked();
 
-        a = nameET.getText().toString();
-        b = surNameET.getText().toString();
-        c = tlfET.getText().toString();
-        d = ageET.getText().toString();
-        e = passET.getText().toString();
-        f = rePassET.getText().toString();
-        g = acceptTermsCB.isChecked();
-        h = adminIdET.getText().toString();
 
         switch (v.getId()) {
             case R.id.createAccountBT:
                 if (checkValidity()) {
 
                     Toast.makeText(getActivity(), "You are registered!", Toast.LENGTH_LONG).show();
-                } else {
-                    Toast.makeText(getActivity(), "Please use a valid registration information", Toast.LENGTH_LONG).show();
+
+                }else{
+                    AlertDialog.Builder builder1 = new AlertDialog.Builder(getActivity());
+                    builder1.setTitle(R.string.registrationFailureAlertTittle);
+                    builder1.setMessage(R.string.alertTextRegisterFailure);
+                    builder1.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            //ingen action.
+                        }
+                    });
+                    AlertDialog alert11 = builder1.create();
+                    alert11.show();
                 }
                 break;
             case R.id.linkLoginTV:
@@ -89,7 +100,71 @@ public class Registration extends Fragment implements View.OnClickListener {
 
     //check for valid registration information using regX
     private boolean checkValidity() {
+        Boolean isValidInfo;
+        String nameRegex = "^[a-zA-Z\\s]+";
+        boolean isNumber, isNumberB;
+        int tlfNrLength = tlf.length();
+        int ageLenth = age.length();
+        try {
+            Long.parseLong(tlf);
+            isNumber = true;
+        } catch (Exception e) {
+            isNumber = false;
+        }
+        try {
+            Integer.parseInt(age);
+            isNumberB = true;
+        } catch (Exception e) {
+            isNumberB = false;
+        }
+        Boolean nameOk = name.matches(nameRegex);
+        Boolean lastNameOk = lastName.matches(nameRegex);
+        Boolean tlfOk = tlfNrLength == 8 && isNumber;
+        Boolean ageOk = ageLenth == 2 && isNumberB;
 
-        return true;
+        Boolean passOk = pss.length() > 3 ;
+        Boolean rPassOk = rPss.length() > 3;
+        Boolean completePassOk = false;
+        if(passOk && rPassOk && pss.matches(rPss)){
+            completePassOk = true;
+            passET.setBackgroundColor(Color.parseColor("#68C3FC"));
+            passET.setTextColor(Color.BLACK);
+            rePassET.setBackgroundColor(Color.parseColor("#68C3FC"));
+            rePassET.setTextColor(Color.BLACK);
+        }else{
+            passET.setBackgroundColor(Color.parseColor("#009DFF"));
+            passET.setTextColor(Color.RED);
+            rePassET.setBackgroundColor(Color.parseColor("#009DFF"));
+            rePassET.setTextColor(Color.RED);
+        }
+
+        if(!checkBox){
+            acceptTermsCB.setBackgroundColor(Color.parseColor("#009DFF"));
+        }else{
+            acceptTermsCB.setBackgroundColor(Color.parseColor("#68C3FC"));
+        }
+
+        if(nameOk && lastNameOk && tlfOk && ageOk && completePassOk && checkBox){
+            isValidInfo = true;
+        }else{
+            isValidInfo = false;
+            EditText values[] = {nameET,surNameET,tlfET,ageET};
+            Boolean isValids[] = {nameOk,lastNameOk,tlfOk,ageOk};
+            for (int i = 0; i < values.length; i++) {
+                if(!isValids[i]) {
+                    values[i].setBackgroundColor(Color.parseColor("#009DFF"));
+                    values[i].setTextColor(Color.RED);
+                }else{
+                    values[i].setBackgroundColor(Color.parseColor("#68C3FC"));
+                    values[i].setTextColor(Color.BLACK);
+                }
+            }
+        }
+        return isValidInfo;
+    }
+
+    //register new user if valid
+    private void registerUser() {
+
     }
 }

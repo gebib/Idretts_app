@@ -114,14 +114,6 @@
             android:textColor="@color/jumbo"
             android:text="Accept terms and conditions" />
 
-        <EditText
-            android:id="@+id/coachCode"
-            android:hint="Administration ID"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="numberPassword" />
-
         <android.support.v7.widget.AppCompatButton
             android:id="@+id/createAccountBT"
             android:layout_width="fill_parent"
