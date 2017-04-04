@@ -5,6 +5,8 @@ import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -75,7 +77,7 @@ public class Registration extends Fragment implements View.OnClickListener {
 
         switch (v.getId()) {
             case R.id.createAccountBT:
-                if (checkValidity()) {
+                if (checkRegistrationValidity()) {
 
                     Toast.makeText(getActivity(), "You are registered!", Toast.LENGTH_LONG).show();
 
@@ -93,13 +95,13 @@ public class Registration extends Fragment implements View.OnClickListener {
                 }
                 break;
             case R.id.linkLoginTV:
-                Toast.makeText(getActivity(), "loginLink", Toast.LENGTH_LONG).show();
+
                 break;
         }
     }
 
     //check for valid registration information using regX
-    private boolean checkValidity() {
+    private boolean checkRegistrationValidity() {
         Boolean isValidInfo;
         String nameRegex = "^[a-zA-Z\\s]+";
         boolean isNumber, isNumberB;
