@@ -37,7 +37,7 @@ public class Trainer extends Fragment {
 
         int[] icons = {R.drawable.training24dp,R.drawable.game24dp,R.drawable.training24dp,R.drawable.meeting24dp,
                 R.drawable.training24dp,R.drawable.training24dp,R.drawable.theory,R.drawable.training24dp};
-        String[] tittles = {"hardt intesift kollen  fdsfs fsd sdf dfs sdfs dfsdf sdfsdf fem","Stafett fram og tilbake","Football kamp med bor",
+        String[] tittles = {"hardt intesift kollen ","Stafett fram og tilbake","Football kamp med bor",
                 "Samling og teoritid i salen"," intesift kollen fem","Stafett fram og tilbake","Football kamp med bor","Samling og teoritid i salen",};
 
         //create list of dummydata objects to display.

@@ -1,25 +1,83 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    xmlns:card_view="http://schemas.android.com/apk/res-auto"
-    card_view:cardCornerRadius="5dp"
-    android:layout_margin="5dp"
-    card_view:cardBackgroundColor="@color/primary_darker">
+    android:background="@drawable/list_selector"
+    android:orientation="horizontal"
+    android:padding="5dip" >
 
-    <ImageView
-        android:id="@+id/listIconTrainer"
-        android:padding="8dp"
-        android:layout_gravity="center_vertical"
+    <!--  ListRow Left sied Thumbnail image -->
+    <LinearLayout android:id="@+id/thumbnail"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:padding="3dip"
+        android:layout_alignParentLeft="true"
+        android:background="@drawable/image_bg"
+        android:layout_marginRight="5dip">
 
+        <ImageView
+            android:id="@+id/listIconTrainer"
+            android:layout_width="50dip"
+            android:layout_height="50dip"/>
+
+    </LinearLayout>
+
+    <!-- Title Of activity-->
     <TextView
         android:id="@+id/listTextTrainer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:padding="8dp" />
+        android:layout_alignTop="@+id/thumbnail"
+        android:layout_toRightOf="@+id/thumbnail"
+        android:text="Activity title"
+        android:textColor="@color/black"
+        android:typeface="sans"
+        android:textSize="15dip"
+        android:textStyle="bold"/>
 
-</android.support.v7.widget.CardView>
+    <!-- info text -->
+    <TextView
+        android:id="@+id/detailInfo1"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/listTextTrainer"
+        android:textColor="#343434"
+        android:textSize="10dip"
+        android:layout_marginTop="1dip"
+        android:layout_toRightOf="@+id/thumbnail"
+        android:text="First: first information" />
+
+    <!-- second info text -->
+    <TextView
+        android:id="@+id/detailInfo2"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/detailInfo1"
+        android:textColor="#343434"
+        android:textSize="10dip"
+        android:layout_marginTop="1dip"
+        android:layout_toRightOf="@+id/thumbnail"
+        android:text="Secondinfo: first information" />
+
+    <!-- time post -->
+    <TextView
+        android:id="@+id/timePosted"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@id/listTextTrainer"
+        android:gravity="right"
+        android:text="5:45"
+        android:layout_marginRight="5dip"
+        android:textSize="10dip"
+        android:textColor="#10bcc9"
+        android:textStyle="bold"/>
+
+    <!-- Expand view arrow -->
+    <ImageView android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/expand24dp"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"/>
+
+</RelativeLayout>
