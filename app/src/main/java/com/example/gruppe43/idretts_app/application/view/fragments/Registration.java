@@ -51,10 +51,7 @@ public class Registration extends Fragment implements View.OnClickListener {
         ageET = (EditText) view.findViewById(R.id.input_age);
         passET = (EditText) view.findViewById(R.id.input_password);
         rePassET = (EditText) view.findViewById(R.id.input_reEnterPassword);
-
         acceptTermsCB = (CheckBox) view.findViewById(R.id.familyApproveCB);
-
-
         // Inflate the layout for this fragment
         return view;
     }
@@ -100,7 +97,7 @@ public class Registration extends Fragment implements View.OnClickListener {
     private boolean checkRegistrationValidity() {
         Boolean isValidInfo;
         String nameRegex = "^[a-zA-Z\\s]+";
-        boolean isNumber, isNumberB;
+        boolean isNumberB;
         int ageLenth = age.length();
         try {
             Integer.parseInt(age);

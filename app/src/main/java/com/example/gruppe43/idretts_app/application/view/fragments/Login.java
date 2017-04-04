@@ -89,7 +89,7 @@ public class Login extends Fragment implements View.OnClickListener {
         if (emailNotEmpty && paswordNotEmpty) {
             signIn();
             Toast.makeText(getActivity(), "signInOK!", Toast.LENGTH_LONG).show();
-        } else {
+        } else if(v.getId() != R.id.link_signup) {
             popUpDialog();
         }
     }
