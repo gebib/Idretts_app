@@ -18,7 +18,7 @@ import com.example.gruppe43.idretts_app.R;
 public class Login extends Fragment implements View.OnClickListener {
     private TextView signUp;
     private Button loginButton;
-    private EditText mobileNumberET;
+    private EditText emailAdress;
     private EditText passwordET;
 
 
@@ -32,7 +32,7 @@ public class Login extends Fragment implements View.OnClickListener {
         View view = inflater.inflate(R.layout.fragment_login, container, false);
         signUp = (TextView) view.findViewById(R.id.link_signup);
         loginButton = (Button) view.findViewById(R.id.loginBT);
-        mobileNumberET = (EditText) view.findViewById(R.id.input_phone);
+        emailAdress = (EditText) view.findViewById(R.id.input_email);
         passwordET = (EditText) view.findViewById(R.id.input_password);
         loginButton.setOnClickListener(this);
         signUp.setOnClickListener(this);
@@ -49,14 +49,14 @@ public class Login extends Fragment implements View.OnClickListener {
                 break;
             case R.id.loginBT:
                 String mobileNumber, password;
-                mobileNumber = mobileNumberET.getText().toString().trim();
+                mobileNumber = emailAdress.getText().toString().trim();
                 password = passwordET.getText().toString().trim();
-                if (mobileNumberET.getText().toString().trim().equals("") || mobileNumber.length() < 8) {
-                    mobileNumberET.setBackgroundColor(Color.parseColor("#009DFF"));
-                    mobileNumberET.setTextColor(Color.RED);
+                if (emailAdress.getText().toString().trim().equals("")) {
+                    emailAdress.setBackgroundColor(Color.parseColor("#009DFF"));
+                    emailAdress.setTextColor(Color.RED);
                 } else {
-                    mobileNumberET.setBackgroundColor(Color.parseColor("#68C3FC"));
-                    mobileNumberET.setTextColor(Color.BLACK);
+                    emailAdress.setBackgroundColor(Color.parseColor("#68C3FC"));
+                    emailAdress.setTextColor(Color.BLACK);
                 }
                 if (passwordET.getText().toString().trim().equals("")) {
                     passwordET.setBackgroundColor(Color.parseColor("#009DFF"));

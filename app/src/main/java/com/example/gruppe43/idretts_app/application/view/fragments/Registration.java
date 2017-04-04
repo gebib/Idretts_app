@@ -5,8 +5,6 @@ import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -49,9 +47,9 @@ public class Registration extends Fragment implements View.OnClickListener {
         createAccount.setOnClickListener(this);
         loginLink.setOnClickListener(this);
 
-        nameET = (EditText) view.findViewById(R.id.input_name);
+        nameET = (EditText) view.findViewById(R.id.input_email);
         surNameET = (EditText) view.findViewById(R.id.input_surname);
-        tlfET = (EditText) view.findViewById(R.id.input_phone);
+        tlfET = (EditText) view.findViewById(R.id.input_email);
         ageET = (EditText) view.findViewById(R.id.input_age);
         passET = (EditText) view.findViewById(R.id.input_password);
         rePassET = (EditText) view.findViewById(R.id.input_reEnterPassword);
