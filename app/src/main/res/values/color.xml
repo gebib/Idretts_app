@@ -2,9 +2,9 @@
 <resources>
 
 
-    <color name="primary">#68C3FC</color>
-    <color name="primary_dark">#45B8FF</color>
-    <color name="primary_darker">#009DFF</color>
+    <color name="primary">#61b8ff</color>
+    <color name="primary_dark">#484848</color>
+    <color name="primary_darker">#3e3e3e</color>
     <color name="accent">#FFFFFF</color>
 
     <color name="black">#000000</color>

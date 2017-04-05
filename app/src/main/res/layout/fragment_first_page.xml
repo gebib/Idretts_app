@@ -37,6 +37,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
+            android:textColor="@color/jet"
             android:id="@+id/textView3" />
 
         <Button
@@ -44,6 +45,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/coachBT"
+            android:textColor="@color/white"
             android:layout_marginTop="5dp"
 
             />
@@ -52,13 +54,15 @@
             android:text="@string/i_m_player"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textColor="@color/white"
             android:id="@+id/playerBT" />
 
         <Button
-            android:text="@string/i_m_family"
+            android:id="@+id/familyBT"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/familyBT" />
+            android:textColor="@color/white"
+            android:text="@string/i_m_family" />
     </LinearLayout>
 
 </RelativeLayout>
