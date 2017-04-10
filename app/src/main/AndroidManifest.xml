@@ -12,7 +12,7 @@
             android:value="@integer/google_play_services_version" />
 
         <activity
-            android:name=".application.view.activity.MainActivity"
+            android:name=".application.view.main.MainActivity"
             android:label="@string/title_activity_main"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme">
