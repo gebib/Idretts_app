@@ -75,8 +75,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.toolbar_home) {
-            Toast.makeText(this, "home!", Toast.LENGTH_LONG).show();
+            FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
+            fragmentTransaction.replace(R.id.containerView,new Tabs()).commit();
             return true;
+        }
+        if(id == R.id.toolbar_messages){
+            FragmentTransaction xfragmentTransaction = mFragmentManager.beginTransaction();
+            xfragmentTransaction.replace(R.id.containerView,new ListOfConversations()).commit();
         }
 
         return super.onOptionsItemSelected(item);
