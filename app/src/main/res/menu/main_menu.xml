@@ -3,9 +3,16 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/action_search"
-        android:orderInCategory="100"
+        android:id="@+id/toolbar_home"
+        android:orderInCategory="200"
         android:icon="@drawable/home24dp"
         android:title=""
-        app:showAsAction="always" />
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/toolbar_messages"
+        android:orderInCategory="100"
+        android:icon="@drawable/messenger"
+        android:title=""
+        app:showAsAction="ifRoom" />
 </menu>
