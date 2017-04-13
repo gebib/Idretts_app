@@ -35,10 +35,10 @@ public class Trainer extends Fragment {
     public static List<TrainerDummyData>getData(){
         List<TrainerDummyData> data = new ArrayList<>();
 
-        int[] icons = {R.drawable.training24dp,R.drawable.game24dp,R.drawable.training24dp,R.drawable.meeting24dp,
-                R.drawable.training24dp,R.drawable.training24dp,R.drawable.theory,R.drawable.training24dp};
-        String[] tittles = {"hardt intesift kollen ","Stafett fram og tilbake","Football kamp med bor",
-                "Samling og teoritid i salen"," intesift kollen fem","Stafett fram og tilbake","Football kamp med bor","Samling og teoritid i salen",};
+        int[] icons = {R.drawable.training,R.drawable.cmp,R.drawable.training,R.drawable.meeting,
+                R.drawable.training_s,R.drawable.training_s,R.drawable.training_s,R.drawable.training};
+        String[] tittles = {"Football training ","Football kamp","Football training",
+                "Oppmote for samlet teori","Styrke training","Styrke training","Styrke training","Football training",};
 
         //create list of dummydata objects to display.
         for (int i = 0; i <tittles.length && i < icons.length ; i++) {//so that if any of the arrays are shorter, that the app does not crash here..

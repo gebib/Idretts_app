@@ -93,7 +93,7 @@
             android:id="@+id/familyApproveCB"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/jumbo"
+            android:textColor="@color/bunni"
             android:text="Accept terms and conditions" />
 
         <android.support.v7.widget.AppCompatButton
