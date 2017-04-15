@@ -1,5 +1,6 @@
 package com.example.gruppe43.idretts_app.application.view.fragments;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
@@ -14,12 +15,14 @@ import android.widget.Toast;
 
 
 import com.example.gruppe43.idretts_app.R;
+import com.example.gruppe43.idretts_app.application.fragment_interfaces.FragmentActivityInterface;
 
-public class Tabs extends Fragment implements TabLayout.OnTabSelectedListener{
+public class Tabs extends Fragment implements TabLayout.OnTabSelectedListener {
 
     public static TabLayout tabLayout;
     public static ViewPager viewPager;
     public static int int_items = 3;
+    private FragmentActivityInterface mCallback;
 
     @Nullable
     @Override
@@ -41,13 +44,24 @@ public class Tabs extends Fragment implements TabLayout.OnTabSelectedListener{
     }
 
     @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        try {
+            mCallback = (FragmentActivityInterface) context;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(context.toString()
+                    + " must implement IFragmentToActivity");
+        }
+    }
+
+    @Override
     public void onTabSelected(TabLayout.Tab tab) {
-        if(tab.getText().equals("Trainer")){
-            Toast.makeText(getActivity(), "tr", Toast.LENGTH_LONG).show();
-        }else if(tab.getText().equals("Player")){
-            Toast.makeText(getActivity(),"pl", Toast.LENGTH_LONG).show();
-        }else if(tab.getText().equals("Team")){
-            Toast.makeText(getActivity(),"tm", Toast.LENGTH_LONG).show();
+        if (tab.getText().equals("Trainer")) {
+            mCallback.currentShowingFragment("trainer");
+        } else if (tab.getText().equals("Player")) {
+            mCallback.currentShowingFragment("player");
+        } else if (tab.getText().equals("Team")) {
+            mCallback.currentShowingFragment("team");
         }
     }
 
@@ -63,6 +77,7 @@ public class Tabs extends Fragment implements TabLayout.OnTabSelectedListener{
         public MyAdapter(FragmentManager fm) {
             super(fm);
         }
+
         @Override
         public Fragment getItem(int position) {
             switch (position) {

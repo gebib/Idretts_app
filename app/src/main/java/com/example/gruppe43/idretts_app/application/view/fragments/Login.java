@@ -2,6 +2,7 @@ package com.example.gruppe43.idretts_app.application.view.fragments;
 
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -43,6 +44,17 @@ public class Login extends Fragment implements View.OnClickListener {
         signUpTV.setOnClickListener(this);
         // Inflate the layout for this fragment
         return view;
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        try {
+            mCallback = (FragmentActivityInterface) context;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(context.toString()
+                    + " must implement IFragmentToActivity");
+        }
     }
 
     @Override

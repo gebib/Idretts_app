@@ -1,6 +1,7 @@
 package com.example.gruppe43.idretts_app.application.view.fragments;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -15,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.gruppe43.idretts_app.R;
+import com.example.gruppe43.idretts_app.application.fragment_interfaces.FragmentActivityInterface;
 
 
 public class Registration extends Fragment implements View.OnClickListener {
@@ -25,6 +27,7 @@ public class Registration extends Fragment implements View.OnClickListener {
     private EditText passET;
     private EditText rePassET;
     private CheckBox acceptTermsCB;
+    private FragmentActivityInterface mCallback;
 
 
     private String name, lastName, age, pss, rPss;
@@ -54,6 +57,17 @@ public class Registration extends Fragment implements View.OnClickListener {
         acceptTermsCB = (CheckBox) view.findViewById(R.id.familyApproveCB);
         // Inflate the layout for this fragment
         return view;
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        try {
+            mCallback = (FragmentActivityInterface) context;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(context.toString()
+                    + " must implement IFragmentToActivity");
+        }
     }
 
     @Override
@@ -88,8 +102,9 @@ public class Registration extends Fragment implements View.OnClickListener {
                 }
                 break;
             case R.id.linkLoginTV:
-
+                mCallback.replaceFragmentWith(new Login());
                 break;
+            default:
         }
     }
 
