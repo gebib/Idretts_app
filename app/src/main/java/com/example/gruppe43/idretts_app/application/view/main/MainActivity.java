@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
@@ -14,11 +15,11 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.TabHost;
 import android.widget.Toast;
 
 
 import com.example.gruppe43.idretts_app.R;
+import com.example.gruppe43.idretts_app.application.fragment_interfaces.FragmentActivityInterface;
 import com.example.gruppe43.idretts_app.application.view.fragments.FirstPage;
 import com.example.gruppe43.idretts_app.application.view.fragments.FullActivityInfo;
 import com.example.gruppe43.idretts_app.application.view.fragments.ListOfConversations;
@@ -33,11 +34,15 @@ import com.example.gruppe43.idretts_app.application.view.fragments.Tabs;
 import com.example.gruppe43.idretts_app.application.view.fragments.Team;
 import com.example.gruppe43.idretts_app.application.view.fragments.Trainer;
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener,FragmentActivityInterface {
     private DrawerLayout mDrawerLayout;
     private FragmentManager mFragmentManager;
     private FragmentTransaction mFragmentTransaction;
     private MainActivity ma;
+    Boolean trainerIsShowing;
+    Boolean playerIsShowing;
+    Boolean teamIsShowing;
+    FloatingActionButton fab;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +53,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mFragmentTransaction.replace(R.id.containerView,new FirstPage()).commit();
         ma = this;
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -179,5 +184,43 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return false;//returning true keeps the item selected, selected.
+    }
+
+    @Override
+    public void onAttachFragment(Fragment fragment) {
+        super.onAttachFragment(fragment);
+    }
+
+    //set current fragment
+    public void currentShowingFragment(String tabId){
+        if(tabId.equals("Trainer")){
+            trainerIsShowing = true;
+            playerIsShowing = false;
+            teamIsShowing = false;
+        }else if(tabId.equals("Player")){
+            trainerIsShowing = false;
+            playerIsShowing = true;
+            teamIsShowing = false;
+        }else if(tabId.equals("Team")){
+            trainerIsShowing = false;
+            playerIsShowing = false;
+            teamIsShowing = true;
+        }
+    }
+
+    //set fragment transactions/navigation
+    public void replaceFragmentWith(Fragment fragmentClass){
+        FragmentTransaction xfragmentTransaction = mFragmentManager.beginTransaction();
+        xfragmentTransaction.replace(R.id.containerView,fragmentClass).commit();
+    }
+
+    public void updatesWhileSwiping(){
+        if(teamIsShowing){
+           // fab.hide();
+            Toast.makeText(this, "hide", Toast.LENGTH_LONG).show();
+        }else{
+            Toast.makeText(this, "show", Toast.LENGTH_LONG).show();
+            //fab.show();
+        }
     }
 }

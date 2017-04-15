@@ -10,26 +10,24 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TabHost;
+import android.widget.Toast;
 
 
 import com.example.gruppe43.idretts_app.R;
 
-public class Tabs extends Fragment  {
+public class Tabs extends Fragment implements TabLayout.OnTabSelectedListener{
 
     public static TabLayout tabLayout;
     public static ViewPager viewPager;
     public static int int_items = 3;
-    private TabHost tabHost;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
         View x = inflater.inflate(R.layout.fragment_tabs, null);
         tabLayout = (TabLayout) x.findViewById(R.id.tabs);
+        tabLayout.addOnTabSelectedListener(this);
         viewPager = (ViewPager) x.findViewById(R.id.viewpager);
-
         viewPager.setAdapter(new MyAdapter(getChildFragmentManager()));
 
         tabLayout.post(new Runnable() {
@@ -42,6 +40,24 @@ public class Tabs extends Fragment  {
         return x;
     }
 
+    @Override
+    public void onTabSelected(TabLayout.Tab tab) {
+        if(tab.getText().equals("Trainer")){
+            Toast.makeText(getActivity(), "tr", Toast.LENGTH_LONG).show();
+        }else if(tab.getText().equals("Player")){
+            Toast.makeText(getActivity(),"pl", Toast.LENGTH_LONG).show();
+        }else if(tab.getText().equals("Team")){
+            Toast.makeText(getActivity(),"tm", Toast.LENGTH_LONG).show();
+        }
+    }
+
+    @Override
+    public void onTabUnselected(TabLayout.Tab tab) {
+    }
+
+    @Override
+    public void onTabReselected(TabLayout.Tab tab) {
+    }
 
     class MyAdapter extends FragmentPagerAdapter {
         public MyAdapter(FragmentManager fm) {

@@ -15,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.gruppe43.idretts_app.R;
+import com.example.gruppe43.idretts_app.application.fragment_interfaces.FragmentActivityInterface;
 
 
 public class Login extends Fragment implements View.OnClickListener {
@@ -22,6 +23,8 @@ public class Login extends Fragment implements View.OnClickListener {
     private Button loginButtonBT;
     private EditText emailAdressET;
     private EditText passwordET;
+    private FragmentActivityInterface mCallback;
+
 
 
     public Login() {
@@ -49,7 +52,7 @@ public class Login extends Fragment implements View.OnClickListener {
         Boolean paswordNotEmpty = false;
         switch (v.getId()) {
             case R.id.link_signup:
-                Toast.makeText(getActivity(), "signUplink!", Toast.LENGTH_LONG).show();
+                mCallback.replaceFragmentWith(new Registration());
                 break;
             case R.id.loginBT:
                 String eMail, password;
