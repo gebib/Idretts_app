@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Idretts App</string>
 
-    <string name="hello_world">Hello world!</string>
+
     <string name="action_settings">Settings</string>
     <string name="title_activity_main">MainActivity</string>
 
@@ -35,4 +35,17 @@
     <string name="registrationFailureAlertTittle">Registration</string>
     <string name="loginFailureTitle">Login</string>
     <string name="loginFailureMessage">Please make sure to fill out both fields with valid credential to sign in. Or Register as new user if you dont have an account.</string>
+    //Registration strings
+    <string name="first_name_reg">First name</string>
+    <string name="last_name_reg">Last name</string>
+    <string name="age_reg">Age</string>
+    <string name="email_reg">Email</string>
+    <string name="accept_terms_and_conditions">Accept terms and conditions</string>
+    <string name="password_reg">Password</string>
+    <string name="re_enter_password">Re-enter password</string>
+    <string name="create_account">Create Account</string>
+    <string name="already_a_member_login">Already a member? Login</string>
+    <string name="password_must_match">Passwords must match.</string>
+
+
 </resources>

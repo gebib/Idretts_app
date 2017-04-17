@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "1094372225605-2uofjj6opg2edpi0hknqstneu6l4r81d.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.gruppe43.idretts_app",
+            "certificate_hash": "b8b44cbaa766ff4e71fefc6b4ebedd4bf3d3cde3"
+          }
+        },
+        {
           "client_id": "1094372225605-oht18muj1g46bcvhsvjgta9a4t7rh5di.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {

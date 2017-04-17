@@ -3,7 +3,6 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="@drawable/gradient_bg_hover"
     android:fitsSystemWindows="true">
 
     <LinearLayout
@@ -14,23 +13,18 @@
         android:paddingLeft="24dp"
         android:paddingRight="24dp">
 
-        <ImageView android:src="@drawable/ia_logo"
-            android:layout_width="160dp"
-            android:layout_height="160dp"
-            android:layout_marginBottom="1dp"
-            android:layout_gravity="center_horizontal" />
-
         <!-- Name Label -->
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp">
-            <EditText android:id="@+id/input_email"
+            <EditText
+                android:id="@+id/input_firstName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPersonName"
-                android:hint="Name" />
+                android:hint="@string/first_name_reg" />
         </android.support.design.widget.TextInputLayout>
 
         <!-- Surname Label -->
@@ -41,11 +35,11 @@
             android:layout_marginBottom="8dp">
 
             <EditText
-                android:id="@+id/input_surname"
+                android:id="@+id/input_lastName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Surname"
-                android:inputType="textPostalAddress" />
+                android:hint="@string/last_name_reg"
+                android:inputType="textPersonName" />
         </android.support.design.widget.TextInputLayout>
 
         <!-- age -->
@@ -54,13 +48,27 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp">
-
             <EditText
                 android:id="@+id/input_age"
+                android:focusable="false"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Age"
-                android:inputType="number" />
+                android:hint="@string/age_reg"
+                android:inputType="date" />
+        </android.support.design.widget.TextInputLayout>
+
+        <!-- Email label -->
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp">
+            <EditText
+                android:id="@+id/input_email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textEmailAddress"
+                android:hint="@string/email_reg" />
         </android.support.design.widget.TextInputLayout>
 
         <!-- Password Label -->
@@ -69,11 +77,12 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp">
-            <EditText android:id="@+id/input_password"
+            <EditText
+                android:id="@+id/input_password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPassword"
-                android:hint="Password"/>
+                android:hint="@string/password_reg"/>
         </android.support.design.widget.TextInputLayout>
 
         <!-- Password Re-enter Label -->
@@ -82,11 +91,12 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp">
-            <EditText android:id="@+id/input_reEnterPassword"
+            <EditText
+                android:id="@+id/input_reEnterPassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPassword"
-                android:hint="Re-enter Password"/>
+                android:hint="@string/re_enter_password"/>
         </android.support.design.widget.TextInputLayout>
 
         <!-- Check Box -->
@@ -94,8 +104,8 @@
             android:id="@+id/familyApproveCB"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/bunni"
-            android:text="Accept terms and conditions" />
+            android:textColor="@color/jumbo"
+            android:text="@string/accept_terms_and_conditions" />
 
         <android.support.v7.widget.AppCompatButton
             android:id="@+id/createAccountBT"
@@ -104,13 +114,14 @@
             android:layout_marginTop="24dp"
             android:layout_marginBottom="24dp"
             android:padding="12dp"
-            android:text="Create Account"/>
+            android:text="@string/create_account"/>
 
-        <TextView android:id="@+id/linkLoginTV"
+        <TextView
+            android:id="@+id/linkLoginTV"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="24dp"
-            android:text="Already a member? Login"
+            android:text="@string/already_a_member_login"
             android:gravity="center"
             android:textSize="16dip"/>
 
