@@ -261,6 +261,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public void initAfterLogin(Boolean isPlayerSignedIn, Boolean isTrainerSignedIn){
         this.isPlayerSignedIn = isPlayerSignedIn;
         this.isTrainerSignedIn = isTrainerSignedIn;
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.show();
     }
 
     //init things on logging out or exiting the application!

@@ -59,7 +59,6 @@ public class Login extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(final View v) {
-        //do what you want to do when button is clicked
         Boolean emailNotEmpty = false;
         Boolean paswordNotEmpty = false;
         switch (v.getId()) {
@@ -100,10 +99,10 @@ public class Login extends Fragment implements View.OnClickListener {
                     paswordNotEmpty = true;
                 }
                 break;
+            default:
         }
         if (emailNotEmpty && paswordNotEmpty) {
             signIn();
-            Toast.makeText(getActivity(), "signInOK!", Toast.LENGTH_LONG).show();
         } else if(v.getId() != R.id.link_signup) {
             popUpDialog();
         }
@@ -111,7 +110,11 @@ public class Login extends Fragment implements View.OnClickListener {
 
     //sign in
     public void signIn() {
-        //TODO sign in method to implement her.
+        ////////////////////////////////////////
+        //TODO fjernes:  fb authentication her
+        mCallback.replaceFragmentWith(new Tabs());
+        mCallback.initAfterLogin(true,false);
+        ///////////////////////////////////////////
     }
 
     //popup message

@@ -9,4 +9,5 @@ import android.support.v4.app.Fragment;
 public interface FragmentActivityInterface {
     void currentShowingFragment(String tabId);
     void replaceFragmentWith(Fragment fragmentClass);
+    void initAfterLogin(Boolean isPlayerSignedIn, Boolean isTrainerSignedIn);
 }

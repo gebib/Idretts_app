@@ -167,6 +167,6 @@ public class Registration extends Fragment implements View.OnClickListener {
 
     //register new user if valid
     private void registerUser() {
-
+        //TODO firebase
     }
 }
