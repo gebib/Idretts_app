@@ -57,12 +57,6 @@
             android:textColor="@color/white"
             android:id="@+id/playerBT" />
 
-        <Button
-            android:id="@+id/familyBT"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColor="@color/white"
-            android:text="@string/i_m_family" />
     </LinearLayout>
 
 </RelativeLayout>

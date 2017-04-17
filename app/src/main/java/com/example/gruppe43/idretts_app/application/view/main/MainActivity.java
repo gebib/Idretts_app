@@ -1,5 +1,6 @@
 package com.example.gruppe43.idretts_app.application.view.main;
 
+import android.content.ClipData;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -43,12 +44,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private FragmentManager mFragmentManager;
     private FragmentTransaction mFragmentTransaction;
     private MainActivity ma;
-    Boolean trainerIsShowing;
-    Boolean playerIsShowing;
-    Boolean teamIsShowing;
-    FloatingActionButton fab;
-    boolean isPlayerSignedIn;
-    boolean isTrainerSignedIn;
+    private Boolean trainerIsShowing;
+    private Boolean playerIsShowing;
+    private Boolean teamIsShowing;
+    private FloatingActionButton fab;
+    private Boolean isPlayerSignedIn;
+    private Boolean isTrainerSignedIn;
+    private Menu actionBarMenuItems;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,10 +64,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         ma = this;
 
         fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.hide();
+        fab.setRippleColor(Color.GREEN);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Toast.makeText(ma, "add", Toast.LENGTH_LONG).show();
+                isPlayerSignedIn = true;
+                updatesWhileSwiping();
             }
         });
 
@@ -76,9 +84,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mDrawerLayout.addDrawerListener(toggle);
         toggle.syncState();
 
+        /*////////////////////////FLAGS////////////////////////////////*/
         //default states assignments
-        fab.hide();
-        fab.setRippleColor(Color.GREEN);
+
+
+        /*////////////////////////FLAGS////////////////////////////////*/
 
     }
 
@@ -96,6 +106,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main_menu, menu);
+            actionBarMenuItems = menu;
+        initPreLogin();//hide menus
         return true;
     }
 
@@ -115,6 +127,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return super.onOptionsItemSelected(item);
     }
 
+
+/*//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         if (menuItem.getItemId() == R.id.nav_home) {
@@ -196,6 +210,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         drawer.closeDrawer(GravityCompat.START);
         return false;//returning true keeps the item selected, selected.
     }
+    /*////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
 
     @Override
     public void onAttachFragment(Fragment fragment) {
@@ -227,13 +242,37 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         FragmentTransaction xfragmentTransaction = mFragmentManager.beginTransaction();
         xfragmentTransaction.replace(R.id.containerView, fragmentClass).commit();
     }
-
+    //update changes
     public void updatesWhileSwiping() {
-        if (teamIsShowing) {
-            fab.hide();
-            //Toast.makeText(this, "hide", Toast.LENGTH_LONG).show();
-        } else {
+        if (trainerIsShowing && isTrainerSignedIn) {
             fab.show();
+            //Toast.makeText(this, "hide", Toast.LENGTH_LONG).show();
+        } else if (playerIsShowing && isPlayerSignedIn) {
+            fab.show();
+        } else {
+            fab.hide();
         }
+        //if no one is signed in dont show the actionbar menu.
+    }
+
+    //init things before login
+    public void initPreLogin(){
+        isPlayerSignedIn = true;
+        isTrainerSignedIn = false;
+        for (int i = 0; i < actionBarMenuItems.size(); i++)
+            actionBarMenuItems.getItem(i).setVisible(false);
+    }
+    //init things that should be initialyzed after a successful sign in.
+    public void initAfterLogin(Boolean isPlayerSignedIn, Boolean isTrainerSignedIn){
+        for (int i = 0; i < actionBarMenuItems.size(); i++) {
+            actionBarMenuItems.getItem(i).setVisible(true);
+        }
+        this.isPlayerSignedIn = isPlayerSignedIn;
+        this.isTrainerSignedIn = isTrainerSignedIn;
+    }
+
+    //init things on logging out or exiting the application!
+    public void initOnLoggout(){
+
     }
 }
