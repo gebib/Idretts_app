@@ -2,24 +2,23 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:padding="5dp"
     android:fitsSystemWindows="true">
 
     <RelativeLayout
         android:padding="1dp"
         android:layout_width="match_parent"
+        android:background="@drawable/gradient_bg_hover"
         android:layout_height="wrap_content">
 
         <ImageView
             android:id="@+id/profImageIV"
-            android:background="@drawable/shape_line"
             android:layout_width="150dp"
             android:layout_height="150dp"
             android:padding="3dp"
             android:src="@drawable/pph" />
 
         <LinearLayout
-            android:background="@drawable/shape_line"
+
             android:layout_width="match_parent"
             android:layout_height="150dp"
             android:padding="5dp"
@@ -31,7 +30,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <TextView
-                    android:background="@drawable/shape_line"
                     android:paddingTop="5dp"
                     android:paddingBottom="5dp"
                     android:id="@+id/LBLprofName"
@@ -42,7 +40,6 @@
                 <TextView
                     android:paddingTop="5dp"
                     android:paddingBottom="5dp"
-                    android:background="@drawable/shape_line"
                     android:id="@+id/profName"
                     android:maxLength="15"
                     android:text="Hans-petter "
@@ -56,7 +53,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <TextView
-                    android:background="@drawable/shape_line"
                     android:id="@+id/LBLprofStatus"
                     android:paddingTop="5dp"
                     android:paddingBottom="5dp"
@@ -68,11 +64,10 @@
                     android:id="@+id/profStatus"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/shape_line"
                     android:maxLength="15"
                     android:paddingBottom="5dp"
                     android:paddingTop="5dp"
-                    android:text="Player"
+                    android:text="Syk"
                     android:textAlignment="textEnd" />
             </LinearLayout>
 
@@ -81,7 +76,6 @@
                 android:layout_height="wrap_content">
 
                 <TextView
-                    android:background="@drawable/shape_line"
                     android:id="@+id/LBLprofPlayerNumber"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -90,7 +84,6 @@
                     android:text=" Player NR: " />
 
                 <TextView
-                    android:background="@drawable/shape_line"
                     android:paddingTop="5dp"
                     android:paddingBottom="5dp"
                     android:id="@+id/profPlayerNumber"
@@ -102,6 +95,4 @@
             </LinearLayout>
         </LinearLayout>
     </RelativeLayout>
-
-
 </ScrollView>

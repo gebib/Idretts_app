@@ -1,6 +1,5 @@
 package com.example.gruppe43.idretts_app.application.view.main;
 
-import android.content.ClipData;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -13,10 +12,10 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -25,7 +24,6 @@ import android.widget.Toast;
 
 import com.example.gruppe43.idretts_app.R;
 import com.example.gruppe43.idretts_app.application.fragment_interfaces.FragmentActivityInterface;
-import com.example.gruppe43.idretts_app.application.view.fragments.FirstPage;
 import com.example.gruppe43.idretts_app.application.view.fragments.FullActivityInfo;
 import com.example.gruppe43.idretts_app.application.view.fragments.ListOfConversations;
 import com.example.gruppe43.idretts_app.application.view.fragments.Login;
@@ -60,7 +58,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setContentView(R.layout.activity_main);
         mFragmentManager = getSupportFragmentManager();
         mFragmentTransaction = mFragmentManager.beginTransaction();
-        mFragmentTransaction.replace(R.id.containerView, new FirstPage()).commit();
+        mFragmentTransaction.replace(R.id.containerView, new Login()).commit();
         ma = this;
 
         fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -89,7 +87,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
 
         /*////////////////////////FLAGS////////////////////////////////*/
-
     }
 
     @Override
@@ -156,10 +153,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
 
                 /*MIDLERTIDIG navigasjon///////////////////////////////////////////////////////*/
-        if (menuItem.getItemId() == R.id.firstpage) {
-            FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
-            fragmentTransaction.replace(R.id.containerView, new FirstPage()).commit();
-        }
+
         if (menuItem.getItemId() == R.id.logginPage) {
             FragmentTransaction xfragmentTransaction = mFragmentManager.beginTransaction();
             xfragmentTransaction.replace(R.id.containerView, new Login()).commit();
@@ -257,16 +251,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     //init things before login
     public void initPreLogin(){
-        isPlayerSignedIn = true;
+        isPlayerSignedIn = false;
         isTrainerSignedIn = false;
-        for (int i = 0; i < actionBarMenuItems.size(); i++)
-            actionBarMenuItems.getItem(i).setVisible(false);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.hide();
+
     }
     //init things that should be initialyzed after a successful sign in.
     public void initAfterLogin(Boolean isPlayerSignedIn, Boolean isTrainerSignedIn){
-        for (int i = 0; i < actionBarMenuItems.size(); i++) {
-            actionBarMenuItems.getItem(i).setVisible(true);
-        }
         this.isPlayerSignedIn = isPlayerSignedIn;
         this.isTrainerSignedIn = isTrainerSignedIn;
     }

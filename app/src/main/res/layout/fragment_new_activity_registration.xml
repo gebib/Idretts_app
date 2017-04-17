@@ -8,15 +8,14 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="5dp"
-        android:paddingLeft="24dp"
-        android:paddingRight="24dp"
+        android:background="@color/primary"
+        android:padding="3dp"
         android:weightSum="1">
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:padding="5dp"
-            android:background="@drawable/shape_line"
+            android:background="@color/white"
             android:layout_height="wrap_content">
 
             <Spinner
@@ -87,8 +86,9 @@
                 android:paddingBottom="2dp"
                 android:gravity="center"
                 android:textStyle="bold"
-                android:textColor="@color/black"
-                android:background="@color/primary_dark"
+                android:background="@color/black"
+                android:textColor="@color/white"
+
                 android:text="Activity Details"
                 android:layout_height="wrap_content"
                 android:id="@+id/textView5" />
@@ -96,7 +96,7 @@
                 android:id="@+id/activityTextInfo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/shape_line"
+                android:background="@color/white"
                 android:lineSpacingExtra="4dp"
                 android:padding="5dp"
                 android:text="@string/tempLorem"
