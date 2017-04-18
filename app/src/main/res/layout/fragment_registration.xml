@@ -3,6 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
+    android:background="@drawable/gradient_bg_hover"
     android:fitsSystemWindows="true">
 
     <LinearLayout
@@ -11,12 +12,14 @@
         android:layout_height="wrap_content"
         android:paddingTop="1dp"
         android:paddingLeft="24dp"
+        android:focusableInTouchMode="true"
         android:paddingRight="24dp">
 
         <!-- Name Label -->
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:inputType="textPersonName|textCapWords"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp">
             <EditText
@@ -50,7 +53,6 @@
             android:layout_marginBottom="8dp">
             <EditText
                 android:id="@+id/input_age"
-                android:focusable="false"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/age_reg"
@@ -104,7 +106,7 @@
             android:id="@+id/familyApproveCB"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/jumbo"
+            android:textColor="@color/white"
             android:text="@string/accept_terms_and_conditions" />
 
         <android.support.v7.widget.AppCompatButton

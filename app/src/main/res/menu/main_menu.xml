@@ -12,7 +12,7 @@
     <item
         android:id="@+id/toolbar_messages"
         android:orderInCategory="100"
-        android:icon="@drawable/messenger"
+        android:icon="@drawable/post24dp"
         android:title=""
         app:showAsAction="ifRoom" />
 </menu>

@@ -13,7 +13,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
+
 
 import com.example.gruppe43.idretts_app.R;
 import com.example.gruppe43.idretts_app.application.fragment_interfaces.FragmentActivityInterface;
@@ -25,7 +25,6 @@ public class Login extends Fragment implements View.OnClickListener {
     private EditText emailAdressET;
     private EditText passwordET;
     private FragmentActivityInterface mCallback;
-
 
 
     public Login() {
@@ -59,66 +58,31 @@ public class Login extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(final View v) {
-        Boolean emailNotEmpty = false;
-        Boolean paswordNotEmpty = false;
         switch (v.getId()) {
             case R.id.link_signup:
                 mCallback.replaceFragmentWith(new Registration());
                 break;
             case R.id.loginBT:
-                String eMail, password;
-                eMail = emailAdressET.getText().toString().trim();
-                password = passwordET.getText().toString().trim();
-
-                if (eMail.equals("") && password.equals("")) {
-                    emailAdressET.setBackgroundColor(Color.parseColor("#009DFF"));
-                    emailAdressET.setTextColor(Color.RED);
-                    passwordET.setBackgroundColor(Color.parseColor("#009DFF"));
-                    passwordET.setTextColor(Color.RED);
-                    emailNotEmpty = false;
-                    paswordNotEmpty = false;
-                }
-                if (eMail.equals("")) {
-                    emailAdressET.setBackgroundColor(Color.parseColor("#009DFF"));
-                    emailAdressET.setTextColor(Color.RED);
-                    emailNotEmpty = false;
-                }
-                if (!eMail.equals("")) {
-                    emailAdressET.setBackgroundColor(Color.parseColor("#68C3FC"));
-                    emailAdressET.setTextColor(Color.BLACK);
-                    emailNotEmpty = true;
-                }
-                if (password.equals("")) {
-                    passwordET.setBackgroundColor(Color.parseColor("#009DFF"));
-                    passwordET.setTextColor(Color.RED);
-                    paswordNotEmpty = false;
-                }
-                if (!password.equals("")) {
-                    passwordET.setBackgroundColor(Color.parseColor("#68C3FC"));
-                    passwordET.setTextColor(Color.BLACK);
-                    paswordNotEmpty = true;
+                Boolean validInfo = validFormat();
+                Boolean signInOk = signInAuthenthication();
+                if (validInfo && signInOk) {
+                    gotoHomePage();
+                }else if(!validInfo || ! signInOk){
+                    alertDialog();
                 }
                 break;
             default:
         }
-        if (emailNotEmpty && paswordNotEmpty) {
-            signIn();
-        } else if(v.getId() != R.id.link_signup) {
-            popUpDialog();
-        }
     }
 
-    //sign in
-    public void signIn() {
-        ////////////////////////////////////////
-        //TODO fjernes:  fb authentication her
+    //open home page after successfull sign in.
+    public void gotoHomePage() {
         mCallback.replaceFragmentWith(new Tabs());
-        mCallback.initAfterLogin(true,false);
-        ///////////////////////////////////////////
+        mCallback.initAfterLogin(false, true);
     }
 
     //popup message
-    public void popUpDialog() {
+    public void alertDialog() {
         AlertDialog.Builder builder1 = new AlertDialog.Builder(getActivity());
         builder1.setTitle(R.string.loginFailureTitle);
         builder1.setMessage(R.string.loginFailureMessage);
@@ -130,4 +94,34 @@ public class Login extends Fragment implements View.OnClickListener {
         AlertDialog alert11 = builder1.create();
         alert11.show();
     }
+
+    //validate loggin info format locally
+    private Boolean validFormat() {
+        Boolean isValid = false;
+        String eMail, password;
+        eMail = emailAdressET.getText().toString().trim();
+        password = passwordET.getText().toString().trim();
+        if (android.util.Patterns.EMAIL_ADDRESS.matcher(eMail).matches()) {
+            emailAdressET.setError(null);
+            isValid = true;
+        } else {
+            emailAdressET.setError(getString(R.string.email_reg));
+        }
+        if (password.equals("")) {
+            passwordET.setError(getString(R.string.password_reg));
+            isValid = false;
+        } else {
+            passwordET.setError(null);
+        }
+        return isValid;
+    }
+
+    //external firebase authentication
+    private Boolean signInAuthenthication() {
+        //TODO firebase sign in check! use progress spinner...
+        String loginEmail = emailAdressET.getText().toString().trim();
+        String pass = passwordET.getText().toString().trim();
+        return true;
+    }
+
 }

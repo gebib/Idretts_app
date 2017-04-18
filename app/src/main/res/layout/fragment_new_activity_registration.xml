@@ -70,7 +70,6 @@
                 android:inputType="time" />
 
             <Spinner
-                android:id="@+id/spinnerIntensity"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/editText6"
@@ -93,7 +92,6 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/textView5" />
             <TextView
-                android:id="@+id/activityTextInfo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@color/white"

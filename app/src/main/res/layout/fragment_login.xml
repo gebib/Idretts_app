@@ -12,6 +12,7 @@
         android:paddingTop="5dp"
         android:paddingLeft="24dp"
         android:paddingRight="24dp"
+        android:focusableInTouchMode="true"
         android:weightSum="1">
 
         <ImageView
@@ -31,6 +32,7 @@
             <EditText android:id="@+id/input_email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:windowSoftInputMode="stateUnchanged"
                 android:inputType="textEmailAddress"
                 android:hint="E-mail" />
         </android.support.design.widget.TextInputLayout>
