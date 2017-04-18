@@ -28,13 +28,12 @@ import static android.R.attr.format;
 
 
 public class Registration extends Fragment implements View.OnClickListener {
-    
+    Calendar calendar = Calendar.getInstance();
     private EditText firstNameET, lastNameET, ageET, emailET, passET, rePassET;
-    private Boolean isValid;
     private CheckBox acceptTermsCB;
 
     private String firstName, lastName, age, email, pss, rPss;
-    private Boolean checkBox; //DO change this
+    private Boolean checkBox; //TODO: change this
 
     private TextView loginLink;
     private Button createAccount;
@@ -51,7 +50,19 @@ public class Registration extends Fragment implements View.OnClickListener {
 
         createAccount.setOnClickListener(this);
         loginLink.setOnClickListener(this);
-        ageET.setOnClickListener(this);
+        ageET.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                new DatePickerDialog(Registration.this, listener, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH)).show();
+            }
+        });
+
+        DatePickerDialog.OnDateSetListener listener = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                ageET.setText(dayOfMonth+"."+(month+1)+"."+year);
+            }
+        };
 
         firstNameET = (EditText) view.findViewById(R.id.input_firstName);
         lastNameET  = (EditText) view.findViewById(R.id.input_lastName);
@@ -98,17 +109,13 @@ public class Registration extends Fragment implements View.OnClickListener {
             case R.id.linkLoginTV:
 
                 break;
-            case R.id.input_age: //TODO: fragmentManager/Transaction
-                DialogFragment picker = new DatePickerFragment();
-                picker.show(getFragmentManager(), "datePicker");
-                break;
+
         }
     }
 
 
     //register new user if valid
     private boolean validateUser() {
-        Boolean isValid;
         String nameRegEx    = "^[a-zA-ZæøåÆØÅ- ]\\w{2,20}";
         String ageRegEx     = "(0?[1-9]|[12][0-9]|3[01])-(0?[1-9]|1[012])-((19|20|21)\\\\d\\\\d)";
         String passRegEx    = "^.{6,}$";
@@ -117,29 +124,29 @@ public class Registration extends Fragment implements View.OnClickListener {
 
         if (!firstName.matches(nameRegEx)){
             firstNameET.setError(getString(R.string.first_name_reg));
-            isValid = false;
+            return false;
 
         } else if (!lastName.matches(nameRegEx)){
             firstNameET.setError(getString(R.string.last_name_reg));
-            isValid = false;
+            return false;
         //TODO: remove after DatePickerFragment communicates
         } else if (!age.matches(ageRegEx) /* FORMATTEST*/ ){
             ageET.setError(getString(R.string.age_reg));
-            isValid = false;
+            return false;
 
         } else if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()){
             ageET.setError(getString(R.string.email_reg));
-            isValid = false;
+            return false;
 
         } else if (!pss.matches(passRegEx)){
             passET.setError(getString(R.string.password_reg));
-            isValid = false;
+            return false;
 
         } else (!pss.matches(rPss)){
             passET.setError(getString(R.string.password_must_match));
-            isValid = false;
+            return false;
         }
-        return isValid;
+        return true;
 
 
 
