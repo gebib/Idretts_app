@@ -31,7 +31,6 @@ import com.example.gruppe43.idretts_app.application.view.fragments.Messages;
 import com.example.gruppe43.idretts_app.application.view.fragments.NewActivityRegistration;
 import com.example.gruppe43.idretts_app.application.view.fragments.Player;
 import com.example.gruppe43.idretts_app.application.view.fragments.ProfileView;
-import com.example.gruppe43.idretts_app.application.view.fragments.Registration;
 import com.example.gruppe43.idretts_app.application.view.fragments.Tabs;
 import com.example.gruppe43.idretts_app.application.view.fragments.Team;
 import com.example.gruppe43.idretts_app.application.view.fragments.Trainer;
@@ -46,8 +45,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private FloatingActionButton fab;
     private Boolean isPlayerSignedIn;
     private Boolean isTrainerSignedIn;
-
-
 
 
     @Override
@@ -78,12 +75,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, mDrawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         mDrawerLayout.addDrawerListener(toggle);
         toggle.syncState();
-
-        /*////////////////////////FLAGS////////////////////////////////*/
-        //default states assignments
-
-
-        /*////////////////////////FLAGS////////////////////////////////*/
     }
 
     @Override
@@ -115,13 +106,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if (id == R.id.toolbar_messages) {
             FragmentTransaction xfragmentTransaction = mFragmentManager.beginTransaction();
             xfragmentTransaction.replace(R.id.containerView, new Messages()).commit();
+            currentShowingFragment("");
         }
-
         return super.onOptionsItemSelected(item);
     }
 
 
-/*//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
+    /*//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         if (menuItem.getItemId() == R.id.nav_profile) {
@@ -196,7 +187,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             trainerIsShowing = false;
             playerIsShowing = true;
             fab.setBackgroundTintList(ColorStateList.valueOf(ResourcesCompat.getColor(getResources(), R.color.jet, null)));
-        }else{
+        } else {
             trainerIsShowing = false;
             playerIsShowing = false;
         }
@@ -208,6 +199,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         FragmentTransaction xfragmentTransaction = mFragmentManager.beginTransaction();
         xfragmentTransaction.replace(R.id.containerView, fragmentClass).commit();
     }
+
     //update changes
     public void updatesWhileSwiping() {
         if (trainerIsShowing && isTrainerSignedIn) {
@@ -222,20 +214,21 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     //init things before login
-    public void initPreLogin(){
+    public void initPreLogin() {
         isPlayerSignedIn = false;
         isTrainerSignedIn = false;
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
 
     }
+
     //init things that should be initialyzed after a successful sign in.
-    public void initAfterLogin(Boolean isPlayerSignedIn, Boolean isTrainerSignedIn){
+    public void initAfterLogin(Boolean isPlayerSignedIn, Boolean isTrainerSignedIn) {
         this.isPlayerSignedIn = isPlayerSignedIn;
         this.isTrainerSignedIn = isTrainerSignedIn;
         ActionBar actionBar = getSupportActionBar();
         actionBar.show();
-        if(getCurrentFocus()!=null) {
+        if (getCurrentFocus() != null) {
             InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
             inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
         }
@@ -243,7 +236,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     //init things on logging out or exiting the application!
-    public void initOnLoggout(){
+    public void initOnLoggout() {
 
     }
 }
