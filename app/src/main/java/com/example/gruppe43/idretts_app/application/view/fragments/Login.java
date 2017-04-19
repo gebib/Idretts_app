@@ -77,7 +77,7 @@ public class Login extends Fragment implements View.OnClickListener {
     //open home page after successfull sign in.
     public void gotoHomePage() {
         mCallback.replaceFragmentWith(new Tabs());
-        mCallback.initAfterLogin(false, true);
+        mCallback.initAfterLogin(false, true);// will be set when user signs in!
     }
 
     //popup message
