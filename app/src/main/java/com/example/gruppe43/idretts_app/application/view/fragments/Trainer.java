@@ -34,7 +34,6 @@ public class Trainer extends Fragment {
 
     public static List<TrainerDummyData>getData(){
         List<TrainerDummyData> data = new ArrayList<>();
-
         int[] icons = {R.drawable.training,R.drawable.cmp,R.drawable.training,R.drawable.meeting,
                 R.drawable.training_s,R.drawable.training_s,R.drawable.training_s,R.drawable.training};
         String[] tittles = {"Football training ","Football kamp","Football training",

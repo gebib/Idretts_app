@@ -127,22 +127,27 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if (menuItem.getItemId() == R.id.nav_profile) {
             FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
             fragmentTransaction.replace(R.id.containerView, new ProfileView()).commit();
+            currentShowingFragment("");
         }
         if (menuItem.getItemId() == R.id.nav_messages) {
             FragmentTransaction xfragmentTransaction = mFragmentManager.beginTransaction();
             xfragmentTransaction.replace(R.id.containerView, new Messages()).commit();
+            currentShowingFragment("");
         }
         if (menuItem.getItemId() == R.id.nav_trainer) {
             FragmentTransaction xfragmentTransaction = mFragmentManager.beginTransaction();
             xfragmentTransaction.replace(R.id.containerView, new Trainer()).commit();
+            currentShowingFragment("trainer");
         }
         if (menuItem.getItemId() == R.id.navn_player) {
             FragmentTransaction xfragmentTransaction = mFragmentManager.beginTransaction();
             xfragmentTransaction.replace(R.id.containerView, new Player()).commit();
+            currentShowingFragment("player");
         }
         if (menuItem.getItemId() == R.id.nav_Team) {
             FragmentTransaction xfragmentTransaction = mFragmentManager.beginTransaction();
             xfragmentTransaction.replace(R.id.containerView, new Team()).commit();
+            currentShowingFragment("");
         }
         if (menuItem.getItemId() == R.id.nav_exit) {
             System.exit(1);
@@ -150,40 +155,26 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
                 /*MIDLERTIDIG navigasjon///////////////////////////////////////////////////////*/
 
-        if (menuItem.getItemId() == R.id.logginPage) {
-            FragmentTransaction xfragmentTransaction = mFragmentManager.beginTransaction();
-            xfragmentTransaction.replace(R.id.containerView, new Login()).commit();
-        }
-        if (menuItem.getItemId() == R.id.registrationPage) {
-            FragmentTransaction xfragmentTransaction = mFragmentManager.beginTransaction();
-            xfragmentTransaction.replace(R.id.containerView, new Registration()).commit();
-        }
-        if (menuItem.getItemId() == R.id.homePage) {
-            FragmentTransaction xfragmentTransaction = mFragmentManager.beginTransaction();
-            xfragmentTransaction.replace(R.id.containerView, new Tabs()).commit();
-        }
-        if (menuItem.getItemId() == R.id.profilePage) {
-            FragmentTransaction xfragmentTransaction = mFragmentManager.beginTransaction();
-            xfragmentTransaction.replace(R.id.containerView, new ProfileView()).commit();
-        }
         if (menuItem.getItemId() == R.id.activityInformationPage) {
             FragmentTransaction xfragmentTransaction = mFragmentManager.beginTransaction();
             xfragmentTransaction.replace(R.id.containerView, new FullActivityInfo()).commit();
+            currentShowingFragment("");
         }
         if (menuItem.getItemId() == R.id.newActivityRegistrationPage) {
             FragmentTransaction xfragmentTransaction = mFragmentManager.beginTransaction();
             xfragmentTransaction.replace(R.id.containerView, new NewActivityRegistration()).commit();
+            currentShowingFragment("");
         }
 
         if (menuItem.getItemId() == R.id.messegesEditgPage) {
             FragmentTransaction xfragmentTransaction = mFragmentManager.beginTransaction();
             xfragmentTransaction.replace(R.id.containerView, new Messages()).commit(); /* dette er fragment siden for all melding osv..*/
+            currentShowingFragment("");
         }
 
         if (menuItem.getItemId() == R.id.nav_exit) {
             System.exit(1);
         }
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return false;//returning true keeps the item selected, selected.
@@ -205,7 +196,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             trainerIsShowing = false;
             playerIsShowing = true;
             fab.setBackgroundTintList(ColorStateList.valueOf(ResourcesCompat.getColor(getResources(), R.color.jet, null)));
-        } else if (tabId.equals("team")) {
+        }else{
             trainerIsShowing = false;
             playerIsShowing = false;
         }
