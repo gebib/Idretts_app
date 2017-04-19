@@ -3,9 +3,11 @@ package com.example.gruppe43.idretts_app.application.view.main;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -20,6 +22,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.TabHost;
 import android.widget.Toast;
 
 
@@ -46,8 +49,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private FloatingActionButton fab;
     private Boolean isPlayerSignedIn;
     private Boolean isTrainerSignedIn;
-
-
+    private Boolean editActivityIsShowing;
 
 
     @Override
@@ -65,8 +67,24 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(ma, "add", Toast.LENGTH_LONG).show();
-                updatesWhileSwiping();
+                if (isTrainerSignedIn && trainerIsShowing) {
+                    FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
+                    fragmentTransaction.replace(R.id.containerView, new NewActivityRegistration()).commit();
+                    currentShowingFragment("editActivity");
+                } else if (isPlayerSignedIn && playerIsShowing) {
+                    FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
+                    fragmentTransaction.replace(R.id.containerView, new NewActivityRegistration()).commit();
+                    currentShowingFragment("editActivity");
+                } else if (isPlayerSignedIn && editActivityIsShowing) {
+                    FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
+                    fragmentTransaction.replace(R.id.containerView, new Tabs()).commit();
+                    new Handler().post(new Runnable() {@Override public void run() {Tabs.viewPager.setCurrentItem(1);}});
+                    currentShowingFragment("player");
+                } else if (isTrainerSignedIn && editActivityIsShowing) {
+                    FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
+                    fragmentTransaction.replace(R.id.containerView, new Tabs()).commit();
+                    currentShowingFragment("trainer");
+                }
             }
         });
 
@@ -121,7 +139,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
 
-/*//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
+    /*//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         if (menuItem.getItemId() == R.id.nav_profile) {
@@ -191,14 +209,21 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if (tabId.equals("trainer")) {
             trainerIsShowing = true;
             playerIsShowing = false;
+            editActivityIsShowing = false;
             fab.setBackgroundTintList(ColorStateList.valueOf(ResourcesCompat.getColor(getResources(), R.color.primary_darker, null)));
         } else if (tabId.equals("player")) {
             trainerIsShowing = false;
             playerIsShowing = true;
+            editActivityIsShowing = false;
             fab.setBackgroundTintList(ColorStateList.valueOf(ResourcesCompat.getColor(getResources(), R.color.jet, null)));
-        }else{
+        } else if (tabId.equals("editActivity")) {
             trainerIsShowing = false;
             playerIsShowing = false;
+            editActivityIsShowing = true;
+        } else {
+            trainerIsShowing = false;
+            playerIsShowing = false;
+            editActivityIsShowing = false;
         }
         updatesWhileSwiping();//update states
     }
@@ -208,13 +233,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         FragmentTransaction xfragmentTransaction = mFragmentManager.beginTransaction();
         xfragmentTransaction.replace(R.id.containerView, fragmentClass).commit();
     }
+
     //update changes
     public void updatesWhileSwiping() {
         if (trainerIsShowing && isTrainerSignedIn) {
+            fab.setImageResource(R.drawable.add24dp);
             fab.show();
             //Toast.makeText(this, "hide", Toast.LENGTH_LONG).show();
         } else if (playerIsShowing && isPlayerSignedIn) {
+            fab.setImageResource(R.drawable.add24dp);
             fab.show();
+        } else if (editActivityIsShowing) {
+            fab.show();
+            fab.setImageResource(R.drawable.check24dp);
         } else {
             fab.hide();
         }
@@ -222,20 +253,21 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     //init things before login
-    public void initPreLogin(){
+    public void initPreLogin() {
         isPlayerSignedIn = false;
         isTrainerSignedIn = false;
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
 
     }
+
     //init things that should be initialyzed after a successful sign in.
-    public void initAfterLogin(Boolean isPlayerSignedIn, Boolean isTrainerSignedIn){
+    public void initAfterLogin(Boolean isPlayerSignedIn, Boolean isTrainerSignedIn) {
         this.isPlayerSignedIn = isPlayerSignedIn;
         this.isTrainerSignedIn = isTrainerSignedIn;
         ActionBar actionBar = getSupportActionBar();
         actionBar.show();
-        if(getCurrentFocus()!=null) {
+        if (getCurrentFocus() != null) {
             InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
             inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
         }
@@ -243,7 +275,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     //init things on logging out or exiting the application!
-    public void initOnLoggout(){
+    public void initOnLoggout() {
 
     }
 }
