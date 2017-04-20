@@ -20,7 +20,6 @@
     <string name="re_enter_password">Re-enter password</string>
     <string name="create_account">Create Account</string>
     <string name="already_a_member_login">Already a member? Login</string>
-    <string name="password_must_match">Passwords must match.</string>
     <string name="please_check_user_agreement">Please check the user agreement</string>
 
 

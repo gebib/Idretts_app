@@ -34,29 +34,14 @@
     <item android:title="Options">
         <menu>
         <item
-            android:id="@+id/logginPage"
-            android:title="loggin" />
-        <item
-            android:id="@+id/registrationPage"
-            android:title="registration" />
-        <item
-            android:id="@+id/homePage"
-            android:title="homePage" />
-        <item
-            android:id="@+id/profilePage"
-            android:title="profilePage" />
-        <item
             android:id="@+id/activityInformationPage"
             android:title="activityInformation" />
         <item
             android:id="@+id/newActivityRegistrationPage"
             android:title="newActivityRegistrationPage" />
         <item
-            android:id="@+id/messegesListPage"
-            android:title="messegesListPage" />
-        <item
             android:id="@+id/messegesEditgPage"
-            android:title="messegesEditPage" />
+            android:title="messaging" />
         </menu>
     </item>
     <!-- /////////////////////////////////////////////////////////////////////////////////-->
