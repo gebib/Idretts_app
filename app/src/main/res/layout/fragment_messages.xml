@@ -10,7 +10,6 @@
         android:layout_marginTop="40dp"
         android:textSize="30sp"
         android:gravity="center"
-        android:id="@+id/textView"
         android:layout_centerHorizontal="true"
         android:textColor="@color/black"
         android:text="Denne fragmenten bruker vi for selve melding redigerings siden, slik vi har illustrert i  protoen. ...! man kommer her hvis man trykker p[ en av samtalelistene, eller hvis man skal sterte en ny melding med noen"/>

@@ -49,7 +49,6 @@
 
     <!-- second info text -->
     <TextView
-        android:id="@+id/detailInfo2"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/detailInfo1"
@@ -61,7 +60,6 @@
 
     <!-- time post -->
     <TextView
-        android:id="@+id/timePosted"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"

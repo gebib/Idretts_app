@@ -19,20 +19,19 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
 
 import com.example.gruppe43.idretts_app.R;
 import com.example.gruppe43.idretts_app.application.fragment_interfaces.FragmentActivityInterface;
 import com.example.gruppe43.idretts_app.application.view.fragments.FullActivityInfo;
-import com.example.gruppe43.idretts_app.application.view.fragments.ListOfConversations;
 import com.example.gruppe43.idretts_app.application.view.fragments.Login;
 import com.example.gruppe43.idretts_app.application.view.fragments.Messages;
 import com.example.gruppe43.idretts_app.application.view.fragments.NewActivityRegistration;
 import com.example.gruppe43.idretts_app.application.view.fragments.Player;
 import com.example.gruppe43.idretts_app.application.view.fragments.ProfileView;
 import com.example.gruppe43.idretts_app.application.view.fragments.Registration;
-import com.example.gruppe43.idretts_app.application.view.fragments.ShowAllPlayers;
 import com.example.gruppe43.idretts_app.application.view.fragments.Tabs;
 import com.example.gruppe43.idretts_app.application.view.fragments.Team;
 import com.example.gruppe43.idretts_app.application.view.fragments.Trainer;
@@ -44,11 +43,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private MainActivity ma;
     private Boolean trainerIsShowing;
     private Boolean playerIsShowing;
-    private Boolean teamIsShowing;
     private FloatingActionButton fab;
     private Boolean isPlayerSignedIn;
     private Boolean isTrainerSignedIn;
-    private Menu actionBarMenuItems;
+
 
 
 
@@ -68,7 +66,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             @Override
             public void onClick(View view) {
                 Toast.makeText(ma, "add", Toast.LENGTH_LONG).show();
-                isPlayerSignedIn = true;
                 updatesWhileSwiping();
             }
         });
@@ -103,7 +100,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main_menu, menu);
-            actionBarMenuItems = menu;
         initPreLogin();//hide menus
         return true;
     }
@@ -118,7 +114,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
         if (id == R.id.toolbar_messages) {
             FragmentTransaction xfragmentTransaction = mFragmentManager.beginTransaction();
-            xfragmentTransaction.replace(R.id.containerView, new ListOfConversations()).commit();
+            xfragmentTransaction.replace(R.id.containerView, new Messages()).commit();
         }
 
         return super.onOptionsItemSelected(item);
@@ -128,9 +124,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 /*//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-        if (menuItem.getItemId() == R.id.nav_home) {
+        if (menuItem.getItemId() == R.id.nav_profile) {
             FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
-            fragmentTransaction.replace(R.id.containerView, new Tabs()).commit();
+            fragmentTransaction.replace(R.id.containerView, new ProfileView()).commit();
         }
         if (menuItem.getItemId() == R.id.nav_messages) {
             FragmentTransaction xfragmentTransaction = mFragmentManager.beginTransaction();
@@ -178,22 +174,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             FragmentTransaction xfragmentTransaction = mFragmentManager.beginTransaction();
             xfragmentTransaction.replace(R.id.containerView, new NewActivityRegistration()).commit();
         }
-        if (menuItem.getItemId() == R.id.showPlayersPage) {
-            FragmentTransaction xfragmentTransaction = mFragmentManager.beginTransaction();
-            xfragmentTransaction.replace(R.id.containerView, new ShowAllPlayers()).commit();
-        }
-        if (menuItem.getItemId() == R.id.showTeamPage) {
-            FragmentTransaction xfragmentTransaction = mFragmentManager.beginTransaction();
-            xfragmentTransaction.replace(R.id.containerView, new Team()).commit();
-        }
-        if (menuItem.getItemId() == R.id.messegesListPage) {
-            FragmentTransaction xfragmentTransaction = mFragmentManager.beginTransaction();
-            xfragmentTransaction.replace(R.id.containerView, new ListOfConversations()).commit(); /* denne fragmenten viser liste av foretatte
-                    tidligere meldinger som som står lagret, når man trykker på en .. skal den åpne for melding redigerings sisde , kan scrolles tilbake for tidligere meldinger med denne personen*/
-        }
+
         if (menuItem.getItemId() == R.id.messegesEditgPage) {
             FragmentTransaction xfragmentTransaction = mFragmentManager.beginTransaction();
-            xfragmentTransaction.replace(R.id.containerView, new Messages()).commit(); /* denne fragmenten brukes for selve meldingene, som i melding siden vårt i prototypen.*/
+            xfragmentTransaction.replace(R.id.containerView, new Messages()).commit(); /* dette er fragment siden for all melding osv..*/
         }
 
         if (menuItem.getItemId() == R.id.nav_exit) {
@@ -216,17 +200,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if (tabId.equals("trainer")) {
             trainerIsShowing = true;
             playerIsShowing = false;
-            teamIsShowing = false;
             fab.setBackgroundTintList(ColorStateList.valueOf(ResourcesCompat.getColor(getResources(), R.color.primary_darker, null)));
         } else if (tabId.equals("player")) {
             trainerIsShowing = false;
             playerIsShowing = true;
-            teamIsShowing = false;
             fab.setBackgroundTintList(ColorStateList.valueOf(ResourcesCompat.getColor(getResources(), R.color.jet, null)));
         } else if (tabId.equals("team")) {
             trainerIsShowing = false;
             playerIsShowing = false;
-            teamIsShowing = true;
         }
         updatesWhileSwiping();//update states
     }
@@ -263,6 +244,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         this.isTrainerSignedIn = isTrainerSignedIn;
         ActionBar actionBar = getSupportActionBar();
         actionBar.show();
+        if(getCurrentFocus()!=null) {
+            InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+            inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+        }
+
     }
 
     //init things on logging out or exiting the application!
