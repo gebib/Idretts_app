@@ -6,10 +6,6 @@
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="alertTextRegisterFailure">Please make sure to fill all the fields and accept terms and conditions, and make sure to type in matching password.</string>
-    <string name="registrationFailureAlertTittle">Registration</string>
-    <string name="loginFailureTitle">Login</string>
-    <string name="loginFailureMessage">Please make sure to fill out both fields with valid credential to sign in. Or Register as new user if you dont have an account.</string>
     //Registration strings
     <string name="first_name_reg">First name</string>
     <string name="last_name_reg">Last name</string>
@@ -21,6 +17,12 @@
     <string name="create_account">Create Account</string>
     <string name="already_a_member_login">Already a member? Login</string>
     <string name="please_check_user_agreement">Please check the user agreement</string>
+    <string name="loginFailureTextInfo">Please make sure to fill out both fields with valid credential to sign in. Or Register as new user if you dont have an account.</string>
+    <string name="loginFailureAlertTitle">Login..</string>
+    <string name="registrationLocalError">Registration</string>
+    <string name="registrationLocalErrorTextInfo">Please make sure to fill all the fields and try again</string>
+    <string name="dbConnectionErrror">Database connection eror</string>
+    <string name="dbConnectionErrorTextnfo">Please make sure to connect to internet to register and try again!</string>
 
 
 </resources>

@@ -1,5 +1,9 @@
 package com.example.gruppe43.idretts_app.application.view.main;
 
+import android.app.AlertDialog;
+import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -7,7 +11,6 @@ import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -22,34 +25,31 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.TabHost;
-import android.widget.Toast;
-
 
 import com.example.gruppe43.idretts_app.R;
-import com.example.gruppe43.idretts_app.application.fragment_interfaces.FragmentActivityInterface;
+import com.example.gruppe43.idretts_app.application.interfaces.FragmentActivityInterface;
 import com.example.gruppe43.idretts_app.application.view.fragments.FullActivityInfo;
 import com.example.gruppe43.idretts_app.application.view.fragments.Login;
 import com.example.gruppe43.idretts_app.application.view.fragments.Messages;
 import com.example.gruppe43.idretts_app.application.view.fragments.NewActivityRegistration;
 import com.example.gruppe43.idretts_app.application.view.fragments.Player;
 import com.example.gruppe43.idretts_app.application.view.fragments.ProfileView;
-import com.example.gruppe43.idretts_app.application.view.fragments.Registration;
 import com.example.gruppe43.idretts_app.application.view.fragments.Tabs;
 import com.example.gruppe43.idretts_app.application.view.fragments.Team;
 import com.example.gruppe43.idretts_app.application.view.fragments.Trainer;
-
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, FragmentActivityInterface {
     private DrawerLayout mDrawerLayout;
     private FragmentManager mFragmentManager;
     private FragmentTransaction mFragmentTransaction;
-    private MainActivity ma;
     private Boolean trainerIsShowing;
     private Boolean playerIsShowing;
     private FloatingActionButton fab;
     private Boolean isPlayerSignedIn;
     private Boolean isTrainerSignedIn;
     private Boolean editActivityIsShowing;
+    protected static Context mainContext;
+
+
 
 
     @Override
@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mFragmentManager = getSupportFragmentManager();
         mFragmentTransaction = mFragmentManager.beginTransaction();
         mFragmentTransaction.replace(R.id.containerView, new Login()).commit();
-        ma = this;
+        mainContext = this;
 
         fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.hide();
@@ -97,11 +97,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mDrawerLayout.addDrawerListener(toggle);
         toggle.syncState();
 
-        /*////////////////////////FLAGS////////////////////////////////*/
-        //default states assignments
-
-
-        /*////////////////////////FLAGS////////////////////////////////*/
     }
 
     @Override

@@ -1,9 +1,7 @@
 package com.example.gruppe43.idretts_app.application.view.fragments;
 
 
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -15,7 +13,8 @@ import android.widget.TextView;
 
 
 import com.example.gruppe43.idretts_app.R;
-import com.example.gruppe43.idretts_app.application.fragment_interfaces.FragmentActivityInterface;
+import com.example.gruppe43.idretts_app.application.controll.Authentication;
+import com.example.gruppe43.idretts_app.application.interfaces.FragmentActivityInterface;
 
 
 public class Login extends Fragment implements View.OnClickListener {
@@ -24,12 +23,13 @@ public class Login extends Fragment implements View.OnClickListener {
     private EditText emailAdressET;
     private EditText passwordET;
     private FragmentActivityInterface mCallback;
+    private Authentication authClass;
+
 
 
     public Login() {
         // Required empty public constructor
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -40,6 +40,7 @@ public class Login extends Fragment implements View.OnClickListener {
         passwordET = (EditText) view.findViewById(R.id.input_password);
         loginButtonBT.setOnClickListener(this);
         signUpTV.setOnClickListener(this);
+        authClass = new Authentication();
         // Inflate the layout for this fragment
         return view;
     }
@@ -63,35 +64,15 @@ public class Login extends Fragment implements View.OnClickListener {
                 break;
             case R.id.loginBT:
                 Boolean validInfo = validFormat();
-                Boolean signInOk = signInAuthenthication();
-                if (validInfo && signInOk) {
-                    gotoHomePage();
-                }else if(!validInfo || ! signInOk){
-                    alertDialog();
+
+                if (validInfo) {
+                   authClass.singIn(emailAdressET.getText().toString().trim(),passwordET.getText().toString().trim());
+                } else if (!validInfo) {
+                    authClass.alert(getString(R.string.loginFailureAlertTitle),getString(R.string.loginFailureTextInfo));
                 }
                 break;
             default:
         }
-    }
-
-    //open home page after successfull sign in.
-    public void gotoHomePage() {
-        mCallback.replaceFragmentWith(new Tabs());
-        mCallback.initAfterLogin(false, true);// will be set when user signs in!
-    }
-
-    //popup message
-    public void alertDialog() {
-        AlertDialog.Builder builder1 = new AlertDialog.Builder(getActivity());
-        builder1.setTitle(R.string.loginFailureTitle);
-        builder1.setMessage(R.string.loginFailureMessage);
-        builder1.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
-                //ingen action.
-            }
-        });
-        AlertDialog alert11 = builder1.create();
-        alert11.show();
     }
 
     //validate loggin info format locally
@@ -114,13 +95,4 @@ public class Login extends Fragment implements View.OnClickListener {
         }
         return isValid;
     }
-
-    //external firebase authentication
-    private Boolean signInAuthenthication() {
-        //TODO firebase sign in check! use progress spinner...
-        String loginEmail = emailAdressET.getText().toString().trim();
-        String pass = passwordET.getText().toString().trim();
-        return true;
-    }
-
 }

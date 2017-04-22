@@ -1,13 +1,10 @@
 package com.example.gruppe43.idretts_app.application.view.fragments;
 
-import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,16 +13,16 @@ import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.gruppe43.idretts_app.R;
-import com.example.gruppe43.idretts_app.application.fragment_interfaces.FragmentActivityInterface;
+import com.example.gruppe43.idretts_app.application.controll.Authentication;
+import com.example.gruppe43.idretts_app.application.interfaces.FragmentActivityInterface;
 import com.example.gruppe43.idretts_app.application.helper_classes.DatePickerFragment;
 
 import java.util.Calendar;
 
 
-public class Registration extends Fragment implements View.OnClickListener {
+public class Registration extends Fragment implements View.OnClickListener{
     private EditText firstNameET, lastNameET, ageET, emailET, passET, rePassET;
     private Boolean isValid;
     private CheckBox acceptTermsCB;
@@ -34,6 +31,7 @@ public class Registration extends Fragment implements View.OnClickListener {
     private TextView loginLink;
     private Button createAccount;
     private FragmentActivityInterface mCallback;
+    private Authentication authClass;
 
     public Registration() {
         // Required empty public constructor
@@ -47,6 +45,7 @@ public class Registration extends Fragment implements View.OnClickListener {
 
         createAccount.setOnClickListener(this);
         loginLink.setOnClickListener(this);
+        authClass = new Authentication();
 
         firstNameET = (EditText) view.findViewById(R.id.input_firstName);
         lastNameET = (EditText) view.findViewById(R.id.input_lastName);
@@ -114,11 +113,11 @@ public class Registration extends Fragment implements View.OnClickListener {
 
         switch (v.getId()) {
             case R.id.createAccountBT:
-                if (validateUser() && newUserIsRegistered()) {
-                    Toast.makeText(getActivity(), "You are registered!", Toast.LENGTH_LONG).show();
-                    gotoHomePage();
-                } else {
-                    alert();
+                boolean validated = validateUser();
+                if (validated) {
+                    authClass.FBregisterUserforAuthentication(email, pss);
+                }else{
+                    authClass.alert(getString(R.string.registrationLocalError),getString(R.string.registrationLocalErrorTextInfo));
                 }
                 break;
             case R.id.linkLoginTV:
@@ -184,37 +183,18 @@ public class Registration extends Fragment implements View.OnClickListener {
     }
 
     //register a valid user into firebase.
-    private Boolean newUserIsRegistered() {
-        Log.i("//////validation/////","VALIDATED");
-        Boolean userRegistered = true;
-        
-        String userName = firstName;
-        String userSureName = lastName;
-        String userAge = age;
-        String userEmail = email;
-        String userPass = pss;
-        //TODO register info to firebase.. use progress spinner.
-        
-        return userRegistered;
-    }
+    private void  newUserIsRegistered() {
+        Boolean userRegistered;
+        //TODO remove or use
+        /*
+        if(userRegistered){
+            HashMap<String, String> uInfo = new HashMap<>();
+            uInfo.put("uName",firstName);
+            uInfo.put("uSurName",lastName);
+            uInfo.put("uAge",age);
+            at.FBregisterUserAdditionalInfo(uInfo);
+        }
+        */
 
-    //open home page after successfull registration.
-    public void gotoHomePage() {
-        mCallback.replaceFragmentWith(new Tabs());
-        mCallback.initAfterLogin(false, true);
-    }
-
-    //show alert
-    private void alert(){
-        AlertDialog.Builder builder1 = new AlertDialog.Builder(getActivity());
-        builder1.setTitle(R.string.registrationFailureAlertTittle);
-        builder1.setMessage(R.string.alertTextRegisterFailure);
-        builder1.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
-                //ingen action.
-            }
-        });
-        AlertDialog alert11 = builder1.create();
-        alert11.show();
     }
 }

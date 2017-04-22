@@ -1,6 +1,9 @@
-package com.example.gruppe43.idretts_app.application.fragment_interfaces;
+package com.example.gruppe43.idretts_app.application.interfaces;
 
+import android.content.Context;
 import android.support.v4.app.Fragment;
+
+import java.util.HashMap;
 
 /**
  * Created by gebi9 on 18-Mar-17.
