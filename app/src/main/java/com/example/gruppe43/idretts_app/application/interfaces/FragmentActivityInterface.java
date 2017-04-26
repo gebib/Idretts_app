@@ -14,5 +14,6 @@ public interface FragmentActivityInterface {
     void replaceFragmentWith(Fragment fragmentClass);
     void initAfterLogin();
     void requIreAdminPass();
+    void currentShowingFragment(String tabId);
     //void initAfterLogin(Boolean isPlayerSignedIn, Boolean isTrainerSignedIn);
 }

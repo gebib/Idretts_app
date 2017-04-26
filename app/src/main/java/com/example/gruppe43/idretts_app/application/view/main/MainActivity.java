@@ -1,13 +1,10 @@
 package com.example.gruppe43.idretts_app.application.view.main;
 
 import android.app.AlertDialog;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
-import android.icu.text.NumberFormat;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
@@ -24,6 +21,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.InputType;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -33,6 +31,7 @@ import android.widget.Toast;
 
 import com.example.gruppe43.idretts_app.R;
 import com.example.gruppe43.idretts_app.application.controll.Authentication;
+import com.example.gruppe43.idretts_app.application.controll.DataBaseHelper;
 import com.example.gruppe43.idretts_app.application.interfaces.FragmentActivityInterface;
 import com.example.gruppe43.idretts_app.application.view.fragments.FullActivityInfo;
 import com.example.gruppe43.idretts_app.application.view.fragments.Login;
@@ -44,11 +43,6 @@ import com.example.gruppe43.idretts_app.application.view.fragments.Tabs;
 import com.example.gruppe43.idretts_app.application.view.fragments.Team;
 import com.example.gruppe43.idretts_app.application.view.fragments.Trainer;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, FragmentActivityInterface {
     private DrawerLayout mDrawerLayout;
@@ -57,14 +51,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private Boolean trainerIsShowing;
     private Boolean playerIsShowing;
     private FloatingActionButton fab;
-    private Boolean isPlayerSignedIn;
-    private Boolean isTrainerSignedIn;
+
     private Boolean editActivityIsShowing;
     protected static Context mainContext;
     private String ADMINISTRATION_ID = 1234+"";//this is used to identify the cuach!
     private FirebaseAuth.AuthStateListener mAuthListner;
     private FirebaseAuth mAuth;
     private Authentication authClass;
+    private boolean isCurrentUserAdmin;
+    private DataBaseHelper databaseHelper;
 
 
 
@@ -100,16 +95,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (isTrainerSignedIn && trainerIsShowing) {
+                if (trainerIsShowing) {
                     FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
+                    fragmentTransaction.addToBackStack("");
                     fragmentTransaction.replace(R.id.containerView, new NewActivityRegistration()).commit();
-                    //  currentShowingFragment("editActivity");
-                } else if (isPlayerSignedIn && playerIsShowing) {
+                      currentShowingFragment("editActivity");
+                } else if (playerIsShowing) {
                     FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
+                    fragmentTransaction.addToBackStack("");
                     fragmentTransaction.replace(R.id.containerView, new NewActivityRegistration()).commit();
-                    //currentShowingFragment("editActivity");
-                } else if (isPlayerSignedIn && editActivityIsShowing) {
+                      currentShowingFragment("editActivity");
+                } else if (editActivityIsShowing) {
                     FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
+                    mFragmentManager.popBackStack();
                     fragmentTransaction.replace(R.id.containerView, new Tabs()).commit();
                     new Handler().post(new Runnable() {
                         @Override
@@ -117,11 +115,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                             Tabs.viewPager.setCurrentItem(1);
                         }
                     });
-                    //currentShowingFragment("player");
-                } else if (isTrainerSignedIn && editActivityIsShowing) {
+                     currentShowingFragment("player");
+                } else if (editActivityIsShowing) {
                     FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
+                    mFragmentManager.popBackStack();
                     fragmentTransaction.replace(R.id.containerView, new Tabs()).commit();
-                    //currentShowingFragment("trainer");
+                     currentShowingFragment("trainer");
                 }
             }
         });
@@ -167,14 +166,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         int id = item.getItemId();
         if (id == R.id.toolbar_home) {
             FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
+            mFragmentManager.popBackStack();
             fragmentTransaction.replace(R.id.containerView, new Tabs()).commit();
             return true;
         }
         if (id == R.id.toolbar_messages) {
             FragmentTransaction xfragmentTransaction = mFragmentManager.beginTransaction();
+            xfragmentTransaction.addToBackStack("messages");
             xfragmentTransaction.replace(R.id.containerView, new Messages()).commit();
         }
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -184,26 +184,31 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         if (menuItem.getItemId() == R.id.nav_profile) {
             FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
+            fragmentTransaction.addToBackStack("");
             fragmentTransaction.replace(R.id.containerView, new ProfileView()).commit();
             // currentShowingFragment("");
         }
         if (menuItem.getItemId() == R.id.nav_messages) {
             FragmentTransaction xfragmentTransaction = mFragmentManager.beginTransaction();
+            xfragmentTransaction.addToBackStack("");
             xfragmentTransaction.replace(R.id.containerView, new Messages()).commit();
             //currentShowingFragment("");
         }
         if (menuItem.getItemId() == R.id.nav_trainer) {
             FragmentTransaction xfragmentTransaction = mFragmentManager.beginTransaction();
+            xfragmentTransaction.addToBackStack("");
             xfragmentTransaction.replace(R.id.containerView, new Trainer()).commit();
             // currentShowingFragment("trainer");
         }
         if (menuItem.getItemId() == R.id.navn_player) {
             FragmentTransaction xfragmentTransaction = mFragmentManager.beginTransaction();
+            xfragmentTransaction.addToBackStack("");
             xfragmentTransaction.replace(R.id.containerView, new Player()).commit();
             // currentShowingFragment("player");
         }
         if (menuItem.getItemId() == R.id.nav_Team) {
             FragmentTransaction xfragmentTransaction = mFragmentManager.beginTransaction();
+            xfragmentTransaction.addToBackStack("");
             xfragmentTransaction.replace(R.id.containerView, new Team()).commit();
             //currentShowingFragment("");
         }
@@ -215,17 +220,20 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         if (menuItem.getItemId() == R.id.activityInformationPage) {
             FragmentTransaction xfragmentTransaction = mFragmentManager.beginTransaction();
+            xfragmentTransaction.addToBackStack("");
             xfragmentTransaction.replace(R.id.containerView, new FullActivityInfo()).commit();
             //currentShowingFragment("");
         }
         if (menuItem.getItemId() == R.id.newActivityRegistrationPage) {
             FragmentTransaction xfragmentTransaction = mFragmentManager.beginTransaction();
+            xfragmentTransaction.addToBackStack("");
             xfragmentTransaction.replace(R.id.containerView, new NewActivityRegistration()).commit();
             //currentShowingFragment("");
         }
 
         if (menuItem.getItemId() == R.id.messegesEditgPage) {
             FragmentTransaction xfragmentTransaction = mFragmentManager.beginTransaction();
+            xfragmentTransaction.addToBackStack("");
             xfragmentTransaction.replace(R.id.containerView, new Messages()).commit(); /* dette er fragment siden for all melding osv..*/
             //currentShowingFragment("");
         }
@@ -241,7 +249,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         super.onAttachFragment(fragment);
     }
 
-   /* //set current fragment
+    //set current fragment
+    @Override
     public void currentShowingFragment(String tabId) {
         if (tabId.equals("trainer")) {
             trainerIsShowing = true;
@@ -263,7 +272,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             editActivityIsShowing = false;
         }
         updatesWhileSwiping();//update states
-    }*/
+    }
 
     //set fragment transactions/navigation
     public void replaceFragmentWith(Fragment fragmentClass) {
@@ -271,14 +280,22 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         xfragmentTransaction.replace(R.id.containerView, fragmentClass).commit();
     }
 
+   /* @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        switch(keyCode){
+            case KeyEvent.KEYCODE_BACK:
+                Toast.makeText(mainContext, "backLLL", Toast.LENGTH_SHORT).show();
+        }
+        return super.onKeyDown(keyCode, event);
+    }*/
 
-    /*//update changes
+    //update changes
     public void updatesWhileSwiping() {
-        if (trainerIsShowing && isTrainerSignedIn) {
+        if (trainerIsShowing) {
             fab.setImageResource(R.drawable.add24dp);
             fab.show();
             //Toast.makeText(this, "hide", Toast.LENGTH_LONG).show();
-        } else if (playerIsShowing && isPlayerSignedIn) {
+        } else if (playerIsShowing) {
             fab.setImageResource(R.drawable.add24dp);
             fab.show();
         } else if (editActivityIsShowing) {
@@ -288,15 +305,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             fab.hide();
         }
         //if no one is signed in dont show the actionbar menu.
-    }*/
-
-    /*//init things before login
-    public void initPreLogin() {
-        isPlayerSignedIn = false;
-        isTrainerSignedIn = false;
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.hide();
-    }*/
+    }
 
     //init things that should be initialyzed after a successful sign in.
     @Override
@@ -307,7 +316,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
             inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
         }
-        fab.show();
+        databaseHelper = new DataBaseHelper();
+        databaseHelper.setSignedInUserType();
+
     }
 
     //set state sign out!
@@ -319,6 +330,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         actionBar.hide();
         fab.hide();
     }
+
 
     //requiere first time admin pass
     @Override
@@ -336,8 +348,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             public void onClick(DialogInterface dialog, int whichButton) {
                 String value = input.getText().toString();
                     if(value.equals(ADMINISTRATION_ID)){
-                       // replaceFragmentWith(new Tabs());
                         initAfterLogin();
+                        databaseHelper = new DataBaseHelper();
+                        databaseHelper.setIsAdmin();//only first time.
                      authClass.alert(getString(R.string.welcomeCoachTittle),getString(R.string.wecomeCoachText));
                     }else{
                         Toast.makeText(MainActivity.this, R.string.adminCodMismatched, Toast.LENGTH_SHORT).show();

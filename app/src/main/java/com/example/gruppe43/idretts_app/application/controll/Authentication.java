@@ -63,7 +63,7 @@ public class Authentication extends MainActivity {
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
                     mCallback.replaceFragmentWith(new Tabs());
-                    // mCallback.initAfterLogin(false, true);//TODO  check who is
+                    mCallback.initAfterLogin();
                     progressDialog(false, "..", "..");
                 }
             }
@@ -88,7 +88,7 @@ public class Authentication extends MainActivity {
                 if (task.isSuccessful()) {
 
                     String user_id = fbAuth.getCurrentUser().getUid();
-                    DatabaseReference current_user_db = fbUsersDbRef.child(user_id);///////////////////////////////////////////////////
+                    DatabaseReference current_user_db = fbUsersDbRef.child(user_id);
                     getCurrentDate();
                     String registeredDate = nowDate + "." + nowMonth + "." + nowYear + " " + nowHour + ":" + nowMinute;
                     boolean confirmation = false;
@@ -99,6 +99,7 @@ public class Authentication extends MainActivity {
                     current_user_db.child("image").setValue("default");//TODO registering image
                     current_user_db.child("registeredDate").setValue(registeredDate);
                     current_user_db.child("confirmedByCoach").setValue(confirmation);//TODO coach need to confirm and user is restricted until then, remove auto or manually if not confirmed
+                    current_user_db.child("isAdmin").setValue("false");
 
                     progressDialog(false, "..", "..");
 
@@ -113,6 +114,87 @@ public class Authentication extends MainActivity {
                 progressDialog(false, "..", "..");
             }
         });
+    }
+
+    //Post trainer activities posts
+    public void postTrainerActivity(String title,
+                                    String activityDate,
+                                    String startTime,
+                                    String endTime,
+                                    String place,
+                                    String intensity) {
+        final String dateOfActivity, startingTime, endingTime, gatherPlace, trainingIntensity, postedTime, activityTitle;
+        dateOfActivity = activityDate;
+        startingTime = startTime;
+        endingTime = endTime;
+        gatherPlace = place;
+        trainingIntensity = intensity;
+        postedTime = nowHour;
+        activityTitle = title;
+
+
+        progressDialog(true, "Posting", "Processing please wait...");
+        fbTrainerPostsDbRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                String user_id = fbAuth.getCurrentUser().getUid();
+                DatabaseReference trainer_post_DB = fbTrainerPostsDbRef.child(user_id);
+                getCurrentDate();
+                String datePosted = nowDate + "." + nowMonth + "." + nowYear + " " + nowHour + ":" + nowMinute;
+
+                trainer_post_DB.child("title").setValue(activityTitle);
+                trainer_post_DB.child("activityDate").setValue(dateOfActivity);
+                trainer_post_DB.child("startTime").setValue(startingTime);
+                trainer_post_DB.child("endTime").setValue(endingTime);
+                trainer_post_DB.child("place").setValue(gatherPlace);
+                trainer_post_DB.child("intensity").setValue(trainingIntensity);
+                trainer_post_DB.child("postTime").setValue(postedTime);
+                trainer_post_DB.child("postedDate").setValue(datePosted);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+    }
+
+    //Post player activity
+    public void postPlayerActivity(String title,
+                                   String date,
+                                   String intencity,
+                                   String place){
+        final String activityTitle,activityDate,activityIntensity,activityPlace;
+        activityTitle = title;
+        activityDate = date;
+        activityIntensity = intencity;
+        activityPlace = place;
+
+        progressDialog(true, "Posting", "Processing please wait...");
+        fbPlayerPostsDbRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                String user_id = fbAuth.getCurrentUser().getUid();
+                DatabaseReference player_post_DB = fbPlayerPostsDbRef.child(user_id);
+                getCurrentDate();
+                String registeredDate = nowDate + "." + nowMonth + "." + nowYear + " " + nowHour + ":" + nowMinute;
+
+                player_post_DB.child("title").setValue(activityTitle);
+                player_post_DB.child("activityDate").setValue(activityDate);
+                player_post_DB.child("datePosted").setValue(registeredDate);
+                player_post_DB.child("intensity").setValue(activityIntensity);
+                player_post_DB.child("place").setValue(activityPlace);
+                player_post_DB.child("userId").setValue(user_id);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+
     }
 
     //depending on if its the first one to register check and init correctly.
@@ -177,7 +259,6 @@ public class Authentication extends MainActivity {
         nowYear = today.year + "";
         nowHour = today.hour + "";
         nowMinute = today.minute + "";
-        System.out.println("////////////////////DATE" + nowDate + " " + nowMonth + " " + nowYear + " " + nowHour + " " + nowMinute + " ");
     }
 
 

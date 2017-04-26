@@ -55,11 +55,11 @@ public class Tabs extends Fragment implements TabLayout.OnTabSelectedListener {
     @Override
     public void onTabSelected(TabLayout.Tab tab) {
         if (tab.getText().equals("Trainer")) {
-           // mCallback.currentShowingFragment("trainer");
+            mCallback.currentShowingFragment("trainer");
         } else if (tab.getText().equals("Player")) {
-           // mCallback.currentShowingFragment("player");
+           mCallback.currentShowingFragment("player");
         } else if (tab.getText().equals("Team")) {
-           // mCallback.currentShowingFragment("team");
+           mCallback.currentShowingFragment("team");
         }
     }
 
