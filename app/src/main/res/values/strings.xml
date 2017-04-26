@@ -23,6 +23,10 @@
     <string name="registrationLocalErrorTextInfo">Please make sure to fill all the fields and try again</string>
     <string name="dbConnectionErrror">Database connection eror</string>
     <string name="dbConnectionErrorTextnfo">Please make sure to connect to internet to register and try again!</string>
+    <string name="welcomeCoachTittle">Welcome coach!</string>
+    <string name="wecomeCoachText">You are registered as the coach and the administrator</string>
+    <string name="adminCodMismatched">Admincod mismatched!   Please try again</string>
+    <string name="administratorNotSet">Adminstrator not set! please set administrator!</string>
 
 
 </resources>

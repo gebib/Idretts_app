@@ -18,13 +18,14 @@ import com.example.gruppe43.idretts_app.R;
 import com.example.gruppe43.idretts_app.application.controll.Authentication;
 import com.example.gruppe43.idretts_app.application.interfaces.FragmentActivityInterface;
 import com.example.gruppe43.idretts_app.application.helper_classes.DatePickerFragment;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.Calendar;
 
 
 public class Registration extends Fragment implements View.OnClickListener{
     private EditText firstNameET, lastNameET, ageET, emailET, passET, rePassET;
-    private Boolean isValid;
     private CheckBox acceptTermsCB;
     private String firstName, lastName, age, email, pss, rPss;
     private Boolean checkBox; //DO change this
@@ -32,6 +33,9 @@ public class Registration extends Fragment implements View.OnClickListener{
     private Button createAccount;
     private FragmentActivityInterface mCallback;
     private Authentication authClass;
+
+
+    private FirebaseDatabase fbAuth;
 
     public Registration() {
         // Required empty public constructor
@@ -101,7 +105,6 @@ public class Registration extends Fragment implements View.OnClickListener{
 
     @Override
     public void onClick(final View v) {
-        //do what you want to do when button is clicked
         firstName = firstNameET.getText().toString().trim();
         lastName = lastNameET.getText().toString().trim();
         age = ageET.getText().toString().trim();
@@ -110,12 +113,11 @@ public class Registration extends Fragment implements View.OnClickListener{
         rPss = rePassET.getText().toString().trim();
         checkBox = acceptTermsCB.isChecked();
 
-
         switch (v.getId()) {
             case R.id.createAccountBT:
                 boolean validated = validateUser();
                 if (validated) {
-                    authClass.FBregisterUserforAuthentication(email, pss);
+                    authClass.FBregisterUserforAuthentication(email, pss,firstName,lastName,age);
                 }else{
                     authClass.alert(getString(R.string.registrationLocalError),getString(R.string.registrationLocalErrorTextInfo));
                 }
@@ -126,6 +128,16 @@ public class Registration extends Fragment implements View.OnClickListener{
             default:
         }
     }
+
+    private boolean checkIfDbImpty() {
+        boolean isFirstTime = false;
+
+
+
+
+        return isFirstTime;
+    }
+
     //register new user if valid locally
     private boolean validateUser() {
         Boolean isValid = true;
@@ -186,6 +198,7 @@ public class Registration extends Fragment implements View.OnClickListener{
     private void  newUserIsRegistered() {
         Boolean userRegistered;
         //TODO remove or use
+
         /*
         if(userRegistered){
             HashMap<String, String> uInfo = new HashMap<>();
@@ -194,7 +207,8 @@ public class Registration extends Fragment implements View.OnClickListener{
             uInfo.put("uAge",age);
             at.FBregisterUserAdditionalInfo(uInfo);
         }
-        */
+      */
 
     }
+
 }

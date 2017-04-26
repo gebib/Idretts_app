@@ -66,7 +66,7 @@ public class Login extends Fragment implements View.OnClickListener {
                 Boolean validInfo = validFormat();
 
                 if (validInfo) {
-                   authClass.singIn(emailAdressET.getText().toString().trim(),passwordET.getText().toString().trim());
+                   authClass.signIn(emailAdressET.getText().toString().trim(),passwordET.getText().toString().trim());
                 } else if (!validInfo) {
                     authClass.alert(getString(R.string.loginFailureAlertTitle),getString(R.string.loginFailureTextInfo));
                 }

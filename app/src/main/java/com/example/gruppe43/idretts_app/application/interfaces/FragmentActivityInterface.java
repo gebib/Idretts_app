@@ -10,7 +10,9 @@ import java.util.HashMap;
  */
 
 public interface FragmentActivityInterface {
-    void currentShowingFragment(String tabId);
+    //void currentShowingFragment(String tabId);
     void replaceFragmentWith(Fragment fragmentClass);
-    void initAfterLogin(Boolean isPlayerSignedIn, Boolean isTrainerSignedIn);
+    void initAfterLogin();
+    void requIreAdminPass();
+    //void initAfterLogin(Boolean isPlayerSignedIn, Boolean isTrainerSignedIn);
 }
