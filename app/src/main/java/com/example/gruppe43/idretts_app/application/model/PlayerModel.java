@@ -5,15 +5,10 @@ package com.example.gruppe43.idretts_app.application.model;
  */
 
 public class PlayerModel {
-    private String firstName;
-    private String lastName;
-    private String playerAge;
-    private String image;
-    private String registeredDate;
-    private String confirmedByCoach;
-    private String isAdmin;
-
     public PlayerModel() {
     }
+
+    public int iconId;
+    public String tittle;
 
 }

@@ -68,8 +68,6 @@ public class NewActivityRegistration extends Fragment {
         newActTimeFrom.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
-               /* DialogFragment newFragment = new TimePickerFragment();
-                newFragment.show(getActivity().getFragmentManager(), "DIALOG_TIME");*/
                 if (hasFocus) {
                     isForStarttime = true;
                     showTimePicker();

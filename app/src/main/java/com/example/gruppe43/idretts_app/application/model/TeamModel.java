@@ -5,6 +5,8 @@ package com.example.gruppe43.idretts_app.application.model;
  */
 
 public class TeamModel {
+    public TeamModel() {
+    }
     public int iconId;
     public String tittle;
 }
