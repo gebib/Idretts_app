@@ -36,14 +36,14 @@ public class Authentication extends MainActivity {
     private FirebaseAuth fbAuth;
     private ProgressDialog progressDialog;
     private FragmentActivityInterface mCallback;
-    private String nowDate, nowMonth, nowYear, nowHour, nowMinute;
+    protected String nowDate, nowMonth, nowYear, nowHour, nowMinute;
 
     private DatabaseReference fbTrainerPostsDbRef;
     private DatabaseReference fbPlayerPostsDbRef;
     private DatabaseReference fbUsersDbRef;
     private DatabaseReference fbAbsenceDbRef;
     private DatabaseReference fbCapsDbRef;
-    private boolean autHasChild;
+
 
     public Authentication() {
         fbAuth = FirebaseAuth.getInstance();
@@ -62,8 +62,7 @@ public class Authentication extends MainActivity {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
-                    mCallback.replaceFragmentWith(new Tabs());
-                    mCallback.initAfterLogin();
+                    setIsAdminOrPlayerSignedIn();
                     progressDialog(false, "..", "..");
                 }
             }
@@ -72,6 +71,29 @@ public class Authentication extends MainActivity {
             public void onFailure(@NonNull Exception e) {
                 alert("Sign in", "Failed to sign in.. please check your internet connection and correct user email and password, and try again");
                 progressDialog(false, "..", "..");
+            }
+        });
+    }
+
+    public void setIsAdminOrPlayerSignedIn() {//////////////////////////////////GET spesific value
+        String currentUserId = fbAuth.getCurrentUser().getUid();
+        fbUsersDbRef.child(currentUserId).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                String signedInUserIsAdminValue = (String) dataSnapshot.child("isAdmin").getValue();
+
+                if (signedInUserIsAdminValue.equals("true")) {
+                    mCallback.initAfterLogin("admin");
+                } else {
+                    mCallback.initAfterLogin("player");
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                //  mCallback.onSignOut();
+                //alert(getString(R.string.signInInitUserTypeFailedTitle),getString(R.string.sinInUserInitUserTypeTextInfo));
+                //progressDialog(false, "..", "..");
             }
         });
     }
@@ -116,86 +138,7 @@ public class Authentication extends MainActivity {
         });
     }
 
-    //Post trainer activities posts
-    public void postTrainerActivity(String title,
-                                    String activityDate,
-                                    String startTime,
-                                    String endTime,
-                                    String place,
-                                    String intensity) {
-        final String dateOfActivity, startingTime, endingTime, gatherPlace, trainingIntensity, postedTime, activityTitle;
-        dateOfActivity = activityDate;
-        startingTime = startTime;
-        endingTime = endTime;
-        gatherPlace = place;
-        trainingIntensity = intensity;
-        postedTime = nowHour;
-        activityTitle = title;
 
-
-        progressDialog(true, "Posting", "Processing please wait...");
-        fbTrainerPostsDbRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                String user_id = fbAuth.getCurrentUser().getUid();
-                DatabaseReference trainer_post_DB = fbTrainerPostsDbRef.child(user_id);
-                getCurrentDate();
-                String datePosted = nowDate + "." + nowMonth + "." + nowYear + " " + nowHour + ":" + nowMinute;
-
-                trainer_post_DB.child("title").setValue(activityTitle);
-                trainer_post_DB.child("activityDate").setValue(dateOfActivity);
-                trainer_post_DB.child("startTime").setValue(startingTime);
-                trainer_post_DB.child("endTime").setValue(endingTime);
-                trainer_post_DB.child("place").setValue(gatherPlace);
-                trainer_post_DB.child("intensity").setValue(trainingIntensity);
-                trainer_post_DB.child("postTime").setValue(postedTime);
-                trainer_post_DB.child("postedDate").setValue(datePosted);
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-
-    }
-
-    //Post player activity
-    public void postPlayerActivity(String title,
-                                   String date,
-                                   String intencity,
-                                   String place){
-        final String activityTitle,activityDate,activityIntensity,activityPlace;
-        activityTitle = title;
-        activityDate = date;
-        activityIntensity = intencity;
-        activityPlace = place;
-
-        progressDialog(true, "Posting", "Processing please wait...");
-        fbPlayerPostsDbRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                String user_id = fbAuth.getCurrentUser().getUid();
-                DatabaseReference player_post_DB = fbPlayerPostsDbRef.child(user_id);
-                getCurrentDate();
-                String registeredDate = nowDate + "." + nowMonth + "." + nowYear + " " + nowHour + ":" + nowMinute;
-
-                player_post_DB.child("title").setValue(activityTitle);
-                player_post_DB.child("activityDate").setValue(activityDate);
-                player_post_DB.child("datePosted").setValue(registeredDate);
-                player_post_DB.child("intensity").setValue(activityIntensity);
-                player_post_DB.child("place").setValue(activityPlace);
-                player_post_DB.child("userId").setValue(user_id);
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-
-
-    }
 
     //depending on if its the first one to register check and init correctly.
     private void checkIfThitIsFirstUser() {

@@ -11,10 +11,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.gruppe43.idretts_app.R;
-import com.example.gruppe43.idretts_app.application.model.TeamDummyData;
-
-import java.util.ArrayList;
-import java.util.List;
 
 
 public class Team extends Fragment {

@@ -3,6 +3,7 @@ package com.example.gruppe43.idretts_app.application.view.main;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -21,7 +22,6 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.InputType;
-import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -51,14 +51,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private Boolean trainerIsShowing;
     private Boolean playerIsShowing;
     private FloatingActionButton fab;
-
+    private Boolean isPlayerSignedIn;
+    private Boolean isTrainerSignedIn;
     private Boolean editActivityIsShowing;
     protected static Context mainContext;
     private String ADMINISTRATION_ID = 1234+"";//this is used to identify the cuach!
     private FirebaseAuth.AuthStateListener mAuthListner;
     private FirebaseAuth mAuth;
     private Authentication authClass;
-    private boolean isCurrentUserAdmin;
     private DataBaseHelper databaseHelper;
 
 
@@ -82,7 +82,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 } else {
                      mFragmentTransaction = mFragmentManager.beginTransaction();
                     mFragmentTransaction.replace(R.id.containerView, new Tabs()).commit();
-                    initAfterLogin();
                 }
             }
         };
@@ -95,17 +94,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (trainerIsShowing) {
+                if (isTrainerSignedIn && trainerIsShowing) {
                     FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
                     fragmentTransaction.addToBackStack("");
                     fragmentTransaction.replace(R.id.containerView, new NewActivityRegistration()).commit();
                       currentShowingFragment("editActivity");
-                } else if (playerIsShowing) {
+                } else if (isPlayerSignedIn && playerIsShowing) {
                     FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
                     fragmentTransaction.addToBackStack("");
                     fragmentTransaction.replace(R.id.containerView, new NewActivityRegistration()).commit();
                       currentShowingFragment("editActivity");
-                } else if (editActivityIsShowing) {
+                } else if (isPlayerSignedIn && editActivityIsShowing) {
                     FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
                     mFragmentManager.popBackStack();
                     fragmentTransaction.replace(R.id.containerView, new Tabs()).commit();
@@ -116,7 +115,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         }
                     });
                      currentShowingFragment("player");
-                } else if (editActivityIsShowing) {
+                } else if (isTrainerSignedIn && editActivityIsShowing) {
                     FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
                     mFragmentManager.popBackStack();
                     fragmentTransaction.replace(R.id.containerView, new Tabs()).commit();
@@ -124,6 +123,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 }
             }
         });
+
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         NavigationView view = (NavigationView) findViewById(R.id.nav_view);
@@ -135,6 +135,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         toggle.syncState();
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
+
+        SharedPreferences prefs = getSharedPreferences("sAdPlayValues", MODE_PRIVATE);
+        String restore = prefs.getString("isAdmin","No name defined");
+        if(restore.equals("false")){
+            isPlayerSignedIn = true;
+            isTrainerSignedIn = false;
+            actionBar.show();
+        }else if(restore.equals("true")){
+            isPlayerSignedIn = false;
+            isTrainerSignedIn = true;
+            actionBar.show();
+        }
     }
 
     @Override
@@ -271,7 +283,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             playerIsShowing = false;
             editActivityIsShowing = false;
         }
-        updatesWhileSwiping();//update states
+        if(isTrainerSignedIn != null && isPlayerSignedIn != null){
+            updatesWhileSwiping();//update states
+        }
     }
 
     //set fragment transactions/navigation
@@ -280,22 +294,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         xfragmentTransaction.replace(R.id.containerView, fragmentClass).commit();
     }
 
-   /* @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        switch(keyCode){
-            case KeyEvent.KEYCODE_BACK:
-                Toast.makeText(mainContext, "backLLL", Toast.LENGTH_SHORT).show();
-        }
-        return super.onKeyDown(keyCode, event);
-    }*/
-
     //update changes
     public void updatesWhileSwiping() {
-        if (trainerIsShowing) {
+        if (trainerIsShowing && isTrainerSignedIn) {
             fab.setImageResource(R.drawable.add24dp);
             fab.show();
             //Toast.makeText(this, "hide", Toast.LENGTH_LONG).show();
-        } else if (playerIsShowing) {
+        } else if (playerIsShowing && isPlayerSignedIn) {
             fab.setImageResource(R.drawable.add24dp);
             fab.show();
         } else if (editActivityIsShowing) {
@@ -309,26 +314,42 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     //init things that should be initialyzed after a successful sign in.
     @Override
-    public void initAfterLogin() {
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.show();
+    public void initAfterLogin(String userType) {
         if (getCurrentFocus() != null) {
             InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
             inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
         }
-        databaseHelper = new DataBaseHelper();
-        databaseHelper.setSignedInUserType();
-
+        if(userType.equals("admin")){
+            isTrainerSignedIn = true;
+            isPlayerSignedIn = false;
+            SharedPreferences.Editor editor = getSharedPreferences("sAdPlayValues", MODE_PRIVATE).edit();
+            editor.putString("isAdmin", "true");
+            editor.commit();
+        }else{
+            isTrainerSignedIn = false;
+            isPlayerSignedIn = true;
+            SharedPreferences.Editor editor = getSharedPreferences("sAdPlayValues", MODE_PRIVATE).edit();
+            editor.putString("isAdmin", "false");
+            editor.commit();
+        }
+        replaceFragmentWith(new Tabs());
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.show();
+        currentShowingFragment("trainer");
     }
 
     //set state sign out!
-    private void onSignOut() {
+    @Override
+    public void onSignOut() {
         if (mAuth.getCurrentUser() != null) {
             mAuth.signOut();
         }
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
         fab.hide();
+        SharedPreferences.Editor editor = getSharedPreferences("sAdPlayValues", MODE_PRIVATE).edit();
+        editor.putString("isAdmin", "false");
+        editor.commit();
     }
 
 
@@ -348,7 +369,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             public void onClick(DialogInterface dialog, int whichButton) {
                 String value = input.getText().toString();
                     if(value.equals(ADMINISTRATION_ID)){
-                        initAfterLogin();
+                        initAfterLogin("admin");
                         databaseHelper = new DataBaseHelper();
                         databaseHelper.setIsAdmin();//only first time.
                      authClass.alert(getString(R.string.welcomeCoachTittle),getString(R.string.wecomeCoachText));

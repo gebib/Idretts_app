@@ -20,7 +20,7 @@ import com.google.firebase.database.ValueEventListener;
  * Created by gebi9 on 26-Apr-17.
  */
 
-public class DataBaseHelper {
+public class DataBaseHelper extends Authentication{
     private DatabaseReference fbTrainerPostsDbRef;
     private DatabaseReference fbPlayerPostsDbRef;
     private DatabaseReference fbUsersDbRef;
@@ -45,7 +45,7 @@ public class DataBaseHelper {
     }
 
 
-
+    //if on registration first time admin is confirmed!
     public void setIsAdmin() {
         fbUsersDbRef.child(fbAuth.getCurrentUser().getUid()).child("isAdmin").setValue("true").addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
@@ -57,21 +57,86 @@ public class DataBaseHelper {
         });
     }
 
-    public void setSignedInUserType() {////////////////////////////////////////////takes time!
-        fbUsersDbRef.child(fbAuth.getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
+    //Post trainer activities posts
+    public void postTrainerActivity(String title,
+                                    String activityDate,
+                                    String startTime,
+                                    String endTime,
+                                    String place,
+                                    String intensity,
+                                    String activityTextInfo) {
+        final String dateOfActivity, startingTime, endingTime, gatherPlace, trainingIntensity, postedTime, activityTitle,textInfo;
+        dateOfActivity = activityDate;
+        startingTime = startTime;
+        endingTime = endTime;
+        gatherPlace = place;
+        trainingIntensity = intensity;
+        postedTime = nowHour;
+        activityTitle = title;
+        textInfo = activityTextInfo;
+
+
+        progressDialog(true, "Posting", "Processing please wait...");
+        fbTrainerPostsDbRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                String value = dataSnapshot.child("isAdmin").getValue()+"";
-                if(value.equals("true")){
+                String user_id = fbAuth.getCurrentUser().getUid();
+                DatabaseReference trainer_post_DB = fbTrainerPostsDbRef.child(user_id);
+                getCurrentDate();
+                String datePosted = nowDate + "." + nowMonth + "." + nowYear + " " + nowHour + ":" + nowMinute;
 
-                }else{
-
-                }
+                trainer_post_DB.child("title").setValue(activityTitle);
+                trainer_post_DB.child("activityDate").setValue(dateOfActivity);
+                trainer_post_DB.child("startTime").setValue(startingTime);
+                trainer_post_DB.child("endTime").setValue(endingTime);
+                trainer_post_DB.child("place").setValue(gatherPlace);
+                trainer_post_DB.child("intensity").setValue(trainingIntensity);
+                trainer_post_DB.child("postTime").setValue(postedTime);
+                trainer_post_DB.child("postedDate").setValue(datePosted);
+                trainer_post_DB.child("infoText").setValue(textInfo);
             }
+
             @Override
             public void onCancelled(DatabaseError databaseError) {
+
             }
         });
 
     }
+
+    //Post player activity
+    public void postPlayerActivity(String title,
+                                   String date,
+                                   String intencity,
+                                   String place) {
+        final String activityTitle, activityDate, activityIntensity, activityPlace;
+        activityTitle = title;
+        activityDate = date;
+        activityIntensity = intencity;
+        activityPlace = place;
+
+        progressDialog(true, "Posting", "Processing please wait...");
+        fbPlayerPostsDbRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                String user_id = fbAuth.getCurrentUser().getUid();
+                DatabaseReference player_post_DB = fbPlayerPostsDbRef.child(user_id);
+                getCurrentDate();
+                String registeredDate = nowDate + "." + nowMonth + "." + nowYear + " " + nowHour + ":" + nowMinute;
+
+                player_post_DB.child("title").setValue(activityTitle);
+                player_post_DB.child("activityDate").setValue(activityDate);
+                player_post_DB.child("datePosted").setValue(registeredDate);
+                player_post_DB.child("intensity").setValue(activityIntensity);
+                player_post_DB.child("place").setValue(activityPlace);
+                player_post_DB.child("userId").setValue(user_id);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
 }

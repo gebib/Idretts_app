@@ -29,6 +29,16 @@
     <string name="administratorNotSet">Adminstrator not set! please set administrator!</string>
     <string name="alert">Alert</string>
     <string name="setAdminFailured">Registration was not successfull, please make sure you are connected to internet and try again!.</string>
+    <string name="signInInitUserTypeFailedTitle">Signin failed!</string>
+    <string name="sinInUserInitUserTypeTextInfo">Could not sign in please check your internet connection and try again</string>
+    <string name="tittleTrainerPostFieldEmpty">Trainer Activity</string>
+    <string name="tittleTrainerPostFieldEmptyTextInfo">Some of the fields are not filled in. Please fill in all the fields and try again</string>
+    <string name="activityDateHint">Date</string>
+    <string name="activityTimeFromHint">Time from</string>
+    <string name="activityTimeToHint">Time to</string>
+    <string name="activityLocation">Location</string>
+    <string name="activityDetailsSeparator">Activity Details</string>
+    <string name="activityExtraInfoHint">...Extra info...</string>
 
 
 </resources>
