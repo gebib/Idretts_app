@@ -116,11 +116,22 @@ public class DataBaseHelper extends Authentication {
                 trainer_post_DB.child("icon").setValue(actIcon);
 
                 progressDialog.dismiss();
+                mCallback.showFragmentOfGivenCondition();
             }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
                 progressDialog.dismiss();
+                AlertDialog.Builder builder1 = new AlertDialog.Builder(authClass);
+                builder1.setTitle(authClass.getString(R.string.activityRegistrationFailureTitle));
+                builder1.setMessage(authClass.getString(R.string.activityRegistrationFailureTextIinfo));
+                builder1.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        //ingen action.
+                    }
+                });
+                AlertDialog alert11 = builder1.create();
+                alert11.show();
             }
         });
 
@@ -163,6 +174,16 @@ public class DataBaseHelper extends Authentication {
             @Override
             public void onCancelled(DatabaseError databaseError) {
                 progressDialog.dismiss();
+                AlertDialog.Builder builder1 = new AlertDialog.Builder(authClass);
+                builder1.setTitle(authClass.getString(R.string.activityRegistrationFailureTitle));
+                builder1.setMessage(authClass.getString(R.string.activityRegistrationFailureTextIinfo));
+                builder1.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        //ingen action.
+                    }
+                });
+                AlertDialog alert11 = builder1.create();
+                alert11.show();
             }
         });
     }

@@ -34,7 +34,6 @@ import java.util.HashMap;
 
 public class Authentication extends MainActivity {
     private FirebaseAuth fbAuth;
-    private ProgressDialog progressDialog;
     private FragmentActivityInterface mCallback;
     protected String nowDate, nowMonth, nowYear, nowHour, nowMinute;
 
@@ -60,7 +59,7 @@ public class Authentication extends MainActivity {
     }
 
     public void signIn(String email, String pass) {
-        progressDialog = new ProgressDialog(mainContext);
+        final ProgressDialog progressDialog = new ProgressDialog(mainContext);
         progressDialog.setTitle(mainContext.getResources().getString(R.string.progressDialogSignInTitle));
         progressDialog.setMessage(mainContext.getResources().getString(R.string.progressDialogSignInTextInfo));
         progressDialog.show();
@@ -75,6 +74,7 @@ public class Authentication extends MainActivity {
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
+                progressDialog.dismiss();
                 AlertDialog.Builder builder1 = new AlertDialog.Builder(mainContext);
                 builder1.setTitle(R.string.signInFailureAlertTitle);
                 builder1.setMessage(R.string.signInFailureAlertText);
@@ -85,8 +85,6 @@ public class Authentication extends MainActivity {
                 });
                 AlertDialog alert11 = builder1.create();
                 alert11.show();
-
-                progressDialog.dismiss();
             }
         });
     }
@@ -110,14 +108,14 @@ public class Authentication extends MainActivity {
     }
 
     //register using email and password and add user info to database
-    public void FBregisterUserforAuthentication(String email, String pass, String fname, String lname, String age) {
+    public void FBregisterUserforAuthentication(final String email, final String pass, String fname, String lname, String age) {
         final String firstName = fname;
         final String lastName = lname;
         final String playerAge = age;
         this.email = email;
         this.pass = pass;
 
-        progressDialog = new ProgressDialog(mainContext);
+        final ProgressDialog progressDialog = new ProgressDialog(mainContext);
         progressDialog.setTitle(mainContext.getResources().getString(R.string.progressDialogRegistrationTitle));
         progressDialog.setMessage(mainContext.getResources().getString(R.string.progressDialogRegistrationTextInfo));
         progressDialog.show();
@@ -139,9 +137,9 @@ public class Authentication extends MainActivity {
                     current_user_db.child("registeredDate").setValue(registeredDate);
                     current_user_db.child("confirmedByCoach").setValue(confirmation);//TODO coach need to confirm and user is restricted until then, remove auto or manually if not confirmed
                     current_user_db.child("isAdmin").setValue("false");
-
-                   progressDialog.dismiss();
+                    progressDialog.dismiss();
                     checkIfThitIsFirstUser();
+                    signIn(email,pass);
                 }
             }
         }).addOnFailureListener(new OnFailureListener() {

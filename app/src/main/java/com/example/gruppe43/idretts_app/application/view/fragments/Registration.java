@@ -134,7 +134,7 @@ public class Registration extends Fragment implements View.OnClickListener{
                 }
                 break;
             case R.id.linkLoginTV:
-                mCallback.replaceFragmentWith(new Login(),"");
+                mCallback.replaceFragmentWith(new Login(),"reg");
                 break;
             default:
         }

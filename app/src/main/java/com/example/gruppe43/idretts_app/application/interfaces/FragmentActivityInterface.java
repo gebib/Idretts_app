@@ -16,5 +16,7 @@ public interface FragmentActivityInterface {
     void requIreAdminPass();
     void currentShowingFragment(String tabId);
     void onSignOut();
+    void hideKeyboard();
+    void showFragmentOfGivenCondition();
     //void initAfterLogin(Boolean isPlayerSignedIn, Boolean isTrainerSignedIn);
 }

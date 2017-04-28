@@ -141,9 +141,8 @@ public class NewActivityRegistration extends Fragment {
         return view;
     }
 
-    @Override
-    public void onDetach() {
-        super.onDetach();
+
+    public void registerActivity (){
         DataBaseHelper dbh = new DataBaseHelper();
         String actDate = newActDate.getText().toString().trim();
         String timeFrom = newActTimeFrom.getText().toString().trim();

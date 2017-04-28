@@ -51,16 +51,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private Boolean trainerIsShowing;
     private Boolean playerIsShowing;
     private FloatingActionButton fab;
-    private Boolean isPlayerSignedIn;
-    private Boolean isTrainerSignedIn;
+    public static Boolean isPlayerSignedIn;
+    public static Boolean isTrainerSignedIn;
     private Boolean editActivityIsShowing;
     protected static Context mainContext;
-    private String ADMINISTRATION_ID = 1234+"";//this is used to identify the cuach!
+    private String ADMINISTRATION_ID = 1234 + "";//this is used to identify the cuach!
     private FirebaseAuth.AuthStateListener mAuthListner;
     private FirebaseAuth mAuth;
     private Authentication authClass;
     private DataBaseHelper databaseHelper;
     public static boolean onRegisterPage;
+    private boolean loggingIn;
+    protected static boolean isRegiteringActivity;
 
 
     @Override
@@ -79,36 +81,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (isTrainerSignedIn && trainerIsShowing) {
-                    FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
-                    fragmentTransaction.addToBackStack("");
-                    fragmentTransaction.replace(R.id.containerView, new NewActivityRegistration()).commit();
-                      currentShowingFragment("editActivity");
-                } else if (isPlayerSignedIn && playerIsShowing) {
-                    FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
-                    fragmentTransaction.addToBackStack("");
-                    fragmentTransaction.replace(R.id.containerView, new NewActivityRegistration()).commit();
-                      currentShowingFragment("editActivity");
-                } else if (isPlayerSignedIn && editActivityIsShowing) {
-                    FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
-                    mFragmentManager.popBackStack();
-                    fragmentTransaction.replace(R.id.containerView, new Tabs()).commit();
-                    new Handler().post(new Runnable() {
-                        @Override
-                        public void run() {
-                            Tabs.viewPager.setCurrentItem(1);
-                        }
-                    });
-                     currentShowingFragment("player");
-                } else if (isTrainerSignedIn && editActivityIsShowing) {
-                    FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
-                    mFragmentManager.popBackStack();
-                    fragmentTransaction.replace(R.id.containerView, new Tabs()).commit();
-                     currentShowingFragment("trainer");
+                if (!onRegisterPage) {
+                    showFragmentOfGivenCondition();
+                    onRegisterPage = true;
+                } else if (onRegisterPage) {
+                    NewActivityRegistration nar = new NewActivityRegistration();
+                    nar.registerActivity();
+                    onRegisterPage = false;
                 }
             }
         });
-
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         NavigationView view = (NavigationView) findViewById(R.id.nav_view);
@@ -121,35 +103,71 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
 
-        SharedPreferences prefs = getSharedPreferences("sAdPlayValues", MODE_PRIVATE);
-        String restore = prefs.getString("isAdmin","No name defined");
-        if(restore.equals("false")){
+         SharedPreferences prefs = getSharedPreferences("sAdPlayValues", MODE_PRIVATE);
+        String restore = prefs.getString("isAdmin", "No name defined");
+        if (restore.equals("false")) {
             isPlayerSignedIn = true;
             isTrainerSignedIn = false;
             actionBar.show();
-        }else if(restore.equals("true")){
+        } else if (restore.equals("true")) {
             isPlayerSignedIn = false;
             isTrainerSignedIn = true;
             actionBar.show();
         }
-            // listen for if user has logged in
-            mAuthListner = new FirebaseAuth.AuthStateListener() {
-                @Override
-                public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                    if ((firebaseAuth.getCurrentUser() == null || (isTrainerSignedIn == null && isPlayerSignedIn == null)) && !onRegisterPage) {
-                        mFragmentTransaction = mFragmentManager.beginTransaction();
-                        mFragmentTransaction.replace(R.id.containerView, new Login()).commit();
-                    } else if(isTrainerSignedIn != null || isPlayerSignedIn != null){
-                        mFragmentTransaction = mFragmentManager.beginTransaction();
-                        mFragmentTransaction.replace(R.id.containerView, new Tabs()).commit();
-                        if(isPlayerSignedIn){
-                            initAfterLogin("notAdmin");
-                        }else if(isTrainerSignedIn){
-                            initAfterLogin("admin");
-                        }
+        // listen for if user has logged in
+        mAuthListner = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                if ((firebaseAuth.getCurrentUser() == null)) {
+                    mFragmentTransaction = mFragmentManager.beginTransaction();
+                    mFragmentTransaction.replace(R.id.containerView, new Login()).commit();
+
+                } else if (isTrainerSignedIn != null || isPlayerSignedIn != null) {
+                    mFragmentTransaction = mFragmentManager.beginTransaction();
+                    mFragmentTransaction.replace(R.id.containerView, new Tabs()).commit();
+                    loggingIn = false;
+                    if (isPlayerSignedIn) {
+                        initAfterLogin("notAdmin");
+                    } else if (isTrainerSignedIn) {
+                        initAfterLogin("admin");
                     }
                 }
-            };
+
+            }
+        };
+    }
+
+    //navigate to appropriate fragment after registration.
+    @Override
+    public void showFragmentOfGivenCondition() {
+        if (isTrainerSignedIn && trainerIsShowing) {
+            FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
+            fragmentTransaction.addToBackStack("");
+            fragmentTransaction.replace(R.id.containerView, new NewActivityRegistration()).commit();
+            currentShowingFragment("editActivity");
+        } else if (isPlayerSignedIn && playerIsShowing) {
+            FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
+            fragmentTransaction.addToBackStack("");
+            fragmentTransaction.replace(R.id.containerView, new NewActivityRegistration()).commit();
+            currentShowingFragment("editActivity");
+        } else if (isPlayerSignedIn && editActivityIsShowing) {
+            FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
+            mFragmentManager.popBackStack();
+            fragmentTransaction.replace(R.id.containerView, new Tabs()).commit();
+            new Handler().post(new Runnable() {
+                @Override
+                public void run() {
+                    Tabs.viewPager.setCurrentItem(1);
+                }
+            });
+            currentShowingFragment("player");
+        } else if (isTrainerSignedIn && editActivityIsShowing) {
+            FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
+            mFragmentManager.popBackStack();
+            fragmentTransaction.replace(R.id.containerView, new Tabs()).commit();
+            currentShowingFragment("trainer");
+        }
+
     }
 
     @Override
@@ -193,6 +211,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        //No call for super(). Bug on API Level > 11.
+    }
+
 
     /*//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
     @Override
@@ -201,7 +224,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
             fragmentTransaction.addToBackStack("");
             fragmentTransaction.replace(R.id.containerView, new ProfileView()).commit();
-             currentShowingFragment("");
+            currentShowingFragment("");
         }
         if (menuItem.getItemId() == R.id.nav_messages) {
             FragmentTransaction xfragmentTransaction = mFragmentManager.beginTransaction();
@@ -229,6 +252,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
         if (menuItem.getItemId() == R.id.nav_exit) {
             onSignOut();
+            mFragmentTransaction = mFragmentManager.beginTransaction();
+            mFragmentTransaction.replace(R.id.containerView, new Login()).commit();
         }
 
                 /*MIDLERTIDIG navigasjon///////////////////////////////////////////////////////*/
@@ -286,22 +311,25 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             playerIsShowing = false;
             editActivityIsShowing = false;
         }
-        if(isTrainerSignedIn != null && isPlayerSignedIn != null){
+        if (isTrainerSignedIn != null && isPlayerSignedIn != null) {
             updatesWhileSwiping();//update states
         }
     }
 
     //set fragment transactions/navigation
-    public void replaceFragmentWith(Fragment fragmentClass,String from) {
-        if(from.equals("login")){
+    public void replaceFragmentWith(Fragment fragmentClass, String from) {
+        if (from.equals("login")) {
             FragmentTransaction xfragmentTransaction = mFragmentManager.beginTransaction();
             xfragmentTransaction.replace(R.id.containerView, fragmentClass).commit();
-        }else{
+        } else if (from.equals("reg")) {
+            FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
+            fragmentTransaction.replace(R.id.containerView, fragmentClass).commit();
+            dumpBackStack();
+        } else {
             FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
             fragmentTransaction.addToBackStack("ok");
             fragmentTransaction.replace(R.id.containerView, fragmentClass).commit();
         }
-
     }
 
     //update changes
@@ -316,6 +344,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         } else if (editActivityIsShowing) {
             fab.show();
             fab.setImageResource(R.drawable.check24dp);
+            isRegiteringActivity = true;
         } else {
             fab.hide();
         }
@@ -329,13 +358,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
             inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
         }
-        if(userType.equals("admin")){
+        if (userType.equals("admin")) {
             isTrainerSignedIn = true;
             isPlayerSignedIn = false;
             SharedPreferences.Editor editor = getSharedPreferences("sAdPlayValues", MODE_PRIVATE).edit();
             editor.putString("isAdmin", "true");
             editor.commit();
-        }else{
+        } else {
             isTrainerSignedIn = false;
             isPlayerSignedIn = true;
             SharedPreferences.Editor editor = getSharedPreferences("sAdPlayValues", MODE_PRIVATE).edit();
@@ -346,23 +375,31 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         actionBar.show();
         currentShowingFragment("trainer");
         onRegisterPage = false;
-        replaceFragmentWith(new Tabs(),"login"); //load the homepage
+        replaceFragmentWith(new Tabs(), "login"); //load the homepage
     }
 
     //set state sign out!
     @Override
     public void onSignOut() {
-        if (mAuth.getCurrentUser() != null) {
+        if (mAuth.getCurrentUser() != null && !loggingIn) {
             mAuth.signOut();
-            ActionBar actionBar = getSupportActionBar();
-            actionBar.hide();
-            fab.hide();
+            loggingIn = false;
+
             SharedPreferences.Editor editor = getSharedPreferences("sAdPlayValues", MODE_PRIVATE).edit();
-            editor.putString("isAdmin", "false");
+            editor.putString("isAdmin", "none");
             editor.commit();
             onRegisterPage = false;
-            dumpBackStack();
         }
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.hide();
+        fab.hide();
+        dumpBackStack();
+    }
+
+    @Override
+    public void hideKeyboard() {
+        InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
     }
 
 
@@ -381,33 +418,33 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
                 String value = input.getText().toString();
-                    if(value.equals(ADMINISTRATION_ID)){
-                        initAfterLogin("admin");
-                        databaseHelper = new DataBaseHelper();
-                        databaseHelper.setIsAdmin();//only first time.
+                if (value.equals(ADMINISTRATION_ID)) {
+                    initAfterLogin("admin");
+                    databaseHelper = new DataBaseHelper();
+                    databaseHelper.setIsAdmin();//only first time.
 
-                        AlertDialog.Builder builder1 = new AlertDialog.Builder(mainContext);
-                        builder1.setTitle(getString(R.string.welcomeCoachTittle));
-                        builder1.setMessage(R.string.wecomeCoachText);
-                        builder1.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                //ingen action.
-                            }
-                        });
-                        AlertDialog alert11 = builder1.create();
-                        alert11.show();
-                        initAfterLogin("admin");
-                    }else{
-                        Toast.makeText(MainActivity.this, R.string.adminCodMismatched, Toast.LENGTH_SHORT).show();
-                        requIreAdminPass();
-                    }
+                    AlertDialog.Builder builder1 = new AlertDialog.Builder(mainContext);
+                    builder1.setTitle(getString(R.string.welcomeCoachTittle));
+                    builder1.setMessage(R.string.wecomeCoachText);
+                    builder1.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            //ingen action.
+                        }
+                    });
+                    AlertDialog alert11 = builder1.create();
+                    alert11.show();
+                    initAfterLogin("admin");
+                } else {
+                    Toast.makeText(MainActivity.this, R.string.adminCodMismatched, Toast.LENGTH_SHORT).show();
+                    requIreAdminPass();
+                }
             }
         });
         alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
-                 authClass.deleteFirstUserNotValid();
+                authClass.deleteFirstUserNotValid();
                 Toast.makeText(MainActivity.this, R.string.administratorNotSet, Toast.LENGTH_SHORT).show();
-                replaceFragmentWith(new Login(),"");
+                replaceFragmentWith(new Login(), "");
                 onSignOut();
             }
         });
@@ -415,8 +452,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     //dump fragments from backstack
-    private void dumpBackStack(){
-        for(int i = 0; i < mFragmentManager.getBackStackEntryCount(); ++i) {
+    private void dumpBackStack() {
+        for (int i = 0; i < mFragmentManager.getBackStackEntryCount(); ++i) {
             mFragmentManager.popBackStack();
         }
     }

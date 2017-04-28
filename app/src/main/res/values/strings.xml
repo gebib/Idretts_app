@@ -50,6 +50,8 @@
     <string name="progressDialogRegistrationTextInfo">Processing please wait...</string>
     <string name="adminPostingProgressDialogTitle">Posting</string>
     <string name="adminPostingProgressDialogTextInfo">Processing please wait...</string>
+    <string name="activityRegistrationFailureTitle">Activity registration</string>
+    <string name="activityRegistrationFailureTextIinfo">Activity has not been registered! Check your internet connection and try again.</string>
 
 
 </resources>
