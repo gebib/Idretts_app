@@ -39,6 +39,9 @@
     <string name="activityLocation">Location</string>
     <string name="activityDetailsSeparator">Activity Details</string>
     <string name="activityExtraInfoHint">...Extra info...</string>
+    <string name="actStarts">Starts:</string>
+    <string name="actEnds">Ends:</string>
+    <string name="actLocation">Location:</string>
 
 
 </resources>

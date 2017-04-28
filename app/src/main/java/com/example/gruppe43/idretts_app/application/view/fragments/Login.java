@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.example.gruppe43.idretts_app.R;
 import com.example.gruppe43.idretts_app.application.controll.Authentication;
 import com.example.gruppe43.idretts_app.application.interfaces.FragmentActivityInterface;
+import com.example.gruppe43.idretts_app.application.view.main.MainActivity;
 
 
 public class Login extends Fragment implements View.OnClickListener {
@@ -61,6 +62,7 @@ public class Login extends Fragment implements View.OnClickListener {
         switch (v.getId()) {
             case R.id.link_signup:
                 mCallback.replaceFragmentWith(new Registration());
+                MainActivity.onRegisterPage = true;
                 break;
             case R.id.loginBT:
                 Boolean validInfo = validFormat();

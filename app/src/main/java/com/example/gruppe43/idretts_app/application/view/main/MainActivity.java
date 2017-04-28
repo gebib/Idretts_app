@@ -60,7 +60,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private FirebaseAuth mAuth;
     private Authentication authClass;
     private DataBaseHelper databaseHelper;
-
+    public static boolean onRegisterPage;
 
 
     @Override
@@ -70,21 +70,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mFragmentManager = getSupportFragmentManager();
         mainContext = this;
         authClass = new Authentication();
-
-        // listen for if user has logged in
-        mAuthListner = new FirebaseAuth.AuthStateListener() {
-            @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                if (firebaseAuth.getCurrentUser() == null) {
-                    mFragmentTransaction = mFragmentManager.beginTransaction();
-                    mFragmentTransaction.replace(R.id.containerView, new Login()).commit();
-                    onSignOut();
-                } else {
-                     mFragmentTransaction = mFragmentManager.beginTransaction();
-                    mFragmentTransaction.replace(R.id.containerView, new Tabs()).commit();
-                }
-            }
-        };
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -147,6 +132,25 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             isTrainerSignedIn = true;
             actionBar.show();
         }
+            // listen for if user has logged in
+            mAuthListner = new FirebaseAuth.AuthStateListener() {
+                @Override
+                public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                    if ((firebaseAuth.getCurrentUser() == null || (isTrainerSignedIn == null && isPlayerSignedIn == null)) && !onRegisterPage) {
+                        mFragmentTransaction = mFragmentManager.beginTransaction();
+                        mFragmentTransaction.replace(R.id.containerView, new Login()).commit();
+                        onSignOut();
+                    } else if(isTrainerSignedIn != null || isPlayerSignedIn != null){
+                        mFragmentTransaction = mFragmentManager.beginTransaction();
+                        mFragmentTransaction.replace(R.id.containerView, new Tabs()).commit();
+                        if(isPlayerSignedIn){
+                            initAfterLogin("notAdmin");
+                        }else if(isTrainerSignedIn){
+                            initAfterLogin("admin");
+                        }
+                    }
+                }
+            };
     }
 
     @Override
@@ -336,6 +340,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         ActionBar actionBar = getSupportActionBar();
         actionBar.show();
         currentShowingFragment("trainer");
+        onRegisterPage = false;
     }
 
     //set state sign out!
@@ -350,6 +355,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         SharedPreferences.Editor editor = getSharedPreferences("sAdPlayValues", MODE_PRIVATE).edit();
         editor.putString("isAdmin", "false");
         editor.commit();
+        onRegisterPage = false;
     }
 
 

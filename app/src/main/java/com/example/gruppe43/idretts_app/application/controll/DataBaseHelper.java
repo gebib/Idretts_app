@@ -20,7 +20,7 @@ import com.google.firebase.database.ValueEventListener;
  * Created by gebi9 on 26-Apr-17.
  */
 
-public class DataBaseHelper extends Authentication{
+public class DataBaseHelper extends Authentication {
     private DatabaseReference fbTrainerPostsDbRef;
     private DatabaseReference fbPlayerPostsDbRef;
     private DatabaseReference fbUsersDbRef;
@@ -50,8 +50,8 @@ public class DataBaseHelper extends Authentication{
         fbUsersDbRef.child(fbAuth.getCurrentUser().getUid()).child("isAdmin").setValue("true").addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
-                if(!task.isSuccessful()){
-                    authClass.alert(authClass.getString(R.string.alert),authClass.getString(R.string.setAdminFailured));
+                if (!task.isSuccessful()) {
+                    authClass.alert(authClass.getString(R.string.alert), authClass.getString(R.string.setAdminFailured));
                 }
             }
         });
@@ -64,8 +64,9 @@ public class DataBaseHelper extends Authentication{
                                     String endTime,
                                     String place,
                                     String intensity,
-                                    String activityTextInfo) {
-        final String dateOfActivity, startingTime, endingTime, gatherPlace, trainingIntensity, postedTime, activityTitle,textInfo;
+                                    String activityTextInfo,
+                                    String icon) {
+        final String dateOfActivity, startingTime, endingTime, gatherPlace, trainingIntensity, postedTime, activityTitle, textInfo,actIcon;
         dateOfActivity = activityDate;
         startingTime = startTime;
         endingTime = endTime;
@@ -74,6 +75,7 @@ public class DataBaseHelper extends Authentication{
         postedTime = nowHour;
         activityTitle = title;
         textInfo = activityTextInfo;
+        actIcon = icon;
 
 
         progressDialog(true, "Posting", "Processing please wait...");
@@ -83,8 +85,8 @@ public class DataBaseHelper extends Authentication{
                 String user_id = fbAuth.getCurrentUser().getUid();
                 DatabaseReference trainer_post_DB = fbTrainerPostsDbRef.child(user_id);
                 getCurrentDate();
-                String datePosted = nowDate + "." + nowMonth + "." + nowYear + " " + nowHour + ":" + nowMinute;
-
+                String datePosted = nowDate + "." + nowMonth + "." + nowYear;
+                String timePosted = nowHour + ":" + nowMinute;
                 trainer_post_DB.child("title").setValue(activityTitle);
                 trainer_post_DB.child("activityDate").setValue(dateOfActivity);
                 trainer_post_DB.child("startTime").setValue(startingTime);
@@ -94,6 +96,8 @@ public class DataBaseHelper extends Authentication{
                 trainer_post_DB.child("postTime").setValue(postedTime);
                 trainer_post_DB.child("postedDate").setValue(datePosted);
                 trainer_post_DB.child("infoText").setValue(textInfo);
+                trainer_post_DB.child("timePosted").setValue(timePosted);
+                trainer_post_DB.child("icon").setValue(actIcon);
             }
 
             @Override

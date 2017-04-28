@@ -63,7 +63,7 @@
                 android:layout_below="@+id/newActTimeTo"
                 android:ems="10"
                 android:hint="@string/activityLocation"
-                android:inputType="time"
+                android:inputType="text"
                 android:layout_alignParentEnd="true" />
 
             <EditText

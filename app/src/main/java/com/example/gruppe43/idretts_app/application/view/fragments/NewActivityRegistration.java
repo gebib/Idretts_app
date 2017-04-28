@@ -36,6 +36,7 @@ public class NewActivityRegistration extends Fragment {
     private Authentication authClass;
 
     private boolean isForStarttime;
+    private String titleSpinnerPos;
 
 
     public NewActivityRegistration() {
@@ -97,9 +98,8 @@ public class NewActivityRegistration extends Fragment {
         newActSpinnerActivityType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
                 activityTitle = (String) parent.getItemAtPosition(pos);
-
+                titleSpinnerPos = pos+"";
             }
-
             public void onNothingSelected(AdapterView<?> parent) {
             }
         });
@@ -139,7 +139,6 @@ public class NewActivityRegistration extends Fragment {
         return view;
     }
 
-
     @Override
     public void onDetach() {
         super.onDetach();
@@ -149,11 +148,21 @@ public class NewActivityRegistration extends Fragment {
         String timeTo = newActTimeTo.getText().toString().trim();
         String actPlace = location.getText().toString().trim();
         String textInfo = newActAdditionalTextInfo.getText().toString().trim();
+        String icon = "";
+        if(titleSpinnerPos.equals("0")){
+            icon = "training_f";
+        }else if(titleSpinnerPos.equals("1")){
+            icon = "training";
+        }else if(titleSpinnerPos.equals("2")){
+            icon = "meeting";
+        }else if(titleSpinnerPos.equals("3")){
+            icon = "camp";
+        }
 
         if (actDate.isEmpty() || timeFrom.isEmpty() || timeTo.isEmpty() || actPlace.isEmpty() || textInfo.isEmpty()) {
             authClass.alert(getString(R.string.tittleTrainerPostFieldEmpty), getString(R.string.tittleTrainerPostFieldEmptyTextInfo));
         } else {
-            dbh.postTrainerActivity(activityTitle, actDate, timeFrom, timeTo, actPlace, setIntensity, textInfo);
+            dbh.postTrainerActivity(activityTitle, actDate, timeFrom, timeTo, actPlace, setIntensity, textInfo,icon);
         }
     }
 
