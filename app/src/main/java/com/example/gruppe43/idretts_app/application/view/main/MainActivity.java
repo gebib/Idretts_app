@@ -119,9 +119,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 if ((firebaseAuth.getCurrentUser() == null)) {
-                    mFragmentTransaction = mFragmentManager.beginTransaction();
-                    mFragmentTransaction.replace(R.id.containerView, new Login()).commit();
-
+                    new Handler().post(new Runnable() {
+                        public void run() {
+                            mFragmentTransaction = mFragmentManager.beginTransaction();
+                            mFragmentTransaction.replace(R.id.containerView, new Login()).commit();
+                        }
+                    });
                 } else if (isTrainerSignedIn != null || isPlayerSignedIn != null) {
                     mFragmentTransaction = mFragmentManager.beginTransaction();
                     mFragmentTransaction.replace(R.id.containerView, new Tabs()).commit();
