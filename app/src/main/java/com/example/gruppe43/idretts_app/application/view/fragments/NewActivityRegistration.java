@@ -1,8 +1,10 @@
 package com.example.gruppe43.idretts_app.application.view.fragments;
 
 
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -160,7 +162,16 @@ public class NewActivityRegistration extends Fragment {
         }
 
         if (actDate.isEmpty() || timeFrom.isEmpty() || timeTo.isEmpty() || actPlace.isEmpty() || textInfo.isEmpty()) {
-            authClass.alert(getString(R.string.tittleTrainerPostFieldEmpty), getString(R.string.tittleTrainerPostFieldEmptyTextInfo));
+            AlertDialog.Builder builder1 = new AlertDialog.Builder(getActivity());
+            builder1.setTitle(R.string.tittleTrainerPostFieldEmpty);
+            builder1.setMessage(getString(R.string.tittleTrainerPostFieldEmptyTextInfo));
+            builder1.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+                    //ingen action.
+                }
+            });
+            AlertDialog alert11 = builder1.create();
+            alert11.show();
         } else {
             dbh.postTrainerActivity(activityTitle, actDate, timeFrom, timeTo, actPlace, setIntensity, textInfo,icon);
         }

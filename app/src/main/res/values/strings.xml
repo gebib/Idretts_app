@@ -42,6 +42,14 @@
     <string name="actStarts">Starts:</string>
     <string name="actEnds">Ends:</string>
     <string name="actLocation">Location:</string>
+    <string name="signInFailureAlertTitle">Sign in</string>
+    <string name="signInFailureAlertText">Sign in failured. Please check your internet connection and try again.</string>
+    <string name="progressDialogSignInTitle">Sign in</string>
+    <string name="progressDialogSignInTextInfo">Signing in ...</string>
+    <string name="progressDialogRegistrationTitle">Registration</string>
+    <string name="progressDialogRegistrationTextInfo">Processing please wait...</string>
+    <string name="adminPostingProgressDialogTitle">Posting</string>
+    <string name="adminPostingProgressDialogTextInfo">Processing please wait...</string>
 
 
 </resources>

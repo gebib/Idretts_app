@@ -1,7 +1,9 @@
 package com.example.gruppe43.idretts_app.application.view.fragments;
 
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -61,7 +63,7 @@ public class Login extends Fragment implements View.OnClickListener {
     public void onClick(final View v) {
         switch (v.getId()) {
             case R.id.link_signup:
-                mCallback.replaceFragmentWith(new Registration());
+                mCallback.replaceFragmentWith(new Registration(),"");
                 MainActivity.onRegisterPage = true;
                 break;
             case R.id.loginBT:
@@ -69,7 +71,16 @@ public class Login extends Fragment implements View.OnClickListener {
                 if (validInfo) {
                    authClass.signIn(emailAdressET.getText().toString().trim(),passwordET.getText().toString().trim());
                 } else if (!validInfo) {
-                    authClass.alert(getString(R.string.loginFailureAlertTitle),getString(R.string.loginFailureTextInfo));
+                    AlertDialog.Builder builder1 = new AlertDialog.Builder(getActivity());
+                    builder1.setTitle(R.string.loginFailureAlertTitle);
+                    builder1.setMessage(getString(R.string.loginFailureTextInfo));
+                    builder1.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            //ingen action.
+                        }
+                    });
+                    AlertDialog alert11 = builder1.create();
+                    alert11.show();
                 }
                 break;
             default:

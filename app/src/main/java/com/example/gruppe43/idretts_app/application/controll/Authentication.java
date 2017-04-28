@@ -38,11 +38,14 @@ public class Authentication extends MainActivity {
     private FragmentActivityInterface mCallback;
     protected String nowDate, nowMonth, nowYear, nowHour, nowMinute;
 
+
     private DatabaseReference fbTrainerPostsDbRef;
     private DatabaseReference fbPlayerPostsDbRef;
     private DatabaseReference fbUsersDbRef;
     private DatabaseReference fbAbsenceDbRef;
     private DatabaseReference fbCapsDbRef;
+    private String email;
+    private String pass;
 
 
     public Authentication() {
@@ -57,43 +60,51 @@ public class Authentication extends MainActivity {
     }
 
     public void signIn(String email, String pass) {
-        progressDialog(true, "Sign in", "Signing in ...");
+        progressDialog = new ProgressDialog(mainContext);
+        progressDialog.setTitle(mainContext.getResources().getString(R.string.progressDialogSignInTitle));
+        progressDialog.setMessage(mainContext.getResources().getString(R.string.progressDialogSignInTextInfo));
+        progressDialog.show();
         fbAuth.signInWithEmailAndPassword(email, pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
                     setIsAdminOrPlayerSignedIn();
-                    progressDialog(false, "..", "..");
+                    progressDialog.dismiss();
                 }
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                alert("Sign in", "Failed to sign in.. please check your internet connection and correct user email and password, and try again");
-                progressDialog(false, "..", "..");
+                AlertDialog.Builder builder1 = new AlertDialog.Builder(mainContext);
+                builder1.setTitle(R.string.signInFailureAlertTitle);
+                builder1.setMessage(R.string.signInFailureAlertText);
+                builder1.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        //ingen action.
+                    }
+                });
+                AlertDialog alert11 = builder1.create();
+                alert11.show();
+
+                progressDialog.dismiss();
             }
         });
     }
 
-    public void setIsAdminOrPlayerSignedIn() {//////////////////////////////////GET spesific value
+    public void setIsAdminOrPlayerSignedIn() {
         String currentUserId = fbAuth.getCurrentUser().getUid();
         fbUsersDbRef.child(currentUserId).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 String signedInUserIsAdminValue = (String) dataSnapshot.child("isAdmin").getValue();
-
                 if (signedInUserIsAdminValue.equals("true")) {
                     mCallback.initAfterLogin("admin");
                 } else {
                     mCallback.initAfterLogin("player");
                 }
             }
-
             @Override
             public void onCancelled(DatabaseError databaseError) {
-                //  mCallback.onSignOut();
-                //alert(getString(R.string.signInInitUserTypeFailedTitle),getString(R.string.sinInUserInitUserTypeTextInfo));
-                //progressDialog(false, "..", "..");
             }
         });
     }
@@ -103,7 +114,13 @@ public class Authentication extends MainActivity {
         final String firstName = fname;
         final String lastName = lname;
         final String playerAge = age;
-        progressDialog(true, "Registration", "Processing please wait...");
+        this.email = email;
+        this.pass = pass;
+
+        progressDialog = new ProgressDialog(mainContext);
+        progressDialog.setTitle(mainContext.getResources().getString(R.string.progressDialogRegistrationTitle));
+        progressDialog.setMessage(mainContext.getResources().getString(R.string.progressDialogRegistrationTextInfo));
+        progressDialog.show();
         fbAuth.createUserWithEmailAndPassword(email, pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
@@ -123,22 +140,27 @@ public class Authentication extends MainActivity {
                     current_user_db.child("confirmedByCoach").setValue(confirmation);//TODO coach need to confirm and user is restricted until then, remove auto or manually if not confirmed
                     current_user_db.child("isAdmin").setValue("false");
 
-                    progressDialog(false, "..", "..");
-
-
+                   progressDialog.dismiss();
                     checkIfThitIsFirstUser();
                 }
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                alert(mainContext.getString(R.string.dbConnectionErrror), mainContext.getString(R.string.dbConnectionErrorTextnfo));
-                progressDialog(false, "..", "..");
+                AlertDialog.Builder builder1 = new AlertDialog.Builder(mainContext);
+                builder1.setTitle(R.string.dbConnectionErrror);
+                builder1.setMessage(R.string.dbConnectionErrorTextnfo);
+                builder1.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        //ingen action.
+                    }
+                });
+                AlertDialog alert11 = builder1.create();
+                alert11.show();
+                progressDialog.dismiss();
             }
         });
     }
-
-
 
     //depending on if its the first one to register check and init correctly.
     private void checkIfThitIsFirstUser() {
@@ -149,6 +171,8 @@ public class Authentication extends MainActivity {
                 //becouse only admin own those default codes
                 if (dataSnapshot.getChildrenCount() == 1) {//only visible after reset/ first start!
                     mCallback.requIreAdminPass();
+                }else{
+                    signIn(email,pass);
                 }
             }
 
@@ -157,7 +181,6 @@ public class Authentication extends MainActivity {
 
             }
         });
-
     }
 
     //delete the first user if not validated as admin!
@@ -165,32 +188,6 @@ public class Authentication extends MainActivity {
         FirebaseUser currentUser = fbAuth.getCurrentUser();
         currentUser.delete();
         fbUsersDbRef.removeValue();
-    }
-
-
-    //show progress dialog while loading something
-    public void progressDialog(Boolean showProgressDialog, String title, String message) {
-        if (showProgressDialog) {
-            progressDialog = new ProgressDialog(mainContext);
-            progressDialog.setTitle(title);
-            progressDialog.setMessage(message);
-            progressDialog.show();
-        } else {
-            progressDialog.dismiss();
-        }
-    }
-
-    public void alert(String title, String message) {
-        AlertDialog.Builder builder1 = new AlertDialog.Builder(mainContext);
-        builder1.setTitle(title);
-        builder1.setMessage(message);
-        builder1.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
-                //ingen action.
-            }
-        });
-        AlertDialog alert11 = builder1.create();
-        alert11.show();
     }
 
     //get the current timeDate
@@ -203,42 +200,5 @@ public class Authentication extends MainActivity {
         nowHour = today.hour + "";
         nowMinute = today.minute + "";
     }
-
-
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 

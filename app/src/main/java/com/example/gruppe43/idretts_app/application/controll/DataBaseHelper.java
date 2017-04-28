@@ -1,5 +1,8 @@
 package com.example.gruppe43.idretts_app.application.controll;
 
+import android.app.AlertDialog;
+import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.support.annotation.NonNull;
 
 import com.example.gruppe43.idretts_app.R;
@@ -27,6 +30,7 @@ public class DataBaseHelper extends Authentication {
     private DatabaseReference fbAbsenceDbRef;
     private DatabaseReference fbCapsDbRef;
     private FragmentActivityInterface mCallback;
+    private ProgressDialog progressDialog;
 
     private Authentication authClass;
 
@@ -51,7 +55,16 @@ public class DataBaseHelper extends Authentication {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if (!task.isSuccessful()) {
-                    authClass.alert(authClass.getString(R.string.alert), authClass.getString(R.string.setAdminFailured));
+                    AlertDialog.Builder builder1 = new AlertDialog.Builder(authClass);
+                    builder1.setTitle(authClass.getString(R.string.alert));
+                    builder1.setMessage(authClass.getString(R.string.setAdminFailured));
+                    builder1.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            //ingen action.
+                        }
+                    });
+                    AlertDialog alert11 = builder1.create();
+                    alert11.show();
                 }
             }
         });
@@ -78,7 +91,10 @@ public class DataBaseHelper extends Authentication {
         actIcon = icon;
 
 
-        progressDialog(true, "Posting", "Processing please wait...");
+        progressDialog = new ProgressDialog(mainContext);
+        progressDialog.setTitle(mainContext.getResources().getString(R.string.adminPostingProgressDialogTitle));
+        progressDialog.setMessage(mainContext.getResources().getString(R.string.adminPostingProgressDialogTextInfo));
+        progressDialog.show();
         fbTrainerPostsDbRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -98,11 +114,13 @@ public class DataBaseHelper extends Authentication {
                 trainer_post_DB.child("infoText").setValue(textInfo);
                 trainer_post_DB.child("timePosted").setValue(timePosted);
                 trainer_post_DB.child("icon").setValue(actIcon);
+
+                progressDialog.dismiss();
             }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-
+                progressDialog.dismiss();
             }
         });
 
@@ -119,7 +137,11 @@ public class DataBaseHelper extends Authentication {
         activityIntensity = intencity;
         activityPlace = place;
 
-        progressDialog(true, "Posting", "Processing please wait...");
+
+        progressDialog = new ProgressDialog(mainContext);
+        progressDialog.setTitle(mainContext.getResources().getString(R.string.adminPostingProgressDialogTitle));
+        progressDialog.setMessage(mainContext.getResources().getString(R.string.adminPostingProgressDialogTextInfo));
+        progressDialog.show();
         fbPlayerPostsDbRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -134,11 +156,13 @@ public class DataBaseHelper extends Authentication {
                 player_post_DB.child("intensity").setValue(activityIntensity);
                 player_post_DB.child("place").setValue(activityPlace);
                 player_post_DB.child("userId").setValue(user_id);
+
+                progressDialog.dismiss();
             }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-
+                progressDialog.dismiss();
             }
         });
     }
