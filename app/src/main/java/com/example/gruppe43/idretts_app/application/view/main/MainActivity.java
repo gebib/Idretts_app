@@ -22,6 +22,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.InputType;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -44,9 +45,6 @@ import com.example.gruppe43.idretts_app.application.view.fragments.Team;
 import com.example.gruppe43.idretts_app.application.view.fragments.Trainer;
 import com.google.firebase.auth.FirebaseAuth;
 
-import java.util.Timer;
-import java.util.TimerTask;
-
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, FragmentActivityInterface {
     private DrawerLayout mDrawerLayout;
     private FragmentManager mFragmentManager;
@@ -65,6 +63,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private DataBaseHelper databaseHelper;
     public static boolean onRegisterPage;
     protected static boolean isRegiteringActivity;
+    private boolean isAdminSet;
 
 
     @Override
@@ -105,6 +104,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
 
+
         SharedPreferences prefs = getSharedPreferences("sAdPlayValues", MODE_PRIVATE);
         String restore = prefs.getString("isAdmin", "No name defined");
         if (restore.equals("false")) {
@@ -116,8 +116,26 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             isTrainerSignedIn = true;
             actionBar.show();
         }
+
+        if (isTrainerSignedIn != null || isPlayerSignedIn != null) {
+            mFragmentTransaction = mFragmentManager.beginTransaction();
+            //mFragmentTransaction.replace(R.id.containerView, new Tabs()).commitAllowingStateLoss();
+            mFragmentTransaction.replace(R.id.containerView, new Tabs()).commit();
+        }else{
+            onSignOut();
+        }
+
+        if (isPlayerSignedIn != null && isTrainerSignedIn != null) {
+            if (isPlayerSignedIn) {
+                initAfterLogin("notAdmin");
+            } else {
+                initAfterLogin("admin");
+            }
+        }
+
+
         // listen for if user has logged in
-        mAuthListner = new FirebaseAuth.AuthStateListener() {
+       /* mAuthListner = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 if ((firebaseAuth.getCurrentUser() == null)) {////////////////////////////////////////////////////////////////////////
@@ -133,7 +151,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     }
                 }
             }
-        };
+        };*/
     }
 
     //navigate to appropriate fragment after registration.
@@ -168,7 +186,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     protected void onStart() {
         super.onStart();
-        mAuth.addAuthStateListener(mAuthListner);//listen for if the user has signed in already
+       // mAuth.addAuthStateListener(mAuthListner);//listen for if the user has signed in already ///////////////////////////////////////////////////////////////////
     }
 
     @Override
@@ -304,7 +322,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     //set fragment transactions/navigation
-    public void replaceFragmentWith(Fragment fragmentClass, String from) {
+    public void replaceFragmentWith(Fragment fragmentClass, String from) {                                                  //TODO fix back stacks!!!
         if (from.equals("login")) {
             FragmentTransaction xfragmentTransaction = mFragmentManager.beginTransaction();
             xfragmentTransaction.replace(R.id.containerView, fragmentClass).commit();
@@ -368,18 +386,23 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     //set state sign out!
     @Override
     public void onSignOut() {
-            mAuth.signOut();
-            SharedPreferences.Editor editor = getSharedPreferences("sAdPlayValues", MODE_PRIVATE).edit();
-            editor.putString("isAdmin", "none");
-            editor.commit();
+        SharedPreferences.Editor editor = getSharedPreferences("sAdPlayValues", MODE_PRIVATE).edit();
+        editor.putString("isAdmin", "none");
+        editor.commit();
 
-            onRegisterPage = false;
-            ActionBar actionBar = getSupportActionBar();
-            actionBar.hide();
-            fab.hide();
-            dumpBackStack();
-            isTrainerSignedIn = null;
-            isPlayerSignedIn = null;
+        onRegisterPage = false;
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.hide();
+        fab.hide();
+        dumpBackStack();
+        isTrainerSignedIn = null;
+        isPlayerSignedIn = null;
+        if(mAuth.getCurrentUser() != null){
+            mAuth.signOut();
+        }
+        mFragmentTransaction = mFragmentManager.beginTransaction();
+        mFragmentTransaction.replace(R.id.containerView, new Login()).commitAllowingStateLoss();
+
     }
 
     @Override
@@ -395,10 +418,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         final AlertDialog.Builder alert = new AlertDialog.Builder(this);
         alert.setTitle(" Administrator");
         final EditText input = new EditText(this);
-
+        isAdminSet = false;
         input.setBackgroundColor(Color.WHITE);
         input.setInputType(InputType.TYPE_NUMBER_FLAG_DECIMAL);
         input.setHint("Admin password");
+        input.setGravity(Gravity.CENTER);
         alert.setView(input);
 
         alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
@@ -408,10 +432,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     initAfterLogin("admin");
                     databaseHelper = new DataBaseHelper();
                     databaseHelper.setIsAdmin();//only first time.
-
+                    isAdminSet = true;
                     AlertDialog.Builder builder1 = new AlertDialog.Builder(mainContext);
                     builder1.setTitle(getString(R.string.welcomeCoachTittle));
                     builder1.setMessage(R.string.wecomeCoachText);
+                    builder1.setCancelable(false);
                     builder1.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
                             //ingen action.
@@ -421,6 +446,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     alert11.show();
                     initAfterLogin("admin");
                 } else {
+                    isAdminSet = false;
                     Toast.makeText(MainActivity.this, R.string.adminCodMismatched, Toast.LENGTH_SHORT).show();
                     requIreAdminPass();
                 }
@@ -430,19 +456,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             public void onClick(DialogInterface dialog, int whichButton) {
                 authClass.deleteFirstUserNotValid();
                 Toast.makeText(MainActivity.this, R.string.administratorNotSet, Toast.LENGTH_SHORT).show();
-                replaceFragmentWith(new Login(), "");
-
-                SharedPreferences.Editor editor = getSharedPreferences("sAdPlayValues", MODE_PRIVATE).edit();
-                editor.putString("isAdmin", "none");
-                editor.commit();
-
-                onRegisterPage = false;
-                ActionBar actionBar = getSupportActionBar();
-                actionBar.hide();
-                fab.hide();
-                dumpBackStack();
-                isTrainerSignedIn = null;
-                isPlayerSignedIn = null;
+                onSignOut();
             }
         });
         alert.show();
