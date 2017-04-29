@@ -44,6 +44,9 @@ import com.example.gruppe43.idretts_app.application.view.fragments.Team;
 import com.example.gruppe43.idretts_app.application.view.fragments.Trainer;
 import com.google.firebase.auth.FirebaseAuth;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, FragmentActivityInterface {
     private DrawerLayout mDrawerLayout;
     private FragmentManager mFragmentManager;
@@ -61,7 +64,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private Authentication authClass;
     private DataBaseHelper databaseHelper;
     public static boolean onRegisterPage;
-    private boolean loggingIn;
     protected static boolean isRegiteringActivity;
 
 
@@ -103,7 +105,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
 
-         SharedPreferences prefs = getSharedPreferences("sAdPlayValues", MODE_PRIVATE);
+        SharedPreferences prefs = getSharedPreferences("sAdPlayValues", MODE_PRIVATE);
         String restore = prefs.getString("isAdmin", "No name defined");
         if (restore.equals("false")) {
             isPlayerSignedIn = true;
@@ -118,24 +120,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mAuthListner = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                if ((firebaseAuth.getCurrentUser() == null)) {
-                    new Handler().post(new Runnable() {
-                        public void run() {
-                            mFragmentTransaction = mFragmentManager.beginTransaction();
-                            mFragmentTransaction.replace(R.id.containerView, new Login()).commit();
-                        }
-                    });
+                if ((firebaseAuth.getCurrentUser() == null)) {////////////////////////////////////////////////////////////////////////
+                    mFragmentTransaction = mFragmentManager.beginTransaction();
+                    mFragmentTransaction.replace(R.id.containerView, new Login()).commitAllowingStateLoss();
                 } else if (isTrainerSignedIn != null || isPlayerSignedIn != null) {
                     mFragmentTransaction = mFragmentManager.beginTransaction();
-                    mFragmentTransaction.replace(R.id.containerView, new Tabs()).commit();
-                    loggingIn = false;
+                    mFragmentTransaction.replace(R.id.containerView, new Tabs()).commitAllowingStateLoss();
                     if (isPlayerSignedIn) {
                         initAfterLogin("notAdmin");
                     } else if (isTrainerSignedIn) {
                         initAfterLogin("admin");
                     }
                 }
-
             }
         };
     }
@@ -154,9 +150,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             fragmentTransaction.replace(R.id.containerView, new NewActivityRegistration()).commit();
             currentShowingFragment("editActivity");
         } else if (isPlayerSignedIn && editActivityIsShowing) {
-            FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
-            mFragmentManager.popBackStack();
-            fragmentTransaction.replace(R.id.containerView, new Tabs()).commit();
             new Handler().post(new Runnable() {
                 @Override
                 public void run() {
@@ -170,7 +163,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             fragmentTransaction.replace(R.id.containerView, new Tabs()).commit();
             currentShowingFragment("trainer");
         }
-
     }
 
     @Override
@@ -217,69 +209,61 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         //No call for super(). Bug on API Level > 11.
+        outState.putString("WORKAROUND_FOR_BUG_19917_KEY", "WORKAROUND_FOR_BUG_19917_VALUE");
+        super.onSaveInstanceState(outState);
     }
 
 
     /*//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-        if (menuItem.getItemId() == R.id.nav_profile) {
+        if (menuItem.getItemId() == R.id.nav_exit) {
+            onSignOut();
+        } else if (menuItem.getItemId() == R.id.nav_profile) {
             FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
             fragmentTransaction.addToBackStack("");
             fragmentTransaction.replace(R.id.containerView, new ProfileView()).commit();
             currentShowingFragment("");
-        }
-        if (menuItem.getItemId() == R.id.nav_messages) {
+        } else if (menuItem.getItemId() == R.id.nav_messages) {
             FragmentTransaction xfragmentTransaction = mFragmentManager.beginTransaction();
             xfragmentTransaction.addToBackStack("");
             xfragmentTransaction.replace(R.id.containerView, new Messages()).commit();
             //currentShowingFragment("");
-        }
-        if (menuItem.getItemId() == R.id.nav_trainer) {
+        } else if (menuItem.getItemId() == R.id.nav_trainer) {
             FragmentTransaction xfragmentTransaction = mFragmentManager.beginTransaction();
             xfragmentTransaction.addToBackStack("");
             xfragmentTransaction.replace(R.id.containerView, new Trainer()).commit();
             // currentShowingFragment("trainer");
-        }
-        if (menuItem.getItemId() == R.id.navn_player) {
+        } else if (menuItem.getItemId() == R.id.navn_player) {
             FragmentTransaction xfragmentTransaction = mFragmentManager.beginTransaction();
             xfragmentTransaction.addToBackStack("");
             xfragmentTransaction.replace(R.id.containerView, new Player()).commit();
             // currentShowingFragment("player");
-        }
-        if (menuItem.getItemId() == R.id.nav_Team) {
+        } else if (menuItem.getItemId() == R.id.nav_Team) {
             FragmentTransaction xfragmentTransaction = mFragmentManager.beginTransaction();
             xfragmentTransaction.addToBackStack("");
             xfragmentTransaction.replace(R.id.containerView, new Team()).commit();
             //currentShowingFragment("");
-        }
-        if (menuItem.getItemId() == R.id.nav_exit) {
-            onSignOut();
-            mFragmentTransaction = mFragmentManager.beginTransaction();
-            mFragmentTransaction.replace(R.id.containerView, new Login()).commit();
-        }
+        } else
 
                 /*MIDLERTIDIG navigasjon///////////////////////////////////////////////////////*/
 
-        if (menuItem.getItemId() == R.id.activityInformationPage) {
-            FragmentTransaction xfragmentTransaction = mFragmentManager.beginTransaction();
-            xfragmentTransaction.addToBackStack("");
-            xfragmentTransaction.replace(R.id.containerView, new FullActivityInfo()).commit();
-            //currentShowingFragment("");
-        }
-        if (menuItem.getItemId() == R.id.newActivityRegistrationPage) {
-            FragmentTransaction xfragmentTransaction = mFragmentManager.beginTransaction();
-            xfragmentTransaction.addToBackStack("");
-            xfragmentTransaction.replace(R.id.containerView, new NewActivityRegistration()).commit();
-            //currentShowingFragment("");
-        }
-
-        if (menuItem.getItemId() == R.id.messegesEditgPage) {
-            FragmentTransaction xfragmentTransaction = mFragmentManager.beginTransaction();
-            xfragmentTransaction.addToBackStack("");
-            xfragmentTransaction.replace(R.id.containerView, new Messages()).commit(); /* dette er fragment siden for all melding osv..*/
-            //currentShowingFragment("");
-        }
+            if (menuItem.getItemId() == R.id.activityInformationPage) {
+                FragmentTransaction xfragmentTransaction = mFragmentManager.beginTransaction();
+                xfragmentTransaction.addToBackStack("");
+                xfragmentTransaction.replace(R.id.containerView, new FullActivityInfo()).commit();
+                //currentShowingFragment("");
+            } else if (menuItem.getItemId() == R.id.newActivityRegistrationPage) {
+                FragmentTransaction xfragmentTransaction = mFragmentManager.beginTransaction();
+                xfragmentTransaction.addToBackStack("");
+                xfragmentTransaction.replace(R.id.containerView, new NewActivityRegistration()).commit();
+                //currentShowingFragment("");
+            } else if (menuItem.getItemId() == R.id.messegesEditgPage) {
+                FragmentTransaction xfragmentTransaction = mFragmentManager.beginTransaction();
+                xfragmentTransaction.addToBackStack("");
+                xfragmentTransaction.replace(R.id.containerView, new Messages()).commit(); /* dette er fragment siden for all melding osv..*/
+                //currentShowingFragment("");
+            }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
@@ -384,19 +368,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     //set state sign out!
     @Override
     public void onSignOut() {
-        if (mAuth.getCurrentUser() != null && !loggingIn) {
             mAuth.signOut();
-            loggingIn = false;
-
             SharedPreferences.Editor editor = getSharedPreferences("sAdPlayValues", MODE_PRIVATE).edit();
             editor.putString("isAdmin", "none");
             editor.commit();
+
             onRegisterPage = false;
-        }
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.hide();
-        fab.hide();
-        dumpBackStack();
+            ActionBar actionBar = getSupportActionBar();
+            actionBar.hide();
+            fab.hide();
+            dumpBackStack();
+            isTrainerSignedIn = null;
+            isPlayerSignedIn = null;
     }
 
     @Override
@@ -448,7 +431,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 authClass.deleteFirstUserNotValid();
                 Toast.makeText(MainActivity.this, R.string.administratorNotSet, Toast.LENGTH_SHORT).show();
                 replaceFragmentWith(new Login(), "");
-                onSignOut();
+
+                SharedPreferences.Editor editor = getSharedPreferences("sAdPlayValues", MODE_PRIVATE).edit();
+                editor.putString("isAdmin", "none");
+                editor.commit();
+
+                onRegisterPage = false;
+                ActionBar actionBar = getSupportActionBar();
+                actionBar.hide();
+                fab.hide();
+                dumpBackStack();
+                isTrainerSignedIn = null;
+                isPlayerSignedIn = null;
             }
         });
         alert.show();

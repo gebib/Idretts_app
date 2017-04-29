@@ -43,7 +43,7 @@
     <string name="actEnds">Ends:</string>
     <string name="actLocation">Location:</string>
     <string name="signInFailureAlertTitle">Sign in</string>
-    <string name="signInFailureAlertText">Sign in failured. Please check your internet connection and try again.</string>
+    <string name="signInFailureAlertText">Sign in failured. Please check you typed right email and password, and make sure you are connected to internet, and try again.</string>
     <string name="progressDialogSignInTitle">Sign in</string>
     <string name="progressDialogSignInTextInfo">Signing in ...</string>
     <string name="progressDialogRegistrationTitle">Registration</string>
