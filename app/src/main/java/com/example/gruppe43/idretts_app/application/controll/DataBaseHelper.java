@@ -2,6 +2,7 @@ package com.example.gruppe43.idretts_app.application.controll;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.support.annotation.NonNull;
 
@@ -29,8 +30,9 @@ public class DataBaseHelper extends Authentication {
     private DatabaseReference fbUsersDbRef;
     private DatabaseReference fbAbsenceDbRef;
     private DatabaseReference fbCapsDbRef;
-    private FragmentActivityInterface mCallback;
     private ProgressDialog progressDialog;
+
+
 
     private Authentication authClass;
 
@@ -90,7 +92,6 @@ public class DataBaseHelper extends Authentication {
         textInfo = activityTextInfo;
         actIcon = icon;
 
-
         progressDialog = new ProgressDialog(mainContext);
         progressDialog.setTitle(mainContext.getResources().getString(R.string.adminPostingProgressDialogTitle));
         progressDialog.setMessage(mainContext.getResources().getString(R.string.adminPostingProgressDialogTextInfo));
@@ -116,12 +117,13 @@ public class DataBaseHelper extends Authentication {
                 trainer_post_DB.child("icon").setValue(actIcon);
 
                 progressDialog.dismiss();
-                mCallback.showFragmentOfGivenCondition();
+               showFragmentOfGivenCondition();
             }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
                 progressDialog.dismiss();
+                isRegisterSuccesfull = false;
                 AlertDialog.Builder builder1 = new AlertDialog.Builder(authClass);
                 builder1.setTitle(authClass.getString(R.string.activityRegistrationFailureTitle));
                 builder1.setMessage(authClass.getString(R.string.activityRegistrationFailureTextIinfo));

@@ -23,6 +23,7 @@ import com.example.gruppe43.idretts_app.application.controll.Authentication;
 import com.example.gruppe43.idretts_app.application.controll.DataBaseHelper;
 import com.example.gruppe43.idretts_app.application.helper_classes.DatePickerFragment;
 import com.example.gruppe43.idretts_app.application.helper_classes.TimePickerFragment;
+import com.example.gruppe43.idretts_app.application.view.main.MainActivity;
 
 
 public class NewActivityRegistration extends Fragment {
@@ -36,6 +37,7 @@ public class NewActivityRegistration extends Fragment {
     private String activityTitle;
     private String setIntensity;
     private Authentication authClass;
+    public static NewActivityRegistration nar;
 
     private boolean isForStarttime;
     private String titleSpinnerPos;
@@ -50,6 +52,7 @@ public class NewActivityRegistration extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_new_activity_registration, container, false);
         authClass = new Authentication();
+        nar = this;
         newActSpinnerActivityType = (Spinner) view.findViewById(R.id.spinnerActivityType);
         newActDate = (EditText) view.findViewById(R.id.newActDate);
         newActTimeFrom = (EditText) view.findViewById(R.id.newActTimeFrom);
@@ -141,6 +144,10 @@ public class NewActivityRegistration extends Fragment {
         return view;
     }
 
+    @Override
+    public void onPause() {
+        super.onPause();
+    }
 
     public void registerActivity (){
         DataBaseHelper dbh = new DataBaseHelper();
@@ -171,6 +178,7 @@ public class NewActivityRegistration extends Fragment {
             });
             AlertDialog alert11 = builder1.create();
             alert11.show();
+            MainActivity.onNewActivityRegisterPage = true;
         } else {
             dbh.postTrainerActivity(activityTitle, actDate, timeFrom, timeTo, actPlace, setIntensity, textInfo,icon);
         }

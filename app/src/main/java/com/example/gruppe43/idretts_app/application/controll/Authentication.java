@@ -4,9 +4,13 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.annotation.NonNull;
+import android.text.InputType;
 import android.text.format.Time;
 import android.util.Log;
+import android.view.Gravity;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.gruppe43.idretts_app.R;
@@ -36,7 +40,7 @@ public class Authentication extends MainActivity {
     private FirebaseAuth fbAuth;
     private FragmentActivityInterface mCallback;
     protected String nowDate, nowMonth, nowYear, nowHour, nowMinute;
-
+    private static final String ONE_TIME_INITIALIZATION_CODE = "1234";
 
     private DatabaseReference fbTrainerPostsDbRef;
     private DatabaseReference fbPlayerPostsDbRef;
@@ -45,6 +49,7 @@ public class Authentication extends MainActivity {
     private DatabaseReference fbCapsDbRef;
     private String email;
     private String pass;
+    private DataBaseHelper databaseHelper;
 
 
     public Authentication() {
@@ -168,7 +173,7 @@ public class Authentication extends MainActivity {
                 //so that the first user to register is identified to be ADMIN!
                 //becouse only admin own those default codes
                 if (dataSnapshot.getChildrenCount() == 1) {//only visible after reset/ first start!
-                    mCallback.requIreAdminPass();
+                    requIreAdminPass();
                 }else{
                     signIn(email,pass);
                 }
@@ -198,5 +203,52 @@ public class Authentication extends MainActivity {
         nowHour = today.hour + "";
         nowMinute = today.minute + "";
     }
+
+    //requiere first time admin pass
+    public void requIreAdminPass() {
+        final AlertDialog.Builder alert = new AlertDialog.Builder(this);
+        alert.setTitle(" Administrator");
+        final EditText input = new EditText(this);
+        input.setBackgroundColor(Color.WHITE);
+        input.setInputType(InputType.TYPE_NUMBER_FLAG_DECIMAL);
+        input.setHint("Admin password");
+        input.setGravity(Gravity.CENTER);
+        alert.setView(input);
+
+        alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                String value = input.getText().toString();
+                if (value.equals(ONE_TIME_INITIALIZATION_CODE)) {
+                    initAfterLogin("admin");
+                    databaseHelper = new DataBaseHelper();
+                    databaseHelper.setIsAdmin();//only first time.
+                    AlertDialog.Builder builder1 = new AlertDialog.Builder(mainContext);
+                    builder1.setTitle(getString(R.string.welcomeCoachTittle));
+                    builder1.setMessage(R.string.wecomeCoachText);
+                    builder1.setCancelable(false);
+                    builder1.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            //ingen action.
+                        }
+                    });
+                    AlertDialog alert11 = builder1.create();
+                    alert11.show();
+                    initAfterLogin("admin");
+                } else {
+                    Toast.makeText(mainContext, R.string.adminCodMismatched, Toast.LENGTH_SHORT).show();
+                    requIreAdminPass();
+                }
+            }
+        });
+        alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                deleteFirstUserNotValid();
+                Toast.makeText(mainContext, R.string.administratorNotSet, Toast.LENGTH_SHORT).show();
+                onSignOut();
+            }
+        });
+        alert.show();
+    }
 }
+
 
