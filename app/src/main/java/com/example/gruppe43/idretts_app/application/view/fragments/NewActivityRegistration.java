@@ -4,6 +4,7 @@ package com.example.gruppe43.idretts_app.application.view.fragments;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -23,6 +24,7 @@ import com.example.gruppe43.idretts_app.application.controll.Authentication;
 import com.example.gruppe43.idretts_app.application.controll.DataBaseHelper;
 import com.example.gruppe43.idretts_app.application.helper_classes.DatePickerFragment;
 import com.example.gruppe43.idretts_app.application.helper_classes.TimePickerFragment;
+import com.example.gruppe43.idretts_app.application.interfaces.FragmentActivityInterface;
 import com.example.gruppe43.idretts_app.application.view.main.MainActivity;
 
 
@@ -38,6 +40,7 @@ public class NewActivityRegistration extends Fragment {
     private String setIntensity;
     private Authentication authClass;
     public static NewActivityRegistration nar;
+    private FragmentActivityInterface mCallback;
 
     private boolean isForStarttime;
     private String titleSpinnerPos;
@@ -47,6 +50,16 @@ public class NewActivityRegistration extends Fragment {
         // Required empty public constructor 
     }
 
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        try {
+            mCallback = (FragmentActivityInterface) context;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(context.toString()
+                    + " must implement IFragmentToActivity");
+        }
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -180,7 +193,10 @@ public class NewActivityRegistration extends Fragment {
             alert11.show();
             MainActivity.onNewActivityRegisterPage = true;
         } else {
-            dbh.postTrainerActivity(activityTitle, actDate, timeFrom, timeTo, actPlace, setIntensity, textInfo,icon);
+          boolean registrationOk =  dbh.postTrainerActivity(activityTitle, actDate, timeFrom, timeTo, actPlace, setIntensity, textInfo,icon);
+            if(registrationOk){
+                mCallback.showFragmentOfGivenCondition();
+            }
         }
     }
 
@@ -210,4 +226,10 @@ public class NewActivityRegistration extends Fragment {
             }
         }
     };
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        MainActivity.onNewActivityRegisterPage = false;
+    }
 }

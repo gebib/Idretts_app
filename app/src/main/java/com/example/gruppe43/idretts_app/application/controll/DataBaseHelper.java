@@ -15,6 +15,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseException;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
@@ -31,7 +32,8 @@ public class DataBaseHelper extends Authentication {
     private DatabaseReference fbAbsenceDbRef;
     private DatabaseReference fbCapsDbRef;
     private ProgressDialog progressDialog;
-
+    private FragmentActivityInterface mCallback;
+    boolean isRegistered;
 
 
     private Authentication authClass;
@@ -40,6 +42,8 @@ public class DataBaseHelper extends Authentication {
     private FirebaseAuth fbAuth;
 
     public DataBaseHelper() {
+        isRegistered = false;
+        mCallback = (FragmentActivityInterface) mainContext;
         fbTrainerPostsDbRef = FirebaseDatabase.getInstance().getReference().child("TrainerPosts");
         fbPlayerPostsDbRef = FirebaseDatabase.getInstance().getReference().child("PlayerPosts");
         fbUsersDbRef = FirebaseDatabase.getInstance().getReference().child("Users");
@@ -73,15 +77,15 @@ public class DataBaseHelper extends Authentication {
     }
 
     //Post trainer activities posts
-    public void postTrainerActivity(String title,
-                                    String activityDate,
-                                    String startTime,
-                                    String endTime,
-                                    String place,
-                                    String intensity,
-                                    String activityTextInfo,
-                                    String icon) {
-        final String dateOfActivity, startingTime, endingTime, gatherPlace, trainingIntensity, postedTime, activityTitle, textInfo,actIcon;
+    public boolean postTrainerActivity(String title,
+                                       String activityDate,
+                                       String startTime,
+                                       String endTime,
+                                       String place,
+                                       String intensity,
+                                       String activityTextInfo,
+                                       String icon) {
+        final String dateOfActivity, startingTime, endingTime, gatherPlace, trainingIntensity, postedTime, activityTitle, textInfo, actIcon;
         dateOfActivity = activityDate;
         startingTime = startTime;
         endingTime = endTime;
@@ -96,47 +100,43 @@ public class DataBaseHelper extends Authentication {
         progressDialog.setTitle(mainContext.getResources().getString(R.string.adminPostingProgressDialogTitle));
         progressDialog.setMessage(mainContext.getResources().getString(R.string.adminPostingProgressDialogTextInfo));
         progressDialog.show();
-        fbTrainerPostsDbRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                String user_id = fbAuth.getCurrentUser().getUid();
-                DatabaseReference trainer_post_DB = fbTrainerPostsDbRef.child(user_id);
-                getCurrentDate();
-                String datePosted = nowDate + "." + nowMonth + "." + nowYear;
-                String timePosted = nowHour + ":" + nowMinute;
-                trainer_post_DB.child("title").setValue(activityTitle);
-                trainer_post_DB.child("activityDate").setValue(dateOfActivity);
-                trainer_post_DB.child("startTime").setValue(startingTime);
-                trainer_post_DB.child("endTime").setValue(endingTime);
-                trainer_post_DB.child("place").setValue(gatherPlace);
-                trainer_post_DB.child("intensity").setValue(trainingIntensity);
-                trainer_post_DB.child("postTime").setValue(postedTime);
-                trainer_post_DB.child("postedDate").setValue(datePosted);
-                trainer_post_DB.child("infoText").setValue(textInfo);
-                trainer_post_DB.child("timePosted").setValue(timePosted);
-                trainer_post_DB.child("icon").setValue(actIcon);
 
-                progressDialog.dismiss();
-               showFragmentOfGivenCondition();
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                progressDialog.dismiss();
-                isRegisterSuccesfull = false;
-                AlertDialog.Builder builder1 = new AlertDialog.Builder(authClass);
-                builder1.setTitle(authClass.getString(R.string.activityRegistrationFailureTitle));
-                builder1.setMessage(authClass.getString(R.string.activityRegistrationFailureTextIinfo));
-                builder1.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        //ingen action.
-                    }
-                });
-                AlertDialog alert11 = builder1.create();
-                alert11.show();
-            }
-        });
-
+        try {
+            String get_current_user_id = fbAuth.getCurrentUser().getUid();
+            DatabaseReference trainer_posts = fbTrainerPostsDbRef.push();//creates new ID for every post.////////////////////////////////////////////
+            getCurrentDate();
+            String datePosted = nowDate + "." + nowMonth + "." + nowYear;
+            String timePosted = nowHour + ":" + nowMinute;
+            trainer_posts.child("title").setValue(activityTitle);
+            trainer_posts.child("activityDate").setValue(dateOfActivity);
+            trainer_posts.child("startTime").setValue(startingTime);
+            trainer_posts.child("endTime").setValue(endingTime);
+            trainer_posts.child("place").setValue(gatherPlace);
+            trainer_posts.child("intensity").setValue(trainingIntensity);
+            trainer_posts.child("postTime").setValue(postedTime);
+            trainer_posts.child("postedDate").setValue(datePosted);
+            trainer_posts.child("infoText").setValue(textInfo);
+            trainer_posts.child("timePosted").setValue(timePosted);
+            trainer_posts.child("icon").setValue(actIcon);
+            trainer_posts.child("postedUserId").setValue(get_current_user_id);
+            progressDialog.dismiss();
+            isRegistered = true;
+        } catch (DatabaseException dbe) {//db failure
+            progressDialog.dismiss();
+            isRegisterSuccesfull = false;
+            AlertDialog.Builder builder1 = new AlertDialog.Builder(authClass);
+            builder1.setTitle(authClass.getString(R.string.activityRegistrationFailureTitle));
+            builder1.setMessage(authClass.getString(R.string.activityRegistrationFailureTextIinfo));
+            builder1.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+                    //ingen action.
+                }
+            });
+            AlertDialog alert11 = builder1.create();
+            alert11.show();
+            isRegistered = false;
+        }
+        return isRegistered;
     }
 
     //Post player activity

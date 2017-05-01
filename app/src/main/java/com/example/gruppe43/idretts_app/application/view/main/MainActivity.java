@@ -154,6 +154,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
             fragmentTransaction.replace(R.id.containerView, new Tabs()).commit();
             currentShowingFragment("trainer");
+            editActivityIsShowing = false;
         }
     }
 
