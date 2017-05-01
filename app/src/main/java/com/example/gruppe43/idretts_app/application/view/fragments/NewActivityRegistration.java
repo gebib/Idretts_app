@@ -27,6 +27,8 @@ import com.example.gruppe43.idretts_app.application.helper_classes.TimePickerFra
 import com.example.gruppe43.idretts_app.application.interfaces.FragmentActivityInterface;
 import com.example.gruppe43.idretts_app.application.view.main.MainActivity;
 
+import java.util.Calendar;
+
 
 public class NewActivityRegistration extends Fragment {
     private Spinner newActSpinnerActivityType;
@@ -36,14 +38,17 @@ public class NewActivityRegistration extends Fragment {
     private EditText newActTimeTo;
     private EditText location;
     private TextView newActAdditionalTextInfo;
+    private EditText nonFunctionalEditTextForUse;
     private String activityTitle;
     private String setIntensity;
     private Authentication authClass;
     public static NewActivityRegistration nar;
     private FragmentActivityInterface mCallback;
 
+
     private boolean isForStarttime;
     private String titleSpinnerPos;
+    private boolean onLocation;
 
 
     public NewActivityRegistration() {
@@ -73,6 +78,7 @@ public class NewActivityRegistration extends Fragment {
         location = (EditText) view.findViewById(R.id.newActLocation);
         newActIntensitySpinner = (Spinner) view.findViewById(R.id.newActIntensitySpinner);
         newActAdditionalTextInfo = (TextView) view.findViewById(R.id.newActTextInfo);
+        nonFunctionalEditTextForUse = (EditText) view.findViewById(R.id.makeGapAndForFocusShiftingPurpose);
 
 
         newActDate.setOnFocusChangeListener(new View.OnFocusChangeListener() {
@@ -80,7 +86,7 @@ public class NewActivityRegistration extends Fragment {
             public void onFocusChange(View v, boolean hasFocus) {
                 if (hasFocus) {
                     showDatePicker();//////////ok
-                    location.requestFocus();
+                    nonFunctionalEditTextForUse.requestFocus();
                 }
             }
         });
@@ -90,7 +96,7 @@ public class NewActivityRegistration extends Fragment {
                 if (hasFocus) {
                     isForStarttime = true;
                     showTimePicker();
-                    location.requestFocus();
+                    nonFunctionalEditTextForUse.requestFocus();
                 }
             }
         });
@@ -101,9 +107,27 @@ public class NewActivityRegistration extends Fragment {
                 if (hasFocus) {
                     isForStarttime = false;
                     showTimePicker();
-                    location.requestFocus();
+                    nonFunctionalEditTextForUse.requestFocus();
                 }
+            }
+        });
+        location.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) {
+                    location.setHint("");
+                }
+            }
+        });
 
+        newActAdditionalTextInfo.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) {
+                   newActAdditionalTextInfo.setHint("");
+                }else if(!hasFocus && newActAdditionalTextInfo.getText().toString().trim().equals("")){
+                    newActAdditionalTextInfo.setHint("");
+                }
             }
         });
 
@@ -116,8 +140,9 @@ public class NewActivityRegistration extends Fragment {
         newActSpinnerActivityType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
                 activityTitle = (String) parent.getItemAtPosition(pos);
-                titleSpinnerPos = pos+"";
+                titleSpinnerPos = pos + "";
             }
+
             public void onNothingSelected(AdapterView<?> parent) {
             }
         });
@@ -162,7 +187,7 @@ public class NewActivityRegistration extends Fragment {
         super.onPause();
     }
 
-    public void registerActivity (){
+    public void registerActivity() {
         DataBaseHelper dbh = new DataBaseHelper();
         String actDate = newActDate.getText().toString().trim();
         String timeFrom = newActTimeFrom.getText().toString().trim();
@@ -170,13 +195,13 @@ public class NewActivityRegistration extends Fragment {
         String actPlace = location.getText().toString().trim();
         String textInfo = newActAdditionalTextInfo.getText().toString().trim();
         String icon = "";
-        if(titleSpinnerPos.equals("0")){
+        if (titleSpinnerPos.equals("0")) {
             icon = "training_f";
-        }else if(titleSpinnerPos.equals("1")){
+        } else if (titleSpinnerPos.equals("1")) {
             icon = "training";
-        }else if(titleSpinnerPos.equals("2")){
+        } else if (titleSpinnerPos.equals("2")) {
             icon = "meeting";
-        }else if(titleSpinnerPos.equals("3")){
+        } else if (titleSpinnerPos.equals("3")) {
             icon = "camp";
         }
 
@@ -193,8 +218,8 @@ public class NewActivityRegistration extends Fragment {
             alert11.show();
             MainActivity.onNewActivityRegisterPage = true;
         } else {
-          boolean registrationOk =  dbh.postTrainerActivity(activityTitle, actDate, timeFrom, timeTo, actPlace, setIntensity, textInfo,icon);
-            if(registrationOk){
+            boolean registrationOk = dbh.postTrainerActivity(activityTitle, actDate, timeFrom, timeTo, actPlace, setIntensity, textInfo, icon);
+            if (registrationOk) {
                 mCallback.showFragmentOfGivenCondition();
             }
         }
@@ -214,15 +239,21 @@ public class NewActivityRegistration extends Fragment {
 
     DatePickerDialog.OnDateSetListener ondate = new DatePickerDialog.OnDateSetListener() {
         public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-            newActDate.setText(dayOfMonth + "." + monthOfYear + 1 + "." + year);
+            newActDate.setText(dayOfMonth + "." + monthOfYear + "." + year);
         }
     };
     TimePickerDialog.OnTimeSetListener ontime = new TimePickerDialog.OnTimeSetListener() {
         public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+            String modifMinut ="";
+            if(minute < 10){
+                modifMinut = "0"+minute;
+            }else{
+                modifMinut = ""+minute;
+            }
             if (isForStarttime) {
-                newActTimeFrom.setText(hourOfDay + ":" + minute);
+                newActTimeFrom.setText(hourOfDay + ":" + modifMinut);
             } else {
-                newActTimeTo.setText(hourOfDay + ":" + minute);
+                newActTimeTo.setText(hourOfDay + ":" + modifMinut);
             }
         }
     };
@@ -232,4 +263,5 @@ public class NewActivityRegistration extends Fragment {
         super.onDestroy();
         MainActivity.onNewActivityRegisterPage = false;
     }
+
 }

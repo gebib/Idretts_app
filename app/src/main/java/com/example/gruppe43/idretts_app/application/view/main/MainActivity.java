@@ -2,6 +2,8 @@ package com.example.gruppe43.idretts_app.application.view.main;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Dialog;
+import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
@@ -25,13 +27,16 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.InputType;
+import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.example.gruppe43.idretts_app.R;
@@ -68,6 +73,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     protected boolean isRegisterSuccesfull;
     private ActionBar actionBar;
     private PrefferencesClass prefs;
+    protected static final int DIALOG_ID = 0;
+    protected int time,minutt;
 
 
     @Override
