@@ -17,8 +17,6 @@ import android.widget.TextView;
 import com.example.gruppe43.idretts_app.R;
 import com.example.gruppe43.idretts_app.application.controll.Authentication;
 import com.example.gruppe43.idretts_app.application.interfaces.FragmentActivityInterface;
-import com.example.gruppe43.idretts_app.application.view.main.MainActivity;
-
 
 public class Login extends Fragment implements View.OnClickListener {
     private TextView signUpTV;
@@ -43,7 +41,7 @@ public class Login extends Fragment implements View.OnClickListener {
         passwordET = (EditText) view.findViewById(R.id.input_password);
         loginButtonBT.setOnClickListener(this);
         signUpTV.setOnClickListener(this);
-        authClass = new Authentication();
+        authClass = new Authentication(mCallback.getContext());
         return view;
     }
 
@@ -64,7 +62,7 @@ public class Login extends Fragment implements View.OnClickListener {
         switch (v.getId()) {
             case R.id.link_signup:
                 mCallback.replaceFragmentWith(new Registration(),"");
-                MainActivity.onNewActivityRegisterPage = true;
+                mCallback.setOnNewActivityRegisterPage(true);
                 break;
             case R.id.loginBT:
                 Boolean validInfo = validFormat();

@@ -2,23 +2,18 @@ package com.example.gruppe43.idretts_app.application.controll;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.support.annotation.NonNull;
 
 import com.example.gruppe43.idretts_app.R;
-import com.example.gruppe43.idretts_app.application.interfaces.FragmentActivityInterface;
-import com.example.gruppe43.idretts_app.application.view.main.MainActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseException;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 /**
@@ -26,32 +21,20 @@ import com.google.firebase.database.ValueEventListener;
  */
 
 public class DataBaseHelper extends Authentication {
-    private DatabaseReference fbTrainerPostsDbRef;
-    private DatabaseReference fbPlayerPostsDbRef;
-    private DatabaseReference fbUsersDbRef;
-    private DatabaseReference fbAbsenceDbRef;
-    private DatabaseReference fbCapsDbRef;
+
+    private boolean isRegistered;
+    private String[] activityData;
     private ProgressDialog progressDialog;
-    private FragmentActivityInterface mCallback;
-    boolean isRegistered;
-
-
-    private Authentication authClass;
-
-    private FirebaseUser fbUser;
-    private FirebaseAuth fbAuth;
+    private String postOwnerUserFirstAndLastName;
 
     public DataBaseHelper() {
         isRegistered = false;
-        mCallback = (FragmentActivityInterface) mainContext;
         fbTrainerPostsDbRef = FirebaseDatabase.getInstance().getReference().child("TrainerPosts");
         fbPlayerPostsDbRef = FirebaseDatabase.getInstance().getReference().child("PlayerPosts");
         fbUsersDbRef = FirebaseDatabase.getInstance().getReference().child("Users");
         fbAbsenceDbRef = FirebaseDatabase.getInstance().getReference().child("Abcences");
         fbCapsDbRef = FirebaseDatabase.getInstance().getReference().child("Camps");
-
         fbAuth = FirebaseAuth.getInstance();
-        authClass = new Authentication();
     }
 
 
@@ -61,9 +44,9 @@ public class DataBaseHelper extends Authentication {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if (!task.isSuccessful()) {
-                    AlertDialog.Builder builder1 = new AlertDialog.Builder(authClass);
-                    builder1.setTitle(authClass.getString(R.string.alert));
-                    builder1.setMessage(authClass.getString(R.string.setAdminFailured));
+                    AlertDialog.Builder builder1 = new AlertDialog.Builder(mainActivity);
+                    builder1.setTitle(mainActivity.getString(R.string.alert));
+                    builder1.setMessage(mainActivity.getString(R.string.setAdminFailured));
                     builder1.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
                             //ingen action.
@@ -85,20 +68,19 @@ public class DataBaseHelper extends Authentication {
                                        String intensity,
                                        String activityTextInfo,
                                        String icon) {
-        final String dateOfActivity, startingTime, endingTime, gatherPlace, trainingIntensity, postedTime, activityTitle, textInfo, actIcon;
+        final String dateOfActivity, startingTime, endingTime, gatherPlace, trainingIntensity, activityTitle, textInfo, actIcon;
         dateOfActivity = activityDate;
         startingTime = startTime;
         endingTime = endTime;
         gatherPlace = place;
         trainingIntensity = intensity;
-        postedTime = nowHour;
         activityTitle = title;
         textInfo = activityTextInfo;
         actIcon = icon;
 
-        progressDialog = new ProgressDialog(mainContext);
-        progressDialog.setTitle(mainContext.getResources().getString(R.string.adminPostingProgressDialogTitle));
-        progressDialog.setMessage(mainContext.getResources().getString(R.string.adminPostingProgressDialogTextInfo));
+        progressDialog = new ProgressDialog(mainActivity);
+        progressDialog.setTitle(mainActivity.getResources().getString(R.string.adminPostingProgressDialogTitle));
+        progressDialog.setMessage(mainActivity.getResources().getString(R.string.adminPostingProgressDialogTextInfo));
         progressDialog.show();
 
         try {
@@ -113,7 +95,6 @@ public class DataBaseHelper extends Authentication {
             trainer_posts.child("endTime").setValue(endingTime);
             trainer_posts.child("place").setValue(gatherPlace);
             trainer_posts.child("intensity").setValue(trainingIntensity);
-            trainer_posts.child("postTime").setValue(postedTime);
             trainer_posts.child("postedDate").setValue(datePosted);
             trainer_posts.child("infoText").setValue(textInfo);
             trainer_posts.child("timePosted").setValue(timePosted);
@@ -123,10 +104,10 @@ public class DataBaseHelper extends Authentication {
             isRegistered = true;
         } catch (DatabaseException dbe) {//db failure
             progressDialog.dismiss();
-            isRegisterSuccesfull = false;
-            AlertDialog.Builder builder1 = new AlertDialog.Builder(authClass);
-            builder1.setTitle(authClass.getString(R.string.activityRegistrationFailureTitle));
-            builder1.setMessage(authClass.getString(R.string.activityRegistrationFailureTextIinfo));
+           mainActivity.setIsRegisterSuccesfull(false);
+            AlertDialog.Builder builder1 = new AlertDialog.Builder(mainActivity);
+            builder1.setTitle(mainActivity.getString(R.string.activityRegistrationFailureTitle));
+            builder1.setMessage(mainActivity.getString(R.string.activityRegistrationFailureTextIinfo));
             builder1.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int id) {
                     //ingen action.
@@ -151,9 +132,9 @@ public class DataBaseHelper extends Authentication {
         activityPlace = place;
 
 
-        progressDialog = new ProgressDialog(mainContext);
-        progressDialog.setTitle(mainContext.getResources().getString(R.string.adminPostingProgressDialogTitle));
-        progressDialog.setMessage(mainContext.getResources().getString(R.string.adminPostingProgressDialogTextInfo));
+        progressDialog = new ProgressDialog(mainActivity);
+        progressDialog.setTitle(mainActivity.getResources().getString(R.string.adminPostingProgressDialogTitle));
+        progressDialog.setMessage(mainActivity.getResources().getString(R.string.adminPostingProgressDialogTextInfo));
         progressDialog.show();
         fbPlayerPostsDbRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -176,9 +157,9 @@ public class DataBaseHelper extends Authentication {
             @Override
             public void onCancelled(DatabaseError databaseError) {
                 progressDialog.dismiss();
-                AlertDialog.Builder builder1 = new AlertDialog.Builder(authClass);
-                builder1.setTitle(authClass.getString(R.string.activityRegistrationFailureTitle));
-                builder1.setMessage(authClass.getString(R.string.activityRegistrationFailureTextIinfo));
+                AlertDialog.Builder builder1 = new AlertDialog.Builder(mainActivity);
+                builder1.setTitle(mainActivity.getString(R.string.activityRegistrationFailureTitle));
+                builder1.setMessage(mainActivity.getString(R.string.activityRegistrationFailureTextIinfo));
                 builder1.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         //ingen action.
@@ -190,4 +171,77 @@ public class DataBaseHelper extends Authentication {
         });
     }
 
+    public String[] getTrainerPostData(String childKey) {
+        activityData = new String[12];
+        fbTrainerPostsDbRef.child(childKey).addValueEventListener(new ValueEventListener() {
+            @Override//hvis denne ikke kalles, sjekk model klassen og DB om det noe ikke stemmer! skal sammen stemme di to!
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                String title, activityDate, startTime, endTime, place, intensity, postedDate,
+                        infoText, timePosted, icon;
+
+                title = (String) dataSnapshot.child("title").getValue();
+                activityDate = (String) dataSnapshot.child("activityDate").getValue();
+                startTime = (String) dataSnapshot.child("startTime").getValue();
+                endTime = (String) dataSnapshot.child("endTime").getValue();
+                place = (String) dataSnapshot.child("place").getValue();
+                intensity = (String) dataSnapshot.child("intensity").getValue();
+                postedDate = (String) dataSnapshot.child("postedDate").getValue();
+                infoText = (String) dataSnapshot.child("infoText").getValue();
+                timePosted = (String) dataSnapshot.child("timePosted").getValue();
+                icon = (String) dataSnapshot.child("icon").getValue();
+
+                activityData[0] = title;
+                activityData[1] = activityDate;
+                activityData[2] = startTime;
+                activityData[3] = endTime;
+                activityData[4] = place;
+                activityData[5] = intensity;
+                activityData[6] = postedDate;
+                activityData[7] = infoText;
+                activityData[8] = timePosted;
+                activityData[9] = icon;
+
+                String postOwnersId = (String) dataSnapshot.child("postedUserId").getValue();
+                String postOwnersName = getPostOwnerName(postOwnersId);
+                activityData[10] = postOwnersName;
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                showDatabaseDataFetchConnectionError();
+            }
+        });
+        return activityData;
+    }
+
+    public String getPostOwnerName(String postOwnersId){
+        fbUsersDbRef.child(postOwnersId).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                String firstName = (String) dataSnapshot.child("firstName").getValue();
+                String lastName = (String) dataSnapshot.child("lastName").getValue();
+                postOwnerUserFirstAndLastName = firstName + " "+ lastName;
+
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                showDatabaseDataFetchConnectionError();
+            }
+        });
+    return  postOwnerUserFirstAndLastName;
+    }
+
+    public void showDatabaseDataFetchConnectionError() {
+        AlertDialog.Builder builder1 = new AlertDialog.Builder(mainActivity);
+        builder1.setTitle(mainActivity.getString(R.string.databaseConnectionErrorFetchTitle));
+        builder1.setMessage(mainActivity.getString(R.string.databaseConnectionErrorFetchTextInfo));
+        builder1.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                //ingen action.
+            }
+        });
+        AlertDialog alert11 = builder1.create();
+        alert11.show();
+    }
 }

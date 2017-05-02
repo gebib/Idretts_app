@@ -3,19 +3,15 @@ package com.example.gruppe43.idretts_app.application.controll;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.text.InputType;
 import android.text.format.Time;
-import android.util.Log;
 import android.view.Gravity;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.gruppe43.idretts_app.R;
-import com.example.gruppe43.idretts_app.application.interfaces.FragmentActivityInterface;
-import com.example.gruppe43.idretts_app.application.view.fragments.Tabs;
 import com.example.gruppe43.idretts_app.application.view.main.MainActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -29,44 +25,40 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.Calendar;
-import java.util.HashMap;
-
-/**
- * Created by gebi9 on 22-Apr-17.
- */
-
-public class Authentication extends MainActivity {
-    private FirebaseAuth fbAuth;
-    private FragmentActivityInterface mCallback;
+public class Authentication {
+    protected FirebaseAuth fbAuth;
     protected String nowDate, nowMonth, nowYear, nowHour, nowMinute;
     private static final String ONE_TIME_INITIALIZATION_CODE = "1234";
 
-    private DatabaseReference fbTrainerPostsDbRef;
-    private DatabaseReference fbPlayerPostsDbRef;
-    private DatabaseReference fbUsersDbRef;
-    private DatabaseReference fbAbsenceDbRef;
-    private DatabaseReference fbCapsDbRef;
+    protected DatabaseReference fbTrainerPostsDbRef;
+    protected DatabaseReference fbPlayerPostsDbRef;
+    protected DatabaseReference fbUsersDbRef;
+    protected DatabaseReference fbAbsenceDbRef;
+    protected DatabaseReference fbCapsDbRef;
     private String email;
     private String pass;
     private DataBaseHelper databaseHelper;
-
+    protected MainActivity mainActivity;
 
     public Authentication() {
-        fbAuth = FirebaseAuth.getInstance();
-        mCallback = (FragmentActivityInterface) mainContext;
+    }
 
+    public Authentication(MainActivity mainActivity){
         fbTrainerPostsDbRef = FirebaseDatabase.getInstance().getReference().child("TrainerPosts");
         fbPlayerPostsDbRef = FirebaseDatabase.getInstance().getReference().child("PlayerPosts");
         fbUsersDbRef = FirebaseDatabase.getInstance().getReference().child("Users");
         fbAbsenceDbRef = FirebaseDatabase.getInstance().getReference().child("Abcences");
         fbCapsDbRef = FirebaseDatabase.getInstance().getReference().child("Camps");
+        fbAuth = FirebaseAuth.getInstance();
+        this.mainActivity = mainActivity;
     }
 
+
+
     public void signIn(String email, String pass) {
-        final ProgressDialog progressDialog = new ProgressDialog(mainContext);
-        progressDialog.setTitle(mainContext.getResources().getString(R.string.progressDialogSignInTitle));
-        progressDialog.setMessage(mainContext.getResources().getString(R.string.progressDialogSignInTextInfo));
+        final ProgressDialog progressDialog = new ProgressDialog(mainActivity);
+        progressDialog.setTitle(mainActivity.getResources().getString(R.string.progressDialogSignInTitle));
+        progressDialog.setMessage(mainActivity.getResources().getString(R.string.progressDialogSignInTextInfo));
         progressDialog.show();
         fbAuth.signInWithEmailAndPassword(email, pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
@@ -80,7 +72,7 @@ public class Authentication extends MainActivity {
             @Override
             public void onFailure(@NonNull Exception e) {
                 progressDialog.dismiss();
-                AlertDialog.Builder builder1 = new AlertDialog.Builder(mainContext);
+                AlertDialog.Builder builder1 = new AlertDialog.Builder(mainActivity);
                 builder1.setTitle(R.string.signInFailureAlertTitle);
                 builder1.setMessage(R.string.signInFailureAlertText);
                 builder1.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
@@ -101,9 +93,9 @@ public class Authentication extends MainActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 String signedInUserIsAdminValue = (String) dataSnapshot.child("isAdmin").getValue();
                 if (signedInUserIsAdminValue.equals("true")) {
-                    mCallback.initAfterLogin("admin");
+                    mainActivity.initAfterLogin("admin");
                 } else {
-                    mCallback.initAfterLogin("player");
+                    mainActivity.initAfterLogin("player");
                 }
             }
             @Override
@@ -120,9 +112,9 @@ public class Authentication extends MainActivity {
         this.email = email;
         this.pass = pass;
 
-        final ProgressDialog progressDialog = new ProgressDialog(mainContext);
-        progressDialog.setTitle(mainContext.getResources().getString(R.string.progressDialogRegistrationTitle));
-        progressDialog.setMessage(mainContext.getResources().getString(R.string.progressDialogRegistrationTextInfo));
+        final ProgressDialog progressDialog = new ProgressDialog(mainActivity);
+        progressDialog.setTitle(mainActivity.getResources().getString(R.string.progressDialogRegistrationTitle));
+        progressDialog.setMessage(mainActivity.getResources().getString(R.string.progressDialogRegistrationTextInfo));
         progressDialog.show();
         fbAuth.createUserWithEmailAndPassword(email, pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
@@ -150,7 +142,7 @@ public class Authentication extends MainActivity {
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                AlertDialog.Builder builder1 = new AlertDialog.Builder(mainContext);
+                AlertDialog.Builder builder1 = new AlertDialog.Builder(mainActivity);
                 builder1.setTitle(R.string.dbConnectionErrror);
                 builder1.setMessage(R.string.dbConnectionErrorTextnfo);
                 builder1.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
@@ -206,9 +198,9 @@ public class Authentication extends MainActivity {
 
     //requiere first time admin pass
     public void requIreAdminPass() {
-        final AlertDialog.Builder alert = new AlertDialog.Builder(this);
+        final AlertDialog.Builder alert = new AlertDialog.Builder(mainActivity);
         alert.setTitle(" Administrator");
-        final EditText input = new EditText(this);
+        final EditText input = new EditText(mainActivity);
         input.setBackgroundColor(Color.WHITE);
         input.setInputType(InputType.TYPE_NUMBER_FLAG_DECIMAL);
         input.setHint("Admin password");
@@ -219,11 +211,11 @@ public class Authentication extends MainActivity {
             public void onClick(DialogInterface dialog, int whichButton) {
                 String value = input.getText().toString();
                 if (value.equals(ONE_TIME_INITIALIZATION_CODE)) {
-                    initAfterLogin("admin");
+                    mainActivity.initAfterLogin("admin");
                     databaseHelper = new DataBaseHelper();
                     databaseHelper.setIsAdmin();//only first time.
-                    AlertDialog.Builder builder1 = new AlertDialog.Builder(mainContext);
-                    builder1.setTitle(getString(R.string.welcomeCoachTittle));
+                    AlertDialog.Builder builder1 = new AlertDialog.Builder(mainActivity);
+                    builder1.setTitle(mainActivity.getString(R.string.welcomeCoachTittle));
                     builder1.setMessage(R.string.wecomeCoachText);
                     builder1.setCancelable(false);
                     builder1.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
@@ -233,9 +225,9 @@ public class Authentication extends MainActivity {
                     });
                     AlertDialog alert11 = builder1.create();
                     alert11.show();
-                    initAfterLogin("admin");
+                    mainActivity.initAfterLogin("admin");
                 } else {
-                    Toast.makeText(mainContext, R.string.adminCodMismatched, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mainActivity, R.string.adminCodMismatched, Toast.LENGTH_SHORT).show();
                     requIreAdminPass();
                 }
             }
@@ -243,8 +235,8 @@ public class Authentication extends MainActivity {
         alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
                 deleteFirstUserNotValid();
-                Toast.makeText(mainContext, R.string.administratorNotSet, Toast.LENGTH_SHORT).show();
-                onSignOut();
+                Toast.makeText(mainActivity, R.string.administratorNotSet, Toast.LENGTH_SHORT).show();
+                mainActivity.onSignOut();
             }
         });
         alert.show();

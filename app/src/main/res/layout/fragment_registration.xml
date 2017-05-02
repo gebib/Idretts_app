@@ -106,7 +106,7 @@
             android:id="@+id/familyApproveCB"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/white"
+            android:textColor="@color/small_stuffs_theme"
             android:text="@string/accept_terms_and_conditions" />
 
         <android.support.v7.widget.AppCompatButton

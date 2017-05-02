@@ -51,7 +51,7 @@ public class Registration extends Fragment implements View.OnClickListener{
 
         createAccount.setOnClickListener(this);
         loginLink.setOnClickListener(this);
-        authClass = new Authentication();
+        authClass = new Authentication(mCallback.getContext());
 
         firstNameET = (EditText) view.findViewById(R.id.input_firstName);
         lastNameET = (EditText) view.findViewById(R.id.input_lastName);

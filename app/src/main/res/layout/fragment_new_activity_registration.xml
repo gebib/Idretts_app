@@ -14,9 +14,9 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:padding="5dp"
-            android:background="@color/white"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:background="@color/defused_blue"
+            android:padding="5dp">
 
             <Spinner
                 android:id="@+id/spinnerActivityType"
@@ -29,68 +29,95 @@
                 android:id="@+id/newActDate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingLeft="8dp"
-                android:textSize="17dp"
-                android:textColorHint="#646464"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/spinnerActivityType"
                 android:ems="10"
                 android:hint="@string/activityDateHint"
                 android:inputType="date"
+                android:paddingLeft="8dp"
                 android:singleLine="true"
-                android:layout_below="@+id/spinnerActivityType"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentEnd="true" />
+                android:textColorHint="#646464"
+                android:textSize="17dp" />
 
             <EditText
                 android:id="@+id/newActTimeFrom"
-                android:textSize="17dp"
                 android:layout_width="wrap_content"
-                android:paddingLeft="8dp"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
-                android:textColorHint="#646464"
                 android:layout_alignParentStart="true"
                 android:layout_below="@+id/newActDate"
                 android:ems="10"
                 android:hint="@string/activityTimeFromHint"
                 android:inputType="time"
-                android:singleLine="true" />
+                android:paddingLeft="8dp"
+                android:singleLine="true"
+                android:textColorHint="#646464"
+                android:textSize="17dp" />
 
             <EditText
                 android:id="@+id/newActLocation"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingLeft="8dp"
-                android:textSize="17dp"
-                android:ems="10"
-                android:textCursorDrawable="@color/jet"
-                android:hint="@string/activityLocation"
-                android:textColorHint="#646464"
-                android:inputType="text"
-                android:layout_below="@+id/newActTimeTo"
+                android:layout_alignParentEnd="true"
                 android:layout_alignParentStart="true"
-                android:layout_alignParentEnd="true" />
+                android:layout_below="@+id/newActTimeTo"
+                android:ems="10"
+                android:hint="@string/activityLocation"
+                android:inputType="text"
+                android:paddingLeft="8dp"
+                android:textColorHint="#646464"
+                android:textCursorDrawable="@color/jet"
+                android:textSize="17dp" />
 
             <EditText
                 android:id="@+id/newActTimeTo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingLeft="8dp"
                 android:layout_alignParentEnd="true"
-                android:textColorHint="#646464"
-                android:textSize="17dp"
                 android:layout_alignParentStart="true"
                 android:layout_below="@+id/newActTimeFrom"
                 android:ems="10"
                 android:hint="@string/activityTimeToHint"
                 android:inputType="time"
-                android:singleLine="true" />
+                android:paddingLeft="8dp"
+                android:singleLine="true"
+                android:textColorHint="#646464"
+                android:textSize="17dp" />
 
-            <Spinner
-                android:id="@+id/newActIntensitySpinner"
-                android:layout_width="match_parent"
+            <SeekBar
+                android:id="@+id/newActIntensitySlider"
+                android:layout_width="150dp"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/newActLocation"
+                android:thumbTint="@color/primary_darker"
+                android:paddingBottom="-1dp"
+                android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true" />
+
+            <TextView
+                android:id="@+id/sliderPercentage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:textSize="17dp"
+                android:layout_alignParentEnd="true"
+                android:layout_below="@+id/newActLocation"
+                android:layout_toEndOf="@+id/newActIntensitySlider"
+                android:gravity="center"
+                android:text="100%" />
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="8dp"
+                android:textColor="@color/jet"
+                android:text="Intensity"
+                android:textSize="17dp"
+                android:layout_alignParentStart="true"
+                android:layout_toStartOf="@+id/newActIntensitySlider"
+                android:layout_alignParentBottom="true"
+                android:layout_below="@+id/newActLocation" />
 
         </RelativeLayout>
 

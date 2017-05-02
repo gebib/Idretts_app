@@ -1,112 +1,211 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="@color/white"
-    android:fitsSystemWindows="true">
-
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="3dp"
-        android:weightSum="1">
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <TextView
-                android:id="@+id/textView2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                android:background="@color/primary_darker"
-                android:gravity="center"
-                android:text="TRAINING"/>
-
-            <ImageView
-                android:id="@+id/imageView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/training_s"
-                android:layout_below="@+id/textView2"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentStart="true"/>
-
-            <TextView
-                android:id="@+id/textView4"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentStart="true"
-                android:layout_below="@+id/imageView"
-                android:layout_marginTop="20dp"
-                android:background="@color/primary_darker"
-                android:gravity="center"
-                android:text="TRAINING"/>
-
-
-            <TextView
-                android:id="@+id/activityTimeTV"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentStart="true"
-                android:layout_below="@+id/activityDateTV"
-                android:text="Time:\t\t\t12:00-15:00"/>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:paddingTop="5dp"
-                android:paddingBottom="2dp"
-                android:gravity="center"
-                android:textStyle="bold"
-                android:textColor="@color/white"
-                android:layout_below="@+id/activityTimeTV"
-                android:background="@color/black"
-                android:text="Activity Details"
-                android:layout_height="wrap_content" />
-
-
-
-            <TextView
-                android:id="@+id/activityDateTV"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentStart="true"
-                android:layout_below="@+id/activityTpeTV"
-                android:text="Date:\t\t\t01.11.2017"/>
-
-            <TextView
-                android:id="@+id/activityTpeTV"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentStart="true"
-                android:layout_below="@+id/textView4"
-                android:text="Type:\t\t\tFootballTraining"/>
-
-        </RelativeLayout>
-
+    android:layout_weight="1.0"
+    android:background="@color/primary"
+    android:fitsSystemWindows="true"
+    android:padding="2dp">
 
 
         <TextView
-            android:layout_below="@+id/activityTimeTV"
+            android:id="@+id/fullActivityInfoTopBar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/tempLorem"
-            android:background="@color/primary"
-            android:padding="5dp"
-            android:lineSpacingExtra="4dp"
-            android:textColor="@color/black"
-
+            android:layout_alignParentEnd="true"
             android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:background="@color/primary_darker"
+            android:gravity="center"
+            android:text="@string/fullactivityinfotopbar"
+            android:textColor="@color/black" />
+
+        <ImageView
+            android:id="@+id/fullactivityinfoImageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/fullActivityInfoTopBar"
+            android:background="@color/jet"
+            android:src="@drawable/training_s" />
+
+        <TextView
+            android:id="@+id/fullActivityInfoButtomBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/fullactivityinfoImageView"
+            android:background="@color/primary_darker"
+            android:gravity="center"
+            android:text="@string/fullactivityinfobuttombar"
+            android:textColor="@color/black" />
+
+
+        <TextView
+            android:id="@+id/activityTimeTV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignEnd="@+id/activityDateTV"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/activityDateTV"
+            android:text="Time:"
+            android:textColor="@color/black" />
+
+
+        <TextView
+            android:id="@+id/activityDateTV"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/activityTitleType"
+            android:layout_toStartOf="@+id/fullactivityinfoTitleTV"
+            android:text="Date:"
+            android:textColor="@color/black" />
+
+        <TextView
+            android:id="@+id/activityTitleType"
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/fullActivityInfoButtomBar"
+            android:text="Title:"
+            android:textColor="@color/black" />
+
+        <TextView
+            android:id="@+id/fullactivityinfoTitleTV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/activityDateTV"
+            android:layout_alignParentEnd="true"
+            android:layout_toEndOf="@+id/activityTitleType"
+            android:text="@string/fullactivityinfo_title"
+            android:textColor="@color/black" />
+
+        <TextView
+            android:id="@+id/fullactivityinfoDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_below="@+id/fullactivityinfoTitleTV"
+            android:layout_toEndOf="@+id/activityTimeTV"
+            android:text="@string/fullactivityinfo_date"
+            android:textColor="@color/black" />
+
+        <TextView
+            android:id="@+id/fullactivityinfoStartEndTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_below="@+id/fullactivityinfoDate"
+            android:layout_toEndOf="@+id/activityTimeTV"
+            android:text="@string/fullactivityinfo_start_end_time"
+            android:textColor="@color/black" />
+
+        <TextView
+            android:id="@+id/activityPlaceTV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/activityTimeTV"
+            android:layout_toStartOf="@+id/fullactivityinfoStartEndTime"
+            android:text="Place:"
+            android:textColor="@color/black" />
+
+        <TextView
+            android:id="@+id/fullactivityinfoPlaceTV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/fullactivityinfoStartEndTime"
+            android:text="fullactivityinfo place"
+            android:textColor="@color/black"
+            android:layout_alignParentEnd="true"
+            android:layout_toEndOf="@+id/activityTimeTV" />
+
+        <TextView
+            android:id="@+id/fullactivityinfoPostedDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/activityPlaceTV"
+            android:alpha="0.5"
+            android:text="Posted:"
+            android:layout_toStartOf="@+id/fullactivityinfoPlaceTV" />
+
+        <TextView
+            android:id="@+id/activityDetailBlackSepBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/fullactivityinfoPostedDate"
+            android:background="@color/black"
+            android:gravity="center"
+            android:paddingBottom="2dp"
+            android:paddingTop="5dp"
+            android:text="@string/activity_details"
+            android:textColor="#ffffff"
+            android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/postDatePostedByOwner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/fullactivityinfoPostedDate"
+        android:layout_alignParentEnd="true"
+        android:layout_toEndOf="@+id/activityPlaceTV"
+        android:alpha="0.5"
+        android:text="dd.mm.yy by Poster Name" />
+
+        <ScrollView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_below="@+id/activityDetailBlackSepBar"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_above="@+id/showFullActivityInfoDeleteButton"
+            android:id="@+id/scrollView2">
+
+            <TextView
+                android:id="@+id/activityTextInfoTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/activityDetailBlackSepBar"
+                android:background="@color/defused_blue"
+                android:lineSpacingExtra="4dp"
+                android:padding="5dp"
+                android:text="@string/tempLorem"
+                android:textColor="@color/black" />
+        </ScrollView>
+
+        <Button
+            android:id="@+id/showFullActivityInfoDeleteButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/showFullActivitiInfoDeleteBtn"
             android:layout_alignParentBottom="true"
-            android:layout_alignParentEnd="true"/>
+            android:layout_alignParentEnd="true"
+            android:layout_toEndOf="@+id/showFullActivityInfoEditButton" />
 
+        <Button
+            android:id="@+id/showFullActivityInfoEditButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingRight="5dp"
+            android:layout_alignParentBottom="true"
+            android:text="@string/showFullActivitiInfoEditBtn"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/scrollView2"
+            android:layout_toStartOf="@+id/button4" />
 
-    </LinearLayout>
-</ScrollView>
+    <!--non functinal positioning purpose button-->
+    <Button
+        android:id="@+id/button4"
+        android:layout_width="1dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true" />
+
+</RelativeLayout>

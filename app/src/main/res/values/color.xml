@@ -5,11 +5,13 @@
     <color name="primary">#4cbbff</color>
     <color name="primary_dark">#1b1b1b</color>
     <color name="primary_darker">#0061a1</color>
-    <color name="accent">#FFFFFF</color>
+    <color name="accent">#ff0000</color>
 
     <color name="black">#000000</color>
     <color name="jet">#222222</color>
     <color name="iron">#44505e</color>
-    <color name="white">#c5e9ff</color>
+    <color name="small_stuffs_theme">#0a9c00</color>
+    <color name="defused_blue">#c5e9ff</color>
+
 
 </resources>

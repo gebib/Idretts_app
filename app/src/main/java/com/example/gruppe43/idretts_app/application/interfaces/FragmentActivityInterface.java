@@ -3,6 +3,8 @@ package com.example.gruppe43.idretts_app.application.interfaces;
 import android.content.Context;
 import android.support.v4.app.Fragment;
 
+import com.example.gruppe43.idretts_app.application.view.main.MainActivity;
+
 import java.util.HashMap;
 
 /**
@@ -17,5 +19,9 @@ public interface FragmentActivityInterface {
     void onSignOut();
     void hideKeyboard();
     void showFragmentOfGivenCondition();
+    void dumpBackStack();
+    MainActivity getContext();
+    void setIsRegisterSuccesfull(boolean isRegisterSuccesfull);
+    void setOnNewActivityRegisterPage(boolean b);
     //void initAfterLogin(Boolean isPlayerSignedIn, Boolean isTrainerSignedIn);
 }

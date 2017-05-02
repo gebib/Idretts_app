@@ -1,18 +1,9 @@
 package com.example.gruppe43.idretts_app.application.view.main;
-
-import android.app.Activity;
-import android.app.AlertDialog;
-import android.app.Dialog;
-import android.app.TimePickerDialog;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.preference.Preference;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -26,22 +17,11 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.text.InputType;
-import android.text.format.DateFormat;
-import android.util.Log;
-import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TimePicker;
-import android.widget.Toast;
-
 import com.example.gruppe43.idretts_app.R;
-import com.example.gruppe43.idretts_app.application.controll.Authentication;
-import com.example.gruppe43.idretts_app.application.controll.DataBaseHelper;
 import com.example.gruppe43.idretts_app.application.helper_classes.PrefferencesClass;
 import com.example.gruppe43.idretts_app.application.interfaces.FragmentActivityInterface;
 import com.example.gruppe43.idretts_app.application.view.fragments.FullActivityInfo;
@@ -53,7 +33,9 @@ import com.example.gruppe43.idretts_app.application.view.fragments.ProfileView;
 import com.example.gruppe43.idretts_app.application.view.fragments.Tabs;
 import com.example.gruppe43.idretts_app.application.view.fragments.Team;
 import com.example.gruppe43.idretts_app.application.view.fragments.Trainer;
+import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.FirebaseDatabase;
 
 import static com.example.gruppe43.idretts_app.application.view.fragments.NewActivityRegistration.nar;
 
@@ -67,25 +49,43 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private Boolean isPlayerSignedIn;
     private Boolean isTrainerSignedIn;
     private Boolean editActivityIsShowing;
-    protected static Context mainContext;
     private FirebaseAuth mAuth;
-    public static boolean onNewActivityRegisterPage;
-    protected boolean isRegisterSuccesfull;
+    private boolean onNewActivityRegisterPage;
+    private boolean isRegisterSuccesfull;
     private ActionBar actionBar;
     private PrefferencesClass prefs;
-    protected static final int DIALOG_ID = 0;
-    protected int time,minutt;
 
+    public MainActivity() {
+        //init only if persistant not set already
+        if (FirebaseApp.getApps(this).isEmpty()) {
+            FirebaseApp.initializeApp(this);
+            FirebaseDatabase.getInstance().setPersistenceEnabled(true);
+        }
+    }
+
+    //context of this class.
+    @Override
+    public MainActivity getContext(){
+        return this;
+    }
+
+    @Override
+    public void setIsRegisterSuccesfull(boolean isRegisterSuccesfull) {
+        this.isRegisterSuccesfull = isRegisterSuccesfull;
+    }
+
+    @Override
+    public void setOnNewActivityRegisterPage(boolean onActivityRegisterPage) {
+        onNewActivityRegisterPage = onActivityRegisterPage;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_main);
         mFragmentManager = getSupportFragmentManager();
         isRegisterSuccesfull = false;
 
-        mainContext = this;
         fab = (FloatingActionButton) findViewById(R.id.fab);
         mAuth = FirebaseAuth.getInstance();
         prefs = new PrefferencesClass(this);
@@ -144,11 +144,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             limitFragmentBackStackSize();
             fragmentTransaction.replace(R.id.containerView, new NewActivityRegistration()).commit();
             currentShowingFragment("editActivity");
+            System.out.println("///////////////////// RUNNING");//TODO update
         } else if (isPlayerSignedIn && playerIsShowing) {
             FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
             fragmentTransaction.addToBackStack("");
             fragmentTransaction.replace(R.id.containerView, new NewActivityRegistration()).commit();
             currentShowingFragment("editActivity");
+            System.out.println("///////////////////// RUNNING");//TODO update
         } else if (isPlayerSignedIn && editActivityIsShowing) {
             new Handler().post(new Runnable() {
                 @Override
@@ -157,11 +159,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 }
             });
             currentShowingFragment("player");
+            System.out.println("///////////////////// RUNNING");//TODO update
         } else if (isTrainerSignedIn && editActivityIsShowing) {
             FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
             fragmentTransaction.replace(R.id.containerView, new Tabs()).commit();
             currentShowingFragment("trainer");
             editActivityIsShowing = false;
+            System.out.println("///////////////////// RUNNING");//TODO update
         }
     }
 
@@ -393,7 +397,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     //dump fragments from backstack
-    private void dumpBackStack() {
+    @Override
+    public void dumpBackStack() {
         for (int i = 0; i < mFragmentManager.getBackStackEntryCount(); ++i) {
             mFragmentManager.popBackStack();
         }

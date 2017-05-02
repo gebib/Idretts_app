@@ -6,6 +6,8 @@ import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -15,6 +17,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -27,20 +30,18 @@ import com.example.gruppe43.idretts_app.application.helper_classes.TimePickerFra
 import com.example.gruppe43.idretts_app.application.interfaces.FragmentActivityInterface;
 import com.example.gruppe43.idretts_app.application.view.main.MainActivity;
 
-import java.util.Calendar;
-
 
 public class NewActivityRegistration extends Fragment {
     private Spinner newActSpinnerActivityType;
-    private Spinner newActIntensitySpinner;
+    private SeekBar newActIntensitySeeker;
     private EditText newActDate;
     private EditText newActTimeFrom;
     private EditText newActTimeTo;
     private EditText location;
     private TextView newActAdditionalTextInfo;
     private EditText nonFunctionalEditTextForUse;
+    private TextView seekBarPersentageDisplay;
     private String activityTitle;
-    private String setIntensity;
     private Authentication authClass;
     public static NewActivityRegistration nar;
     private FragmentActivityInterface mCallback;
@@ -76,16 +77,41 @@ public class NewActivityRegistration extends Fragment {
         newActTimeFrom = (EditText) view.findViewById(R.id.newActTimeFrom);
         newActTimeTo = (EditText) view.findViewById(R.id.newActTimeTo);
         location = (EditText) view.findViewById(R.id.newActLocation);
-        newActIntensitySpinner = (Spinner) view.findViewById(R.id.newActIntensitySpinner);
+        newActIntensitySeeker = (SeekBar) view.findViewById(R.id.newActIntensitySlider);
         newActAdditionalTextInfo = (TextView) view.findViewById(R.id.newActTextInfo);
         nonFunctionalEditTextForUse = (EditText) view.findViewById(R.id.makeGapAndForFocusShiftingPurpose);
+        seekBarPersentageDisplay =(TextView) view.findViewById(R.id.sliderPercentage);
+        newActIntensitySeeker.setMinimumHeight(0);
+        newActIntensitySeeker.setMax(100);
+        newActIntensitySeeker.setProgress(20);
+        seekBarPersentageDisplay.setText("20%");
 
+        try {
+            newActIntensitySeeker.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+                @Override
+                public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                    seekBarPersentageDisplay.setText(progress + "%");
+                }
+
+                @Override
+                public void onStartTrackingTouch(SeekBar seekBar) {
+
+                }
+
+                @Override
+                public void onStopTrackingTouch(SeekBar seekBar) {
+
+                }
+            });
+        }catch (Exception e){
+            System.out.println("Seeker failure!");
+        }
 
         newActDate.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if (hasFocus) {
-                    showDatePicker();//////////ok
+                    showDatePicker();
                     nonFunctionalEditTextForUse.requestFocus();
                 }
             }
@@ -147,38 +173,10 @@ public class NewActivityRegistration extends Fragment {
             }
         });
 
-        String[] intensity = {"Easy 20%", "Normal 40%", "Moderate 60%", "High 80%", "Max 100%"};
-        ArrayAdapter<String> intensitySpinner = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, intensity);
-        intensitySpinner.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        newActIntensitySpinner.setAdapter(intensitySpinner);
-        newActIntensitySpinner.setSelection(0);
-        newActIntensitySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
-                setIntensity = (String) parent.getItemAtPosition(pos);
-                switch (pos) {
-                    case 0:
-                        setIntensity = "20%";
-                        break;
-                    case 1:
-                        setIntensity = "40%";
-                        break;
-                    case 2:
-                        setIntensity = "60%";
-                        break;
-                    case 3:
-                        setIntensity = "80%";
-                        break;
-                    case 4:
-                        setIntensity = "100%";
-                        break;
-                    default:
-                        setIntensity = "20%";
-                }
-            }
 
-            public void onNothingSelected(AdapterView<?> parent) {
-            }
-        });
+
+
+
         return view;
     }
 
@@ -194,6 +192,7 @@ public class NewActivityRegistration extends Fragment {
         String timeTo = newActTimeTo.getText().toString().trim();
         String actPlace = location.getText().toString().trim();
         String textInfo = newActAdditionalTextInfo.getText().toString().trim();
+        String setIntensity = seekBarPersentageDisplay.getText().toString();
         String icon = "";
         if (titleSpinnerPos.equals("0")) {
             icon = "training_f";
@@ -216,7 +215,7 @@ public class NewActivityRegistration extends Fragment {
             });
             AlertDialog alert11 = builder1.create();
             alert11.show();
-            MainActivity.onNewActivityRegisterPage = true;
+            mCallback.setOnNewActivityRegisterPage(true);
         } else {
             boolean registrationOk = dbh.postTrainerActivity(activityTitle, actDate, timeFrom, timeTo, actPlace, setIntensity, textInfo, icon);
             if (registrationOk) {
@@ -259,9 +258,8 @@ public class NewActivityRegistration extends Fragment {
     };
 
     @Override
-    public void onDestroy() {
-        super.onDestroy();
-        MainActivity.onNewActivityRegisterPage = false;
+    public void onStop() {
+        super.onStop();
+        mCallback.setOnNewActivityRegisterPage(false); 
     }
-
 }
