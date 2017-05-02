@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.support.annotation.NonNull;
 
 import com.example.gruppe43.idretts_app.R;
+import com.example.gruppe43.idretts_app.application.view.main.MainActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -27,7 +28,7 @@ public class DataBaseHelper extends Authentication {
     private ProgressDialog progressDialog;
     private String postOwnerUserFirstAndLastName;
 
-    public DataBaseHelper() {
+    public DataBaseHelper(MainActivity mainActivity) {
         isRegistered = false;
         fbTrainerPostsDbRef = FirebaseDatabase.getInstance().getReference().child("TrainerPosts");
         fbPlayerPostsDbRef = FirebaseDatabase.getInstance().getReference().child("PlayerPosts");
@@ -35,6 +36,7 @@ public class DataBaseHelper extends Authentication {
         fbAbsenceDbRef = FirebaseDatabase.getInstance().getReference().child("Abcences");
         fbCapsDbRef = FirebaseDatabase.getInstance().getReference().child("Camps");
         fbAuth = FirebaseAuth.getInstance();
+        this.mainActivity = mainActivity;
     }
 
 

@@ -20,7 +20,6 @@ import com.example.gruppe43.idretts_app.R;
 import com.example.gruppe43.idretts_app.application.controll.Authentication;
 import com.example.gruppe43.idretts_app.application.interfaces.FragmentActivityInterface;
 import com.example.gruppe43.idretts_app.application.helper_classes.DatePickerFragment;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.Calendar;
@@ -204,22 +203,4 @@ public class Registration extends Fragment implements View.OnClickListener{
         return isValid;
 
     }
-
-    //register a valid user into firebase.
-    private void  newUserIsRegistered() {
-        Boolean userRegistered;
-        //TODO remove or use
-
-        /*
-        if(userRegistered){
-            HashMap<String, String> uInfo = new HashMap<>();
-            uInfo.put("uName",firstName);
-            uInfo.put("uSurName",lastName);
-            uInfo.put("uAge",age);
-            at.FBregisterUserAdditionalInfo(uInfo);
-        }
-      */
-
-    }
-
 }

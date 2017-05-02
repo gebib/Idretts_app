@@ -17,7 +17,6 @@ import com.example.gruppe43.idretts_app.application.controll.DataBaseHelper;
 import com.example.gruppe43.idretts_app.application.helper_classes.PrefferencesClass;
 import com.example.gruppe43.idretts_app.application.interfaces.FragmentActivityInterface;
 import com.example.gruppe43.idretts_app.application.model.TrainerModel;
-import com.example.gruppe43.idretts_app.application.view.main.MainActivity;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -68,7 +67,7 @@ public class Trainer extends Fragment {
                 viewHolder.mView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        databaseHelper = new DataBaseHelper();
+                        databaseHelper = new DataBaseHelper(mCallback.getContext());
                         String postKey = getRef(position).getKey();
                         String[] dataRetrieved = databaseHelper.getTrainerPostData(postKey);
 

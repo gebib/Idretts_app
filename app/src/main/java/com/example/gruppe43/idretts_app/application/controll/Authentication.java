@@ -212,7 +212,7 @@ public class Authentication {
                 String value = input.getText().toString();
                 if (value.equals(ONE_TIME_INITIALIZATION_CODE)) {
                     mainActivity.initAfterLogin("admin");
-                    databaseHelper = new DataBaseHelper();
+                    databaseHelper = new DataBaseHelper(mainActivity);
                     databaseHelper.setIsAdmin();//only first time.
                     AlertDialog.Builder builder1 = new AlertDialog.Builder(mainActivity);
                     builder1.setTitle(mainActivity.getString(R.string.welcomeCoachTittle));

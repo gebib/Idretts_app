@@ -70,7 +70,7 @@ public class NewActivityRegistration extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_new_activity_registration, container, false);
-        authClass = new Authentication();
+        authClass = new Authentication(mCallback.getContext());
         nar = this;
         newActSpinnerActivityType = (Spinner) view.findViewById(R.id.spinnerActivityType);
         newActDate = (EditText) view.findViewById(R.id.newActDate);
@@ -186,7 +186,7 @@ public class NewActivityRegistration extends Fragment {
     }
 
     public void registerActivity() {
-        DataBaseHelper dbh = new DataBaseHelper();
+        DataBaseHelper dbh = new DataBaseHelper(mCallback.getContext());
         String actDate = newActDate.getText().toString().trim();
         String timeFrom = newActTimeFrom.getText().toString().trim();
         String timeTo = newActTimeTo.getText().toString().trim();
@@ -260,6 +260,6 @@ public class NewActivityRegistration extends Fragment {
     @Override
     public void onStop() {
         super.onStop();
-        mCallback.setOnNewActivityRegisterPage(false); 
+        mCallback.setOnNewActivityRegisterPage(false);
     }
 }

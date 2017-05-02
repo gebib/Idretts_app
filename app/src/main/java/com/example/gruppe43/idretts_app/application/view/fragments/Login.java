@@ -56,7 +56,6 @@ public class Login extends Fragment implements View.OnClickListener {
         }
     }
 
-
     @Override
     public void onClick(final View v) {
         switch (v.getId()) {
