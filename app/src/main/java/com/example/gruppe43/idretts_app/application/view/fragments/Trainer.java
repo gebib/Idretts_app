@@ -58,8 +58,8 @@ public class Trainer extends Fragment {
             protected void populateViewHolder(TrainerViewHolder viewHolder, TrainerModel model, final int position) {
 
                 viewHolder.setActivityTitleDate(model.getTitle() + " " + model.getActivityDate());
-                viewHolder.setActivityStartEndTime(getString(R.string.actStarts) + model.getStartTime() + " " + getString(R.string.actEnds) + model.getEndTime());
-                viewHolder.setActivityPlace(getString(R.string.actLocation) + model.getPlace() + " ");
+                viewHolder.setActivityStartEndTime(getString(R.string.actStarts) +" "+ model.getStartTime() + " " + getString(R.string.actEnds) +" "+ model.getEndTime());
+                viewHolder.setActivityPlace(getString(R.string.actLocation) +" "+ model.getPlace() + " ");
                 viewHolder.setTrainerActivityTime(model.getTimePosted());
                 viewHolder.setTrainerActivityIntensity(model.getIntensity());
                 viewHolder.setTrainerActivityIcon(model.getIcon());
@@ -69,12 +69,8 @@ public class Trainer extends Fragment {
                     public void onClick(View v) {
                         databaseHelper = new DataBaseHelper(mCallback.getContext());
                         String postKey = getRef(position).getKey();
-                        String[] dataRetrieved = databaseHelper.getTrainerPostData(postKey);
-
-                        Bundle args = new Bundle();
-                        args.putStringArray("postData", dataRetrieved);
-                        FullActivityInfo fullActivityInfoFragment = new FullActivityInfo();
-                        fullActivityInfoFragment.setArguments(args);
+                        databaseHelper.getSelectedActivityInfo(postKey);
+                        NewActivityRegistration.setSelectedActivityPostKey(postKey);
                     }
                 });
             }
@@ -131,7 +127,7 @@ public class Trainer extends Fragment {
             if (icon.equals("camp")) {
                 trainerPostIcon.setImageResource(R.drawable.cmp);
             } else if (icon.equals("training_f")) {//football
-                trainerPostIcon.setImageResource(R.drawable.training);
+                trainerPostIcon.setImageResource(R.drawable.training_f);
             } else if (icon.equals("meeting")) {
                 trainerPostIcon.setImageResource(R.drawable.meeting);
             } else if (icon.equals("training")) {//styrke

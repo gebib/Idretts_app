@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -133,19 +134,12 @@ public class Registration extends Fragment implements View.OnClickListener{
                 }
                 break;
             case R.id.linkLoginTV:
-                mCallback.replaceFragmentWith(new Login(),"reg");
+                FragmentTransaction fragmentTransaction = mCallback.getmFragmentManager().beginTransaction();
+                fragmentTransaction.replace(R.id.containerView, new Login()).commit();
+                mCallback.getmFragmentManager().popBackStack();
                 break;
             default:
         }
-    }
-
-    private boolean checkIfDbImpty() {
-        boolean isFirstTime = false;
-
-
-
-
-        return isFirstTime;
     }
 
     //register new user if valid locally

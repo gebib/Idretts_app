@@ -1,11 +1,9 @@
 package com.example.gruppe43.idretts_app.application.interfaces;
 
-import android.content.Context;
-import android.support.v4.app.Fragment;
+import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.FragmentManager;
 
 import com.example.gruppe43.idretts_app.application.view.main.MainActivity;
-
-import java.util.HashMap;
 
 /**
  * Created by gebi9 on 18-Mar-17.
@@ -13,15 +11,14 @@ import java.util.HashMap;
 
 public interface FragmentActivityInterface {
     //void currentShowingFragment(String tabId);
-    void replaceFragmentWith(Fragment fragmentClass,String from);
     void initAfterLogin(String userType);
     void currentShowingFragment(String tabId);
     void onSignOut();
     void hideKeyboard();
     void showFragmentOfGivenCondition();
-    void dumpBackStack();
     MainActivity getContext();
-    void setIsRegisterSuccesfull(boolean isRegisterSuccesfull);
-    void setOnNewActivityRegisterPage(boolean b);
-    //void initAfterLogin(Boolean isPlayerSignedIn, Boolean isTrainerSignedIn);
+    void setIsOnNewActivityRegisterPage(boolean b);
+    FragmentManager getmFragmentManager();
+    FloatingActionButton getFab();
+    void clearBackStack();
 }

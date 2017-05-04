@@ -29,7 +29,9 @@
         android:layout_height="wrap_content"
         android:layout_alignTop="@+id/thumbnail"
         android:layout_toRightOf="@+id/thumbnail"
-        android:text="Activity title"
+        android:maxLines="1"
+        android:scrollHorizontally="true"
+        android:text="Personal training"
         android:textColor="@color/black"
         android:typeface="sans"
         android:textSize="15dip"
@@ -43,9 +45,12 @@
         android:layout_below="@id/listTextPlayer"
         android:textColor="#343434"
         android:textSize="10dip"
+        android:maxLines="1"
+        android:scrollHorizontally="true"
         android:layout_marginTop="1dip"
         android:layout_toRightOf="@+id/thumbnail"
-        android:text="First: first information" />
+        android:text="Type:"
+        android:layout_alignEnd="@+id/listTextPlayer" />
 
     <!-- second info text -->
     <TextView
@@ -54,6 +59,8 @@
         android:layout_below="@id/detailInfo1"
         android:textColor="#343434"
         android:textSize="10dip"
+        android:maxLines="1"
+        android:scrollHorizontally="true"
         android:layout_marginTop="1dip"
         android:layout_toRightOf="@+id/thumbnail"
         android:text="Secondinfo: first information" />

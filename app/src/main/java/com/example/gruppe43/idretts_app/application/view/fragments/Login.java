@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,6 +43,7 @@ public class Login extends Fragment implements View.OnClickListener {
         loginButtonBT.setOnClickListener(this);
         signUpTV.setOnClickListener(this);
         authClass = new Authentication(mCallback.getContext());
+        mCallback.getFab().hide();
         return view;
     }
 
@@ -60,8 +62,10 @@ public class Login extends Fragment implements View.OnClickListener {
     public void onClick(final View v) {
         switch (v.getId()) {
             case R.id.link_signup:
-                mCallback.replaceFragmentWith(new Registration(),"");
-                mCallback.setOnNewActivityRegisterPage(true);
+                FragmentTransaction fragmentTransaction = mCallback.getmFragmentManager().beginTransaction();
+                fragmentTransaction.replace(R.id.containerView, new Registration()).commit();
+                mCallback.setIsOnNewActivityRegisterPage(true);
+                fragmentTransaction.addToBackStack("");
                 break;
             case R.id.loginBT:
                 Boolean validInfo = validFormat();

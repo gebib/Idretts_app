@@ -49,6 +49,7 @@ public class Authentication {
         fbUsersDbRef = FirebaseDatabase.getInstance().getReference().child("Users");
         fbAbsenceDbRef = FirebaseDatabase.getInstance().getReference().child("Abcences");
         fbCapsDbRef = FirebaseDatabase.getInstance().getReference().child("Camps");
+
         fbAuth = FirebaseAuth.getInstance();
         this.mainActivity = mainActivity;
     }
@@ -86,7 +87,8 @@ public class Authentication {
         });
     }
 
-    public void setIsAdminOrPlayerSignedIn() {
+    //assign the first user as the adminstrator.
+    public void setIsAdminOrPlayerSignedIn() {//////////////////////////////set value using KEY//////////////////////////
         String currentUserId = fbAuth.getCurrentUser().getUid();
         fbUsersDbRef.child(currentUserId).addValueEventListener(new ValueEventListener() {
             @Override
@@ -103,6 +105,7 @@ public class Authentication {
             }
         });
     }
+
 
     //register using email and password and add user info to database
     public void FBregisterUserforAuthentication(final String email, final String pass, String fname, String lname, String age) {

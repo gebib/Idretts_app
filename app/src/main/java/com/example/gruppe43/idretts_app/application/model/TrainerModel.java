@@ -7,30 +7,34 @@ package com.example.gruppe43.idretts_app.application.model;
 public class TrainerModel {
     String activityDate;//OPSI OPSI!!
     String endTime;
+    String icon;
     String infoText;
     String intensity;
     String place;
     String postedDate;
+    String postedUserId;
     String startTime;
-    String title;
     String timePosted;
-    String icon;
+    String title;
+
 
     public TrainerModel() {
     }
 
-    public TrainerModel(String activityDate, String endTime, String infoText, String intensity,
-                        String place, String postedDate, String startTime, String title,String timePosted,String icon) {
+    public TrainerModel(String activityDate, String endTime, String icon, String infoText,
+                        String intensity, String place, String postedDate, String postedUserId,
+                        String startTime, String timePosted, String title) {
         this.activityDate = activityDate;
         this.endTime = endTime;
+        this.icon = icon;
         this.infoText = infoText;
         this.intensity = intensity;
         this.place = place;
         this.postedDate = postedDate;
+        this.postedUserId = postedUserId;
         this.startTime = startTime;
-        this.title = title;
         this.timePosted = timePosted;
-        this.icon = icon;
+        this.title = title;
     }
 
     public String getActivityDate() {
@@ -47,6 +51,14 @@ public class TrainerModel {
 
     public void setEndTime(String endTime) {
         this.endTime = endTime;
+    }
+
+    public String getIcon() {
+        return icon;
+    }
+
+    public void setIcon(String icon) {
+        this.icon = icon;
     }
 
     public String getInfoText() {
@@ -81,20 +93,20 @@ public class TrainerModel {
         this.postedDate = postedDate;
     }
 
+    public String getPostedUserId() {
+        return postedUserId;
+    }
+
+    public void setPostedUserId(String postedUserId) {
+        this.postedUserId = postedUserId;
+    }
+
     public String getStartTime() {
         return startTime;
     }
 
     public void setStartTime(String startTime) {
         this.startTime = startTime;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
     }
 
     public String getTimePosted() {
@@ -105,11 +117,11 @@ public class TrainerModel {
         this.timePosted = timePosted;
     }
 
-    public String getIcon(){
-        return icon;
+    public String getTitle() {
+        return title;
     }
 
-    public void setIcon(String icon){
-        this.icon = icon;
+    public void setTitle(String title) {
+        this.title = title;
     }
 }

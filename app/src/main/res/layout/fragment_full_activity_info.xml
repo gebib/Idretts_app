@@ -31,7 +31,7 @@
             android:src="@drawable/training_s" />
 
         <TextView
-            android:id="@+id/fullActivityInfoButtomBar"
+            android:id="@+id/fullActivityInfoBottomBar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
@@ -69,7 +69,7 @@
             android:layout_width="60dp"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
-            android:layout_below="@+id/fullActivityInfoButtomBar"
+            android:layout_below="@+id/fullActivityInfoBottomBar"
             android:text="Title:"
             android:textColor="@color/black" />
 
@@ -77,6 +77,8 @@
             android:id="@+id/fullactivityinfoTitleTV"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:scrollHorizontally="true"
             android:layout_above="@+id/activityDateTV"
             android:layout_alignParentEnd="true"
             android:layout_toEndOf="@+id/activityTitleType"
@@ -88,6 +90,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
+            android:maxLines="1"
+            android:scrollHorizontally="true"
             android:layout_below="@+id/fullactivityinfoTitleTV"
             android:layout_toEndOf="@+id/activityTimeTV"
             android:text="@string/fullactivityinfo_date"
@@ -98,6 +102,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
+            android:maxLines="1"
+            android:scrollHorizontally="true"
             android:layout_below="@+id/fullactivityinfoDate"
             android:layout_toEndOf="@+id/activityTimeTV"
             android:text="@string/fullactivityinfo_start_end_time"
@@ -119,6 +125,8 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/fullactivityinfoStartEndTime"
             android:text="fullactivityinfo place"
+            android:maxLines="1"
+            android:scrollHorizontally="true"
             android:textColor="@color/black"
             android:layout_alignParentEnd="true"
             android:layout_toEndOf="@+id/activityTimeTV" />
@@ -151,29 +159,29 @@
         android:id="@+id/postDatePostedByOwner"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:maxLines="1"
+        android:scrollHorizontally="true"
         android:layout_alignBottom="@+id/fullactivityinfoPostedDate"
         android:layout_alignParentEnd="true"
         android:layout_toEndOf="@+id/activityPlaceTV"
         android:alpha="0.5"
-        android:text="dd.mm.yy by Poster Name" />
+        android:text="by firstName dd.mm.yy 00:00" />
 
         <ScrollView
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_below="@+id/activityDetailBlackSepBar"
             android:layout_alignParentStart="true"
             android:layout_alignParentEnd="true"
+            android:background="@color/defused_blue"
             android:layout_above="@+id/showFullActivityInfoDeleteButton"
             android:id="@+id/scrollView2">
 
             <TextView
                 android:id="@+id/activityTextInfoTV"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentStart="true"
+                android:layout_height="match_parent"
                 android:layout_below="@+id/activityDetailBlackSepBar"
-                android:background="@color/defused_blue"
                 android:lineSpacingExtra="4dp"
                 android:padding="5dp"
                 android:text="@string/tempLorem"
@@ -207,5 +215,4 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true" />
-
 </RelativeLayout>

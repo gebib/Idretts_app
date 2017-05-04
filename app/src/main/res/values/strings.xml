@@ -2,11 +2,10 @@
     <string name="app_name">Idretts App</string>
 
 
-    <string name="tempLorem">Activity additional text information here.Activity additional text information here.Activity additional text information here.Activity additional text information here.Activity additional text information here.Activity additional text information here.Activity additional text information here.Activity additional text information here.Activity additional text information here.Activity additional text information here.Activity additional text information here.Activity additional text information here.Activity additional text information here.Activity additional text information here.Activity additional text information here.Activity additional text information here.Activity additional text information here.Activity additional text information here.Activity additional text information here.</string>
+    <string name="tempLorem">additional text information here.Activity additional text information here.Activity additional text information here.Activity additional text information here.Activity additional text information here.</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    //Registration strings
     <string name="first_name_reg">First name</string>
     <string name="last_name_reg">Last name</string>
     <string name="age_reg">Age</string>
@@ -63,6 +62,15 @@
     <string name="fullActivityShowEndS">Ends:</string>
     <string name="databaseConnectionErrorFetchTitle">Connection error</string>
     <string name="databaseConnectionErrorFetchTextInfo">Post owners id could not be fetched from the database. please check your internet connection and try again.</string>
+    <string name="regiistration_requests">Registration requests</string>
+    <string name="save_players_data">Save players data</string>
+    <string name="reset_all_data_to_default_state">Reset app to default state</string>
+    <string name="by">by</string>
+    <string name="editingCouldNotBeSetTitle">Editing</string>
+    <string name="editingCouldNotBeSetText">Edited activity could not be set. Check you internet connection and try again.</string>
+    <string name="toastActivityUpdated">Activity updated!</string>
+    <string name="toastPostRegSuccess">Registered!</string>
+    <string name="toastPostEditSuccess">Post edited!</string>
 
 
 </resources>
