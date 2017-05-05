@@ -16,7 +16,7 @@ import com.example.gruppe43.idretts_app.R;
 import com.example.gruppe43.idretts_app.application.controll.DataBaseHelper;
 import com.example.gruppe43.idretts_app.application.helper_classes.PrefferencesClass;
 import com.example.gruppe43.idretts_app.application.interfaces.FragmentActivityInterface;
-import com.example.gruppe43.idretts_app.application.model.TrainerModel;
+import com.example.gruppe43.idretts_app.application.model.TrainerPostsModel;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -48,14 +48,14 @@ public class Trainer extends Fragment {
 
         fbDbRef = FirebaseDatabase.getInstance().getReference().child("TrainerPosts");
 
-        FirebaseRecyclerAdapter<TrainerModel, TrainerViewHolder> trainerAdapter = new FirebaseRecyclerAdapter<TrainerModel, TrainerViewHolder>(
-                TrainerModel.class,
+        FirebaseRecyclerAdapter<TrainerPostsModel, TrainerViewHolder> trainerAdapter = new FirebaseRecyclerAdapter<TrainerPostsModel, TrainerViewHolder>(
+                TrainerPostsModel.class,
                 R.layout.trainer_items,
                 TrainerViewHolder.class,
                 fbDbRef
         ) {
             @Override
-            protected void populateViewHolder(TrainerViewHolder viewHolder, TrainerModel model, final int position) {
+            protected void populateViewHolder(TrainerViewHolder viewHolder, TrainerPostsModel model, final int position) {
 
                 viewHolder.setActivityTitleDate(model.getTitle() + " " + model.getActivityDate());
                 viewHolder.setActivityStartEndTime(getString(R.string.actStarts) +" "+ model.getStartTime() + " " + getString(R.string.actEnds) +" "+ model.getEndTime());

@@ -4,7 +4,7 @@ package com.example.gruppe43.idretts_app.application.model;
  * Created by gebi9 on 31-Mar-17.
  */
 
-public class TrainerModel {
+public class TrainerPostsModel {
     private String activityDate;//OPSI OPSI!!
     private String endTime;
     private String icon;
@@ -18,12 +18,12 @@ public class TrainerModel {
     private String title;
 
 
-    public TrainerModel() {
+    public TrainerPostsModel() {
     }
 
-    public TrainerModel(String activityDate, String endTime, String icon, String infoText,
-                        String intensity, String place, String postedDate, String postedUserId,
-                        String startTime, String timePosted, String title) {
+    public TrainerPostsModel(String activityDate, String endTime, String icon, String infoText,
+                             String intensity, String place, String postedDate, String postedUserId,
+                             String startTime, String timePosted, String title) {
         this.activityDate = activityDate;
         this.endTime = endTime;
         this.icon = icon;

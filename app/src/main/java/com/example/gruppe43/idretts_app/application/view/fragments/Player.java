@@ -2,9 +2,7 @@ package com.example.gruppe43.idretts_app.application.view.fragments;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.net.ParseException;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -19,11 +17,10 @@ import com.example.gruppe43.idretts_app.R;
 import com.example.gruppe43.idretts_app.application.controll.DataBaseHelper;
 import com.example.gruppe43.idretts_app.application.helper_classes.PrefferencesClass;
 import com.example.gruppe43.idretts_app.application.interfaces.FragmentActivityInterface;
-import com.example.gruppe43.idretts_app.application.model.PlayerModel;
+import com.example.gruppe43.idretts_app.application.model.PlayerPostsModel;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.squareup.picasso.Picasso;
 
 public class Player extends Fragment {
     private DatabaseReference fbDbRef;
@@ -56,14 +53,14 @@ public class Player extends Fragment {
         fbDbUsersRef = FirebaseDatabase.getInstance().getReference().child("Users");
 
 
-        FirebaseRecyclerAdapter<PlayerModel, Player.PlayerViewHolder> playerAdapter = new FirebaseRecyclerAdapter<PlayerModel, Player.PlayerViewHolder>(
-                PlayerModel.class,
+        FirebaseRecyclerAdapter<PlayerPostsModel, Player.PlayerViewHolder> playerAdapter = new FirebaseRecyclerAdapter<PlayerPostsModel, Player.PlayerViewHolder>(
+                PlayerPostsModel.class,
                 R.layout.player_items,
                 Player.PlayerViewHolder.class,
                 fbDbRef
         ) {
             @Override
-            protected void populateViewHolder(Player.PlayerViewHolder viewHolder, PlayerModel model, final int position) {
+            protected void populateViewHolder(Player.PlayerViewHolder viewHolder, PlayerPostsModel model, final int position) {
 
                 viewHolder.setProfileImage(mCallback.getContext(), model.getPlayerImage());
                 viewHolder.setPlayerPostTitle(model.getTitle());

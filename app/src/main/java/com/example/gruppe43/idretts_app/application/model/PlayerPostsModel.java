@@ -1,7 +1,7 @@
 package com.example.gruppe43.idretts_app.application.model;
 
 
-public class PlayerModel {
+public class PlayerPostsModel {
     private String DatePosted;
     private int Intensity;
     private String Place;
@@ -12,11 +12,11 @@ public class PlayerModel {
     private String FirstName;
     private String LastName;
 
-    public PlayerModel() {
+    public PlayerPostsModel() {
     }
 
-    public PlayerModel(String datePosted, int intensity, String place, String playerId,
-                       String playerImage, String timePosted, String title, String firstNAme, String lastName) {
+    public PlayerPostsModel(String datePosted, int intensity, String place, String playerId,
+                            String playerImage, String timePosted, String title, String firstNAme, String lastName) {
         this.DatePosted = datePosted;
         this.Intensity = intensity;
         this.Place = place;
