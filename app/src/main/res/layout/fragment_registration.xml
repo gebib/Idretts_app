@@ -27,6 +27,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPersonName"
+                android:textColor="#ffffff"
                 android:hint="@string/first_name_reg" />
         </android.support.design.widget.TextInputLayout>
 
@@ -42,6 +43,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/last_name_reg"
+                android:textColor="#ffffff"
                 android:inputType="textPersonName" />
         </android.support.design.widget.TextInputLayout>
 
@@ -55,6 +57,7 @@
                 android:id="@+id/input_age"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textColor="#ffffff"
                 android:hint="@string/age_reg"
                 android:inputType="date" />
         </android.support.design.widget.TextInputLayout>
@@ -69,6 +72,7 @@
                 android:id="@+id/input_email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textColor="#ffffff"
                 android:inputType="textEmailAddress"
                 android:hint="@string/email_reg" />
         </android.support.design.widget.TextInputLayout>
@@ -82,6 +86,7 @@
             <EditText
                 android:id="@+id/input_password"
                 android:layout_width="match_parent"
+                android:textColor="#ffffff"
                 android:layout_height="wrap_content"
                 android:inputType="textPassword"
                 android:hint="@string/password_reg"/>
@@ -97,6 +102,7 @@
                 android:id="@+id/input_reEnterPassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textColor="#ffffff"
                 android:inputType="textPassword"
                 android:hint="@string/re_enter_password"/>
         </android.support.design.widget.TextInputLayout>
@@ -114,6 +120,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
+            android:textColor="#ffffff"
             android:layout_marginBottom="24dp"
             android:padding="12dp"
             android:text="@string/create_account"/>
@@ -122,6 +129,7 @@
             android:id="@+id/linkLoginTV"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:textColor="@color/black"
             android:layout_marginBottom="24dp"
             android:text="@string/already_a_member_login"
             android:gravity="center"

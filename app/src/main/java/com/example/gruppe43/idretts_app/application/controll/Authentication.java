@@ -93,11 +93,13 @@ public class Authentication {
         fbUsersDbRef.child(currentUserId).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                String signedInUserIsAdminValue = (String) dataSnapshot.child("isAdmin").getValue();
-                if (signedInUserIsAdminValue.equals("true")) {
-                    mainActivity.initAfterLogin("admin");
-                } else {
-                    mainActivity.initAfterLogin("player");
+                if (dataSnapshot.exists()) {
+                    String signedInUserIsAdminValue = (String) dataSnapshot.child("isAdmin").getValue();
+                    if (signedInUserIsAdminValue.equals("true")) {
+                        mainActivity.initAfterLogin("admin");
+                    } else {
+                        mainActivity.initAfterLogin("player");
+                    }
                 }
             }
             @Override

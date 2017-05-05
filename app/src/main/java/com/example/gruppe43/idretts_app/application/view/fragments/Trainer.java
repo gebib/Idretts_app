@@ -70,7 +70,7 @@ public class Trainer extends Fragment {
                         databaseHelper = new DataBaseHelper(mCallback.getContext());
                         String postKey = getRef(position).getKey();
                         databaseHelper.getSelectedActivityInfo(postKey);
-                        NewActivityRegistration.setSelectedActivityPostKey(postKey);
+                        TrainerActivityRegistration.setSelectedActivityPostKey(postKey);
                     }
                 });
             }

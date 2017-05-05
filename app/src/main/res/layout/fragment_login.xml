@@ -32,6 +32,7 @@
             <EditText android:id="@+id/input_email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textColor="#ffffff"
                 android:windowSoftInputMode="stateUnchanged"
                 android:inputType="textEmailAddress"
                 android:hint="E-mail" />
@@ -46,6 +47,7 @@
             <EditText android:id="@+id/input_password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textColor="#ffffff"
                 android:inputType="textPassword"
                 android:hint="Password"/>
         </android.support.design.widget.TextInputLayout>
@@ -54,6 +56,7 @@
             android:id="@+id/loginBT"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:textColor="#ffffff"
             android:layout_marginTop="24dp"
             android:layout_marginBottom="24dp"
             android:padding="12dp"
@@ -62,6 +65,7 @@
         <TextView android:id="@+id/link_signup"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:textColor="@color/black"
             android:layout_marginBottom="24dp"
             android:text="No account yet? Create one"
             android:gravity="center"

@@ -10,7 +10,6 @@ import android.widget.Toast;
 
 import com.example.gruppe43.idretts_app.R;
 import com.example.gruppe43.idretts_app.application.view.fragments.FullActivityInfo;
-import com.example.gruppe43.idretts_app.application.view.fragments.Tabs;
 import com.example.gruppe43.idretts_app.application.view.main.MainActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -33,6 +32,8 @@ public class DataBaseHelper extends Authentication {
     private String postOwnerUserLastName;
     private static String[] activityDataCache;
     private DatabaseReference trainer_posts;
+    private DatabaseReference player_posts;
+    private String firstANdLastNameOfPlayerPostOwner;
 
 
     public String[] getActivityDataCache() {
@@ -88,9 +89,9 @@ public class DataBaseHelper extends Authentication {
 
         try {
             String get_current_user_id = fbAuth.getCurrentUser().getUid();
-            if(editedPostKey.equals("")) {
+            if (editedPostKey.equals("")) {
                 trainer_posts = fbTrainerPostsDbRef.push();//creates new ID.
-            }else{
+            } else {
                 trainer_posts = fbTrainerPostsDbRef.child(editedPostKey);
             }
             getCurrentDate();
@@ -102,20 +103,20 @@ public class DataBaseHelper extends Authentication {
             trainer_posts.child("endTime").setValue(endTime);
             trainer_posts.child("place").setValue(place);
             trainer_posts.child("intensity").setValue(intensity);
-            if(editedPostKey.equals("")){
+            if (editedPostKey.equals("")) {
                 trainer_posts.child("postedDate").setValue(datePosted);
             }
             trainer_posts.child("infoText").setValue(activityTextInfo);
             trainer_posts.child("timePosted").setValue(timePosted);
             trainer_posts.child("icon").setValue(icon);
-            if(editedPostKey.equals("")) {
+            if (editedPostKey.equals("")) {
                 trainer_posts.child("postedUserId").setValue(get_current_user_id);
             }
             progressDialog.dismiss();
-                Toast.makeText(mainActivity,mainActivity.getResources().getString(R.string.toastPostRegSuccess), Toast.LENGTH_SHORT).show();
-                mainActivity.showFragmentOfGivenCondition();
-                mainActivity.clearBackStack();
-                mainActivity.hideKeyboard();
+            Toast.makeText(mainActivity, mainActivity.getResources().getString(R.string.toastPostRegSuccess), Toast.LENGTH_SHORT).show();
+            mainActivity.showFragmentOfGivenCondition();
+            mainActivity.clearBackStack();
+            mainActivity.hideKeyboard();
         } catch (DatabaseException dbe) {//db failure
             progressDialog.dismiss();
             AlertDialog.Builder builder1 = new AlertDialog.Builder(mainActivity);
@@ -132,56 +133,52 @@ public class DataBaseHelper extends Authentication {
         }
     }
 
-    /*//Post player activity
-    public void postPlayerActivity(String title,
-                                   String date,
-                                   String intencity,
-                                   String place) {
-        final String activityTitle, activityDate, activityIntensity, activityPlace;
-        activityTitle = title;
-        activityDate = date;
-        activityIntensity = intencity;
-        activityPlace = place;
-
-
+    //Post player activity
+    public void postPlayerActivity(String title, String place, int intensity, String fname,String lastName) {
         progressDialog = new ProgressDialog(mainActivity);
         progressDialog.setTitle(mainActivity.getResources().getString(R.string.adminPostingProgressDialogTitle));
         progressDialog.setMessage(mainActivity.getResources().getString(R.string.adminPostingProgressDialogTextInfo));
         progressDialog.show();
-        fbPlayerPostsDbRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                String user_id = fbAuth.getCurrentUser().getUid();
-                DatabaseReference player_post_DB = fbPlayerPostsDbRef.child(user_id);
-                getCurrentDate();
-                String registeredDate = nowDate + "." + nowMonth + "." + nowYear + " " + nowHour + ":" + nowMinute;
 
-                player_post_DB.child("title").setValue(activityTitle);
-                player_post_DB.child("activityDate").setValue(activityDate);
-                player_post_DB.child("datePosted").setValue(registeredDate);
-                player_post_DB.child("intensity").setValue(activityIntensity);
-                player_post_DB.child("place").setValue(activityPlace);
-                player_post_DB.child("userId").setValue(user_id);
+        try {
+            getCurrentDate();
+            String user_id = fbAuth.getCurrentUser().getUid();
+            String datePosted = nowDate + "." + nowMonth + "." + nowYear;
+            String timePosted = nowHour + ":" + nowMinute;
 
-                progressDialog.dismiss();
-            }
 
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                progressDialog.dismiss();
-                AlertDialog.Builder builder1 = new AlertDialog.Builder(mainActivity);
-                builder1.setTitle(mainActivity.getString(R.string.activityRegistrationFailureTitle));
-                builder1.setMessage(mainActivity.getString(R.string.activityRegistrationFailureTextIinfo));
-                builder1.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        //ingen action.
-                    }
-                });
-                AlertDialog alert11 = builder1.create();
-                alert11.show();
-            }
-        });
-    }*/
+            player_posts = fbPlayerPostsDbRef.push();
+
+            player_posts.child("Title").setValue(title);
+            player_posts.child("Place").setValue(place);
+            player_posts.child("Intensity").setValue(intensity);
+            player_posts.child("FirstName").setValue(fname);
+            player_posts.child("TimePosted").setValue(timePosted);
+            player_posts.child("DatePosted").setValue(datePosted);
+            player_posts.child("LastName").setValue(lastName);
+            player_posts.child("PlayerId").setValue(user_id);
+            player_posts.child("PlayerImage").setValue("TODO"); //TODO picasso..
+
+            progressDialog.dismiss();
+
+            Toast.makeText(mainActivity, mainActivity.getResources().getString(R.string.toastPostRegSuccess), Toast.LENGTH_SHORT).show();
+            mainActivity.showFragmentOfGivenCondition();
+            mainActivity.clearBackStack();
+        } catch (DatabaseException dbe) {
+            progressDialog.dismiss();
+            AlertDialog.Builder builder1 = new AlertDialog.Builder(mainActivity);
+            builder1.setTitle(mainActivity.getString(R.string.activityRegistrationFailureTitle));
+            builder1.setMessage(mainActivity.getString(R.string.activityRegistrationFailureTextIinfo));
+            builder1.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+                    //ingen action.
+                }
+            });
+            AlertDialog alert11 = builder1.create();
+            alert11.show();
+            mainActivity.setIsOnNewActivityRegisterPage(true);
+        }
+    }
 
     //retrieve dataes of the selected activity for displaying
     public void getSelectedActivityInfo(String postKey) {
@@ -191,31 +188,32 @@ public class DataBaseHelper extends Authentication {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 String title, activityDate, startTime, endTime, place, intensity, postedDate,
                         infoText, timePosted, icon;
+                if (dataSnapshot.exists()) {
+                    title = (String) dataSnapshot.child("title").getValue();
+                    activityDate = (String) dataSnapshot.child("activityDate").getValue();
+                    startTime = (String) dataSnapshot.child("startTime").getValue();
+                    endTime = (String) dataSnapshot.child("endTime").getValue();
+                    place = (String) dataSnapshot.child("place").getValue();
+                    intensity = (String) dataSnapshot.child("intensity").getValue();
+                    postedDate = (String) dataSnapshot.child("postedDate").getValue();
+                    infoText = (String) dataSnapshot.child("infoText").getValue();
+                    timePosted = (String) dataSnapshot.child("timePosted").getValue();
+                    icon = (String) dataSnapshot.child("icon").getValue();
 
-                title = (String) dataSnapshot.child("title").getValue();
-                activityDate = (String) dataSnapshot.child("activityDate").getValue();
-                startTime = (String) dataSnapshot.child("startTime").getValue();
-                endTime = (String) dataSnapshot.child("endTime").getValue();
-                place = (String) dataSnapshot.child("place").getValue();
-                intensity = (String) dataSnapshot.child("intensity").getValue();
-                postedDate = (String) dataSnapshot.child("postedDate").getValue();
-                infoText = (String) dataSnapshot.child("infoText").getValue();
-                timePosted = (String) dataSnapshot.child("timePosted").getValue();
-                icon = (String) dataSnapshot.child("icon").getValue();
+                    activityDataCache[0] = title;
+                    activityDataCache[1] = activityDate;
+                    activityDataCache[2] = startTime;
+                    activityDataCache[3] = endTime;
+                    activityDataCache[4] = place;
+                    activityDataCache[5] = intensity;
+                    activityDataCache[6] = postedDate;
+                    activityDataCache[7] = infoText;
+                    activityDataCache[8] = timePosted;
+                    activityDataCache[9] = icon;
 
-                activityDataCache[0] = title;
-                activityDataCache[1] = activityDate;
-                activityDataCache[2] = startTime;
-                activityDataCache[3] = endTime;
-                activityDataCache[4] = place;
-                activityDataCache[5] = intensity;
-                activityDataCache[6] = postedDate;
-                activityDataCache[7] = infoText;
-                activityDataCache[8] = timePosted;
-                activityDataCache[9] = icon;
-
-                String postOwnersId = (String) dataSnapshot.child("postedUserId").getValue();
-                getPostOwnerName(postOwnersId);
+                    String postOwnersId = (String) dataSnapshot.child("postedUserId").getValue();
+                    getPostOwnerName(postOwnersId);
+                }
             }
 
             @Override
@@ -225,24 +223,43 @@ public class DataBaseHelper extends Authentication {
         });
     }
 
+/*    private void getUserNameGivenId(String userId){
+        fbUsersDbRef.child(userId).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if(dataSnapshot.exists()){
+                    player_posts.child()
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        })
+    }*/
+
+    //get the name of owner of this post key
     private void getPostOwnerName(String postOwnersId) {
         fbUsersDbRef.child(postOwnersId).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                String firstName = (String) dataSnapshot.child("firstName").getValue();
-                String lastName = (String) dataSnapshot.child("lastName").getValue();
-                postOwnerUserFirstName = firstName;
-                postOwnerUserLastName = lastName;
-                activityDataCache[10] = postOwnerUserFirstName;
-                activityDataCache[11] = postOwnerUserLastName;
-                Bundle bundle = new Bundle();
-                bundle.putStringArray("postData", activityDataCache);
-                FullActivityInfo fullActivityInfoFragment = new FullActivityInfo();
-                fullActivityInfoFragment.setArguments(bundle);
+                if (dataSnapshot.exists()) {
+                    String firstName = (String) dataSnapshot.child("firstName").getValue();
+                    String lastName = (String) dataSnapshot.child("lastName").getValue();
+                    postOwnerUserFirstName = firstName;
+                    postOwnerUserLastName = lastName;
+                    activityDataCache[10] = postOwnerUserFirstName;
+                    activityDataCache[11] = postOwnerUserLastName;
+                    Bundle bundle = new Bundle();
+                    bundle.putStringArray("postData", activityDataCache);
+                    FullActivityInfo fullActivityInfoFragment = new FullActivityInfo();
+                    fullActivityInfoFragment.setArguments(bundle);
 
-                FragmentTransaction fragmentTransaction = mainActivity.getmFragmentManager().beginTransaction();
-                fragmentTransaction.addToBackStack("");
-                fragmentTransaction.replace(R.id.containerView, fullActivityInfoFragment).commit();
+                    FragmentTransaction fragmentTransaction = mainActivity.getmFragmentManager().beginTransaction();
+                    fragmentTransaction.addToBackStack("");
+                    fragmentTransaction.replace(R.id.containerView, fullActivityInfoFragment).commit();
+                }
             }
 
             @Override
@@ -252,21 +269,73 @@ public class DataBaseHelper extends Authentication {
         });
     }
 
-    public void showDatabaseDataFetchConnectionError() {
-        AlertDialog.Builder builder1 = new AlertDialog.Builder(mainActivity);
-        builder1.setTitle(mainActivity.getString(R.string.databaseConnectionErrorFetchTitle));
-        builder1.setMessage(mainActivity.getString(R.string.databaseConnectionErrorFetchTextInfo));
-        builder1.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
-                //ingen action.
+    //delete the selected plost if the user chooses to do so.
+    public void deleteSelectedPost(String primaryKey, boolean isTrainerPost) {
+        DatabaseReference dbRef;
+        try {
+            if (isTrainerPost) {
+                dbRef = FirebaseDatabase.getInstance().getReference().child("TrainerPosts");
+            } else {
+                dbRef = FirebaseDatabase.getInstance().getReference().child("PlayerPosts");
             }
-        });
-        AlertDialog alert11 = builder1.create();
-        alert11.show();
+            dbRef.child(primaryKey).removeValue();
+        } catch (DatabaseException dbe) {
+            dbe.printStackTrace();
+        }
+        return;
     }
 
-    //svas changes to database for edited posts.
-    public void setEditTrainerPost(String[] editedValues, String postKey) {
+    public void checkDoesPlayerOwnThePost(final String postKey) {
+        fbPlayerPostsDbRef.child(postKey).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if(dataSnapshot.exists()){
+                    String postOwnerId = (String) dataSnapshot.child("PlayerId").getValue();
+                    String currentUserId = fbAuth.getCurrentUser().getUid();
+                    if(postOwnerId.equals(currentUserId)){ // then player is allawed to remove the post!
+                        AlertDialog.Builder builder1 = new AlertDialog.Builder(mainActivity);
+                        builder1.setTitle(mainActivity.getString(R.string.userClickedTheirPostAlertTitle));
+                        builder1.setMessage(mainActivity.getString(R.string.userClickedTheirPostAlertText));
 
+                        builder1.setPositiveButton(mainActivity.getString(R.string.playerPostAlertCANCELlabel), new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                            }
+                        });
+                        builder1.setNegativeButton(mainActivity.getString(R.string.playerPostAlertDELETElabel), new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                Toast.makeText(mainActivity, R.string.playerPostDeleteToast, Toast.LENGTH_SHORT).show();
+                                deleteSelectedPost(postKey,false);
+                            }
+                        });
+                        AlertDialog alert11 = builder1.create();
+                        alert11.show();
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    public void prePostPlayerActivity(final String typeOfActivity, final String activityPlace, final int intensity) {
+        String currentUserId = fbAuth.getCurrentUser().getUid();
+        fbUsersDbRef.child(currentUserId).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if(dataSnapshot.exists()){
+                    String firstName = (String) dataSnapshot.child("firstName").getValue();
+                    String lastName = (String) dataSnapshot.child("lastName").getValue();
+                    postPlayerActivity(typeOfActivity,activityPlace,intensity,firstName,lastName);
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
 }

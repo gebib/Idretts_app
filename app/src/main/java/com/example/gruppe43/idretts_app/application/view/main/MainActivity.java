@@ -17,7 +17,6 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -28,7 +27,8 @@ import com.example.gruppe43.idretts_app.application.helper_classes.PrefferencesC
 import com.example.gruppe43.idretts_app.application.interfaces.FragmentActivityInterface;
 import com.example.gruppe43.idretts_app.application.view.fragments.Login;
 import com.example.gruppe43.idretts_app.application.view.fragments.Messages;
-import com.example.gruppe43.idretts_app.application.view.fragments.NewActivityRegistration;
+import com.example.gruppe43.idretts_app.application.view.fragments.PlayerActivityRegistration;
+import com.example.gruppe43.idretts_app.application.view.fragments.TrainerActivityRegistration;
 import com.example.gruppe43.idretts_app.application.view.fragments.Player;
 import com.example.gruppe43.idretts_app.application.view.fragments.ProfileView;
 import com.example.gruppe43.idretts_app.application.view.fragments.Tabs;
@@ -37,8 +37,8 @@ import com.example.gruppe43.idretts_app.application.view.fragments.Trainer;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
-
-import static com.example.gruppe43.idretts_app.application.view.fragments.NewActivityRegistration.nar;
+import static com.example.gruppe43.idretts_app.application.view.fragments.PlayerActivityRegistration.par;
+import static com.example.gruppe43.idretts_app.application.view.fragments.TrainerActivityRegistration.nar;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, FragmentActivityInterface {
     private DrawerLayout mDrawerLayout;
@@ -102,8 +102,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (onNewActivityRegisterPage) {
+                if (onNewActivityRegisterPage && isTrainerSignedIn) {
                     nar.registerActivity();
+                    onNewActivityRegisterPage = false;
+                } else if (onNewActivityRegisterPage && isPlayerSignedIn) {
+                    par.registerPlayerActivity();
                     onNewActivityRegisterPage = false;
                 } else if (!onNewActivityRegisterPage) {
                     showFragmentOfGivenCondition();
@@ -149,12 +152,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if (isTrainerSignedIn && trainerIsShowing) {
             FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
             fragmentTransaction.addToBackStack("");
-            fragmentTransaction.replace(R.id.containerView, new NewActivityRegistration()).commit();
+            fragmentTransaction.replace(R.id.containerView, new TrainerActivityRegistration()).commit();
             currentShowingFragment("editActivity");
         } else if (isPlayerSignedIn && playerIsShowing) {
             FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
             fragmentTransaction.addToBackStack("");
-            fragmentTransaction.replace(R.id.containerView, new NewActivityRegistration()).commit();
+            fragmentTransaction.replace(R.id.containerView, new PlayerActivityRegistration()).commit();
             currentShowingFragment("editActivity");
         } else if (isPlayerSignedIn && editActivityIsShowing) {
             new Handler().post(new Runnable() {
@@ -177,12 +180,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
     }
 
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        // mAuth.addAuthStateListener(mAuthListner);//listen for if the user has signed in already ///////////////////////////////////////////////////////////////////
-    }
 
     @Override
     public void onBackPressed() {

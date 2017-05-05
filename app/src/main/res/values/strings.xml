@@ -72,5 +72,26 @@
     <string name="toastPostRegSuccess">Registered!</string>
     <string name="toastPostEditSuccess">Post edited!</string>
 
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="personal_activity_registration">Personal activity registration</string>
+    <string name="type_of_activity">Type of activity</string>
+    <string name="football_training">Football training</string>
+    <string name="gymnastics">Gymnastics</string>
+    <string name="activity_place">Activity place</string>
+    <string name="training_intensity">Training intensity</string>
+    <string name="reister">Reister</string>
+    <string name="userClickedTheirPostAlertText">Your post will be registered into the database withing 24 hour after you posted it and then will automatically be removed from here.  Choose \"Delete\" if you want to cancel registration. You can register personal training any time.</string>
+    <string name="userClickedTheirPostAlertTitle">Personal training</string>
+    <string name="playerPostAlertCANCELlabel">Cancel</string>
+    <string name="playerPostAlertDELETElabel">Delete</string>
+    <string name="personalTrainingTypeFootball">Football training</string>
+    <string name="personalTrainingTypeGymnastic">Gymnastics</string>
+    <string name="personalTrainingPlaceLocalOutside">Local gym/ outside</string>
+    <string name="personalTrainingPlaceSchool">School</string>
+    <string name="playerPostDeleteToast">Your post is deleted. You can add new post any time.</string>
+    <string name="informationLogPlayerActivityTextInfo">Here every player registers their personal sport activity after they have completed, or before starting. All personal trainings will be logged to a logg book of the coach.</string>
+    <string name="informationLogPlayerActivityTextTitle">Information</string>
+
 
 </resources>

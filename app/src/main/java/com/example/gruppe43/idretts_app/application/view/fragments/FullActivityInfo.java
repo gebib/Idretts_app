@@ -3,7 +3,6 @@ package com.example.gruppe43.idretts_app.application.view.fragments;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -107,7 +106,9 @@ public class FullActivityInfo extends Fragment {
         activityDeleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                System.out.println("///////////////////////Delete button");
+                 DataBaseHelper dbh = new DataBaseHelper(mCallback.getContext());
+                dbh.deleteSelectedPost(TrainerActivityRegistration.getSelectedActivityPostKey(),true);
+                mCallback.getmFragmentManager().popBackStack();
             }
         });
 

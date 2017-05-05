@@ -29,7 +29,7 @@ import com.example.gruppe43.idretts_app.application.helper_classes.TimePickerFra
 import com.example.gruppe43.idretts_app.application.interfaces.FragmentActivityInterface;
 
 
-public class NewActivityRegistration extends Fragment {
+public class TrainerActivityRegistration extends Fragment {
     private Spinner newActSpinnerActivityType;
     private SeekBar newActIntensitySeeker;
     private EditText newActDate;
@@ -40,7 +40,7 @@ public class NewActivityRegistration extends Fragment {
     private EditText nonFunctionalEditTextForUse;
     private TextView seekBarPersentageDisplay;
     private String activityTitle;
-    public static NewActivityRegistration nar;
+    public static TrainerActivityRegistration nar;
     private FragmentActivityInterface mCallback;
     private String[] cacheDataForEdit;
     private static String selectedActivityPostKey;
@@ -48,13 +48,17 @@ public class NewActivityRegistration extends Fragment {
     private boolean isForStarttime;
     private String titleSpinnerPos;
 
-    public NewActivityRegistration() {
+    public TrainerActivityRegistration() {
         // Required empty public constructor 
     }
 
     //set the selected post key in case of editing the key is needed.
     public static void setSelectedActivityPostKey(String selectedActivityPostKey) {
-        NewActivityRegistration.selectedActivityPostKey = selectedActivityPostKey;
+        TrainerActivityRegistration.selectedActivityPostKey = selectedActivityPostKey;
+    }
+
+    public static String getSelectedActivityPostKey() {
+        return selectedActivityPostKey;
     }
 
     @Override
@@ -70,7 +74,7 @@ public class NewActivityRegistration extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_new_activity_registration, container, false);
+        View view = inflater.inflate(R.layout.fragment_trainer_activity_registration, container, false);
         nar = this;
         newActSpinnerActivityType = (Spinner) view.findViewById(R.id.spinnerActivityType);
         newActDate = (EditText) view.findViewById(R.id.newActDate);

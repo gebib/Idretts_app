@@ -5,17 +5,17 @@ package com.example.gruppe43.idretts_app.application.model;
  */
 
 public class TrainerModel {
-    String activityDate;//OPSI OPSI!!
-    String endTime;
-    String icon;
-    String infoText;
-    String intensity;
-    String place;
-    String postedDate;
-    String postedUserId;
-    String startTime;
-    String timePosted;
-    String title;
+    private String activityDate;//OPSI OPSI!!
+    private String endTime;
+    private String icon;
+    private String infoText;
+    private String intensity;
+    private String place;
+    private String postedDate;
+    private String postedUserId;
+    private String startTime;
+    private String timePosted;
+    private String title;
 
 
     public TrainerModel() {
