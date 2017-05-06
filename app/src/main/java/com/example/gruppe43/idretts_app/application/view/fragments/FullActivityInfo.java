@@ -5,10 +5,13 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.example.gruppe43.idretts_app.R;
@@ -34,6 +37,9 @@ public class FullActivityInfo extends Fragment {
     private FragmentActivityInterface mCallback;
     private String[] postDataToDisplay;
     private static boolean isEditClicked;
+    private Button absenceControllButton;
+    private RelativeLayout buttonsHolderRelativeLayout;
+    private Button addRemoveCampRecords;
 
     public FullActivityInfo() {
     }
@@ -71,6 +77,8 @@ public class FullActivityInfo extends Fragment {
         isEditClicked = false;
         activityEditButton = (Button) view.findViewById(R.id.showFullActivityInfoEditButton);
         activityDeleteButton = (Button) view.findViewById(R.id.showFullActivityInfoDeleteButton);
+        absenceControllButton = (Button) view.findViewById(R.id.absenceControllButton);
+        addRemoveCampRecords = (Button) view.findViewById(R.id.addRemoveCampRecords);
 
         fullactivityinfoImageView = (ImageView) view.findViewById(R.id.fullactivityinfoImageView);
 
@@ -82,6 +90,27 @@ public class FullActivityInfo extends Fragment {
         fullactivityinfoPlaceTV = (TextView) view.findViewById(R.id.fullactivityinfoPlaceTV);
         postOwnerNameAndPostedDate = (TextView) view.findViewById(R.id.postDatePostedByOwner);
         activityTextInfoTV = (TextView) view.findViewById(R.id.activityTextInfoTV);
+
+        buttonsHolderRelativeLayout = (RelativeLayout) view.findViewById(R.id.buttonsHolderRelativeLayout);
+
+        absenceControllButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                System.out.println("///////////////////////////// absenceControllButon"); //TODO
+            }
+        });
+
+        addRemoveCampRecords.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                System.out.println("///////////////////////////// campREcords"); //TODO
+            }
+        });
+
+
+
+
+
         try {
             Bundle bundle = this.getArguments();
             postDataToDisplay = bundle.getStringArray("postData");
@@ -100,8 +129,7 @@ public class FullActivityInfo extends Fragment {
         PrefferencesClass prefs = new PrefferencesClass(mCallback.getContext());
         String prefData = prefs.loadSharedPrefData("isAdmin");
         if (prefData.equals("false")) {
-            activityEditButton.setVisibility(View.GONE);
-            activityDeleteButton.setVisibility(View.GONE);
+            buttonsHolderRelativeLayout.setVisibility(view.GONE);
         }
         activityDeleteButton.setOnClickListener(new View.OnClickListener() {
             @Override

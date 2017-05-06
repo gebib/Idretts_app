@@ -73,7 +73,7 @@ public class Team extends Fragment {
                     public void onClick(View v) {
                         databaseHelper = new DataBaseHelper(mCallback.getContext());
                         String userId= getRef(position).getKey();//you will get which user you clicked on uId?
-                        Toast.makeText(mCallback.getContext(), "/////////////////////////"+userId, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(mCallback.getContext(), "/////////////////////////"+userId, Toast.LENGTH_SHORT).show();//TODO
                     }
                 });
             }

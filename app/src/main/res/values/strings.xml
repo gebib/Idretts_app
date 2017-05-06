@@ -2,7 +2,7 @@
     <string name="app_name">Idretts App</string>
 
 
-    <string name="tempLorem">additional text information here.Activity additional text information here.Activity additional text information here.Activity additional text information here.Activity additional text information here.</string>
+    <string name="tempLorem">additional text information here.Activity additional text information here.Activity additional text information here.Activity additional text information here.Activiormation here.Activity additional text information here.Activity additional text information here.Activity additional text information here.Activiormation here.Activity additional text information here.Activity additional text information here.Activity additional text information here.Activiormation here.Activity additional text information here.Activity additional text information here.Activity additional text information here.Activiormation here.Activity additional text information here.Activity additional text information here.Activity additional text information here.Activiormation here.Activity additional text information here.Activity additional text information here.Activity additional text information here.Activiormation here.Activity additional text information here.Activity additional text information here.Activity additional text information here.Activiormation here.Activity additional text information here.Activity additional text information here.Activity additional text information here.Activiormation here.Activity additional text information here.Activity additional text information here.Activity additional text information here.Activiormation here.Activity additional text information here.Activity additional text information here.Activity additional text information here.Activiormation here.Activity additional text information here.Activity additional text information here.Activity additional text information here.Activity additional text information here.</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -55,8 +55,8 @@
     <string name="fullactivityinfo_date">fullactivityinfo date</string>
     <string name="fullactivityinfo_start_end_time">fullactivityinfo start end time</string>
     <string name="fullactivityinfo_date_of_post">fullactivityinfo date of post</string>
-    <string name="showFullActivitiInfoEditBtn">Edit</string>
-    <string name="showFullActivitiInfoDeleteBtn">Delete</string>
+    <string name="showFullActivitiInfoEditBtn">Edit activity </string>
+    <string name="showFullActivitiInfoDeleteBtn">Delete activity</string>
     <string name="activity_details">Activity Details</string>
     <string name="fullActivityShowStartS">Starts:</string>
     <string name="fullActivityShowEndS">Ends:</string>
