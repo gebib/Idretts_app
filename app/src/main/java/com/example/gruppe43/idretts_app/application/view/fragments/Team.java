@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.gruppe43.idretts_app.R;
 import com.example.gruppe43.idretts_app.application.controll.DataBaseHelper;
@@ -72,7 +73,7 @@ public class Team extends Fragment {
                     public void onClick(View v) {
                         databaseHelper = new DataBaseHelper(mCallback.getContext());
                         String userId= getRef(position).getKey();//you will get which user you clicked on uId?
-                        System.out.println("/////////////////////////"+userId);
+                        Toast.makeText(mCallback.getContext(), "/////////////////////////"+userId, Toast.LENGTH_SHORT).show();
                     }
                 });
             }

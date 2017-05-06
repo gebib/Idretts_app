@@ -122,7 +122,7 @@
 
         <TextView
             android:id="@+id/textView9Percent"
-            android:layout_width="wrap_content"
+            android:layout_width="80dp"
             android:layout_height="wrap_content"
             android:background="#82bcff"
             android:text="100%"
@@ -142,7 +142,6 @@
                 android:id="@+id/seekBarIntensity"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="10dp"
                 android:layout_centerVertical="true"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentStart="true" />
