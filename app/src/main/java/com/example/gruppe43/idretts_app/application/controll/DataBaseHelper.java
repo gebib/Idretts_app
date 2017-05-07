@@ -229,21 +229,6 @@ public class DataBaseHelper extends Authentication {
         });
     }
 
-/*    private void getUserNameGivenId(String userId){
-        fbUsersDbRef.child(userId).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                if(dataSnapshot.exists()){
-                    player_posts.child()
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        })
-    }*/
 
     //get the name of owner of this post key
     private void getPostOwnerName(String postOwnersId) {

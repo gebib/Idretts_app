@@ -139,6 +139,9 @@ public class Authentication {
                     current_user_db.child("registeredDate").setValue(registeredDate);
                     current_user_db.child("confirmedByCoach").setValue(confirmation);//TODO coach need to confirm and user is restricted until then, remove auto or manually if not confirmed
                     current_user_db.child("isAdmin").setValue("false");
+                    current_user_db.child("playerNr").setValue("unknown");//TODO
+                    current_user_db.child("playerType").setValue("unknown");//TODO
+                    current_user_db.child("status").setValue("Active");// TODO change when abcence registered
                     progressDialog.dismiss();
                     checkIfThitIsFirstUser();
                     signIn(email,pass);

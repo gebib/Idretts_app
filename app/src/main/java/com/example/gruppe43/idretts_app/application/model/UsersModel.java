@@ -11,19 +11,25 @@ public class UsersModel {
     private String isAdmin;
     private String lastName;
     private String playerAge;
+    private String playerNr;
+    private String playerType;
     private String registeredDate;
+    private String status;
 
     public UsersModel() {
     }
 
-    public UsersModel(boolean confirmedByCoach, String firstName, String image, String isAdmin, String lastName, String playerAge, String registeredDate) {
+    public UsersModel(boolean confirmedByCoach, String firstName, String image, String isAdmin, String lastName, String playerAge, String playerNr, String playerType, String registeredDate, String status) {
         this.confirmedByCoach = confirmedByCoach;
         this.firstName = firstName;
         this.image = image;
         this.isAdmin = isAdmin;
         this.lastName = lastName;
         this.playerAge = playerAge;
+        this.playerNr = playerNr;
+        this.playerType = playerType;
         this.registeredDate = registeredDate;
+        this.status = status;
     }
 
     public boolean isConfirmedByCoach() {
@@ -74,11 +80,35 @@ public class UsersModel {
         this.playerAge = playerAge;
     }
 
+    public String getPlayerNr() {
+        return playerNr;
+    }
+
+    public void setPlayerNr(String playerNr) {
+        this.playerNr = playerNr;
+    }
+
+    public String getPlayerType() {
+        return playerType;
+    }
+
+    public void setPlayerType(String playerType) {
+        this.playerType = playerType;
+    }
+
     public String getRegisteredDate() {
         return registeredDate;
     }
 
     public void setRegisteredDate(String registeredDate) {
         this.registeredDate = registeredDate;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

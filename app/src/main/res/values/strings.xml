@@ -101,6 +101,9 @@
     <string name="green_cards">Green card:</string>
     <string name="player_data_registration">Player data registration</string>
     <string name="registerDialog">REGISTER</string>
+    <string name="profileNameLabe">Name:</string>
+    <string name="profilePlayer_nr">Player NR:</string>
+    <string name="player_age">Player Age:</string>
 
 
 </resources>

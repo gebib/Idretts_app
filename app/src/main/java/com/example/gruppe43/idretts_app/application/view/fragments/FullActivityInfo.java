@@ -94,7 +94,7 @@ public class FullActivityInfo extends Fragment {
         absenceControllButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                System.out.println("///////////////////////////// absenceControllButon"); //TODO
+                 //TODO absence controll popup
             }
         });
 
