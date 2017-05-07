@@ -34,7 +34,7 @@ public class Authentication {
     protected DatabaseReference fbPlayerPostsDbRef;
     protected DatabaseReference fbUsersDbRef;
     protected DatabaseReference fbAbsenceDbRef;
-    protected DatabaseReference fbCapsDbRef;
+    protected DatabaseReference fbCapRecordsDbRef;
     private String email;
     private String pass;
     private DataBaseHelper databaseHelper;
@@ -48,7 +48,7 @@ public class Authentication {
         fbPlayerPostsDbRef = FirebaseDatabase.getInstance().getReference().child("PlayerPosts");
         fbUsersDbRef = FirebaseDatabase.getInstance().getReference().child("Users");
         fbAbsenceDbRef = FirebaseDatabase.getInstance().getReference().child("Abcences");
-        fbCapsDbRef = FirebaseDatabase.getInstance().getReference().child("Camps");
+        fbCapRecordsDbRef = FirebaseDatabase.getInstance().getReference().child("CampsRecords");
 
         fbAuth = FirebaseAuth.getInstance();
         this.mainActivity = mainActivity;

@@ -5,13 +5,11 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.example.gruppe43.idretts_app.R;
@@ -39,7 +37,7 @@ public class FullActivityInfo extends Fragment {
     private static boolean isEditClicked;
     private Button absenceControllButton;
     private RelativeLayout buttonsHolderRelativeLayout;
-    private Button addRemoveCampRecords;
+    private Button addCampRecords;
 
     public FullActivityInfo() {
     }
@@ -78,7 +76,7 @@ public class FullActivityInfo extends Fragment {
         activityEditButton = (Button) view.findViewById(R.id.showFullActivityInfoEditButton);
         activityDeleteButton = (Button) view.findViewById(R.id.showFullActivityInfoDeleteButton);
         absenceControllButton = (Button) view.findViewById(R.id.absenceControllButton);
-        addRemoveCampRecords = (Button) view.findViewById(R.id.addRemoveCampRecords);
+        addCampRecords = (Button) view.findViewById(R.id.addRemoveCampRecords);
 
         fullactivityinfoImageView = (ImageView) view.findViewById(R.id.fullactivityinfoImageView);
 
@@ -100,16 +98,13 @@ public class FullActivityInfo extends Fragment {
             }
         });
 
-        addRemoveCampRecords.setOnClickListener(new View.OnClickListener() {
+        addCampRecords.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                System.out.println("///////////////////////////// campREcords"); //TODO
+                DataBaseHelper dbh = new DataBaseHelper(mCallback.getContext());
+                dbh.retrieveAllPlayersNameAndId();
             }
         });
-
-
-
-
 
         try {
             Bundle bundle = this.getArguments();
@@ -140,7 +135,6 @@ public class FullActivityInfo extends Fragment {
             }
         });
 
-
         postDataToDisplay = getArguments().getStringArray("postData");
         String icon = postDataToDisplay[9];
         switch (icon) {
@@ -158,6 +152,11 @@ public class FullActivityInfo extends Fragment {
                 break;
             default:
                 fullactivityinfoImageView.setImageResource(R.drawable.ia_logo);
+        }
+        if (!(postDataToDisplay[0].equals("Football camp") || postDataToDisplay[0].equals("Fotballkamp"))){
+            addCampRecords.setEnabled(false);
+        }else{
+            addCampRecords.setEnabled(true);
         }
 
         fulActivityInfoTopBar.setText(postDataToDisplay[0]);

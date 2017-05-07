@@ -71,8 +71,6 @@
     <string name="toastActivityUpdated">Activity updated!</string>
     <string name="toastPostRegSuccess">Registered!</string>
     <string name="toastPostEditSuccess">Post edited!</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="personal_activity_registration">Personal activity registration</string>
     <string name="type_of_activity">Type of activity</string>
@@ -92,6 +90,17 @@
     <string name="playerPostDeleteToast">Your post is deleted. You can add new post any time.</string>
     <string name="informationLogPlayerActivityTextInfo">Here every player registers their personal sport activity after they have completed, or before starting. All personal trainings will be logged to a logg book of the coach.</string>
     <string name="informationLogPlayerActivityTextTitle">Information</string>
+    <string name="dialogCampRecords">Camp records</string>
+    <string name="select_player">Select player</string>
+    <string name="minutes_played">Minutes played:</string>
+    <string name="red_card">Red Card:</string>
+    <string name="yellow_card">Yellow Card:</string>
+    <string name="green_card">Green Card:</string>
+    <string name="register">REGISTER</string>
+    <string name="perfect_passings">Passing:</string>
+    <string name="green_cards">Green card:</string>
+    <string name="player_data_registration">Player data registration</string>
+    <string name="registerDialog">REGISTER</string>
 
 
 </resources>

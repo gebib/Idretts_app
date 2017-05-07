@@ -9,7 +9,10 @@ import android.support.v4.app.FragmentTransaction;
 import android.widget.Toast;
 
 import com.example.gruppe43.idretts_app.R;
+import com.example.gruppe43.idretts_app.application.helper_classes.EditCampRecordsDialog;
+import com.example.gruppe43.idretts_app.application.model.UsersModel;
 import com.example.gruppe43.idretts_app.application.view.fragments.FullActivityInfo;
+import com.example.gruppe43.idretts_app.application.view.fragments.TrainerActivityRegistration;
 import com.example.gruppe43.idretts_app.application.view.main.MainActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -20,6 +23,9 @@ import com.google.firebase.database.DatabaseException;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+
 
 /**
  * Created by gebi9 on 26-Apr-17.
@@ -33,8 +39,8 @@ public class DataBaseHelper extends Authentication {
     private static String[] activityDataCache;
     private DatabaseReference trainer_posts;
     private DatabaseReference player_posts;
+    private DatabaseReference camp_records;
     private String firstANdLastNameOfPlayerPostOwner;
-
 
     public String[] getActivityDataCache() {
         return activityDataCache;
@@ -45,7 +51,7 @@ public class DataBaseHelper extends Authentication {
         fbPlayerPostsDbRef = FirebaseDatabase.getInstance().getReference().child("PlayerPosts");
         fbUsersDbRef = FirebaseDatabase.getInstance().getReference().child("Users");
         fbAbsenceDbRef = FirebaseDatabase.getInstance().getReference().child("Abcences");
-        fbCapsDbRef = FirebaseDatabase.getInstance().getReference().child("Camps");
+        fbCapRecordsDbRef = FirebaseDatabase.getInstance().getReference().child("CampsRecords");
         fbAuth = FirebaseAuth.getInstance();
         this.mainActivity = mainActivity;
     }
@@ -134,7 +140,7 @@ public class DataBaseHelper extends Authentication {
     }
 
     //Post player activity
-    public void postPlayerActivity(String title, String place, int intensity, String fname,String lastName) {
+    public void postPlayerActivity(String title, String place, int intensity, String fname, String lastName) {
         progressDialog = new ProgressDialog(mainActivity);
         progressDialog.setTitle(mainActivity.getResources().getString(R.string.adminPostingProgressDialogTitle));
         progressDialog.setMessage(mainActivity.getResources().getString(R.string.adminPostingProgressDialogTextInfo));
@@ -289,10 +295,10 @@ public class DataBaseHelper extends Authentication {
         fbPlayerPostsDbRef.child(postKey).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                if(dataSnapshot.exists()){
+                if (dataSnapshot.exists()) {
                     String postOwnerId = (String) dataSnapshot.child("PlayerId").getValue();
                     String currentUserId = fbAuth.getCurrentUser().getUid();
-                    if(postOwnerId.equals(currentUserId)){ // then player is allawed to remove the post!
+                    if (postOwnerId.equals(currentUserId)) { // then player is allawed to remove the post!
                         AlertDialog.Builder builder1 = new AlertDialog.Builder(mainActivity);
                         builder1.setTitle(mainActivity.getString(R.string.userClickedTheirPostAlertTitle));
                         builder1.setMessage(mainActivity.getString(R.string.userClickedTheirPostAlertText));
@@ -305,7 +311,7 @@ public class DataBaseHelper extends Authentication {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 Toast.makeText(mainActivity, R.string.playerPostDeleteToast, Toast.LENGTH_SHORT).show();
-                                deleteSelectedPost(postKey,false);
+                                deleteSelectedPost(postKey, false);
                             }
                         });
                         AlertDialog alert11 = builder1.create();
@@ -321,15 +327,51 @@ public class DataBaseHelper extends Authentication {
         });
     }
 
+    //init a player post to be posted
     public void prePostPlayerActivity(final String typeOfActivity, final String activityPlace, final int intensity) {
         String currentUserId = fbAuth.getCurrentUser().getUid();
         fbUsersDbRef.child(currentUserId).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                if(dataSnapshot.exists()){
+                if (dataSnapshot.exists()) {
                     String firstName = (String) dataSnapshot.child("firstName").getValue();
                     String lastName = (String) dataSnapshot.child("lastName").getValue();
-                    postPlayerActivity(typeOfActivity,activityPlace,intensity,firstName,lastName);
+                    postPlayerActivity(typeOfActivity, activityPlace, intensity, firstName, lastName);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    //get players names and id for all players
+    public void retrieveAllPlayersNameAndId() {
+       final ArrayList<String> playerIds = new ArrayList<>();
+        final ArrayList<String> firstNameLastNameArray = new ArrayList<>();
+
+        fbUsersDbRef.addValueEventListener(new ValueEventListener() {////////////////////////////////////////////////////////////////////////////////////////////////
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                   Iterable<DataSnapshot> playerChildren = dataSnapshot.getChildren();
+
+                   for(DataSnapshot players : playerChildren){
+                       UsersModel um = players.getValue(UsersModel.class);
+                       String fn,ln,userId;
+                       fn = um.getFirstName();
+                       ln = um.getLastName();
+                       userId = players.getKey();
+
+                       firstNameLastNameArray.add(fn+" "+ln);
+                       playerIds.add(userId);
+                   }
+                    EditCampRecordsDialog ecr = new EditCampRecordsDialog();
+                    ecr.setPlayerNames(firstNameLastNameArray);
+                    ecr.setPlayerIds(playerIds);
+                    ecr.show(mainActivity.getmFragmentManager(),"ecd");
                 }
             }
             @Override
@@ -337,5 +379,44 @@ public class DataBaseHelper extends Authentication {
 
             }
         });
+    }
+     /*a user can have more tan ONE register//////////////////////////////////////////////////////////////////////////////////////////////////////////*/
+    //register player data related to camp matches.
+    public void registerPlayerCampDataRecords(int numMinutPlayed, int numRedCard, int numYellowCard, int numGreenCard, int numPerfectPasses, int numScores,String playerId) {
+        progressDialog = new ProgressDialog(mainActivity);
+        progressDialog.setTitle(mainActivity.getResources().getString(R.string.adminPostingProgressDialogTitle));
+        progressDialog.setMessage(mainActivity.getResources().getString(R.string.adminPostingProgressDialogTextInfo));
+        progressDialog.show();
+        try {
+            camp_records = fbCapRecordsDbRef.push();
+
+            camp_records.child("userId").setValue(playerId);
+            camp_records.child("activityId").setValue(TrainerActivityRegistration.getSelectedActivityPostKey());
+            camp_records.child("minutPlayed").setValue(numMinutPlayed);
+            camp_records.child("redCard").setValue(numRedCard);
+            camp_records.child("yellowCard").setValue(numYellowCard);
+            camp_records.child("greenCard").setValue(numGreenCard);
+            camp_records.child("numPerfectPass").setValue(numPerfectPasses);
+            camp_records.child("scored").setValue(numScores);
+
+            progressDialog.dismiss();
+
+            Toast.makeText(mainActivity, mainActivity.getResources().getString(R.string.toastPostRegSuccess), Toast.LENGTH_SHORT).show();
+            mainActivity.showFragmentOfGivenCondition();
+            mainActivity.clearBackStack();
+        } catch (DatabaseException dbe) {
+            progressDialog.dismiss();
+            AlertDialog.Builder builder1 = new AlertDialog.Builder(mainActivity);
+            builder1.setTitle(mainActivity.getString(R.string.activityRegistrationFailureTitle));
+            builder1.setMessage(mainActivity.getString(R.string.activityRegistrationFailureTextIinfo));
+            builder1.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+                    //ingen action.
+                }
+            });
+            AlertDialog alert11 = builder1.create();
+            alert11.show();
+            mainActivity.setIsOnNewActivityRegisterPage(true);
+        }
     }
 }

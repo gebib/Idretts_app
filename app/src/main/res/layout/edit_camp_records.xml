@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/iron"
+    android:fitsSystemWindows="true">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/gradient_bg_hover"
+        android:padding="1dp">
+
+        <RelativeLayout
+            android:id="@+id/secondRelativeLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/topRelativLayout"
+            android:background="@color/primary"
+            android:padding="20dp"
+            android:layout_marginLeft="1dp"
+            android:layout_marginRight="1dp"
+            android:layout_marginTop="1dp">
+
+            <TextView
+                android:id="@+id/textView10"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginTop="14dp"
+                android:textSize="20dp"
+                android:background="#82bcff"
+                android:gravity="center"
+                android:text="@string/select_player" />
+
+            <Spinner
+                android:id="@+id/spinnerCampRecordsSelectPlayer"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_below="@+id/textView10"
+                android:layout_alignParentStart="true" />
+
+            <EditText
+                android:id="@+id/minutesPlayed"
+                android:layout_width="150dp"
+                android:textSize="20dp"
+                android:background="#ffffff"
+                android:gravity="center"
+                android:inputType="numberDecimal"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="3dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/spinnerCampRecordsSelectPlayer"
+                android:hint="@string/minutes_played"
+                android:textColorHint="#b1b1b1"
+                android:layout_alignParentStart="true" />
+            <EditText
+                android:id="@+id/redCards"
+                android:layout_width="40dp"
+                android:textSize="20dp"
+                android:background="#ffffff"
+                android:gravity="center"
+                android:inputType="numberDecimal"
+                android:layout_height="wrap_content"
+                android:hint="@string/red_card"
+                android:textColorHint="#b1b1b1"
+                android:layout_alignBaseline="@+id/minutesPlayed"
+                android:layout_alignBottom="@+id/minutesPlayed"
+                android:layout_alignParentEnd="true"
+                android:layout_toEndOf="@+id/minutesPlayed" />
+            <EditText
+                android:id="@+id/yellowCards"
+                android:layout_width="40dp"
+                android:textSize="20dp"
+                android:background="#ffffff"
+                android:layout_marginTop="20dp"
+                android:gravity="center"
+                android:inputType="numberDecimal"
+                android:layout_height="wrap_content"
+                android:hint="@string/yellow_card"
+                android:textColorHint="#b1b1b1"
+                android:layout_below="@+id/redCards"
+                android:layout_alignParentStart="true"
+                android:layout_toStartOf="@+id/redCards"
+                android:layout_alignEnd="@+id/minutesPlayed" />
+
+            <EditText
+                android:id="@+id/greenCards"
+                android:layout_width="40dp"
+                android:textSize="20dp"
+                android:background="#ffffff"
+                android:gravity="center"
+                android:inputType="numberDecimal"
+                android:layout_height="wrap_content"
+                android:hint="@string/green_cards"
+                android:textColorHint="#b1b1b1"
+                android:layout_alignBaseline="@+id/yellowCards"
+                android:layout_alignBottom="@+id/yellowCards"
+                android:layout_alignParentEnd="true"
+                android:layout_toEndOf="@+id/yellowCards"
+                android:layout_alignStart="@+id/redCards" />
+
+            <EditText
+                android:id="@+id/perfectPasses"
+                android:layout_width="40dp"
+                android:textSize="20dp"
+                android:background="#ffffff"
+                android:gravity="center"
+                android:layout_marginTop="20dp"
+                android:inputType="numberDecimal"
+                android:layout_height="wrap_content"
+                android:hint="@string/perfect_passings"
+                android:textColorHint="#b1b1b1"
+                android:layout_below="@+id/greenCards"
+                android:layout_alignParentStart="true"
+                android:layout_alignEnd="@+id/yellowCards" />
+            <EditText
+                android:id="@+id/scores"
+                android:layout_width="40dp"
+                android:textSize="20dp"
+                android:background="#ffffff"
+                android:gravity="center"
+                android:inputType="numberDecimal"
+                android:layout_height="wrap_content"
+                android:hint="Score:"
+                android:textColorHint="#b1b1b1"
+                android:layout_alignBaseline="@+id/perfectPasses"
+                android:layout_alignBottom="@+id/perfectPasses"
+                android:layout_alignParentEnd="true"
+                android:layout_alignStart="@+id/greenCards" />
+            <Button
+                android:id="@+id/campRecordDialogAddBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/scores"
+                android:textColor="#ffffff"
+                android:layout_marginTop="40dp"
+                android:text="@string/registerDialog"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentEnd="true" />
+
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/fullActivityInfoTopBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignEnd="@+id/secondRelativeLayout"
+            android:layout_alignStart="@+id/secondRelativeLayout"
+            android:layout_alignTop="@+id/secondRelativeLayout"
+            android:background="@color/black"
+            android:gravity="center"
+            android:text="@string/player_data_registration"
+            android:textColor="#ffffff" />
+
+
+
+    </RelativeLayout>
+</ScrollView>
