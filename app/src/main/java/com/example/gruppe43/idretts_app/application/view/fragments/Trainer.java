@@ -13,7 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.gruppe43.idretts_app.R;
-import com.example.gruppe43.idretts_app.application.controll.DataBaseHelper;
+import com.example.gruppe43.idretts_app.application.controll.DataBaseHelperA;
 import com.example.gruppe43.idretts_app.application.helper_classes.PrefferencesClass;
 import com.example.gruppe43.idretts_app.application.interfaces.FragmentActivityInterface;
 import com.example.gruppe43.idretts_app.application.model.TrainerPostsModel;
@@ -24,7 +24,7 @@ import com.google.firebase.database.FirebaseDatabase;
 public class Trainer extends Fragment {
     private RecyclerView recyclerViewTrainerRV;
     private DatabaseReference fbDbRef;
-    private DataBaseHelper databaseHelper;
+    private DataBaseHelperA databaseHelper;
     private FragmentActivityInterface mCallback;
     private PrefferencesClass prefs;
 
@@ -67,7 +67,7 @@ public class Trainer extends Fragment {
                 viewHolder.mView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        databaseHelper = new DataBaseHelper(mCallback.getContext());
+                        databaseHelper = new DataBaseHelperA(mCallback.getContext());
                         String postKey = getRef(position).getKey();
                         databaseHelper.getSelectedActivityInfo(postKey);
                         TrainerActivityRegistration.setSelectedActivityPostKey(postKey);

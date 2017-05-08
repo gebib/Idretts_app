@@ -53,4 +53,23 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true" />
 
+    <RelativeLayout
+        android:id="@+id/adtoAbsentHolderRLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#000000"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true">
+
+        <Button
+            android:id="@+id/button2AddToAbsentLists"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:text="ADD TO ABSENT LISTS"
+            android:textColor="#ffffff" />
+    </RelativeLayout>
+
 </RelativeLayout>

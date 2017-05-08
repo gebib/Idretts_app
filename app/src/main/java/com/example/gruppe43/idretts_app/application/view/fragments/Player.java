@@ -14,7 +14,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.gruppe43.idretts_app.R;
-import com.example.gruppe43.idretts_app.application.controll.DataBaseHelper;
+import com.example.gruppe43.idretts_app.application.controll.DataBaseHelperA;
 import com.example.gruppe43.idretts_app.application.helper_classes.PrefferencesClass;
 import com.example.gruppe43.idretts_app.application.interfaces.FragmentActivityInterface;
 import com.example.gruppe43.idretts_app.application.model.PlayerPostsModel;
@@ -25,7 +25,7 @@ import com.google.firebase.database.FirebaseDatabase;
 public class Player extends Fragment {
     private DatabaseReference fbDbRef;
     private DatabaseReference fbDbUsersRef;
-    private DataBaseHelper databaseHelper;
+    private DataBaseHelperA databaseHelper;
     private FragmentActivityInterface mCallback;
     private PrefferencesClass prefs;
     private RecyclerView recyclerViewPlayerRV;
@@ -73,7 +73,7 @@ public class Player extends Fragment {
                 viewHolder.mView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        databaseHelper = new DataBaseHelper(mCallback.getContext());
+                        databaseHelper = new DataBaseHelperA(mCallback.getContext());
                         String postKey = getRef(position).getKey();
                         databaseHelper.checkDoesPlayerOwnThePost(postKey);
                     }

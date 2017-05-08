@@ -31,31 +31,25 @@ import java.util.ArrayList;
  * Created by gebi9 on 26-Apr-17.
  */
 
-public class DataBaseHelper extends Authentication {
+public class DataBaseHelperA extends Authentication {
 
-    private ProgressDialog progressDialog;
+    protected ProgressDialog progressDialog;
     private String postOwnerUserFirstName;
     private String postOwnerUserLastName;
     private static String[] activityDataCache;
     private DatabaseReference trainer_posts;
     private DatabaseReference player_posts;
-    private DatabaseReference camp_records;
+    protected DatabaseReference camp_records;
+    protected DatabaseReference absent_records;
     private String firstANdLastNameOfPlayerPostOwner;
+
+    public DataBaseHelperA(MainActivity mainActivity) {
+        super(mainActivity);
+    }
 
     public String[] getActivityDataCache() {
         return activityDataCache;
     }
-
-    public DataBaseHelper(MainActivity mainActivity) {
-        fbTrainerPostsDbRef = FirebaseDatabase.getInstance().getReference().child("TrainerPosts");
-        fbPlayerPostsDbRef = FirebaseDatabase.getInstance().getReference().child("PlayerPosts");
-        fbUsersDbRef = FirebaseDatabase.getInstance().getReference().child("Users");
-        fbAbsenceDbRef = FirebaseDatabase.getInstance().getReference().child("Abcences");
-        fbCapRecordsDbRef = FirebaseDatabase.getInstance().getReference().child("CampsRecords");
-        fbAuth = FirebaseAuth.getInstance();
-        this.mainActivity = mainActivity;
-    }
-
 
     //if on registration first time admin is confirmed!
     public void setIsAdmin() {
@@ -365,43 +359,5 @@ public class DataBaseHelper extends Authentication {
             }
         });
     }
-     /*a user can have more tan ONE register//////////////////////////////////////////////////////////////////////////////////////////////////////////*/
-    //register player data related to camp matches.
-    public void registerPlayerCampDataRecords(int numMinutPlayed, int numRedCard, int numYellowCard, int numGreenCard, int numPerfectPasses, int numScores,String playerId) {
-        progressDialog = new ProgressDialog(mainActivity);
-        progressDialog.setTitle(mainActivity.getResources().getString(R.string.adminPostingProgressDialogTitle));
-        progressDialog.setMessage(mainActivity.getResources().getString(R.string.adminPostingProgressDialogTextInfo));
-        progressDialog.show();
-        try {
-            camp_records = fbCapRecordsDbRef.push();
 
-            camp_records.child("userId").setValue(playerId);
-            camp_records.child("activityId").setValue(TrainerActivityRegistration.getSelectedActivityPostKey());
-            camp_records.child("minutPlayed").setValue(numMinutPlayed);
-            camp_records.child("redCard").setValue(numRedCard);
-            camp_records.child("yellowCard").setValue(numYellowCard);
-            camp_records.child("greenCard").setValue(numGreenCard);
-            camp_records.child("numPerfectPass").setValue(numPerfectPasses);
-            camp_records.child("scored").setValue(numScores);
-
-            progressDialog.dismiss();
-
-            Toast.makeText(mainActivity, mainActivity.getResources().getString(R.string.toastPostRegSuccess), Toast.LENGTH_SHORT).show();
-            mainActivity.showFragmentOfGivenCondition();
-            mainActivity.clearBackStack();
-        } catch (DatabaseException dbe) {
-            progressDialog.dismiss();
-            AlertDialog.Builder builder1 = new AlertDialog.Builder(mainActivity);
-            builder1.setTitle(mainActivity.getString(R.string.activityRegistrationFailureTitle));
-            builder1.setMessage(mainActivity.getString(R.string.activityRegistrationFailureTextIinfo));
-            builder1.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int id) {
-                    //ingen action.
-                }
-            });
-            AlertDialog alert11 = builder1.create();
-            alert11.show();
-            mainActivity.setIsOnNewActivityRegisterPage(true);
-        }
-    }
 }

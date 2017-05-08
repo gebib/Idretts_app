@@ -224,7 +224,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             onSignOut();
         } else if (menuItem.getItemId() == R.id.nav_profile) {
             FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
-            fragmentTransaction.addToBackStack("");
+            fragmentTransaction.addToBackStack("");//TODO goes to only current logged in and EDIT is enabled
             fragmentTransaction.replace(R.id.containerView, new ProfileView()).commit();
             fragmentTransaction.addToBackStack("");
             currentShowingFragment("");

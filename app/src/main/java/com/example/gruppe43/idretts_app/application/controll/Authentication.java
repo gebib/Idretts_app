@@ -37,7 +37,7 @@ public class Authentication {
     protected DatabaseReference fbCapRecordsDbRef;
     private String email;
     private String pass;
-    private DataBaseHelper databaseHelper;
+    private DataBaseHelperA databaseHelper;
     protected MainActivity mainActivity;
 
     public Authentication() {
@@ -47,7 +47,7 @@ public class Authentication {
         fbTrainerPostsDbRef = FirebaseDatabase.getInstance().getReference().child("TrainerPosts");
         fbPlayerPostsDbRef = FirebaseDatabase.getInstance().getReference().child("PlayerPosts");
         fbUsersDbRef = FirebaseDatabase.getInstance().getReference().child("Users");
-        fbAbsenceDbRef = FirebaseDatabase.getInstance().getReference().child("Abcences");
+        fbAbsenceDbRef = FirebaseDatabase.getInstance().getReference().child("Absences");
         fbCapRecordsDbRef = FirebaseDatabase.getInstance().getReference().child("CampsRecords");
 
         fbAuth = FirebaseAuth.getInstance();
@@ -220,7 +220,7 @@ public class Authentication {
                 String value = input.getText().toString();
                 if (value.equals(ONE_TIME_INITIALIZATION_CODE)) {
                     mainActivity.initAfterLogin("admin");
-                    databaseHelper = new DataBaseHelper(mainActivity);
+                    databaseHelper = new DataBaseHelperA(mainActivity);
                     databaseHelper.setIsAdmin();//only first time.
                     AlertDialog.Builder builder1 = new AlertDialog.Builder(mainActivity);
                     builder1.setTitle(mainActivity.getString(R.string.welcomeCoachTittle));

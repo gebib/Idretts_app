@@ -15,7 +15,7 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.example.gruppe43.idretts_app.R;
-import com.example.gruppe43.idretts_app.application.controll.DataBaseHelper;
+import com.example.gruppe43.idretts_app.application.controll.DataBaseHelperA;
 import com.example.gruppe43.idretts_app.application.interfaces.FragmentActivityInterface;
 
 public class PlayerActivityRegistration extends Fragment {
@@ -145,7 +145,7 @@ public class PlayerActivityRegistration extends Fragment {
 
     //register player activity in database.
     public void registerPlayerActivity() {
-        DataBaseHelper dbh = new DataBaseHelper(mCallback.getContext());
+        DataBaseHelperA dbh = new DataBaseHelperA(mCallback.getContext());
 
         String typeOfActivity = "";
         if (fotballTraining.isChecked() && !gymnastics.isChecked()) {

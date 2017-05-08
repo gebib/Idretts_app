@@ -7,7 +7,6 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -16,12 +15,10 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.example.gruppe43.idretts_app.R;
-import com.example.gruppe43.idretts_app.application.controll.DataBaseHelper;
+import com.example.gruppe43.idretts_app.application.controll.DataBaseHelperA;
+import com.example.gruppe43.idretts_app.application.controll.DataBaseHelperB;
 import com.example.gruppe43.idretts_app.application.interfaces.FragmentActivityInterface;
 
-import org.w3c.dom.Text;
-
-import java.text.ParseException;
 import java.util.ArrayList;
 
 /**
@@ -145,12 +142,12 @@ public class EditCampRecordsDialog extends DialogFragment {
                 }catch (Exception e){
 
                 }
-                DataBaseHelper dbh = new DataBaseHelper(mCallback.getContext());
+                DataBaseHelperB dbh = new DataBaseHelperB(mCallback.getContext());
                 dbh.registerPlayerCampDataRecords(numMinutPlayed,numRedCard,numYellowCard,numGreenCard,numPerfectPasses,numScores,playerId);
             }
         });
 
-        DataBaseHelper dbh = new DataBaseHelper(mCallback.getContext());
+        DataBaseHelperA dbh = new DataBaseHelperA(mCallback.getContext());
         ArrayAdapter<String> playerNamesSpinner = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, playerNames);
         playerNamesSpinner.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerCampRecordsSelectPlayer.setAdapter(playerNamesSpinner);

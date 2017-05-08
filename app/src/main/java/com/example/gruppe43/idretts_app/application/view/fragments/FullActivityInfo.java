@@ -3,6 +3,7 @@ package com.example.gruppe43.idretts_app.application.view.fragments;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,7 +14,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.gruppe43.idretts_app.R;
-import com.example.gruppe43.idretts_app.application.controll.DataBaseHelper;
+import com.example.gruppe43.idretts_app.application.controll.DataBaseHelperA;
 import com.example.gruppe43.idretts_app.application.helper_classes.PrefferencesClass;
 import com.example.gruppe43.idretts_app.application.interfaces.FragmentActivityInterface;
 
@@ -94,14 +95,21 @@ public class FullActivityInfo extends Fragment {
         absenceControllButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                 //TODO absence controll popup
+                Bundle bundle = new Bundle();
+                bundle.putBoolean("absenceCheck", true);
+                Team teamFrag = new Team();
+                teamFrag.setArguments(bundle);
+
+                FragmentTransaction fragmentTransaction = mCallback.getmFragmentManager().beginTransaction();
+                fragmentTransaction.addToBackStack("");
+                fragmentTransaction.replace(R.id.containerView, teamFrag).commit();
             }
         });
 
         addCampRecords.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DataBaseHelper dbh = new DataBaseHelper(mCallback.getContext());
+                DataBaseHelperA dbh = new DataBaseHelperA(mCallback.getContext());
                 dbh.retrieveAllPlayersNameAndId();
             }
         });
@@ -129,7 +137,7 @@ public class FullActivityInfo extends Fragment {
         activityDeleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                 DataBaseHelper dbh = new DataBaseHelper(mCallback.getContext());
+                 DataBaseHelperA dbh = new DataBaseHelperA(mCallback.getContext());
                 dbh.deleteSelectedPost(TrainerActivityRegistration.getSelectedActivityPostKey(),true);
                 mCallback.getmFragmentManager().popBackStack();
             }

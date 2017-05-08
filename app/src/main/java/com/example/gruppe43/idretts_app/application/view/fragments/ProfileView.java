@@ -37,7 +37,7 @@ public class ProfileView extends Fragment {
     private TextView personalActivityActivitiesText;
     private TextView coachActivityAttendedText;
     private TextView numberOfAccidentsText;
-    private ArrayList<String> selectedUserIfoData;
+    private ArrayList<String> selectedUserIfoData;//TODO set before call
 
 
     public void setSelectedUserIfoData(ArrayList<String> selectedUserIfoData) {

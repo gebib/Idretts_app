@@ -23,7 +23,7 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 
 import com.example.gruppe43.idretts_app.R;
-import com.example.gruppe43.idretts_app.application.controll.DataBaseHelper;
+import com.example.gruppe43.idretts_app.application.controll.DataBaseHelperA;
 import com.example.gruppe43.idretts_app.application.helper_classes.DatePickerFragment;
 import com.example.gruppe43.idretts_app.application.helper_classes.TimePickerFragment;
 import com.example.gruppe43.idretts_app.application.interfaces.FragmentActivityInterface;
@@ -98,7 +98,7 @@ public class TrainerActivityRegistration extends Fragment {
         seekBarPersentageDisplay.setText("20%");
         try {
             if (FullActivityInfo.getIsEditClicked()) {
-                DataBaseHelper dbh = new DataBaseHelper(mCallback.getContext());
+                DataBaseHelperA dbh = new DataBaseHelperA(mCallback.getContext());
                 cacheDataForEdit = dbh.getActivityDataCache();
                 FullActivityInfo.setIsEditClicked(false);
                 if (cacheDataForEdit != null) {
@@ -224,7 +224,7 @@ public class TrainerActivityRegistration extends Fragment {
 
 
     public void registerActivity() {
-        DataBaseHelper dbh = new DataBaseHelper(mCallback.getContext());
+        DataBaseHelperA dbh = new DataBaseHelperA(mCallback.getContext());
         String actDate = newActDate.getText().toString().trim();
         String timeFrom = newActTimeFrom.getText().toString().trim();
         String timeTo = newActTimeTo.getText().toString().trim();
