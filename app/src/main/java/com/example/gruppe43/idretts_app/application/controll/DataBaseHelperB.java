@@ -3,12 +3,19 @@ package com.example.gruppe43.idretts_app.application.controll;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
-import android.widget.Toast;
+import android.text.format.Time;
+import android.util.Log;
 
 import com.example.gruppe43.idretts_app.R;
-import com.example.gruppe43.idretts_app.application.view.fragments.TrainerActivityRegistration;
+import com.example.gruppe43.idretts_app.application.model.PlayerPostsModel;
+import com.example.gruppe43.idretts_app.application.model.TrainerPostsModel;
 import com.example.gruppe43.idretts_app.application.view.main.MainActivity;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseException;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
@@ -17,27 +24,36 @@ import java.util.ArrayList;
  */
 
 public class DataBaseHelperB extends DataBaseHelperA {
+    private int nowDate, nowMonth, nowYear, nowHour, nowMinute;
+    private boolean onStartPosArchiveChecked;
+    private int nTrainerPosts;
+    private int nPlayerPosts;
+    private boolean checkAddEventRecallCampData;
 
+    public void setOnStartPosArchiveChecked(boolean onStartPosArchiveChecked) {
+        this.onStartPosArchiveChecked = onStartPosArchiveChecked;
+    }
 
     public DataBaseHelperB(MainActivity mainActivity) {
         super(mainActivity);
+        checkAddEventRecallCampData = false;
     }
 
     //show general loading
-    public void showGeneralProgressDialog(Boolean state){
-        if(state){
+    public void showGeneralProgressDialog(Boolean state) {
+        if (state) {
             progressDialog = new ProgressDialog(mainActivity);
             progressDialog.setTitle(mainActivity.getResources().getString(R.string.adminPostingProgressDialogTitle));
             progressDialog.setMessage(mainActivity.getResources().getString(R.string.adminPostingProgressDialogTextInfo));
             progressDialog.show();
-        }else{
+        } else {
             progressDialog.dismiss();
         }
 
     }
 
     //show general db failure alert
-    public void showGeneralDbExceptionAlert(){
+    public void showGeneralDbExceptionAlert() {
         AlertDialog.Builder builder1 = new AlertDialog.Builder(mainActivity);
         builder1.setTitle(mainActivity.getString(R.string.activityRegistrationFailureTitle));
         builder1.setMessage(mainActivity.getString(R.string.activityRegistrationFailureTextIinfo));
@@ -50,50 +66,223 @@ public class DataBaseHelperB extends DataBaseHelperA {
         alert11.show();
     }
 
-    /*a user can have more tan ONE register//////////////////////////////////////////////////////////////////////////////////////////////////////////*/
-    //register player data related to camp matches.
-    public void registerPlayerCampDataRecords(int numMinutPlayed, int numRedCard, int numYellowCard, int numGreenCard, int numPerfectPasses, int numScores,String playerId) {
-            showGeneralProgressDialog(true);
-        try {
-            camp_records = fbCapRecordsDbRef.push();
+    /*a user can have more tan ONE register/////////////////////no one cares when and on what they got THE CARD/////////////////////////////////////////////////////////////////////*/
+    //register player data related to camp matches.asdfasdf
+    public void registerPlayerCampDataRecords(final int numMinutPlayed, final int numRedCard, final int numYellowCard, final int numGreenCard, final int numAccidents, final int numPerfectPasses, final int numScores, final String playerId) {
+        DatabaseReference fbUserDbRef = FirebaseDatabase.getInstance().getReference().child("Users");
+        fbUserDbRef.child(playerId).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    if (!checkAddEventRecallCampData) {
+                        checkAddEventRecallCampData = true;
+                        String rCard = (String) dataSnapshot.child("rCard").getValue();
+                        String yCard = (String) dataSnapshot.child("yCard").getValue();
+                        String gCard = (String) dataSnapshot.child("gCard").getValue();
+                        String nMinutesPlayed = (String) dataSnapshot.child("nMinutesPlayed").getValue();
+                        String nAccidents = (String) dataSnapshot.child("nAccidents").getValue();
+                        String nGoalGivingPasses = (String) dataSnapshot.child("nGoalGivingPasses").getValue();
+                        String nScores = (String) dataSnapshot.child("nScores").getValue();
 
-            camp_records.child("userId").setValue(playerId);
-            camp_records.child("activityId").setValue(TrainerActivityRegistration.getSelectedActivityPostKey());
-            camp_records.child("minutPlayed").setValue(numMinutPlayed);
-            camp_records.child("redCard").setValue(numRedCard);
-            camp_records.child("yellowCard").setValue(numYellowCard);
-            camp_records.child("greenCard").setValue(numGreenCard);
-            camp_records.child("numPerfectPass").setValue(numPerfectPasses);
-            camp_records.child("scored").setValue(numScores);
+                        String[] nActivityT = {rCard, yCard, gCard, nMinutesPlayed,nAccidents,nGoalGivingPasses,nScores};
+                        int[] intVals = parseString(nActivityT);
+                        intVals[0] = intVals[0] + numRedCard;
+                        intVals[1] = intVals[1] + numYellowCard;
+                        intVals[2] = intVals[2] + numGreenCard;
+                        intVals[3] = intVals[3] + numMinutPlayed;
+                        intVals[4] = intVals[4] + numAccidents;
+                        intVals[5] = intVals[5] + numPerfectPasses;
+                        intVals[6] = intVals[6] + numScores;
+                        try {
+                            DatabaseReference nPlayerCampRecords = FirebaseDatabase.getInstance().getReference().child("Users");
+                            nPlayerCampRecords.child(playerId).child("rCard").setValue(intVals[0] + "");
+                            nPlayerCampRecords.child(playerId).child("yCard").setValue(intVals[1] + "");
+                            nPlayerCampRecords.child(playerId).child("gCard").setValue(intVals[2] + "");
+                            nPlayerCampRecords.child(playerId).child("nMinutesPlayed").setValue(intVals[3] + "");
+                            nPlayerCampRecords.child(playerId).child("nAccidents").setValue(intVals[4] + "");
+                            nPlayerCampRecords.child(playerId).child("nGoalGivingPasses").setValue(intVals[5] + "");
+                            nPlayerCampRecords.child(playerId).child("nScores").setValue(intVals[6] + "");
+                        } catch (DatabaseException dbe) {
+                            Log.d("//////////", "trainer incr activity record dbe");
+                        }
+                    }
 
-            showGeneralProgressDialog(false);
-            Toast.makeText(mainActivity, mainActivity.getResources().getString(R.string.toastPostRegSuccess), Toast.LENGTH_SHORT).show();
-            mainActivity.showFragmentOfGivenCondition();
-            mainActivity.clearBackStack();
-        } catch (DatabaseException dbe) {
-            showGeneralProgressDialog(false);
-            mainActivity.setIsOnNewActivityRegisterPage(true);
-            showGeneralDbExceptionAlert();
-        }
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
+
     //when trainer has checked all absence players for an activity register those.
     public void registerAbsence(ArrayList<String> absentPlayersIds, String activityKey) {
         showGeneralProgressDialog(true);
+        DatabaseReference fbAbsenceDbRef = FirebaseDatabase.getInstance().getReference().child("AbsenceRecords");
         try {
             for (int i = 0; i < absentPlayersIds.size(); i++) {
-                absent_records = fbAbsenceDbRef.push();
+                DatabaseReference absent_records = fbAbsenceDbRef.push();
                 absent_records.child("absentPlayersId").setValue(absentPlayersIds.get(i));
                 absent_records.child("activityId").setValue(activityKey);
             }
             showGeneralProgressDialog(false);
-        }catch (DatabaseException dbe){
+        } catch (DatabaseException dbe) {
             showGeneralProgressDialog(false);
             showGeneralDbExceptionAlert();
         }
     }
 
+    //get the current date as int
+    public void getCurrentDateInt() {
+
+        Time today = new Time(Time.getCurrentTimezone());
+        today.setToNow();
+        nowDate = today.monthDay;
+        nowMonth = today.month + 1;
+        nowYear = today.year;
+        nowHour = today.hour;
+        nowMinute = today.minute;
+    }
+
+    //parse string date to int values
+    public int[] parsePosteDate(String datePosted, String timePosted) {
+        int[] parsedDate = new int[5];
+        int t = 0;
+        int arIndex = 0;
+        String toBeParsed = datePosted + "." + timePosted;
+
+        while (t < toBeParsed.length()) {
+            String temp = "";
+            char c = toBeParsed.charAt(t);
+            while (t < toBeParsed.length() && c != '.' && c != ':') {
+                temp += String.valueOf(c);
+                t++;
+                if (toBeParsed.length() == t) {
+                    break;
+                } else {
+                    c = toBeParsed.charAt(t);
+                }
+            }
+            try {
+                parsedDate[arIndex] = Integer.parseInt(temp);
+            } catch (Exception e) {
+                Log.d("/////////////parse", "Parse erro");
+            }
+            t++;
+            arIndex++;
+        }
+        return parsedDate;
+    }
+
+
     //when a user is clicked in team, get the data to be displayed about this user.
     public void getProfileViewDataForUser(String userId) {
         //TODO if this user == key show edit else turn off editing
+        //data comes from them !
+    }
+
+
+    //delete Trainer posts that has the date later than today
+    public void checkOutdatedTrainerPosts() {
+        DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference().child("TrainerPosts");
+        dbRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    Iterable<DataSnapshot> trainerPostNodes = dataSnapshot.getChildren();
+                    getCurrentDateInt();
+                    for (DataSnapshot trainerPosts : trainerPostNodes) {
+                        TrainerPostsModel tpm = trainerPosts.getValue(TrainerPostsModel.class);
+                        int[] postDateAndTime = parsePosteDate(tpm.getActivityDate(), tpm.getTimePosted());
+                        String title =  tpm.getTitle();
+                        String activityType = "";
+                        if (title.equals("Football training") || title.equals("Fotballtrening")) {
+                            activityType = "footballT";
+                        } else if (title.equals("Gym/Strength") || title.equals("Gym/Styrke")) {
+                            activityType = "gymT";
+                        } else if (title.equals("Theory/meeting") || title.equals("Teori/møte")) {
+                            activityType = "Meet";
+                        } else if (title.equals("Football camp") || title.equals("Fotballkamp")) {
+                            activityType = "camp";
+                        }
+
+                        if (nowYear > postDateAndTime[2]) {
+                            deleteSelectedPost(trainerPosts.getKey(), true,activityType);
+                        } else if (nowMonth > postDateAndTime[1]) {
+
+                            deleteSelectedPost(trainerPosts.getKey(), true,activityType);
+                        } else if (nowDate > postDateAndTime[0]) {
+
+                            deleteSelectedPost(trainerPosts.getKey(), true,activityType);
+                        } else if (nowHour > postDateAndTime[3]) {
+
+                            deleteSelectedPost(trainerPosts.getKey(), true,activityType);
+                        } else if (nowMinute > postDateAndTime[4]) {
+
+                            deleteSelectedPost(trainerPosts.getKey(), true,activityType);
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    //delete Player posts that has the date later than today
+    public void checkOutdatedPlayerPosts() {
+        DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference().child("PlayerPosts");
+        final ArrayList<DataSnapshot> listOfnodesToBeDeleted = new ArrayList<>();
+        dbRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    Iterable<DataSnapshot> playerPostNodes = dataSnapshot.getChildren();
+                    getCurrentDateInt();
+                    for (DataSnapshot playerPosts : playerPostNodes) {
+                        PlayerPostsModel ppm = playerPosts.getValue(PlayerPostsModel.class);
+                        int[] postDateAndTime = parsePosteDate(ppm.getDatePosted(), ppm.getTimePosted());
+                        if (nowYear > postDateAndTime[2]) {
+                            listOfnodesToBeDeleted.add(playerPosts);
+                            deleteSelectedPost(playerPosts.getKey(), false,"");
+                        } else if (nowMonth > postDateAndTime[1]) {
+                            listOfnodesToBeDeleted.add(playerPosts);
+                            deleteSelectedPost(playerPosts.getKey(), false,"");
+                        } else if (nowDate > postDateAndTime[0]) {
+                            listOfnodesToBeDeleted.add(playerPosts);
+                            deleteSelectedPost(playerPosts.getKey(), false,"");
+                        } else if (nowHour > postDateAndTime[3]) {
+                            listOfnodesToBeDeleted.add(playerPosts);
+                            deleteSelectedPost(playerPosts.getKey(), false,"");
+                        } else if (nowMinute > postDateAndTime[4]) {
+                            listOfnodesToBeDeleted.add(playerPosts);
+                            deleteSelectedPost(playerPosts.getKey(), false,"");
+                        }
+                    }
+                    //  archivePlayerPostBeforeDelete(listOfnodesToBeDeleted);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    //store trainer posts records for refference
+    public void archiveTrainerPosts(String postKey) {
+        final DatabaseReference nTrainerPostRef = FirebaseDatabase.getInstance().getReference().child("trainerPostArchive");
+        try {
+            nTrainerPostRef.push();
+            nTrainerPostRef.child("trainerPostKey").setValue(postKey);
+        } catch (DatabaseException dbe) {
+            Log.d("/////////////", "nTrainer post dbe!");
+        }
     }
 }

@@ -29,12 +29,6 @@ public class Authentication {
     protected FirebaseAuth fbAuth;
     protected String nowDate, nowMonth, nowYear, nowHour, nowMinute;
     private static final String ONE_TIME_INITIALIZATION_CODE = "1234";
-
-    protected DatabaseReference fbTrainerPostsDbRef;
-    protected DatabaseReference fbPlayerPostsDbRef;
-    protected DatabaseReference fbUsersDbRef;
-    protected DatabaseReference fbAbsenceDbRef;
-    protected DatabaseReference fbCapRecordsDbRef;
     private String email;
     private String pass;
     private DataBaseHelperA databaseHelper;
@@ -44,12 +38,6 @@ public class Authentication {
     }
 
     public Authentication(MainActivity mainActivity){
-        fbTrainerPostsDbRef = FirebaseDatabase.getInstance().getReference().child("TrainerPosts");
-        fbPlayerPostsDbRef = FirebaseDatabase.getInstance().getReference().child("PlayerPosts");
-        fbUsersDbRef = FirebaseDatabase.getInstance().getReference().child("Users");
-        fbAbsenceDbRef = FirebaseDatabase.getInstance().getReference().child("Absences");
-        fbCapRecordsDbRef = FirebaseDatabase.getInstance().getReference().child("CampsRecords");
-
         fbAuth = FirebaseAuth.getInstance();
         this.mainActivity = mainActivity;
     }
@@ -90,6 +78,7 @@ public class Authentication {
     //assign the first user as the adminstrator.
     public void setIsAdminOrPlayerSignedIn() {//////////////////////////////set value using KEY//////////////////////////
         String currentUserId = fbAuth.getCurrentUser().getUid();
+        final DatabaseReference fbUsersDbRef = FirebaseDatabase.getInstance().getReference().child("Users");
         fbUsersDbRef.child(currentUserId).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -127,10 +116,11 @@ public class Authentication {
                 if (task.isSuccessful()) {
 
                     String user_id = fbAuth.getCurrentUser().getUid();
+                    final DatabaseReference fbUsersDbRef = FirebaseDatabase.getInstance().getReference().child("Users");
                     DatabaseReference current_user_db = fbUsersDbRef.child(user_id);
                     getCurrentDate();
                     String registeredDate = nowDate + "." + nowMonth + "." + nowYear + " " + nowHour + ":" + nowMinute;
-                    boolean confirmation = false;
+                    String confirmation = "false";
 
                     current_user_db.child("firstName").setValue(firstName);
                     current_user_db.child("lastName").setValue(lastName);
@@ -142,6 +132,32 @@ public class Authentication {
                     current_user_db.child("playerNr").setValue("unknown");//TODO
                     current_user_db.child("playerType").setValue("unknown");//TODO
                     current_user_db.child("status").setValue("Active");// TODO change when abcence registered
+
+                    //modified separately
+                    current_user_db.child("absFb").setValue("0");
+                    current_user_db.child("absGym").setValue("0");
+                    current_user_db.child("absMeet").setValue("0");
+                    current_user_db.child("absCmp").setValue("0");
+
+                    current_user_db.child("rCard").setValue("0");
+                    current_user_db.child("yCard").setValue("0");
+                    current_user_db.child("gCard").setValue("0");
+
+                    current_user_db.child("nMinutesPlayed").setValue("0");
+                    current_user_db.child("nAccidents").setValue("0");
+                    current_user_db.child("nGoalGivingPasses").setValue("0");
+                    current_user_db.child("nScores").setValue("0");
+
+                    current_user_db.child("nPersonalTraining").setValue("0");
+
+
+                    current_user_db.child("nFbAct").setValue("0");
+                    current_user_db.child("nGymAct").setValue("0");
+                    current_user_db.child("nMeetAct").setValue("0");
+                    current_user_db.child("nCmpAct").setValue("0");
+
+
+
                     progressDialog.dismiss();
                     checkIfThitIsFirstUser();
                     signIn(email,pass);
@@ -167,6 +183,7 @@ public class Authentication {
 
     //depending on if its the first one to register check and init correctly.
     private void checkIfThitIsFirstUser() {
+        final DatabaseReference fbUsersDbRef = FirebaseDatabase.getInstance().getReference().child("Users");
         fbUsersDbRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -190,6 +207,7 @@ public class Authentication {
     public void deleteFirstUserNotValid() {
         FirebaseUser currentUser = fbAuth.getCurrentUser();
         currentUser.delete();
+        final DatabaseReference fbUsersDbRef = FirebaseDatabase.getInstance().getReference().child("Users");
         fbUsersDbRef.removeValue();
     }
 

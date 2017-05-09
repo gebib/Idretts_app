@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import com.example.gruppe43.idretts_app.R;
 import com.example.gruppe43.idretts_app.application.controll.DataBaseHelperA;
+import com.example.gruppe43.idretts_app.application.helper_classes.PrefferencesClass;
 import com.example.gruppe43.idretts_app.application.interfaces.FragmentActivityInterface;
 
 public class PlayerActivityRegistration extends Fragment {
@@ -160,9 +161,9 @@ public class PlayerActivityRegistration extends Fragment {
         } else if (!fotballTraining.isChecked() && gymnastics.isChecked()) {
             activityPlace = getString(R.string.personalTrainingPlaceSchool);
         }
-
-
-        dbh.prePostPlayerActivity(typeOfActivity, activityPlace, unPursedIntensityValue);
+        PrefferencesClass pc = new PrefferencesClass(mCallback.getContext());
+        String[] userName = pc.loadUserName();
+        dbh.postPlayerActivity(typeOfActivity, activityPlace, unPursedIntensityValue,userName[0],userName[1]);
     }
 
     @Override

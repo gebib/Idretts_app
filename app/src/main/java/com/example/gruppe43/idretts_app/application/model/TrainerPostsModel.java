@@ -5,7 +5,7 @@ package com.example.gruppe43.idretts_app.application.model;
  */
 
 public class TrainerPostsModel {
-    private String activityDate;//OPSI OPSI!!
+    private String activityDate;
     private String endTime;
     private String icon;
     private String infoText;

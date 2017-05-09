@@ -35,4 +35,29 @@ public class PrefferencesClass {
         }
         return data;
     }
+
+    public void saveLoggedInUserNameLocally(String firstName, String lastname){
+        SharedPreferences.Editor editor;
+        try {
+            editor = ctx.getSharedPreferences("pname", Context.MODE_PRIVATE).edit();
+            editor.putString("fname", firstName);
+            editor.putString("lname", lastname);
+            editor.commit();
+        } catch (NullPointerException npe) {
+            Log.e("///////SHARED_PREF_SAVE", "isNullpointing");
+        }
+    }
+
+    public String[] loadUserName() {
+        String[] name = new String[2];
+        try {
+            SharedPreferences prefs = ctx.getSharedPreferences("pname", Context.MODE_PRIVATE);
+            name[0] = prefs.getString("fname", "No name defined");
+            name[1] = prefs.getString("lname", "No name defined");
+        } catch (NullPointerException npe) {
+            Log.e("///////SHARED_PREF_LOAD", "isNullpointing");
+        }
+        return name;
+    }
+
 }

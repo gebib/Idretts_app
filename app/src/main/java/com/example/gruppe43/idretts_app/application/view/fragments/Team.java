@@ -87,8 +87,7 @@ public class Team extends Fragment {
                 adtoAbsentHolderRLayout.setVisibility(view.VISIBLE);
             }
         } catch (Exception e) {
-            e.printStackTrace();
-            Log.i("Bundle::::", "isNull");
+            Log.e("Bundle::::", "isNull");
         }
 
         FirebaseRecyclerAdapter<UsersModel, Team.TeamViewHolder> teamAdapter = new FirebaseRecyclerAdapter<UsersModel, Team.TeamViewHolder>(

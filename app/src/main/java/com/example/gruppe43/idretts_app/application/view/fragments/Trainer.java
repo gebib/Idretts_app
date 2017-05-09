@@ -123,17 +123,21 @@ public class Trainer extends Fragment {
         }
 
         public void setTrainerActivityIcon(String icon) {
-            trainerPostIcon = (ImageView) mView.findViewById(R.id.listIconTrainer);
-            if (icon.equals("camp")) {
-                trainerPostIcon.setImageResource(R.drawable.cmp);
-            } else if (icon.equals("training_f")) {//football
-                trainerPostIcon.setImageResource(R.drawable.training_f);
-            } else if (icon.equals("meeting")) {
-                trainerPostIcon.setImageResource(R.drawable.meeting);
-            } else if (icon.equals("training")) {//styrke
-                trainerPostIcon.setImageResource(R.drawable.training_s);
-            }
-        }
+            try {
+                trainerPostIcon = (ImageView) mView.findViewById(R.id.listIconTrainer);
+                if (icon.equals("camp")) {
+                    trainerPostIcon.setImageResource(R.drawable.cmp);
+                } else if (icon.equals("training_f")) {//football
+                    trainerPostIcon.setImageResource(R.drawable.training_f);
+                } else if (icon.equals("meeting")) {
+                    trainerPostIcon.setImageResource(R.drawable.meeting);
+                } else if (icon.equals("training")) {//styrke
+                    trainerPostIcon.setImageResource(R.drawable.training_s);
+                }
+            } catch (NullPointerException npe) {
 
+            }
+
+        }
     }
 }

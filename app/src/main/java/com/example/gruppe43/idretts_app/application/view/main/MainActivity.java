@@ -23,6 +23,8 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
 import com.example.gruppe43.idretts_app.R;
+import com.example.gruppe43.idretts_app.application.controll.DataBaseHelperA;
+import com.example.gruppe43.idretts_app.application.controll.DataBaseHelperB;
 import com.example.gruppe43.idretts_app.application.helper_classes.PrefferencesClass;
 import com.example.gruppe43.idretts_app.application.interfaces.FragmentActivityInterface;
 import com.example.gruppe43.idretts_app.application.view.fragments.Login;
@@ -95,7 +97,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         fab = (FloatingActionButton) findViewById(R.id.fab);
         mAuth = FirebaseAuth.getInstance();
         prefs = new PrefferencesClass(this);
-
+        //dbhb.runPlayerPostMaintenance();
         fab.hide();
 
         fab.setRippleColor(Color.GREEN);
@@ -247,7 +249,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             xfragmentTransaction.addToBackStack("");
             xfragmentTransaction.replace(R.id.containerView, new Team()).commit();
         } else if (menuItem.getItemId() == R.id.registrationRequests) {
-//TODO
+            DataBaseHelperB dbhb = new DataBaseHelperB(this);
+            dbhb.checkOutdatedTrainerPosts();
+            //TODO
         } else if (menuItem.getItemId() == R.id.savePlayersData) {
 //TODO
         } else if (menuItem.getItemId() == R.id.resetApp) {
@@ -331,6 +335,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             prefs.saveSharedPrefData("isAdmin", "false");
         }
         actionBar.show();
+        DataBaseHelperA dbha = new DataBaseHelperA(this);
+        dbha.saveSignedInUserName();
     }
 
     //set state sign out!

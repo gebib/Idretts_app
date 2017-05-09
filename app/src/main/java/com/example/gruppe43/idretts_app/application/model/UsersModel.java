@@ -5,7 +5,7 @@ package com.example.gruppe43.idretts_app.application.model;
  */
 
 public class UsersModel {
-    private boolean confirmedByCoach;
+    //cmmon
     private String firstName;
     private String image;
     private String isAdmin;
@@ -16,11 +16,40 @@ public class UsersModel {
     private String registeredDate;
     private String status;
 
+    //pl_____________________________
+    private String confirmedByCoach;
+    private String absFb;
+    private String absGym;  //absents
+    private String absMeet;
+    private String absCmp;
+
+    private String rCard;
+    private String yCard; //cmp record
+    private String gCard;
+    private String nMinutesPlayed;
+    private String nAccidents;
+    private String nGoalGivingPasses;
+    private String nScores;
+
+    private String nPersonalTraining;
+
+
+    //tr_______________________________
+    private String nFbAct;
+    private String nGymAct; //activity record
+    private String nMeetAct;
+    private String nCmpAct;
+
+
     public UsersModel() {
     }
 
-    public UsersModel(boolean confirmedByCoach, String firstName, String image, String isAdmin, String lastName, String playerAge, String playerNr, String playerType, String registeredDate, String status) {
-        this.confirmedByCoach = confirmedByCoach;
+    public UsersModel(String firstName, String image, String isAdmin, String lastName, String playerAge,
+                      String playerNr, String playerType, String registeredDate, String status,
+                      String confirmedByCoach, String absFb, String absGym, String absMeet, String absCmp,
+                      String rCard, String yCard, String gCard, String nMinutesPlayed, String nAccidents,
+                      String nGoalGivingPasses, String nScores, String nPersonalTraining, String nFbAct,
+                      String nGymAct, String nMeetAct, String nCmpAct) {
         this.firstName = firstName;
         this.image = image;
         this.isAdmin = isAdmin;
@@ -30,14 +59,23 @@ public class UsersModel {
         this.playerType = playerType;
         this.registeredDate = registeredDate;
         this.status = status;
-    }
-
-    public boolean isConfirmedByCoach() {
-        return confirmedByCoach;
-    }
-
-    public void setConfirmedByCoach(boolean confirmedByCoach) {
         this.confirmedByCoach = confirmedByCoach;
+        this.absFb = absFb;
+        this.absGym = absGym;
+        this.absMeet = absMeet;
+        this.absCmp = absCmp;
+        this.rCard = rCard;
+        this.yCard = yCard;
+        this.gCard = gCard;
+        this.nMinutesPlayed = nMinutesPlayed;
+        this.nAccidents = nAccidents;
+        this.nGoalGivingPasses = nGoalGivingPasses;
+        this.nScores = nScores;
+        this.nPersonalTraining = nPersonalTraining;
+        this.nFbAct = nFbAct;
+        this.nGymAct = nGymAct;
+        this.nMeetAct = nMeetAct;
+        this.nCmpAct = nCmpAct;
     }
 
     public String getFirstName() {
@@ -110,5 +148,141 @@ public class UsersModel {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getConfirmedByCoach() {
+        return confirmedByCoach;
+    }
+
+    public void setConfirmedByCoach(String confirmedByCoach) {
+        this.confirmedByCoach = confirmedByCoach;
+    }
+
+    public String getAbsFb() {
+        return absFb;
+    }
+
+    public void setAbsFb(String absFb) {
+        this.absFb = absFb;
+    }
+
+    public String getAbsGym() {
+        return absGym;
+    }
+
+    public void setAbsGym(String absGym) {
+        this.absGym = absGym;
+    }
+
+    public String getAbsMeet() {
+        return absMeet;
+    }
+
+    public void setAbsMeet(String absMeet) {
+        this.absMeet = absMeet;
+    }
+
+    public String getAbsCmp() {
+        return absCmp;
+    }
+
+    public void setAbsCmp(String absCmp) {
+        this.absCmp = absCmp;
+    }
+
+    public String getrCard() {
+        return rCard;
+    }
+
+    public void setrCard(String rCard) {
+        this.rCard = rCard;
+    }
+
+    public String getyCard() {
+        return yCard;
+    }
+
+    public void setyCard(String yCard) {
+        this.yCard = yCard;
+    }
+
+    public String getgCard() {
+        return gCard;
+    }
+
+    public void setgCard(String gCard) {
+        this.gCard = gCard;
+    }
+
+    public String getnMinutesPlayed() {
+        return nMinutesPlayed;
+    }
+
+    public void setnMinutesPlayed(String nMinutesPlayed) {
+        this.nMinutesPlayed = nMinutesPlayed;
+    }
+
+    public String getnAccidents() {
+        return nAccidents;
+    }
+
+    public void setnAccidents(String nAccidents) {
+        this.nAccidents = nAccidents;
+    }
+
+    public String getnGoalGivingPasses() {
+        return nGoalGivingPasses;
+    }
+
+    public void setnGoalGivingPasses(String nGoalGivingPasses) {
+        this.nGoalGivingPasses = nGoalGivingPasses;
+    }
+
+    public String getnScores() {
+        return nScores;
+    }
+
+    public void setnScores(String nScores) {
+        this.nScores = nScores;
+    }
+
+    public String getnPersonalTraining() {
+        return nPersonalTraining;
+    }
+
+    public void setnPersonalTraining(String nPersonalTraining) {
+        this.nPersonalTraining = nPersonalTraining;
+    }
+
+    public String getnFbAct() {
+        return nFbAct;
+    }
+
+    public void setnFbAct(String nFbAct) {
+        this.nFbAct = nFbAct;
+    }
+
+    public String getnGymAct() {
+        return nGymAct;
+    }
+
+    public void setnGymAct(String nGymAct) {
+        this.nGymAct = nGymAct;
+    }
+
+    public String getnMeetAct() {
+        return nMeetAct;
+    }
+
+    public void setnMeetAct(String nMeetAct) {
+        this.nMeetAct = nMeetAct;
+    }
+
+    public String getnCmpAct() {
+        return nCmpAct;
+    }
+
+    public void setnCmpAct(String nCmpAct) {
+        this.nCmpAct = nCmpAct;
     }
 }

@@ -93,6 +93,7 @@
     <string name="profileNameLabe">Name:</string>
     <string name="profilePlayer_nr">Player NR:</string>
     <string name="player_age">Player Age:</string>
+    <string name="post_deleted_deletepost">Post Deleted!</string>
 
 
 </resources>

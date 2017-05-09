@@ -39,6 +39,7 @@ public class FullActivityInfo extends Fragment {
     private Button absenceControllButton;
     private RelativeLayout buttonsHolderRelativeLayout;
     private Button addCampRecords;
+    private String activityType;
 
     public FullActivityInfo() {
     }
@@ -53,12 +54,6 @@ public class FullActivityInfo extends Fragment {
             throw new ClassCastException(context.toString()
                     + " must implement IFragmentToActivity");
         }
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        mCallback.getFab().hide();
     }
 
     public static boolean getIsEditClicked() {
@@ -138,8 +133,10 @@ public class FullActivityInfo extends Fragment {
             @Override
             public void onClick(View v) {
                  DataBaseHelperA dbh = new DataBaseHelperA(mCallback.getContext());
-                dbh.deleteSelectedPost(TrainerActivityRegistration.getSelectedActivityPostKey(),true);
-                mCallback.getmFragmentManager().popBackStack();
+                dbh.deleteSelectedPost(TrainerActivityRegistration.getSelectedActivityPostKey(),true,activityType);
+                //mCallback.clearBackStack();
+                FragmentTransaction fragmentTransaction = mCallback.getmFragmentManager().beginTransaction();
+                fragmentTransaction.replace(R.id.containerView, new Tabs()).commit();
             }
         });
 
@@ -148,15 +145,19 @@ public class FullActivityInfo extends Fragment {
         switch (icon) {
             case "training_f":
                 fullactivityinfoImageView.setImageResource(R.drawable.training_f);
+                activityType = "footballT";
                 break;
             case "meeting":
                 fullactivityinfoImageView.setImageResource(R.drawable.meeting);
+                activityType = "Meet";
                 break;
             case "training":
                 fullactivityinfoImageView.setImageResource(R.drawable.training_s);
+                activityType = "gymT";
                 break;
             case "camp":
                 fullactivityinfoImageView.setImageResource(R.drawable.cmp);
+                activityType = "camp";
                 break;
             default:
                 fullactivityinfoImageView.setImageResource(R.drawable.ia_logo);

@@ -34,6 +34,7 @@ public class EditCampRecordsDialog extends DialogFragment {
     private TextView greenCards;
     private TextView perfectPasses;
     private TextView scores;
+    private TextView accidents;
     private Button campRecordDialogAddBtn;
     private String playerId;
     private int numMinutPlayed;
@@ -42,6 +43,7 @@ public class EditCampRecordsDialog extends DialogFragment {
     private int numGreenCard;
     private int numPerfectPasses;
     private int numScores;
+    private int numAccidents;
     private ArrayList<String> playerNames;
     private ArrayList<String> playerIds;
 
@@ -81,6 +83,8 @@ public class EditCampRecordsDialog extends DialogFragment {
         greenCards = (EditText) view.findViewById(R.id.greenCards);
         perfectPasses = (EditText) view.findViewById(R.id.perfectPasses);
         scores = (EditText) view.findViewById(R.id.scores);
+        accidents = (EditText) view.findViewById(R.id.accidentTV);
+
 
 
         redCards.setOnFocusChangeListener(new View.OnFocusChangeListener() {
@@ -128,6 +132,15 @@ public class EditCampRecordsDialog extends DialogFragment {
             }
         });
 
+        accidents.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(hasFocus){
+                    accidents.setHint("");
+                }
+            }
+        });
+
         campRecordDialogAddBtn = (Button) view.findViewById(R.id.campRecordDialogAddBtn);
         campRecordDialogAddBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -139,11 +152,12 @@ public class EditCampRecordsDialog extends DialogFragment {
                     numGreenCard = Integer.parseInt(greenCards.getText().toString().trim());
                     numPerfectPasses = Integer.parseInt(perfectPasses.getText().toString().trim());
                     numScores = Integer.parseInt(scores.getText().toString().trim());
+                    numAccidents = Integer.parseInt(accidents.getText().toString().trim());
                 }catch (Exception e){
 
                 }
                 DataBaseHelperB dbh = new DataBaseHelperB(mCallback.getContext());
-                dbh.registerPlayerCampDataRecords(numMinutPlayed,numRedCard,numYellowCard,numGreenCard,numPerfectPasses,numScores,playerId);
+                dbh.registerPlayerCampDataRecords(numMinutPlayed,numRedCard,numYellowCard,numGreenCard,numAccidents,numPerfectPasses,numScores,playerId);
             }
         });
 
