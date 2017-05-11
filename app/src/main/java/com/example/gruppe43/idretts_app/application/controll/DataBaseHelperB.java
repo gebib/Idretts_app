@@ -5,10 +5,13 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.text.format.Time;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.example.gruppe43.idretts_app.R;
 import com.example.gruppe43.idretts_app.application.model.PlayerPostsModel;
 import com.example.gruppe43.idretts_app.application.model.TrainerPostsModel;
+import com.example.gruppe43.idretts_app.application.model.UsersModel;
+import com.example.gruppe43.idretts_app.application.view.fragments.Team;
 import com.example.gruppe43.idretts_app.application.view.main.MainActivity;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -84,7 +87,7 @@ public class DataBaseHelperB extends DataBaseHelperA {
                         String nGoalGivingPasses = (String) dataSnapshot.child("nGoalGivingPasses").getValue();
                         String nScores = (String) dataSnapshot.child("nScores").getValue();
 
-                        String[] nActivityT = {rCard, yCard, gCard, nMinutesPlayed,nAccidents,nGoalGivingPasses,nScores};
+                        String[] nActivityT = {rCard, yCard, gCard, nMinutesPlayed, nAccidents, nGoalGivingPasses, nScores};
                         int[] intVals = parseString(nActivityT);
                         intVals[0] = intVals[0] + numRedCard;
                         intVals[1] = intVals[1] + numYellowCard;
@@ -117,22 +120,6 @@ public class DataBaseHelperB extends DataBaseHelperA {
         });
     }
 
-    //when trainer has checked all absence players for an activity register those.
-    public void registerAbsence(ArrayList<String> absentPlayersIds, String activityKey) {
-        showGeneralProgressDialog(true);
-        DatabaseReference fbAbsenceDbRef = FirebaseDatabase.getInstance().getReference().child("AbsenceRecords");
-        try {
-            for (int i = 0; i < absentPlayersIds.size(); i++) {
-                DatabaseReference absent_records = fbAbsenceDbRef.push();
-                absent_records.child("absentPlayersId").setValue(absentPlayersIds.get(i));
-                absent_records.child("activityId").setValue(activityKey);
-            }
-            showGeneralProgressDialog(false);
-        } catch (DatabaseException dbe) {
-            showGeneralProgressDialog(false);
-            showGeneralDbExceptionAlert();
-        }
-    }
 
     //get the current date as int
     public void getCurrentDateInt() {
@@ -196,7 +183,7 @@ public class DataBaseHelperB extends DataBaseHelperA {
                     for (DataSnapshot trainerPosts : trainerPostNodes) {
                         TrainerPostsModel tpm = trainerPosts.getValue(TrainerPostsModel.class);
                         int[] postDateAndTime = parsePosteDate(tpm.getActivityDate(), tpm.getTimePosted());
-                        String title =  tpm.getTitle();
+                        String title = tpm.getTitle();
                         String activityType = "";
                         if (title.equals("Football training") || title.equals("Fotballtrening")) {
                             activityType = "footballT";
@@ -209,19 +196,19 @@ public class DataBaseHelperB extends DataBaseHelperA {
                         }
 
                         if (nowYear > postDateAndTime[2]) {
-                            deleteSelectedPost(trainerPosts.getKey(), true,activityType);
+                            deleteSelectedPost(trainerPosts.getKey(), true, activityType);
                         } else if (nowMonth > postDateAndTime[1]) {
 
-                            deleteSelectedPost(trainerPosts.getKey(), true,activityType);
+                            deleteSelectedPost(trainerPosts.getKey(), true, activityType);
                         } else if (nowDate > postDateAndTime[0]) {
 
-                            deleteSelectedPost(trainerPosts.getKey(), true,activityType);
+                            deleteSelectedPost(trainerPosts.getKey(), true, activityType);
                         } else if (nowHour > postDateAndTime[3]) {
 
-                            deleteSelectedPost(trainerPosts.getKey(), true,activityType);
+                            deleteSelectedPost(trainerPosts.getKey(), true, activityType);
                         } else if (nowMinute > postDateAndTime[4]) {
 
-                            deleteSelectedPost(trainerPosts.getKey(), true,activityType);
+                            deleteSelectedPost(trainerPosts.getKey(), true, activityType);
                         }
                     }
                 }
@@ -235,7 +222,7 @@ public class DataBaseHelperB extends DataBaseHelperA {
     }
 
     //delete Player posts that has the date later than today
-    public void checkOutdatedPlayerPosts() {
+    public void checkOutdatedPlayerPosts() {  //TODO if activity deleted AUTO no absence update!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference().child("PlayerPosts");
         final ArrayList<DataSnapshot> listOfnodesToBeDeleted = new ArrayList<>();
         dbRef.addValueEventListener(new ValueEventListener() {
@@ -249,22 +236,22 @@ public class DataBaseHelperB extends DataBaseHelperA {
                         int[] postDateAndTime = parsePosteDate(ppm.getDatePosted(), ppm.getTimePosted());
                         if (nowYear > postDateAndTime[2]) {
                             listOfnodesToBeDeleted.add(playerPosts);
-                            deleteSelectedPost(playerPosts.getKey(), false,"");
+                            deleteSelectedPost(playerPosts.getKey(), false, "");
                         } else if (nowMonth > postDateAndTime[1]) {
                             listOfnodesToBeDeleted.add(playerPosts);
-                            deleteSelectedPost(playerPosts.getKey(), false,"");
+                            deleteSelectedPost(playerPosts.getKey(), false, "");
                         } else if (nowDate > postDateAndTime[0]) {
                             listOfnodesToBeDeleted.add(playerPosts);
-                            deleteSelectedPost(playerPosts.getKey(), false,"");
+                            deleteSelectedPost(playerPosts.getKey(), false, "");
                         } else if (nowHour > postDateAndTime[3]) {
                             listOfnodesToBeDeleted.add(playerPosts);
-                            deleteSelectedPost(playerPosts.getKey(), false,"");
+                            deleteSelectedPost(playerPosts.getKey(), false, "");
                         } else if (nowMinute > postDateAndTime[4]) {
                             listOfnodesToBeDeleted.add(playerPosts);
-                            deleteSelectedPost(playerPosts.getKey(), false,"");
+                            deleteSelectedPost(playerPosts.getKey(), false, "");
                         }
                     }
-                    //  archivePlayerPostBeforeDelete(listOfnodesToBeDeleted);
+                    //archivePlayerPostBeforeDelete(listOfnodesToBeDeleted);
                 }
             }
 
@@ -275,7 +262,7 @@ public class DataBaseHelperB extends DataBaseHelperA {
         });
     }
 
-    //store trainer posts records for refference
+    /*//store trainer posts records for refference
     public void archiveTrainerPosts(String postKey) {
         final DatabaseReference nTrainerPostRef = FirebaseDatabase.getInstance().getReference().child("trainerPostArchive");
         try {
@@ -283,6 +270,112 @@ public class DataBaseHelperB extends DataBaseHelperA {
             nTrainerPostRef.child("trainerPostKey").setValue(postKey);
         } catch (DatabaseException dbe) {
             Log.d("/////////////", "nTrainer post dbe!");
+        }
+    }*/
+    //set player absence from a PARTICULAR! activity type, from team absence check on activity
+    public void setAbsenceForArrayOfAbsentPlayerIds(final ArrayList<String> absentPlayersIds, final String activityType, final String activityId) {
+        final DatabaseReference fbUsersDbRef = FirebaseDatabase.getInstance().getReference().child("Users");
+        fbUsersDbRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    if (!decrementedPlayerAbsent) {
+                        decrementedPlayerAbsent = true;
+
+                        Iterable<DataSnapshot> playerChildren = dataSnapshot.getChildren();
+                        DatabaseReference setAbsents = FirebaseDatabase.getInstance().getReference().child("Users");
+                        int absentIdIndex = 0;
+                        for (DataSnapshot players : playerChildren) {
+                            if (absentIdIndex < absentPlayersIds.size()) {
+
+                                UsersModel um = players.getValue(UsersModel.class);
+                                String userKey = players.getKey();
+                                String addAbsNodeKey = absentPlayersIds.get(absentIdIndex);
+
+                                if (userKey.equals(addAbsNodeKey)) { // its searching through the nodes it has to check if the node at position equal the user noede so it knows it has to set its
+                                    String absFb = um.getAbsFb();
+                                    String absGym = um.getAbsGym();
+                                    String absMeet = um.getAbsMeet();
+                                    String absCmp = um.getAbsCmp();
+
+                                    String[] absValues = {absFb, absGym, absMeet, absCmp};
+                                    int[] intVals = parseString(absValues);
+
+
+                                    if (activityType.equals("footballT")) {
+                                        intVals[0] = intVals[0] - 1;
+                                    } else if (activityType.equals("gymT")) {
+                                        intVals[1] = intVals[1] - 1;
+                                    } else if (activityType.equals("Meet")) {
+                                        intVals[2] = intVals[2] - 1;
+                                    } else if (activityType.equals("camp")) {
+                                        intVals[3] = intVals[3] - 1;
+                                    }
+
+                                    if (intVals[0] < 0) {
+                                        intVals[0] = 0;
+                                    }
+                                    if (intVals[1] < 0) {
+                                        intVals[1] = 0;
+                                    }
+                                    if (intVals[2] < 0) {
+                                        intVals[2] = 0;
+                                    }
+                                    if (intVals[3] < 0) {
+                                        intVals[3] = 0;
+                                    }
+
+                                    try {
+                                        setAbsents.child(absentPlayersIds.get(absentIdIndex)).child("absFb").setValue(intVals[0] + "");
+                                        setAbsents.child(absentPlayersIds.get(absentIdIndex)).child("absGym").setValue(intVals[1] + "");
+                                        setAbsents.child(absentPlayersIds.get(absentIdIndex)).child("absMeet").setValue(intVals[2] + "");
+                                        setAbsents.child(absentPlayersIds.get(absentIdIndex)).child("absCmp").setValue(intVals[3] + "");
+                                    } catch (DatabaseException dbe) {
+                                        Log.d("///////////", "set absence from team dbe");
+                                    }
+                                    absentIdIndex++;
+                                }
+                            } else {
+                                registerAbsenceTableInDb(absentPlayersIds, activityId);
+                                break;
+                            }
+                        }
+                    }
+
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+    }
+
+    /*a user can have more tan ONE register/////////////////////*/
+    //register absent players to activity id. FOR TEAM ABS REVISIT SHOW ABSENT PURPoSE
+    private void registerAbsenceTableInDb(ArrayList<String> absentPlayersIds, String activityId) {
+        ProgressDialog progressDialog = new ProgressDialog(mainActivity);
+        progressDialog.setTitle(mainActivity.getResources().getString(R.string.adminPostingProgressDialogTitle));
+        progressDialog.setMessage(mainActivity.getResources().getString(R.string.adminPostingProgressDialogTextInfo));
+        progressDialog.show();
+        DatabaseReference fbAbsenceDbRef = FirebaseDatabase.getInstance().getReference().child("AbsenceRecords");
+        try {
+            for (int i = 0; i < absentPlayersIds.size(); i++) {
+                DatabaseReference absent_records = fbAbsenceDbRef.push();
+                absent_records.child("absentPlayersId").setValue(absentPlayersIds.get(i));
+                absent_records.child("activityId").setValue(activityId);
+            }
+            Toast.makeText(mainActivity, R.string.absentplayersregistered, Toast.LENGTH_SHORT).show();
+            progressDialog.dismiss();
+
+            DatabaseHelperC dbhc = new DatabaseHelperC(mainActivity);
+           // dbhc.removeAbsentFromPlayerId(Team.getListOfTobeRemovedFromAbsent()); //TODO what is this??
+
+        } catch (DatabaseException dbe) {
+            progressDialog.dismiss();
+            showGeneralDbExceptionAlert();
         }
     }
 }

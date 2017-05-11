@@ -49,7 +49,7 @@ public class TrainerActivityRegistration extends Fragment {
     private String titleSpinnerPos;
 
     public TrainerActivityRegistration() {
-        // Required empty public constructor 
+        // Required empty public constructor
     }
 
     //set the selected post key in case of editing the key is needed.
@@ -60,6 +60,8 @@ public class TrainerActivityRegistration extends Fragment {
     public static String getSelectedActivityPostKey() {
         return selectedActivityPostKey;
     }
+
+
 
     @Override
     public void onAttach(Context context) {

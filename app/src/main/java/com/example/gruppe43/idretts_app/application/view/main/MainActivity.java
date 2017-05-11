@@ -25,6 +25,7 @@ import android.view.inputmethod.InputMethodManager;
 import com.example.gruppe43.idretts_app.R;
 import com.example.gruppe43.idretts_app.application.controll.DataBaseHelperA;
 import com.example.gruppe43.idretts_app.application.controll.DataBaseHelperB;
+import com.example.gruppe43.idretts_app.application.controll.DatabaseHelperC;
 import com.example.gruppe43.idretts_app.application.helper_classes.PrefferencesClass;
 import com.example.gruppe43.idretts_app.application.interfaces.FragmentActivityInterface;
 import com.example.gruppe43.idretts_app.application.view.fragments.Login;
@@ -39,6 +40,7 @@ import com.example.gruppe43.idretts_app.application.view.fragments.Trainer;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
+
 import static com.example.gruppe43.idretts_app.application.view.fragments.PlayerActivityRegistration.par;
 import static com.example.gruppe43.idretts_app.application.view.fragments.TrainerActivityRegistration.nar;
 
@@ -56,6 +58,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private ActionBar actionBar;
     private PrefferencesClass prefs;
     private boolean isBackButtonPressedFromEditFragment;
+    private static MainActivity mainContext;
 
     public MainActivity() {
         //init only if persistant not set already
@@ -65,7 +68,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
     }
 
-    //context of this class.
     @Override
     public MainActivity getContext() {
         return this;
@@ -82,6 +84,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public void setIsOnNewActivityRegisterPage(boolean onActivityRegisterPage) {
         onNewActivityRegisterPage = onActivityRegisterPage;
+    }
+    public static MainActivity getMainContext() {
+        return mainContext;
     }
 
     public FragmentManager getmFragmentManager() {
@@ -146,6 +151,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         } else {//isOnSignedOutState
             onSignOut();
         }
+        DatabaseHelperC dbhc = new DatabaseHelperC(this);
+        dbhc.initiateDataInRecyclerViewForTeam();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        System.out.println("//////////// resume");
     }
 
     //navigate to appropriate fragment after registration.

@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.example.gruppe43.idretts_app.R;
 import com.example.gruppe43.idretts_app.application.controll.DataBaseHelperA;
+import com.example.gruppe43.idretts_app.application.controll.DatabaseHelperC;
 import com.example.gruppe43.idretts_app.application.helper_classes.PrefferencesClass;
 import com.example.gruppe43.idretts_app.application.interfaces.FragmentActivityInterface;
 
@@ -39,7 +40,12 @@ public class FullActivityInfo extends Fragment {
     private Button absenceControllButton;
     private RelativeLayout buttonsHolderRelativeLayout;
     private Button addCampRecords;
-    private String activityType;
+    private static String activityType;
+
+
+    public static String getActivityType() {
+        return activityType;
+    }
 
     public FullActivityInfo() {
     }
@@ -90,14 +96,17 @@ public class FullActivityInfo extends Fragment {
         absenceControllButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Bundle bundle = new Bundle();
+                DatabaseHelperC dbhc = new DatabaseHelperC(mCallback.getContext());
+                dbhc.retrieveAllPlayersRegisteredAsAbsent(); // TODO ok???????     /////////////////////////////////////////////////////////////);/////////////////////////////////////////////////////////////);/////////////////////////////////////////////////////////////);/////////////////////////////////////////////////////////////
+
+               /* Bundle bundle = new Bundle();
                 bundle.putBoolean("absenceCheck", true);
                 Team teamFrag = new Team();
                 teamFrag.setArguments(bundle);
 
                 FragmentTransaction fragmentTransaction = mCallback.getmFragmentManager().beginTransaction();
                 fragmentTransaction.addToBackStack("");
-                fragmentTransaction.replace(R.id.containerView, teamFrag).commit();
+                fragmentTransaction.replace(R.id.containerView, teamFrag).commit();*/
             }
         });
 

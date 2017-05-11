@@ -94,6 +94,9 @@
     <string name="profilePlayer_nr">Player NR:</string>
     <string name="player_age">Player Age:</string>
     <string name="post_deleted_deletepost">Post Deleted!</string>
+    <string name="absentplayersregistered">Abcent players registered!</string>
+    <string name="userAbsenceRegistrationTeamTitle">User absence registration</string>
+    <string name="userAbsenceRegistrationTeamTextInfo">This player has already been registered as absent! do you want to remove absent mark on this player?</string>
 
 
 </resources>

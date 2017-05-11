@@ -43,12 +43,14 @@ public class DataBaseHelperA extends Authentication {
     private boolean hasRun;
     private boolean hasBeenCalledOnce;
     private boolean defaultAbsentValuesIsSet;
+    protected boolean decrementedPlayerAbsent;
 
     public DataBaseHelperA(MainActivity mainActivity) {
         super(mainActivity);
         hasRun = false;
         hasBeenCalledOnce = false;
         defaultAbsentValuesIsSet = false;
+        decrementedPlayerAbsent = false;
     }
 
     public String[] getActivityDataCache() {
@@ -196,16 +198,28 @@ public class DataBaseHelperA extends Authentication {
                             }
                         }
                         try {
+                            if (intVals[0] < 0) {
+                                intVals[0] = 0;
+                            }
+                            if (intVals[1] < 0) {
+                                intVals[1] = 0;
+                            }
+                            if (intVals[2] < 0) {
+                                intVals[2] = 0;
+                            }
+                            if (intVals[3] < 0) {
+                                intVals[3] = 0;
+                            }
                             DatabaseReference nTrainerUpdateRef = FirebaseDatabase.getInstance().getReference().child("Users");
                             nTrainerUpdateRef.child(trainerKey).child("nFbAct").setValue(intVals[0] + "");
                             nTrainerUpdateRef.child(trainerKey).child("nGymAct").setValue(intVals[1] + "");
                             nTrainerUpdateRef.child(trainerKey).child("nMeetAct").setValue(intVals[2] + "");
                             nTrainerUpdateRef.child(trainerKey).child("nCmpAct").setValue(intVals[3] + "");
 
-                            if(addOrRemove.equals("add")){
-                                setAssummedPlayersAbsence(activityType,"add");
-                            }else if(addOrRemove.equals("delete")){
-                                setAssummedPlayersAbsence(activityType,"delete");
+                            if (addOrRemove.equals("add")) {
+                                setPlayerAbsenceRecord(activityType, "add");
+                            } else if (addOrRemove.equals("delete")) {
+                                setPlayerAbsenceRecord(activityType, "delete");
                             }
                         } catch (DatabaseException dbe) {
                             Log.d("//////////", "trainer incr activity record dbe");
@@ -222,62 +236,74 @@ public class DataBaseHelperA extends Authentication {
         });
     }
 
-    //all players are assumed to have attended on all activities tha are posted by the trainer uless trainer sets some as absents.
-    private void setAssummedPlayersAbsence(final String activityType,final String addOrRemove) {
-       // final ArrayList<String> playerIds = new ArrayList<>();
+    //all players are assumed to have attended on ALL! activities tha are posted by the trainer uless trainer sets some as absents.
+    public void setPlayerAbsenceRecord(final String activityType, final String addOrRemove) {
+        // final ArrayList<String> playerIds = new ArrayList<>();
         final DatabaseReference fbUsersDbRef = FirebaseDatabase.getInstance().getReference().child("Users");
         fbUsersDbRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
-                    if(!defaultAbsentValuesIsSet){
+                    if (!defaultAbsentValuesIsSet) {
                         defaultAbsentValuesIsSet = true;
-                    Iterable<DataSnapshot> playerChildren = dataSnapshot.getChildren();
+                        Iterable<DataSnapshot> playerChildren = dataSnapshot.getChildren();
                         DatabaseReference setUpdateAbsents = FirebaseDatabase.getInstance().getReference().child("Users");////////////////////////////////////////////////////////////////// Iterate get or set
-                    for (DataSnapshot players : playerChildren) {
-                        UsersModel um = players.getValue(UsersModel.class);
-                        String  userKey = players.getKey();
+                        for (DataSnapshot players : playerChildren) {
+                            UsersModel um = players.getValue(UsersModel.class);
+                            String userKey = players.getKey();
 
-                        String absFb = um.getAbsFb();
-                        String absGym = um.getAbsGym();
-                        String absMeet = um.getAbsMeet();
-                        String absCmp = um.getAbsCmp();
+                            String absFb = um.getAbsFb();
+                            String absGym = um.getAbsGym();
+                            String absMeet = um.getAbsMeet();
+                            String absCmp = um.getAbsCmp();
 
-                        String[] absValues = {absFb,absGym,absMeet,absCmp};
-                        int[] intVals = parseString(absValues);
+                            String[] absValues = {absFb, absGym, absMeet, absCmp};
+                            int[] intVals = parseString(absValues);
 
-                        if (addOrRemove.equals("add")) {
-                            if (activityType.equals("footballT")) {
-                                intVals[0] = intVals[0] + 1;
-                            } else if (activityType.equals("gymT")) {
-                                intVals[1] = intVals[1] + 1;
-                            } else if (activityType.equals("Meet")) {
-                                intVals[2] = intVals[2] + 1;
-                            } else if (activityType.equals("camp")) {
-                                intVals[3] = intVals[3] + 1;
+                            if (addOrRemove.equals("add")) {
+                                if (activityType.equals("footballT")) {
+                                    intVals[0] = intVals[0] + 1;
+                                } else if (activityType.equals("gymT")) {
+                                    intVals[1] = intVals[1] + 1;
+                                } else if (activityType.equals("Meet")) {
+                                    intVals[2] = intVals[2] + 1;
+                                } else if (activityType.equals("camp")) {
+                                    intVals[3] = intVals[3] + 1;
+                                }
+                            } else if (addOrRemove.equals("delete")) {
+                                if (activityType.equals("footballT")) {
+                                    intVals[0] = intVals[0] - 1;
+                                } else if (activityType.equals("gymT")) {
+                                    intVals[1] = intVals[1] - 1;
+                                } else if (activityType.equals("Meet")) {
+                                    intVals[2] = intVals[2] - 1;
+                                } else if (activityType.equals("camp")) {
+                                    intVals[3] = intVals[3] - 1;
+                                }
                             }
-                        } else if (addOrRemove.equals("delete")) {
-                            if (activityType.equals("footballT")) {
-                                intVals[0] = intVals[0] - 1;
-                            } else if (activityType.equals("gymT")) {
-                                intVals[1] = intVals[1] - 1;
-                            } else if (activityType.equals("Meet")) {
-                                intVals[2] = intVals[2] - 1;
-                            } else if (activityType.equals("camp")) {
-                                intVals[3] = intVals[3] - 1;
+                            try {
+                                if (intVals[0] < 0) {
+                                    intVals[0] = 0;
+                                }
+                                if (intVals[1] < 0) {
+                                    intVals[1] = 0;
+                                }
+                                if (intVals[2] < 0) {
+                                    intVals[2] = 0;
+                                }
+                                if (intVals[3] < 0) {
+                                    intVals[3] = 0;
+                                }
+                                setUpdateAbsents.child(userKey).child("absFb").setValue(intVals[0] + "");
+                                setUpdateAbsents.child(userKey).child("absGym").setValue(intVals[1] + "");
+                                setUpdateAbsents.child(userKey).child("absMeet").setValue(intVals[2] + "");
+                                setUpdateAbsents.child(userKey).child("absCmp").setValue(intVals[3] + "");
+                            } catch (DatabaseException dbe) {
+                                Log.d("//////////", "trainer incr activity record dbe");
                             }
-                        }
-                        try {
-                            setUpdateAbsents.child(userKey).child("absFb").setValue(intVals[0] + "");
-                            setUpdateAbsents.child(userKey).child("absGym").setValue(intVals[1] + "");
-                            setUpdateAbsents.child(userKey).child("absMeet").setValue(intVals[2] + "");
-                            setUpdateAbsents.child(userKey).child("absCmp").setValue(intVals[3] + "");
-                        } catch (DatabaseException dbe) {
-                            Log.d("//////////", "trainer incr activity record dbe");
                         }
                     }
                 }
-            }
             }
 
             @Override
@@ -292,7 +318,12 @@ public class DataBaseHelperA extends Authentication {
         int[] parsed = new int[nActivityT.length];
         try {
             for (int i = 0; i < nActivityT.length; i++) {
-                parsed[i] = Integer.parseInt(nActivityT[i]);
+                int parsedIndexValue = Integer.parseInt(nActivityT[i]);
+                if (parsedIndexValue < 0) {
+                    parsed[i] = 0;
+                } else {
+                    parsed[i] = parsedIndexValue;
+                }
             }
         } catch (Exception pe) {
             Log.d("//////////", "Integer parse exception parseString()");
@@ -363,9 +394,9 @@ public class DataBaseHelperA extends Authentication {
                         String nPersonalTraining = (String) dataSnapshot.child("nPersonalTraining").getValue();
                         String[] nActivityT = {nPersonalTraining};
                         int[] intVals = parseString(nActivityT);
-                        if(addOrRemove.equals("add")){
+                        if (addOrRemove.equals("add")) {
                             intVals[0] = intVals[0] + 1;
-                        }else if(addOrRemove.equals("delete")){
+                        } else if (addOrRemove.equals("delete")) {
                             intVals[0] = intVals[0] - 1;
                         }
                         try {
@@ -438,7 +469,7 @@ public class DataBaseHelperA extends Authentication {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
-                    if(!hasBeenCalledOnce) {
+                    if (!hasBeenCalledOnce) {
                         hasBeenCalledOnce = true;
                         String firstName = (String) dataSnapshot.child("firstName").getValue();
                         String lastName = (String) dataSnapshot.child("lastName").getValue();
@@ -468,7 +499,7 @@ public class DataBaseHelperA extends Authentication {
     }
 
     //delete the selected plost if the user chooses to do so.
-    public void deleteSelectedPost(String postKey, boolean isTrainerPost,String activityType) {
+    public void deleteSelectedPost(String postKey, boolean isTrainerPost, String activityType) {
         DatabaseReference dbPostRef;
         try {
             if (isTrainerPost) {
@@ -476,13 +507,13 @@ public class DataBaseHelperA extends Authentication {
             } else {
                 dbPostRef = FirebaseDatabase.getInstance().getReference().child("PlayerPosts");
             }
-            if(isTrainerPost){
+            if (isTrainerPost) {
                 setTrainerNactivityRecord(activityType, "delete");
                 dbPostRef.child(postKey).removeValue();
                 Toast.makeText(mainActivity, R.string.post_deleted_deletepost, Toast.LENGTH_SHORT).show();
-            }else{
+            } else {
                 dbPostRef.child(postKey).removeValue();
-               setPlayerNactivityRecord("delete");
+                setPlayerNactivityRecord("delete");
                 Toast.makeText(mainActivity, R.string.post_deleted_deletepost, Toast.LENGTH_SHORT).show();
             }
 
@@ -513,7 +544,7 @@ public class DataBaseHelperA extends Authentication {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 Toast.makeText(mainActivity, R.string.playerPostDeleteToast, Toast.LENGTH_SHORT).show();
-                                deleteSelectedPost(postKey, false,"");
+                                deleteSelectedPost(postKey, false, "");
                             }
                         });
                         AlertDialog alert11 = builder1.create();
@@ -540,7 +571,7 @@ public class DataBaseHelperA extends Authentication {
                     String firstName = (String) dataSnapshot.child("firstName").getValue();
                     String lastName = (String) dataSnapshot.child("lastName").getValue();
                     PrefferencesClass pc = new PrefferencesClass(mainActivity);
-                    pc.saveLoggedInUserNameLocally(firstName,lastName);
+                    pc.saveLoggedInUserNameLocally(firstName, lastName);
                 }
             }
 
@@ -585,5 +616,4 @@ public class DataBaseHelperA extends Authentication {
             }
         });
     }
-
 }

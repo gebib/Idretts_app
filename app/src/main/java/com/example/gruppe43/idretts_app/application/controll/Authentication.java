@@ -181,6 +181,20 @@ public class Authentication {
         });
     }
 
+    //show general db failure alert
+    public void showGeneralDbExceptionAlert() {
+        AlertDialog.Builder builder1 = new AlertDialog.Builder(mainActivity);
+        builder1.setTitle(mainActivity.getString(R.string.activityRegistrationFailureTitle));
+        builder1.setMessage(mainActivity.getString(R.string.activityRegistrationFailureTextIinfo));
+        builder1.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                //ingen action.
+            }
+        });
+        AlertDialog alert11 = builder1.create();
+        alert11.show();
+    }
+
     //depending on if its the first one to register check and init correctly.
     private void checkIfThitIsFirstUser() {
         final DatabaseReference fbUsersDbRef = FirebaseDatabase.getInstance().getReference().child("Users");
@@ -267,6 +281,8 @@ public class Authentication {
         });
         alert.show();
     }
+
+
 }
 
 
