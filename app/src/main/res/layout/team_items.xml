@@ -22,10 +22,10 @@
 
         <ImageView
             android:id="@+id/indicateBoxAbsence"
-            android:layout_width="15dp"
-            android:layout_height="15dp"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
             android:padding="0dp"
-            android:layout_alignBottom="@+id/userImageIV"
+            android:layout_alignTop="@+id/userImageIV"
             android:layout_alignEnd="@+id/userImageIV" />
 
         <TextView

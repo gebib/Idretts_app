@@ -146,22 +146,59 @@ public class EditCampRecordsDialog extends DialogFragment {
             @Override
             public void onClick(View v) {
                 try{
-                    numMinutPlayed = Integer.parseInt(minutesPlayed.getText().toString().trim());
-                    numRedCard = Integer.parseInt(redCards.getText().toString().trim());
-                    numYellowCard = Integer.parseInt(yellowCards.getText().toString().trim());
-                    numGreenCard = Integer.parseInt(greenCards.getText().toString().trim());
-                    numPerfectPasses = Integer.parseInt(perfectPasses.getText().toString().trim());
-                    numScores = Integer.parseInt(scores.getText().toString().trim());
-                    numAccidents = Integer.parseInt(accidents.getText().toString().trim());
+                    String sNumMinPlayed = minutesPlayed.getText().toString().trim();
+                    String sNumRedCard = redCards.getText().toString().trim();
+                    String sNumYellowCard = yellowCards.getText().toString().trim();
+                    String sNumGreenCard = greenCards.getText().toString().trim();
+                    String sNumPerfectPasses = perfectPasses.getText().toString().trim();
+                    String sNumScores = scores.getText().toString().trim();
+                    String sNumAccidents = accidents.getText().toString().trim();
+
+                    if(!sNumMinPlayed.equals("")){
+                        numMinutPlayed = Integer.parseInt(sNumMinPlayed);
+                    }else{
+                        numMinutPlayed = 0;
+                    }
+                    if(!sNumRedCard.equals("")){
+                        numRedCard = Integer.parseInt(sNumRedCard);
+                    }else{
+                        numRedCard = 0;
+                    }
+                    if(!sNumYellowCard.equals("")){
+                        numYellowCard = Integer.parseInt(sNumYellowCard);
+                    }else{
+                        numYellowCard = 0;
+                    }
+                    if(!sNumGreenCard.equals("")){
+                        numGreenCard = Integer.parseInt(sNumGreenCard);
+                    }else{
+                        numGreenCard = 0;
+                    }
+                    if(!sNumPerfectPasses.equals("")){
+                        numPerfectPasses = Integer.parseInt(sNumPerfectPasses);
+                    }else{
+                        numPerfectPasses = 0;
+                    }
+                    if(!sNumScores.equals("")){
+                        numScores = Integer.parseInt(sNumScores);
+                    }else{
+                        numScores = 0;
+                    }
+                    if(!sNumAccidents.equals("")){
+                        numAccidents = Integer.parseInt(sNumAccidents);
+                    }else{
+                        numAccidents = 0;
+                    }
+
                 }catch (Exception e){
 
                 }
+                 getDialog().dismiss();
                 DataBaseHelperB dbh = new DataBaseHelperB(mCallback.getContext());
                 dbh.registerPlayerCampDataRecords(numMinutPlayed,numRedCard,numYellowCard,numGreenCard,numAccidents,numPerfectPasses,numScores,playerId);
             }
         });
 
-        DataBaseHelperA dbh = new DataBaseHelperA(mCallback.getContext());
         ArrayAdapter<String> playerNamesSpinner = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, playerNames);
         playerNamesSpinner.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerCampRecordsSelectPlayer.setAdapter(playerNamesSpinner);

@@ -349,7 +349,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
         actionBar.show();
         DataBaseHelperA dbha = new DataBaseHelperA(this);
-        dbha.saveSignedInUserName();
+        dbha.saveSignedInUserNameToCache();
     }
 
     //set state sign out!

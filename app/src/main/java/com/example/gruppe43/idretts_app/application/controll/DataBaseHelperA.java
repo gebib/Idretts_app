@@ -44,6 +44,8 @@ public class DataBaseHelperA extends Authentication {
     private boolean hasBeenCalledOnce;
     private boolean defaultAbsentValuesIsSet;
     protected boolean decrementedPlayerAbsent;
+    private boolean dialogHasRun;
+
 
     public DataBaseHelperA(MainActivity mainActivity) {
         super(mainActivity);
@@ -51,6 +53,7 @@ public class DataBaseHelperA extends Authentication {
         hasBeenCalledOnce = false;
         defaultAbsentValuesIsSet = false;
         decrementedPlayerAbsent = false;
+        dialogHasRun = false;
     }
 
     public String[] getActivityDataCache() {
@@ -238,7 +241,7 @@ public class DataBaseHelperA extends Authentication {
 
     //all players are assumed to have attended on ALL! activities tha are posted by the trainer uless trainer sets some as absents.
     public void setPlayerAbsenceRecord(final String activityType, final String addOrRemove) {
-        // final ArrayList<String> playerIds = new ArrayList<>();
+
         final DatabaseReference fbUsersDbRef = FirebaseDatabase.getInstance().getReference().child("Users");
         fbUsersDbRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -247,7 +250,7 @@ public class DataBaseHelperA extends Authentication {
                     if (!defaultAbsentValuesIsSet) {
                         defaultAbsentValuesIsSet = true;
                         Iterable<DataSnapshot> playerChildren = dataSnapshot.getChildren();
-                        DatabaseReference setUpdateAbsents = FirebaseDatabase.getInstance().getReference().child("Users");////////////////////////////////////////////////////////////////// Iterate get or set
+                        DatabaseReference setUpdateAbsents = FirebaseDatabase.getInstance().getReference().child("Users");
                         for (DataSnapshot players : playerChildren) {
                             UsersModel um = players.getValue(UsersModel.class);
                             String userKey = players.getKey();
@@ -498,7 +501,7 @@ public class DataBaseHelperA extends Authentication {
         });
     }
 
-    //delete the selected plost if the user chooses to do so.
+    //delete the selected post if the user chooses to do so.
     public void deleteSelectedPost(String postKey, boolean isTrainerPost, String activityType) {
         DatabaseReference dbPostRef;
         try {
@@ -561,7 +564,7 @@ public class DataBaseHelperA extends Authentication {
     }
 
     //save logged in player name locally for use in the app instead of requesting it everytieme.
-    public void saveSignedInUserName() {
+    public void saveSignedInUserNameToCache() {
         final DatabaseReference fbUsersDbRef = FirebaseDatabase.getInstance().getReference().child("Users");
         String currentUserId = fbAuth.getCurrentUser().getUid();
         fbUsersDbRef.child(currentUserId).addValueEventListener(new ValueEventListener() {
@@ -590,23 +593,27 @@ public class DataBaseHelperA extends Authentication {
         fbUsersDbRef.addValueEventListener(new ValueEventListener() {////////////////////////////////////////////////////////////////////////////////////////////////
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                if (dataSnapshot.exists()) {
-                    Iterable<DataSnapshot> playerChildren = dataSnapshot.getChildren();
+                if (!dialogHasRun) {
+                    dialogHasRun = true;
 
-                    for (DataSnapshot players : playerChildren) {
-                        UsersModel um = players.getValue(UsersModel.class);
-                        String fn, ln, userId;
-                        fn = um.getFirstName();
-                        ln = um.getLastName();
-                        userId = players.getKey();
+                    if (dataSnapshot.exists()) {
+                        Iterable<DataSnapshot> playerChildren = dataSnapshot.getChildren();
 
-                        firstNameLastNameArray.add(fn + " " + ln);
-                        playerIds.add(userId);
+                        for (DataSnapshot players : playerChildren) {
+                            UsersModel um = players.getValue(UsersModel.class);
+                            String fn, ln, userId;
+                            fn = um.getFirstName();
+                            ln = um.getLastName();
+                            userId = players.getKey();
+
+                            firstNameLastNameArray.add(fn + " " + ln);
+                            playerIds.add(userId);
+                        }
+                        EditCampRecordsDialog ecr = new EditCampRecordsDialog();
+                        ecr.setPlayerNames(firstNameLastNameArray);
+                        ecr.setPlayerIds(playerIds);
+                        ecr.show(mainActivity.getmFragmentManager(), "ecd");
                     }
-                    EditCampRecordsDialog ecr = new EditCampRecordsDialog();
-                    ecr.setPlayerNames(firstNameLastNameArray);
-                    ecr.setPlayerIds(playerIds);
-                    ecr.show(mainActivity.getmFragmentManager(), "ecd");
                 }
             }
 

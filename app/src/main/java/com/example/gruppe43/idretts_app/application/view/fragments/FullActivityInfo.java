@@ -3,7 +3,6 @@ package com.example.gruppe43.idretts_app.application.view.fragments;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,7 +21,7 @@ import com.example.gruppe43.idretts_app.application.interfaces.FragmentActivityI
 
 public class FullActivityInfo extends Fragment {
     private Button activityEditButton;
-    private Button activityDeleteButton;
+    //private Button activityDeleteButton;
 
     private ImageView fullactivityinfoImageView;
 
@@ -37,7 +36,7 @@ public class FullActivityInfo extends Fragment {
     private FragmentActivityInterface mCallback;
     private String[] postDataToDisplay;
     private static boolean isEditClicked;
-    private Button absenceControllButton;
+    private Button addAbsence;
     private RelativeLayout buttonsHolderRelativeLayout;
     private Button addCampRecords;
     private static String activityType;
@@ -76,8 +75,7 @@ public class FullActivityInfo extends Fragment {
         mCallback.getFab().hide();
         isEditClicked = false;
         activityEditButton = (Button) view.findViewById(R.id.showFullActivityInfoEditButton);
-        activityDeleteButton = (Button) view.findViewById(R.id.showFullActivityInfoDeleteButton);
-        absenceControllButton = (Button) view.findViewById(R.id.absenceControllButton);
+        addAbsence = (Button) view.findViewById(R.id.absenceControllButton);
         addCampRecords = (Button) view.findViewById(R.id.addRemoveCampRecords);
 
         fullactivityinfoImageView = (ImageView) view.findViewById(R.id.fullactivityinfoImageView);
@@ -93,20 +91,11 @@ public class FullActivityInfo extends Fragment {
 
         buttonsHolderRelativeLayout = (RelativeLayout) view.findViewById(R.id.buttonsHolderRelativeLayout);
 
-        absenceControllButton.setOnClickListener(new View.OnClickListener() {
+        addAbsence.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 DatabaseHelperC dbhc = new DatabaseHelperC(mCallback.getContext());
-                dbhc.retrieveAllPlayersRegisteredAsAbsent(); // TODO ok???????     /////////////////////////////////////////////////////////////);/////////////////////////////////////////////////////////////);/////////////////////////////////////////////////////////////);/////////////////////////////////////////////////////////////
-
-               /* Bundle bundle = new Bundle();
-                bundle.putBoolean("absenceCheck", true);
-                Team teamFrag = new Team();
-                teamFrag.setArguments(bundle);
-
-                FragmentTransaction fragmentTransaction = mCallback.getmFragmentManager().beginTransaction();
-                fragmentTransaction.addToBackStack("");
-                fragmentTransaction.replace(R.id.containerView, teamFrag).commit();*/
+                dbhc.retrieveAllPlayersRegisteredAsAbsent();
             }
         });
 
@@ -138,16 +127,6 @@ public class FullActivityInfo extends Fragment {
         if (prefData.equals("false")) {
             buttonsHolderRelativeLayout.setVisibility(view.GONE);
         }
-        activityDeleteButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                 DataBaseHelperA dbh = new DataBaseHelperA(mCallback.getContext());
-                dbh.deleteSelectedPost(TrainerActivityRegistration.getSelectedActivityPostKey(),true,activityType);
-                //mCallback.clearBackStack();
-                FragmentTransaction fragmentTransaction = mCallback.getmFragmentManager().beginTransaction();
-                fragmentTransaction.replace(R.id.containerView, new Tabs()).commit();
-            }
-        });
 
         postDataToDisplay = getArguments().getStringArray("postData");
         String icon = postDataToDisplay[9];
@@ -171,9 +150,9 @@ public class FullActivityInfo extends Fragment {
             default:
                 fullactivityinfoImageView.setImageResource(R.drawable.ia_logo);
         }
-        if (!(postDataToDisplay[0].equals("Football camp") || postDataToDisplay[0].equals("Fotballkamp"))){
+        if (!(postDataToDisplay[0].equals("Football camp") || postDataToDisplay[0].equals("Fotballkamp"))) {
             addCampRecords.setEnabled(false);
-        }else{
+        } else {
             addCampRecords.setEnabled(true);
         }
 

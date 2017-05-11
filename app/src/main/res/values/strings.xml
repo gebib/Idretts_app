@@ -97,6 +97,9 @@
     <string name="absentplayersregistered">Abcent players registered!</string>
     <string name="userAbsenceRegistrationTeamTitle">User absence registration</string>
     <string name="userAbsenceRegistrationTeamTextInfo">This player has already been registered as absent! do you want to remove absent mark on this player?</string>
+    <string name="playerAbsentRemoved">Player absent removed!</string>
+    <string name="noChangesToBeRegisteredToast">There are no changes to be registrered!</string>
+    <string name="playerAlreadyAbsent">Player already absent.</string>
 
 
 </resources>
