@@ -115,6 +115,15 @@
             android:textColor="@color/small_stuffs_theme"
             android:text="@string/accept_terms_and_conditions" />
 
+        <TextView
+            android:id="@+id/agreement"
+            android:layout_width="107dp"
+            android:layout_marginTop="1dp"
+            android:textSize="12dp"
+            android:layout_gravity="center"
+            android:layout_height="wrap_content"
+            android:text="@string/agreement" />
+
         <android.support.v7.widget.AppCompatButton
             android:id="@+id/createAccountBT"
             android:layout_width="fill_parent"

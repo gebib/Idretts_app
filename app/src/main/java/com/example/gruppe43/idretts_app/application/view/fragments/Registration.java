@@ -35,6 +35,7 @@ public class Registration extends Fragment implements View.OnClickListener{
     private Button createAccount;
     private FragmentActivityInterface mCallback;
     private Authentication authClass;
+    private TextView agreement;
 
 
     private FirebaseDatabase fbAuth;
@@ -60,6 +61,23 @@ public class Registration extends Fragment implements View.OnClickListener{
         passET = (EditText) view.findViewById(R.id.input_password);
         rePassET = (EditText) view.findViewById(R.id.input_reEnterPassword);
         acceptTermsCB = (CheckBox) view.findViewById(R.id.familyApproveCB);
+        agreement = (TextView) view.findViewById(R.id.agreement);
+
+        agreement.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder builder1 = new AlertDialog.Builder(mCallback.getContext());
+                builder1.setTitle(R.string.userAgreementTitle);
+                builder1.setMessage(R.string.userAgreementText);
+                builder1.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        //ingen action.
+                    }
+                });
+                AlertDialog alert11 = builder1.create();
+                alert11.show();
+            }
+        });
         ageET.setKeyListener(null);
         ageET.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
