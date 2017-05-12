@@ -52,7 +52,7 @@
                 android:marqueeRepeatLimit="marquee_forever"
                 android:maxLines="1"
                 android:scrollHorizontally="true"
-                android:text="db"
+                android:text="--"
                 android:textAlignment="textEnd"
                 android:textColor="@color/black" />
 
@@ -101,7 +101,7 @@
                 android:layout_alignBottom="@+id/psl"
                 android:layout_alignParentEnd="true"
                 android:maxLength="15"
-                android:text="db"
+                android:text="--"
                 android:textAlignment="textEnd"
                 android:textColor="@color/black" />
 
@@ -113,7 +113,7 @@
                 android:layout_below="@+id/linearLayout"
                 android:layout_marginTop="10dp"
                 android:maxLength="15"
-                android:text="unknown"
+                android:text="--"
                 android:textAlignment="textEnd"
                 android:textColor="@color/black" />
 
@@ -125,7 +125,7 @@
 
                 android:layout_alignTop="@+id/playerAge"
                 android:maxLength="15"
-                android:text="db"
+                android:text="--"
                 android:textAlignment="textEnd"
                 android:textColor="@color/black" />
             <ImageView
@@ -151,35 +151,38 @@
                 android:id="@+id/dateRegistered"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Date registered:" />
+                android:text="Date registered:"
+                android:layout_alignEnd="@+id/playerPosition"
+                android:layout_alignParentStart="true" />
 
             <TextView
                 android:id="@+id/dateRegisteredDate"
-                android:layout_width="wrap_content"
+                android:layout_width="120dp"
                 android:layout_height="wrap_content"
-
+                android:gravity="center"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentTop="true"
-                android:text="01.01.2017" />
+                android:text="--.--.---- --:--" />
 
             <TextView
                 android:id="@+id/playerPosition"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignEnd="@+id/dateRegistered"
                 android:layout_alignParentStart="true"
                 android:layout_below="@+id/dateRegistered"
                 android:text="Player type:"
-                android:textColor="@color/black" />
+                android:textColor="@color/black"
+                android:layout_alignEnd="@+id/numberOfminutePlayed" />
 
             <TextView
                 android:id="@+id/playerTypeText"
                 android:layout_width="wrap_content"
+                android:gravity="center"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_alignStart="@+id/dateRegisteredDate"
                 android:layout_below="@+id/dateRegisteredDate"
-                android:text="Unknown"
+                android:text="--"
                 android:textColor="@color/black" />
 
             <TextView
@@ -189,17 +192,19 @@
                 android:layout_alignParentStart="true"
                 android:layout_below="@+id/playerPosition"
                 android:text="Minutes played:"
-                android:textColor="@color/black" />
+                android:textColor="@color/black"
+                android:layout_alignEnd="@+id/numberOfRedCard" />
 
             <TextView
                 android:id="@+id/numberOfminutePlayedText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_alignStart="@+id/playerTypeText"
+                android:gravity="center"
+                android:text="--"
+                android:textColor="@color/black"
                 android:layout_below="@+id/playerTypeText"
-                android:text="0"
-                android:textColor="@color/black" />
+                android:layout_alignParentEnd="true"
+                android:layout_alignStart="@+id/playerTypeText" />
 
             <TextView
                 android:id="@+id/numberOfRedCard"
@@ -208,16 +213,18 @@
                 android:layout_alignParentStart="true"
                 android:layout_below="@+id/numberOfminutePlayed"
                 android:text="Red card:"
-                android:textColor="@color/black" />
+                android:textColor="@color/black"
+                android:layout_alignEnd="@+id/numberOfGreenCard" />
 
             <TextView
                 android:id="@+id/numberOfRedCardText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:gravity="center"
                 android:layout_alignParentEnd="true"
                 android:layout_alignStart="@+id/numberOfminutePlayedText"
                 android:layout_below="@+id/numberOfminutePlayedText"
-                android:text="0"
+                android:text="--"
                 android:textColor="#c60000" />
 
             <TextView
@@ -227,16 +234,18 @@
                 android:layout_alignParentStart="true"
                 android:layout_below="@+id/numberOfRedCard"
                 android:text="Green card:"
-                android:textColor="@color/black" />
+                android:textColor="@color/black"
+                android:layout_alignEnd="@+id/numberOfYellowCard" />
 
             <TextView
                 android:id="@+id/numberOfGreenCardText"
                 android:layout_width="wrap_content"
+                android:gravity="center"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_alignStart="@+id/numberOfRedCardText"
                 android:layout_below="@+id/numberOfRedCardText"
-                android:text="0"
+                android:text="--"
                 android:textColor="#2eb335" />
 
             <TextView
@@ -246,16 +255,18 @@
                 android:layout_alignParentStart="true"
                 android:layout_below="@+id/numberOfGreenCard"
                 android:text="Yellow card:"
-                android:textColor="@color/black" />
+                android:textColor="@color/black"
+                android:layout_alignEnd="@+id/textView2" />
 
             <TextView
                 android:id="@+id/numberOfYellowCardText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
+                android:gravity="center"
                 android:layout_alignStart="@+id/numberOfGreenCardText"
                 android:layout_below="@+id/numberOfGreenCardText"
-                android:text="0"
+                android:text="--"
                 android:textColor="#FFAEA800" />
 
             <TextView
@@ -264,19 +275,19 @@
                 android:layout_alignParentStart="true"
                 android:layout_below="@+id/numberOfYellowCard"
                 android:text="Perfect passings:"
-                android:textColor="@color/black" />
+                android:textColor="@color/black"
+                android:id="@+id/textView2" />
 
             <TextView
                 android:id="@+id/numberOfPerfectPassingsText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:gravity="center"
                 android:layout_alignParentEnd="true"
                 android:layout_alignStart="@+id/numberOfYellowCardText"
                 android:layout_below="@+id/numberOfYellowCardText"
-                android:text="0"
+                android:text="--"
                 android:textColor="@color/black" />
-
-
 
 
         </RelativeLayout>
@@ -300,16 +311,16 @@
             android:layout_below="@+id/secondRelativeLayout"
             android:background="@color/black"
             android:gravity="center"
-            android:text="Player total activity status"
+            android:text="Activity attendance status"
             android:textColor="#ffffff" />
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignStart="@+id/otherPlayerStatus"
-            android:layout_below="@+id/otherPlayerStatus"
             android:background="@drawable/gradient_bg"
-            android:padding="20dp">
+            android:padding="20dp"
+            android:layout_below="@+id/otherPlayerStatus"
+            android:layout_alignParentEnd="true">
 
             <TextView
                 android:id="@+id/personalActivityActivities"
@@ -323,50 +334,138 @@
 
             <TextView
                 android:id="@+id/personalActivityActivitiesText"
-                android:layout_width="70dp"
+                android:layout_width="120dp"
                 android:layout_height="wrap_content"
-
+                android:gravity="center"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentTop="true"
-                android:text="0"
+                android:text="--"
                 android:textColor="@color/black" />
 
             <TextView
-                android:id="@+id/coachActivityAttended"
+                android:id="@+id/bsFb"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
+                android:layout_marginTop="5dp"
                 android:layout_below="@+id/personalActivityActivities"
-                android:text="Coach activities attended"
-                android:textColor="@color/black" />
+                android:text="@string/football_activity"
+                android:textColor="@color/black"
+                android:layout_alignEnd="@+id/absGym" />
 
             <TextView
-                android:id="@+id/coachActivityAttendedText"
+                android:id="@+id/nAbsFb"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
+                android:gravity="center"
+                android:layout_marginTop="5dp"
                 android:layout_alignStart="@+id/personalActivityActivitiesText"
                 android:layout_below="@+id/personalActivityActivitiesText"
-                android:text="0/0"
+                android:text="-/-"
                 android:textColor="@color/black" />
 
             <TextView
+                android:id="@+id/absGym"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
-                android:layout_below="@+id/coachActivityAttended"
-                android:text="Accidents:"
+                android:layout_below="@+id/nAbsFb"
+                android:text="Gymnastic activity:"
                 android:textColor="@color/black" />
 
             <TextView
-                android:id="@+id/numberOfAccidentsText"
+                android:id="@+id/nGym"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
-                android:layout_alignStart="@+id/coachActivityAttendedText"
-                android:layout_below="@+id/coachActivityAttendedText"
-                android:text="0"
+                android:layout_alignStart="@+id/nAbsFb"
+                android:gravity="center"
+                android:layout_below="@+id/nAbsFb"
+                android:text="-/-"
                 android:textColor="@color/black" />
+
+            <TextView
+                android:id="@+id/absTheory"
+                android:layout_width="wrap_content"
+                android:textColor="@color/black"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/absGym"
+                android:text="Theory/meeting:"
+                android:layout_alignEnd="@+id/absGym" />
+
+            <TextView
+                android:id="@+id/nAbsTheor"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:gravity="center"
+                android:text="-/-"
+                android:layout_below="@+id/nGym"
+                android:layout_alignParentEnd="true"
+                android:layout_alignStart="@+id/nGym" />
+
+            <TextView
+                android:id="@+id/absCamp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:text="Camp activity:"
+                android:layout_below="@+id/absTheory"
+                android:layout_alignParentStart="true"
+                android:layout_alignEnd="@+id/textView13" />
+
+            <TextView
+                android:id="@+id/nAbsCamp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:text="-/-"
+                android:gravity="center"
+                android:layout_below="@+id/nAbsTheor"
+                android:layout_alignStart="@+id/nAbsTheor"
+                android:layout_alignParentEnd="true" />
+
+            <TextView
+                android:id="@+id/textView13"
+                android:layout_marginTop="5dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/absCamp"
+                android:text="Accidents:"
+                android:layout_alignEnd="@+id/absGym" />
+
+            <TextView
+                android:id="@+id/nAccidents"
+                android:layout_width="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_height="wrap_content"
+                android:layout_alignStart="@+id/nAbsCamp"
+                android:layout_below="@+id/nAbsCamp"
+                android:gravity="center"
+                android:text="--"
+                android:layout_alignParentEnd="true" />
+
+            <TextView
+                android:id="@+id/textView16"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/textView13"
+                android:text="Total attended:"
+                android:layout_alignEnd="@+id/textView13" />
+
+            <TextView
+                android:id="@+id/nTotalAttended"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_alignStart="@+id/nAccidents"
+                android:layout_below="@+id/nAccidents"
+                android:text="-/-"
+                android:layout_alignParentEnd="true" />
 
 
         </RelativeLayout>

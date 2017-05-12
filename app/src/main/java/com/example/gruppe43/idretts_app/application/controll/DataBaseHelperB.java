@@ -190,18 +190,6 @@ public class DataBaseHelperB extends DataBaseHelperA {
         return parsedDate;
     }
 
-
-    //when a user is clicked in team, get the data to be displayed about this user.
-    public void getProfileViewDataForUser(String userId) {
-        //TODO if this user == key show edit else turn off editing
-        //data comes from them !
-
-        FragmentTransaction fragmentTransaction = mainActivity.getmFragmentManager().beginTransaction();
-                fragmentTransaction.addToBackStack("");
-        fragmentTransaction.replace(R.id.containerView, new ProfileView()).commit();
-    }
-
-
     //delete Trainer posts that has the date later than today
     public void checkOutdatedTrainerPosts() {
         DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference().child("TrainerPosts");
@@ -387,8 +375,6 @@ public class DataBaseHelperB extends DataBaseHelperA {
             }
             Toast.makeText(mainActivity, R.string.absentplayersregistered, Toast.LENGTH_SHORT).show();
             progressDialog.dismiss();
-           /* DataBaseHelperA dbha = new DataBaseHelperA(mainActivity);
-            dbha.setPlayerAbsenceRecord("add", FullActivityInfo.getActivityType());asdfasdfas*/
         } catch (DatabaseException dbe) {
             progressDialog.dismiss();
             showGeneralDbExceptionAlert();

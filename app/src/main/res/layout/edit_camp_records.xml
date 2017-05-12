@@ -46,7 +46,7 @@
                 android:layout_alignParentStart="true" />
 
             <EditText
-                android:id="@+id/minutesPlayed"
+                android:id="@+id/myStatus"
                 android:layout_width="60dp"
                 android:textSize="20dp"
                 android:background="@drawable/round_corners"
@@ -57,15 +57,15 @@
                 android:hint="@string/minutes_played"
                 android:textColorHint="#b1b1b1"
                 android:layout_below="@+id/spinnerCampRecordsSelectPlayer"
-                android:layout_alignStart="@+id/perfectPasses"
-                android:layout_alignEnd="@+id/perfectPasses" />
+                android:layout_alignStart="@+id/myPlayerNr"
+                android:layout_alignEnd="@+id/myPlayerNr" />
             <ImageView
                 android:id="@+id/imageView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/stop_watch"
-                android:layout_alignTop="@+id/minutesPlayed"
-                android:layout_alignStart="@+id/imageView3" />
+                android:layout_below="@+id/spinnerCampRecordsSelectPlayer"
+                android:layout_alignEnd="@+id/imageView3" />
             <EditText
                 android:id="@+id/redCards"
                 android:layout_width="60dp"
@@ -77,7 +77,7 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/red_card"
                 android:textColorHint="#b1b1b1"
-                android:layout_below="@+id/scores"
+                android:layout_below="@+id/myPlayerType"
                 android:layout_alignStart="@+id/yellowCards"
                 android:layout_alignEnd="@+id/yellowCards" />
             <EditText
@@ -111,7 +111,7 @@
                 android:layout_alignEnd="@+id/accidentTV" />
 
             <EditText
-                android:id="@+id/perfectPasses"
+                android:id="@+id/myPlayerNr"
                 android:layout_width="40dp"
                 android:textSize="20dp"
                 android:background="@drawable/round_corners"
@@ -121,18 +121,19 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/perfect_passings"
                 android:textColorHint="#b1b1b1"
-                android:layout_below="@+id/minutesPlayed"
-                android:layout_alignStart="@+id/scores"
-                android:layout_alignEnd="@+id/scores" />
+                android:layout_below="@+id/myStatus"
+                android:layout_alignStart="@+id/myPlayerType"
+                android:layout_alignEnd="@+id/myPlayerType" />
             <ImageView
                 android:id="@+id/imageView3"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:paddingLeft="3dp"
                 app:srcCompat="@drawable/pass"
-                android:layout_alignTop="@+id/perfectPasses"
+                android:layout_alignTop="@+id/myPlayerNr"
                 android:layout_alignParentStart="true" />
             <EditText
-                android:id="@+id/scores"
+                android:id="@+id/myPlayerType"
                 android:layout_width="40dp"
                 android:textSize="20dp"
                 android:background="@drawable/round_corners"
@@ -142,7 +143,7 @@
                 android:layout_marginTop="10dp"
                 android:hint="Score:"
                 android:textColorHint="#b1b1b1"
-                android:layout_below="@+id/perfectPasses"
+                android:layout_below="@+id/myPlayerNr"
                 android:layout_alignStart="@+id/redCards"
                 android:layout_alignEnd="@+id/redCards" />
             <ImageView
@@ -150,10 +151,10 @@
                 android:layout_width="25dp"
                 android:layout_height="25dp"
                 app:srcCompat="@drawable/score"
-                android:layout_alignTop="@+id/scores"
-                android:layout_alignStart="@+id/imageView3" />
+                android:layout_alignTop="@+id/myPlayerType"
+                android:layout_alignEnd="@+id/imageView3" />
             <Button
-                android:id="@+id/campRecordDialogAddBtn"
+                android:id="@+id/profileEditBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="#ffffff"

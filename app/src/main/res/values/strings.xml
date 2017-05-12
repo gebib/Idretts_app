@@ -103,6 +103,11 @@
     <string name="agreement">Agreement</string>
     <string name="userAgreementTitle">User Agreement</string>
     <string name="userAgreementText">By submitting your information you are confirming being a part of Høvik Idrettslag. The data collected by this application is used to track your progress as an athlete, and will at no point be available to people or organizations outside of Høvik IL. If you are under the age of 13, please check with your parent or legal guardian before agreeing to these terms. While using this application we expect you to behave with common courtesy when using the messaging service. Any unwanted actions can lead to the cancellation of your account in addition to notification of your parents/legal guardians. This application works best if you submit realistic efforts, so have fun and be truthful with your excersise.</string>
+    <string name="football_activity">Football activity:</string>
+    <string name="editDialogTitle">Edit profile</string>
+    <string name="statusUpdated">Status updated.</string>
+    <string name="player_type">Player type:</string>
+    <string name="nocahngesTosaveProfileEdit">No changes to save.</string>
 
 
 </resources>

@@ -15,7 +15,6 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.example.gruppe43.idretts_app.R;
-import com.example.gruppe43.idretts_app.application.controll.DataBaseHelperA;
 import com.example.gruppe43.idretts_app.application.controll.DataBaseHelperB;
 import com.example.gruppe43.idretts_app.application.interfaces.FragmentActivityInterface;
 
@@ -62,6 +61,7 @@ public class EditCampRecordsDialog extends DialogFragment {
     public void onAttach(Context context) {
         super.onAttach(context);
         try {
+            System.out.print("///////////////////////////////??");
             mCallback = (FragmentActivityInterface) context;
         } catch (ClassCastException e) {
             throw new ClassCastException(context.toString()
@@ -77,71 +77,18 @@ public class EditCampRecordsDialog extends DialogFragment {
         getDialog().setTitle(R.string.dialogCampRecords);
         spinnerCampRecordsSelectPlayer = (Spinner) view.findViewById(R.id.spinnerCampRecordsSelectPlayer);
 
-        minutesPlayed = (EditText) view.findViewById(R.id.minutesPlayed);
+        minutesPlayed = (EditText) view.findViewById(R.id.myStatus);
         redCards = (EditText) view.findViewById(R.id.redCards);
         yellowCards = (EditText) view.findViewById(R.id.yellowCards);
         greenCards = (EditText) view.findViewById(R.id.greenCards);
-        perfectPasses = (EditText) view.findViewById(R.id.perfectPasses);
-        scores = (EditText) view.findViewById(R.id.scores);
+        perfectPasses = (EditText) view.findViewById(R.id.myPlayerNr);
+        scores = (EditText) view.findViewById(R.id.myPlayerType);
         accidents = (EditText) view.findViewById(R.id.accidentTV);
 
 
 
-        redCards.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if(hasFocus){
-                    redCards.setHint("");
-                }
-            }
-        });
 
-        yellowCards.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if(hasFocus){
-                    yellowCards.setHint("");
-                }
-            }
-        });
-
-        greenCards.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if(hasFocus){
-                    greenCards.setHint("");
-                }
-            }
-        });
-
-        scores.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if(hasFocus){
-                    scores.setHint("");
-                }
-            }
-        });
-
-        perfectPasses.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if(hasFocus){
-                    perfectPasses.setHint("");
-                }
-            }
-        });
-
-        accidents.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if(hasFocus){
-                    accidents.setHint("");
-                }
-            }
-        });
-
-        campRecordDialogAddBtn = (Button) view.findViewById(R.id.campRecordDialogAddBtn);
+        campRecordDialogAddBtn = (Button) view.findViewById(R.id.profileEditBtn);
         campRecordDialogAddBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

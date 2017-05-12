@@ -1,7 +1,9 @@
 package com.example.gruppe43.idretts_app.application.view.main;
 
+import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
@@ -40,6 +42,8 @@ import com.example.gruppe43.idretts_app.application.view.fragments.Trainer;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
+import com.theartofdev.edmodo.cropper.CropImage;
+import com.theartofdev.edmodo.cropper.CropImageView;
 
 import static com.example.gruppe43.idretts_app.application.view.fragments.PlayerActivityRegistration.par;
 import static com.example.gruppe43.idretts_app.application.view.fragments.TrainerActivityRegistration.nar;
@@ -59,6 +63,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private PrefferencesClass prefs;
     private boolean isBackButtonPressedFromEditFragment;
     private static MainActivity mainContext;
+
+
 
     public MainActivity() {
         //init only if persistant not set already
@@ -378,6 +384,32 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public void clearBackStack() {
         for (int i = 0; i < mFragmentManager.getBackStackEntryCount(); i++) {
             mFragmentManager.popBackStack();
+        }
+    }
+
+
+     @Override//imageCroper..
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == ProfileView.GALLERY_REQUEST && resultCode == RESULT_OK && data != null) {
+            Uri imageUri = data.getData();
+
+            CropImage.activity(imageUri)
+                    .setGuidelines(CropImageView.Guidelines.ON)
+                    .setAspectRatio(1,1)
+                    .setRequestedSize(150,150)
+                    .start(this);
+        }
+
+        if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
+            CropImage.ActivityResult result = CropImage.getActivityResult(data);
+            if (resultCode == RESULT_OK) {
+               ProfileView.mImageUri = result.getUri();
+                ProfileView.profImageIV.setImageURI(ProfileView.mImageUri);
+            } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
+                Exception error = result.getError();
+                System.out.println("///////////////////////"+error);
+            }
         }
     }
 }

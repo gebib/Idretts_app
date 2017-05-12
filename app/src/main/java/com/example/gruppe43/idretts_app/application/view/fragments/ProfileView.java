@@ -2,7 +2,10 @@ package com.example.gruppe43.idretts_app.application.view.fragments;
 
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,14 +14,33 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.gruppe43.idretts_app.R;
+import com.example.gruppe43.idretts_app.application.helper_classes.EditProfileDialog;
 import com.example.gruppe43.idretts_app.application.interfaces.FragmentActivityInterface;
+import com.example.gruppe43.idretts_app.application.view.main.MainActivity;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+import com.theartofdev.edmodo.cropper.CropImage;
+import com.theartofdev.edmodo.cropper.CropImageView;
+
 
 import java.util.ArrayList;
+import java.util.Random;
+
+import static android.app.Activity.RESULT_OK;
 
 public class ProfileView extends Fragment {
     private FragmentActivityInterface mCallback;
 
-    private ImageView profImageIV;//profile image
+    public static ImageView profImageIV;//profile image
 
     private TextView profileNameTv;
     private TextView textView3PlayerNr;
@@ -35,9 +57,26 @@ public class ProfileView extends Fragment {
     private TextView numberOfYellowCardText;
     private TextView numberOfPerfectPassingsText;
     private TextView personalActivityActivitiesText;
-    private TextView coachActivityAttendedText;
-    private TextView numberOfAccidentsText;
-    private ArrayList<String> selectedUserIfoData;//TODO set before call
+
+    private TextView nAbsFb;
+    private TextView nGym;
+    private TextView nAbsTheor;
+    private TextView nAbsCamp;
+    private TextView nAccidents;
+    private TextView nTotalAttended;
+
+
+    private static ArrayList<String> selectedUserIfoData;
+    private String selectedUserIdInTeam;
+
+     public static final int GALLERY_REQUEST = 1;
+    public static final int MAX_LENGTH = 50;
+    public static Uri mImageUri;
+
+
+    /*private final int GALLERY_REQUEST = 1;
+    private final int MAX_LENGTH = 50;
+    private  Uri mImageUri;*/
 
 
     public void setSelectedUserIfoData(ArrayList<String> selectedUserIfoData) {
@@ -64,11 +103,11 @@ public class ProfileView extends Fragment {
         View view = inflater.inflate(R.layout.fragment_profile_view, container, false);
         mCallback.getFab().hide();
 
+        selectedUserIdInTeam = Team.selectedUserIdInTeam;
 
         profileNameTv = (TextView) view.findViewById(R.id.profileNameTv);
         profImageIV = (ImageView) view.findViewById(R.id.profImageIV);
         textView3PlayerNr = (TextView) view.findViewById(R.id.textView3PlayerNr);
-
         textView11PlayerAge = (TextView) view.findViewById(R.id.textView11PlayerAge);
         textView8Status = (TextView) view.findViewById(R.id.textView8Status);
 
@@ -81,47 +120,72 @@ public class ProfileView extends Fragment {
         numberOfGreenCardText = (TextView) view.findViewById(R.id.numberOfGreenCardText);
         numberOfYellowCardText = (TextView) view.findViewById(R.id.numberOfYellowCardText);
         numberOfPerfectPassingsText = (TextView) view.findViewById(R.id.numberOfPerfectPassingsText);
+
         personalActivityActivitiesText = (TextView) view.findViewById(R.id.personalActivityActivitiesText);
-        coachActivityAttendedText = (TextView) view.findViewById(R.id.coachActivityAttendedText);
-        numberOfAccidentsText = (TextView) view.findViewById(R.id.numberOfAccidentsText);
 
+        nAbsFb =  (TextView) view.findViewById(R.id.nAbsFb);
+        nGym = (TextView) view.findViewById(R.id.nGym);
+        nAbsTheor = (TextView) view.findViewById(R.id.nAbsTheor);
+        nAbsCamp = (TextView) view.findViewById(R.id.nAbsCamp);
 
-        profImageIV.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                System.out.println("////////////////// set image picasso");//TODO
-            }
-        });
+        nAccidents = (TextView) view.findViewById(R.id.nAccidents);
+        nTotalAttended = (TextView) view.findViewById(R.id.nTotalAttended);
 
-        imageButtonEditProfile.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                System.out.println("////////////////// identify current user and get popup to fill inn the missings");//TODO
-            }
-        });
+        FirebaseAuth fbAuth = FirebaseAuth.getInstance();
+        String currentUserId = fbAuth.getCurrentUser().getUid();
 
-        //profImageIV TODO picasso
-        if(selectedUserIfoData != null){
-            profileNameTv.setText(selectedUserIfoData.get(0));
-            textView3PlayerNr.setText(selectedUserIfoData.get(1));
-            textView11PlayerAge.setText(selectedUserIfoData.get(2));
-            textView8Status.setText(selectedUserIfoData.get(3));
+        if(!Team.selectedUserIdInTeam.equals(currentUserId)){
+            imageButtonEditProfile.setVisibility(view.GONE);
+        }else{
+            profImageIV.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
 
-            dateRegisteredDate.setText(selectedUserIfoData.get(4));
-            playerTypeText.setText(selectedUserIfoData.get(5));
-            numberOfminutePlayedText.setText(selectedUserIfoData.get(6));
-            numberOfRedCardText.setText(selectedUserIfoData.get(7));
-            numberOfGreenCardText.setText(selectedUserIfoData.get(8));
-            numberOfYellowCardText.setText(selectedUserIfoData.get(9));
-            numberOfPerfectPassingsText.setText(selectedUserIfoData.get(10));
+                    Intent galleryIntent = new Intent(Intent.ACTION_GET_CONTENT);
+                    galleryIntent.setType("image/*");
+                 mCallback.getContext().startActivityForResult(galleryIntent, ProfileView.GALLERY_REQUEST);
+                }
+            });
 
-            personalActivityActivitiesText.setText(selectedUserIfoData.get(11));
-            coachActivityAttendedText.setText(selectedUserIfoData.get(12));
-            numberOfAccidentsText.setText(selectedUserIfoData.get(13));
+            imageButtonEditProfile.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    EditProfileDialog epd = new EditProfileDialog();
+                    epd.setCtx(mCallback.getContext());
+                    epd.show(mCallback.getContext().getFragmentManager(),"");
+                }
+            });
         }
 
+        if(selectedUserIfoData != null){
+            try {
+                profileNameTv.setText(selectedUserIfoData.get(0));
+                textView3PlayerNr.setText(selectedUserIfoData.get(1));
+                textView11PlayerAge.setText(selectedUserIfoData.get(2));
+                textView8Status.setText(selectedUserIfoData.get(3));
 
+                dateRegisteredDate.setText(selectedUserIfoData.get(4));
+                playerTypeText.setText(selectedUserIfoData.get(5));
+                numberOfminutePlayedText.setText(selectedUserIfoData.get(6));
+                numberOfRedCardText.setText(selectedUserIfoData.get(7));
+                numberOfGreenCardText.setText(selectedUserIfoData.get(8));
+                numberOfYellowCardText.setText(selectedUserIfoData.get(9));
+                numberOfPerfectPassingsText.setText(selectedUserIfoData.get(10));
+
+                personalActivityActivitiesText.setText(selectedUserIfoData.get(11));
+
+                nAbsFb.setText(selectedUserIfoData.get(12));
+                nGym.setText(selectedUserIfoData.get(13));
+                nAbsTheor.setText(selectedUserIfoData.get(14));
+                nAbsCamp.setText(selectedUserIfoData.get(15));
+
+                nAccidents.setText(selectedUserIfoData.get(16));
+                nTotalAttended.setText(selectedUserIfoData.get(17));
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
         return view;
     }
-
 }

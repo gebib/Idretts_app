@@ -67,10 +67,15 @@ public class Trainer extends Fragment {
                 viewHolder.mView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        databaseHelper = new DataBaseHelperA(mCallback.getContext());
-                        String postKey = getRef(position).getKey();
-                        databaseHelper.getSelectedActivityInfo(postKey);
-                        TrainerActivityRegistration.setSelectedActivityPostKey(postKey);
+
+                        try {
+                            databaseHelper = new DataBaseHelperA(mCallback.getContext());
+                            String postKey = getRef(position).getKey();
+                            databaseHelper.getSelectedActivityInfo(postKey);
+                            TrainerActivityRegistration.setSelectedActivityPostKey(postKey);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
                     }
                 });
             }
