@@ -156,9 +156,15 @@ public class Team extends Fragment {
                     @Override
                     public void onClick(final View v) {
                         try {
-                            int clickedPosition = listOfViews.indexOf(v);
-                            final String clickedPlayerId = listOfAllUsersId.get(clickedPosition);
-                            selectedUserIdInTeam = clickedPlayerId;
+                            final String clickedPlayerId;
+                            try {
+                                int clickedPosition = listOfViews.indexOf(v);
+                                clickedPlayerId = listOfAllUsersId.get(clickedPosition);
+                                selectedUserIdInTeam = clickedPlayerId;
+                            } catch (NullPointerException npee) {
+                                Log.i("NPE!","Team not fully loaded yet!");
+                                return;
+                            }
 
                             if (isForCheckAbsence && !listOfClicked.contains(v) && !listOfPlayersAlreadMarkedAsAbsent.contains(clickedPlayerId)) {
                                 viewHolder.getAbsenceIndicatorImageView().setImageResource(R.drawable.x);
@@ -177,8 +183,9 @@ public class Team extends Fragment {
                                 //derfor bruker vi egne maate aa finne posisjon av view paa!
                                 dbhc.getProfileViewDataForUser(clickedPlayerId);
                             }
-                        } catch (Exception e) {
-                            e.printStackTrace();
+                        } catch (NullPointerException npe) {
+                            Log.i("NPE!","Team not fully loaded yet!");
+                            return;
                         }
                     }
                 });
