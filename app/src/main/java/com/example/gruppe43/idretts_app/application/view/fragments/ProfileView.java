@@ -10,10 +10,13 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.gruppe43.idretts_app.R;
+import com.example.gruppe43.idretts_app.application.controll.DatabaseHelperC;
 import com.example.gruppe43.idretts_app.application.helper_classes.EditProfileDialog;
 import com.example.gruppe43.idretts_app.application.interfaces.FragmentActivityInterface;
 import com.example.gruppe43.idretts_app.application.view.main.MainActivity;
@@ -28,6 +31,9 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.squareup.picasso.Callback;
+import com.squareup.picasso.NetworkPolicy;
+import com.squareup.picasso.Picasso;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
@@ -43,14 +49,14 @@ public class ProfileView extends Fragment {
     public static ImageView profImageIV;//profile image
 
     private TextView profileNameTv;
-    private TextView textView3PlayerNr;
+    public static TextView textView3PlayerNr;
     private TextView textView11PlayerAge;
-    private TextView textView8Status;
+    public static TextView textView8Status;
 
     private ImageView imageButtonEditProfile;//use as button
 
     private TextView dateRegisteredDate;
-    private TextView playerTypeText;
+    public static TextView playerTypeText;
     private TextView numberOfminutePlayedText;
     private TextView numberOfRedCardText;
     private TextView numberOfGreenCardText;
@@ -65,18 +71,14 @@ public class ProfileView extends Fragment {
     private TextView nAccidents;
     private TextView nTotalAttended;
 
+    private Button profileViewSaveChange;
+
 
     private static ArrayList<String> selectedUserIfoData;
     private String selectedUserIdInTeam;
 
-     public static final int GALLERY_REQUEST = 1;
-    public static final int MAX_LENGTH = 50;
-    public static Uri mImageUri;
-
-
-    /*private final int GALLERY_REQUEST = 1;
-    private final int MAX_LENGTH = 50;
-    private  Uri mImageUri;*/
+    public static final int GALLERY_REQUEST = 1;
+    public static Uri imageUri;
 
 
     public void setSelectedUserIfoData(ArrayList<String> selectedUserIfoData) {
@@ -123,7 +125,7 @@ public class ProfileView extends Fragment {
 
         personalActivityActivitiesText = (TextView) view.findViewById(R.id.personalActivityActivitiesText);
 
-        nAbsFb =  (TextView) view.findViewById(R.id.nAbsFb);
+        nAbsFb = (TextView) view.findViewById(R.id.nAbsFb);
         nGym = (TextView) view.findViewById(R.id.nGym);
         nAbsTheor = (TextView) view.findViewById(R.id.nAbsTheor);
         nAbsCamp = (TextView) view.findViewById(R.id.nAbsCamp);
@@ -131,19 +133,35 @@ public class ProfileView extends Fragment {
         nAccidents = (TextView) view.findViewById(R.id.nAccidents);
         nTotalAttended = (TextView) view.findViewById(R.id.nTotalAttended);
 
+        profileViewSaveChange = (Button) view.findViewById(R.id.profileViewSaveChange);
+
+        profileViewSaveChange.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String statuss = textView8Status.getText().toString().trim();
+                String playerNr = textView3PlayerNr.getText().toString().trim();
+                String playerType = playerTypeText.getText().toString().trim();
+                if (statuss.equals("") && playerNr.equals("") && playerType.equals("")) {
+                    Toast.makeText(mCallback.getContext(), R.string.nocahngesTosaveProfileEdit, Toast.LENGTH_SHORT).show();
+                } else {
+                    DatabaseHelperC dbhc = new DatabaseHelperC(mCallback.getContext());
+                    dbhc.updateProfileEdit(statuss, playerNr, playerType);
+                }
+            }
+        });
+
         FirebaseAuth fbAuth = FirebaseAuth.getInstance();
         String currentUserId = fbAuth.getCurrentUser().getUid();
 
-        if(!Team.selectedUserIdInTeam.equals(currentUserId)){
+        if (!Team.selectedUserIdInTeam.equals(currentUserId)) {
             imageButtonEditProfile.setVisibility(view.GONE);
-        }else{
+        } else {
             profImageIV.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
                     Intent galleryIntent = new Intent(Intent.ACTION_GET_CONTENT);
                     galleryIntent.setType("image/*");
-                 mCallback.getContext().startActivityForResult(galleryIntent, ProfileView.GALLERY_REQUEST);
+                    mCallback.getContext().startActivityForResult(galleryIntent, ProfileView.GALLERY_REQUEST);
                 }
             });
 
@@ -152,12 +170,12 @@ public class ProfileView extends Fragment {
                 public void onClick(View v) {
                     EditProfileDialog epd = new EditProfileDialog();
                     epd.setCtx(mCallback.getContext());
-                    epd.show(mCallback.getContext().getFragmentManager(),"");
+                    epd.show(mCallback.getContext().getFragmentManager(), "");
                 }
             });
         }
 
-        if(selectedUserIfoData != null){
+        if (selectedUserIfoData != null) {
             try {
                 profileNameTv.setText(selectedUserIfoData.get(0));
                 textView3PlayerNr.setText(selectedUserIfoData.get(1));
@@ -181,6 +199,26 @@ public class ProfileView extends Fragment {
 
                 nAccidents.setText(selectedUserIfoData.get(16));
                 nTotalAttended.setText(selectedUserIfoData.get(17));
+
+                final String profileImage = selectedUserIfoData.get(18);
+                Picasso.with(mCallback.getContext())
+                        .load(profileImage)
+                        .networkPolicy(NetworkPolicy.OFFLINE)
+                        .into(profImageIV, new Callback() {
+                            @Override
+                            public void onSuccess() {
+                                //picture exist in cache
+                            }
+
+                            @Override
+                            public void onError() {
+                                Picasso.with(mCallback.getContext())
+                                        .load(profileImage)
+                                        .error(R.drawable.pph_s)
+                                        .into(profImageIV);
+                            }
+                        });
+
 
             } catch (Exception e) {
                 e.printStackTrace();

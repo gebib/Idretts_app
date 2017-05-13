@@ -23,6 +23,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Toast;
 
 import com.example.gruppe43.idretts_app.R;
 import com.example.gruppe43.idretts_app.application.controll.DataBaseHelperA;
@@ -65,7 +66,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private static MainActivity mainContext;
 
 
-
     public MainActivity() {
         //init only if persistant not set already
         if (FirebaseApp.getApps(this).isEmpty()) {
@@ -91,6 +91,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public void setIsOnNewActivityRegisterPage(boolean onActivityRegisterPage) {
         onNewActivityRegisterPage = onActivityRegisterPage;
     }
+
     public static MainActivity getMainContext() {
         return mainContext;
     }
@@ -388,27 +389,22 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
 
-     @Override//imageCroper..
+    @Override//imageCroper..A
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == ProfileView.GALLERY_REQUEST && resultCode == RESULT_OK && data != null) {
             Uri imageUri = data.getData();
 
-            CropImage.activity(imageUri)
-                    .setGuidelines(CropImageView.Guidelines.ON)
-                    .setAspectRatio(1,1)
-                    .setRequestedSize(150,150)
-                    .start(this);
+            CropImage.activity(imageUri).setGuidelines(CropImageView.Guidelines.ON).setAspectRatio(1, 1).start(this);
         }
 
         if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
             CropImage.ActivityResult result = CropImage.getActivityResult(data);
             if (resultCode == RESULT_OK) {
-               ProfileView.mImageUri = result.getUri();
-                ProfileView.profImageIV.setImageURI(ProfileView.mImageUri);
+                ProfileView.imageUri = result.getUri();
+                ProfileView.profImageIV.setImageURI(ProfileView.imageUri);
             } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
                 Exception error = result.getError();
-                System.out.println("///////////////////////"+error);
             }
         }
     }

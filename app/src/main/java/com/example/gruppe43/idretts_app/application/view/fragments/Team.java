@@ -30,6 +30,9 @@ import com.example.gruppe43.idretts_app.application.model.UsersModel;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.squareup.picasso.Callback;
+import com.squareup.picasso.NetworkPolicy;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -55,8 +58,6 @@ public class Team extends Fragment {
     private ArrayList<View> listOfViews;//temp
 
     int countIndex = 0;
-
-
 
 
     public static ArrayList<String> getListOfAllUsersId() {
@@ -140,15 +141,14 @@ public class Team extends Fragment {
                         countIndex++;
                         if (listOfPlayersAlreadMarkedAsAbsent.contains(currentPositionPlayerId)) {
                             viewHolder.getAbsenceIndicatorImageView().setImageResource(R.drawable.x);
-                            viewHolder.getView().setBackgroundColor(Color.rgb(176, 11, 11));
                         } else {
-                            viewHolder.getView().setBackgroundColor(Color.rgb(0, 163, 0));
                             viewHolder.getAbsenceIndicatorImageView().setImageResource(R.drawable.check_black);
                         }
                     }
                     viewHolder.setProfileImage(mCallback.getContext(), model.getImage());
                     String nameAndDate = model.getFirstName() + " " + model.getLastName();
                     viewHolder.setUserNameLastName(nameAndDate);
+                    viewHolder.setProfileImage(mCallback.getContext(), model.getImage());
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -161,13 +161,11 @@ public class Team extends Fragment {
                             selectedUserIdInTeam = clickedPlayerId;
 
                             if (isForCheckAbsence && !listOfClicked.contains(v) && !listOfPlayersAlreadMarkedAsAbsent.contains(clickedPlayerId)) {
-                                v.setBackgroundColor(Color.rgb(176, 11, 11));
                                 viewHolder.getAbsenceIndicatorImageView().setImageResource(R.drawable.x);
                                 listOfClicked.add(v);
                                 listOfTobeAddedToAbsent.add(clickedPlayerId);//userIds
 
                             } else if (isForCheckAbsence && listOfClicked.contains(v)) {
-                                v.setBackgroundColor(Color.rgb(0, 163, 0));
                                 viewHolder.getAbsenceIndicatorImageView().setImageResource(R.drawable.check_black);
                                 listOfClicked.remove(v);
                                 listOfTobeAddedToAbsent.remove(clickedPlayerId);//userIds
@@ -179,7 +177,8 @@ public class Team extends Fragment {
                                 //derfor bruker vi egne maate aa finne posisjon av view paa!
                                 dbhc.getProfileViewDataForUser(clickedPlayerId);
                             }
-                        }catch (Exception e){
+                        } catch (Exception e) {
+                            e.printStackTrace();
                         }
                     }
                 });
@@ -191,7 +190,7 @@ public class Team extends Fragment {
         return view;
     }
 
-    public static class TeamViewHolder extends RecyclerView.ViewHolder {
+    private static class TeamViewHolder extends RecyclerView.ViewHolder {
         View mView;
         ImageView profileImage;
         TextView userNameLastName;
@@ -203,7 +202,7 @@ public class Team extends Fragment {
             absenceIndicatorIV = (ImageView) mView.findViewById(R.id.indicateBoxAbsence);
         }
 
-        public ImageView getAbsenceIndicatorImageView() {
+        private ImageView getAbsenceIndicatorImageView() {
             return absenceIndicatorIV;
         }
 
@@ -211,13 +210,30 @@ public class Team extends Fragment {
             return mView;
         }
 
-        public void setProfileImage(Context ctx, String image) {
+        private void setProfileImage(final Context ctx, final String image) {
             profileImage = (ImageView) mView.findViewById(R.id.userImageIV);
-            // Picasso.with(ctx).load(image).into(profileImage); TODO
-            profileImage.setImageResource(R.drawable.pph_s);//TEMP
+            Picasso.with(ctx)
+                    .load(image)
+                    .networkPolicy(NetworkPolicy.OFFLINE)
+                    .into(profileImage, new Callback() {
+                        @Override
+                        public void onSuccess() {
+                            //picture exist in cache
+                        }
+
+                        @Override
+                        public void onError() {
+                            Picasso.with(ctx)
+                                    .load(image)
+                                    .error(R.drawable.pph_s)//default profile place holder
+                                    .into(profileImage);
+                        }
+                    });
+
+
         }
 
-        public void setUserNameLastName(String firstLastName) {
+        private void setUserNameLastName(String firstLastName) {
             userNameLastName = (TextView) mView.findViewById(R.id.userFirstAndLastName);
             userNameLastName.setText(firstLastName);
         }

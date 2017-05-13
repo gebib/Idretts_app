@@ -46,7 +46,7 @@
                 android:background="@drawable/round_corners"
                 android:gravity="center"
                 android:inputType="numberDecimal"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="10dp"
                 android:layout_height="wrap_content"
                 android:hint="My player Nr:"
                 android:textColorHint="#b1b1b1"
@@ -62,7 +62,7 @@
                 android:gravity="center"
                 android:inputType="text"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="10dp"
                 android:hint="@string/player_type"
                 android:textColorHint="#b1b1b1"
                 android:layout_below="@+id/myPlayerNr"
@@ -71,14 +71,13 @@
 
             <Button
                 android:id="@+id/profileEditBtn"
-                android:layout_width="wrap_content"
+                android:layout_width="50dp"
+                android:layout_marginTop="10dp"
                 android:layout_height="wrap_content"
-                android:textColor="#ffffff"
-                android:layout_marginTop="19dp"
-                android:text="Save"
-                android:layout_below="@+id/myPlayerType"
-                android:layout_alignStart="@+id/myPlayerType"
-                android:layout_alignEnd="@+id/myPlayerNr" />
+                android:textColor="#fff"
+                android:text="ok"
+                 android:layout_below="@+id/myPlayerType"
+                android:layout_centerHorizontal="true" />
 
 
         </RelativeLayout>

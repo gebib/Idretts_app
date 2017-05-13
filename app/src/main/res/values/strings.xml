@@ -108,6 +108,10 @@
     <string name="statusUpdated">Status updated.</string>
     <string name="player_type">Player type:</string>
     <string name="nocahngesTosaveProfileEdit">No changes to save.</string>
+    <string name="profileImageSavedToast">Saved!</string>
+    <string name="save_change">Save all</string>
+    <string name="status">Status:</string>
+    <string name="profileImageSaved">Profile image saved!</string>
 
 
 </resources>

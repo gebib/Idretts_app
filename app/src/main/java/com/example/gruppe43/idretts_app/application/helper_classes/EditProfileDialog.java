@@ -10,11 +10,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.gruppe43.idretts_app.R;
 import com.example.gruppe43.idretts_app.application.controll.DatabaseHelperC;
 import com.example.gruppe43.idretts_app.application.interfaces.FragmentActivityInterface;
+import com.example.gruppe43.idretts_app.application.view.fragments.ProfileView;
 import com.example.gruppe43.idretts_app.application.view.main.MainActivity;
 
 /**
@@ -25,13 +27,19 @@ public class EditProfileDialog extends DialogFragment {
     private EditText myStatus;
     private EditText myPlayerNr;
     private EditText myPlayerType;
-    public static  MainActivity ctx;
+    public static MainActivity ctx;
+
+    private TextView textView3PlayerNr;
+    private TextView textView8Status;
+    private TextView playerTypeText;
+
 
     private Button profileEditBtn;
 
     public void setCtx(MainActivity ctx) {
         this.ctx = ctx;
     }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
@@ -43,6 +51,12 @@ public class EditProfileDialog extends DialogFragment {
         myPlayerType = (EditText) view.findViewById(R.id.myPlayerType);
 
         profileEditBtn = (Button) view.findViewById(R.id.profileEditBtn);
+
+        textView3PlayerNr = ProfileView.textView3PlayerNr;
+        textView8Status =  ProfileView.textView8Status;
+        playerTypeText =  ProfileView.playerTypeText;
+
+
         profileEditBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -50,13 +64,17 @@ public class EditProfileDialog extends DialogFragment {
                     String statuss = myStatus.getText().toString().trim();
                     String playerNr = myPlayerNr.getText().toString().trim();
                     String playerType = myPlayerType.getText().toString().trim();
-                    if (statuss.equals("") && playerNr.equals("") && playerType.equals("")) {
-                        Toast.makeText(ctx, R.string.nocahngesTosaveProfileEdit, Toast.LENGTH_SHORT).show();
-                    } else {
-                        getDialog().dismiss();
-                        DatabaseHelperC dbhc = new DatabaseHelperC(ctx);
-                        dbhc.updateProfileEdit(statuss, playerNr, playerType);
+
+                    if(!statuss.equals("")){
+                        textView8Status.setText(statuss);
                     }
+                    if(!playerNr.equals("")){
+                        textView3PlayerNr.setText(playerNr);
+                    }
+                    if(!playerType.equals("")){
+                        playerTypeText.setText(playerType);
+                    }
+                    getDialog().dismiss();
                 } catch (Resources.NotFoundException e) {
                     e.printStackTrace();
                 }
