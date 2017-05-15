@@ -1,8 +1,7 @@
 package com.example.gruppe43.idretts_app.application.model;
 
-/**
- * Created by gebi9 on 31-Mar-17.
- */
+//Idretts-app bachelor oppgave 2017
+//Ole-Kristian Steiro, Tasmia Faruque, Gebi Beshir
 
 public class TrainerPostsModel {
     private String activityDate;

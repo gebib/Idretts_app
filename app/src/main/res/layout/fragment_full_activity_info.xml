@@ -199,27 +199,28 @@
             android:id="@+id/infoTextRlayout"
             android:layout_width="match_parent"
             android:layout_height="250dp"
-            android:padding="5dp"
             android:layout_alignStart="@+id/thirdRelativeLayout"
             android:layout_below="@+id/activityDetailsBar"
-            android:background="@color/defused_blue">
+            android:background="@color/defused_blue"
+            android:padding="5dp">
 
             <android.support.v4.widget.NestedScrollView
                 android:layout_width="match_parent"
-                android:scrollbarAlwaysDrawVerticalTrack="true"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:scrollbarAlwaysDrawVerticalTrack="true">
+
                 <LinearLayout
 
-                    android:orientation="vertical"
-                    android:scrollbars="vertical"
-                    android:scrollbarAlwaysDrawVerticalTrack="true"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:scrollbarAlwaysDrawVerticalTrack="true"
+                    android:scrollbars="vertical">
+
                     <TextView
                         android:id="@+id/activityTextInfoTV"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:text="@string/tempLorem" />
+                        android:layout_height="match_parent" />
 
                 </LinearLayout>
             </android.support.v4.widget.NestedScrollView>
@@ -244,22 +245,22 @@
                 android:id="@+id/showFullActivityInfoEditButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingRight="5dp"
-                android:textColor="#ffffff"
-                android:text="@string/showFullActivitiInfoEditBtn"
-
-                android:layout_below="@+id/absenceControllButton"
+                android:layout_alignParentEnd="true"
                 android:layout_alignParentStart="true"
-                android:layout_alignParentEnd="true" />
+                android:layout_below="@+id/absenceControllButton"
+
+                android:paddingRight="5dp"
+                android:text="@string/showFullActivitiInfoEditBtn"
+                android:textColor="#ffffff" />
 
             <Button
                 android:id="@+id/addRemoveCampRecords"
                 android:layout_width="match_parent"
-                android:text="add camp records"
-                android:textColor="#ffffff"
                 android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
                 android:layout_below="@+id/showFullActivityInfoEditButton"
-                android:layout_alignParentStart="true" />
+                android:text="add camp records"
+                android:textColor="#ffffff" />
 
 
         </RelativeLayout>

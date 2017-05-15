@@ -29,9 +29,8 @@ import com.google.firebase.storage.UploadTask;
 import java.util.ArrayList;
 import java.util.Random;
 
-/**
- * Created by gebi9 on 08-May-17.
- */
+//Idretts-app bachelor oppgave 2017
+//Ole-Kristian Steiro, Tasmia Faruque, Gebi Beshir
 
 public class DatabaseHelperC extends DataBaseHelperB {
     private boolean absenceIteratedOnce;
@@ -362,5 +361,9 @@ public class DatabaseHelperC extends DataBaseHelperB {
 
 
         }
+    }
+
+    public void cleanUpChat() {
+        //TODO
     }
 }

@@ -1,5 +1,6 @@
 package com.example.gruppe43.idretts_app.application.view.fragments;
-
+//Idretts-app bachelor oppgave 2017
+//Ole-Kristian Steiro, Tasmia Faruque, Gebi Beshir
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.Context;

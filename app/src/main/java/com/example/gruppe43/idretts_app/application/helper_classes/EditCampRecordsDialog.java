@@ -21,9 +21,8 @@ import com.example.gruppe43.idretts_app.application.interfaces.FragmentActivityI
 
 import java.util.ArrayList;
 
-/**
- * Created by gebi9 on 06-May-17.
- */
+//Idretts-app bachelor oppgave 2017
+//Ole-Kristian Steiro, Tasmia Faruque, Gebi Beshir
 
 public class EditCampRecordsDialog extends DialogFragment {
     private FragmentActivityInterface mCallback;

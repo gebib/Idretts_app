@@ -28,6 +28,8 @@ import com.example.gruppe43.idretts_app.application.helper_classes.DatePickerFra
 import com.example.gruppe43.idretts_app.application.helper_classes.TimePickerFragment;
 import com.example.gruppe43.idretts_app.application.interfaces.FragmentActivityInterface;
 
+//Idretts-app bachelor oppgave 2017
+//Ole-Kristian Steiro, Tasmia Faruque, Gebi Beshir
 
 public class TrainerActivityRegistration extends Fragment {
     private Spinner newActSpinnerActivityType;

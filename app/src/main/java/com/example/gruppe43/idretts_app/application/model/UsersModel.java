@@ -1,8 +1,7 @@
 package com.example.gruppe43.idretts_app.application.model;
 
-/**
- * Created by gebi9 on 05-May-17.
- */
+//Idretts-app bachelor oppgave 2017
+//Ole-Kristian Steiro, Tasmia Faruque, Gebi Beshir
 
 public class UsersModel {
     //cmmon

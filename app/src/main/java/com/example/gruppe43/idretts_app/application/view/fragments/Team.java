@@ -33,6 +33,8 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
+//Idretts-app bachelor oppgave 2017
+//Ole-Kristian Steiro, Tasmia Faruque, Gebi Beshir
 
 public class Team extends Fragment {
 

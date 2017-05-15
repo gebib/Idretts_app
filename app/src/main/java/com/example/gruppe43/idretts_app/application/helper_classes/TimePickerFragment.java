@@ -11,9 +11,8 @@ import android.widget.TimePicker;
 
 import java.util.Calendar;
 
-/**
- * Created by gebi9 on 27-Apr-17.
- */
+//Idretts-app bachelor oppgave 2017
+//Ole-Kristian Steiro, Tasmia Faruque, Gebi Beshir
 
 public class TimePickerFragment extends DialogFragment{
     TimePickerDialog.OnTimeSetListener onTimeSet;

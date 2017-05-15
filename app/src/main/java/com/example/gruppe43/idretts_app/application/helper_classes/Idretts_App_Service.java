@@ -19,6 +19,9 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+//Idretts-app bachelor oppgave 2017
+//Ole-Kristian Steiro, Tasmia Faruque, Gebi Beshir
+
 public class Idretts_App_Service extends Service {
    public static boolean serviceRunning = true;
     static int NOTIFICATION_ID = 1;
@@ -95,12 +98,4 @@ public class Idretts_App_Service extends Service {
         mNotificationManager.notify(NOTIFICATION_ID, mBuilder.build());
 
     }
-
-    //check for new message on ONLY A SESTION THIS USER IS INVOLVED IN and push notify.
-    public void checkNewChatSestion(){
-        FirebaseAuth fbAuth = FirebaseAuth.getInstance();
-        String currentUserId = fbAuth.getCurrentUser().getUid();
-        DatabaseReference trainerPosts = FirebaseDatabase.getInstance().getReference().child("Chat");
-    }
-
 }

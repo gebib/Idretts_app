@@ -31,21 +31,7 @@
         </menu>
     </item>
     <!-- alt nedenfor: DETTE SLETTER VI men hjelper oss under utvikling for å navigere!!-->
-    <item android:title="Options">
-        <menu>
-        <item
-            android:id="@+id/registrationRequests"
-            android:icon="@drawable/reg_requests"
-            android:title="@string/regiistration_requests" />
-        <item
-            android:id="@+id/savePlayersData"
-            android:icon="@drawable/save_from_cloud"
-            android:title="@string/save_players_data" />
-        <item
-            android:id="@+id/resetApp"
-            android:icon="@drawable/reset_app"
-            android:title="@string/reset_all_data_to_default_state" />
-        </menu>
+    <item android:title="">
     </item>
     <!-- /////////////////////////////////////////////////////////////////////////////////-->
 

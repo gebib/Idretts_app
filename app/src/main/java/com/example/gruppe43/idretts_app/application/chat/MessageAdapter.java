@@ -16,6 +16,8 @@ import com.firebase.ui.database.FirebaseListAdapter;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 
+//Idretts-app bachelor oppgave 2017
+//Ole-Kristian Steiro, Tasmia Faruque, Gebi Beshir
 public class MessageAdapter extends FirebaseListAdapter<ChatModel> {
 
     private MainActivity activity;

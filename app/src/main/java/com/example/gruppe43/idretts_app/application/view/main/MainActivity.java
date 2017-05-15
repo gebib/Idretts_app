@@ -1,5 +1,6 @@
 package com.example.gruppe43.idretts_app.application.view.main;
-
+//Idretts-app bachelor oppgave 2017
+//Ole-Kristian Steiro, Tasmia Faruque, Gebi Beshir
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
@@ -48,6 +49,9 @@ import com.theartofdev.edmodo.cropper.CropImageView;
 
 import static com.example.gruppe43.idretts_app.application.view.fragments.PlayerActivityRegistration.par;
 import static com.example.gruppe43.idretts_app.application.view.fragments.TrainerActivityRegistration.nar;
+
+//Idretts-app bachelor oppgave 2017
+//Ole-Kristian Steiro, Tasmia Faruque, Gebi Beshir
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, FragmentActivityInterface {
     private DrawerLayout mDrawerLayout;
@@ -155,6 +159,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             isPlayerSignedIn = false;
             isTrainerSignedIn = true;
             actionBar.show();
+
+
         }
 
         if (isTrainerSignedIn != null || isPlayerSignedIn != null) {//isOnSignedInState
@@ -165,6 +171,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
         DatabaseHelperC dbhc = new DatabaseHelperC(this);
         dbhc.initiateDataInRecyclerViewForTeam();
+
+        DataBaseHelperB dbhb = new DataBaseHelperB(this);
+        dbhb.checkOutdatedTrainerPosts();
+
+        dbhb.checkOutdatedPlayerPosts();
     }
 
     @Override
@@ -270,21 +281,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             FragmentTransaction xfragmentTransaction = mFragmentManager.beginTransaction();
             xfragmentTransaction.addToBackStack("");
             xfragmentTransaction.replace(R.id.containerView, new Team()).commit();
-        } else if (menuItem.getItemId() == R.id.registrationRequests) {
-            DataBaseHelperB dbhb = new DataBaseHelperB(this);
-            dbhb.checkOutdatedTrainerPosts();
-            //TODO
-        } else if (menuItem.getItemId() == R.id.savePlayersData) {
-//TODO
-        } else if (menuItem.getItemId() == R.id.resetApp) {
-//TODO
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return false;//returning true keeps the item selected, selected.
     }
-    /*////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
 
     @Override
     public void onAttachFragment(Fragment fragment) {

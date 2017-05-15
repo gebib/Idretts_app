@@ -8,9 +8,8 @@ import android.os.Bundle;
 
 import java.util.Calendar;
 
-/**
- * Created by gebi9 on 18-Apr-17.
- */
+//Idretts-app bachelor oppgave 2017
+//Ole-Kristian Steiro, Tasmia Faruque, Gebi Beshir
 
 public class DatePickerFragment extends DialogFragment {
     DatePickerDialog.OnDateSetListener ondateSet;

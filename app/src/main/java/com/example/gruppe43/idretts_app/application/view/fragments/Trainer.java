@@ -21,6 +21,8 @@ import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+//Idretts-app bachelor oppgave 2017
+//Ole-Kristian Steiro, Tasmia Faruque, Gebi Beshir
 public class Trainer extends Fragment {
     private RecyclerView recyclerViewTrainerRV;
     private DatabaseReference fbDbRef;

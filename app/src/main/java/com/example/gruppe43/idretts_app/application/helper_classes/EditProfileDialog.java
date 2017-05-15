@@ -15,9 +15,8 @@ import com.example.gruppe43.idretts_app.R;
 import com.example.gruppe43.idretts_app.application.view.fragments.ProfileView;
 import com.example.gruppe43.idretts_app.application.view.main.MainActivity;
 
-/**
- * Created by gebi9 on 12-May-17.
- */
+//Idretts-app bachelor oppgave 2017
+//Ole-Kristian Steiro, Tasmia Faruque, Gebi Beshir
 
 public class EditProfileDialog extends DialogFragment {
     private EditText myStatus;

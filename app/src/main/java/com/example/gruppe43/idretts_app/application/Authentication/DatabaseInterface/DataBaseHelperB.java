@@ -12,6 +12,7 @@ import com.example.gruppe43.idretts_app.application.model.PlayerPostsModel;
 import com.example.gruppe43.idretts_app.application.model.TrainerPostsModel;
 import com.example.gruppe43.idretts_app.application.model.UsersModel;
 import com.example.gruppe43.idretts_app.application.view.main.MainActivity;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseException;
@@ -21,9 +22,8 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-/**
- * Created by gebi9 on 08-May-17.
- */
+//Idretts-app bachelor oppgave 2017
+//Ole-Kristian Steiro, Tasmia Faruque, Gebi Beshir
 
 public class DataBaseHelperB extends DataBaseHelperA {
     private int nowDate, nowMonth, nowYear, nowHour, nowMinute;
@@ -233,6 +233,14 @@ public class DataBaseHelperB extends DataBaseHelperA {
 
             }
         });
+    }
+
+    //check if removed trainer post has some absent data associated with it
+    public void checkTrainerPostHasAbsenceRecordAssociation(){
+        FirebaseAuth fbAuth = FirebaseAuth.getInstance();
+        String currentUserId = fbAuth.getCurrentUser().getUid();
+        DatabaseReference trainerPosts = FirebaseDatabase.getInstance().getReference().child("Chat");
+
     }
 
     //delete Player posts that has the date later than today

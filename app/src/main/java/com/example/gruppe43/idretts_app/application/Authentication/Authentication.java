@@ -26,6 +26,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+//Idretts-app bachelor oppgave 2017
+//Ole-Kristian Steiro, Tasmia Faruque, Gebi Beshir
+
 public class Authentication {
     protected FirebaseAuth fbAuth;
     protected String nowDate, nowMonth, nowYear, nowHour, nowMinute;

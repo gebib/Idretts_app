@@ -1,9 +1,6 @@
 <resources>
     <string name="app_name">Idretts App</string>
 
-
-    <string name="tempLorem">additional text information here.Activity additional text information here.Activity additional text information here.Activity additional text information here.Activiormation here.Activity additional text information here.Activity additional text information here.Activity additional text information here.Activiormation here.Activity additional text information here.Activity additional text information here.Activity additional text information here.Activiormation here.Activity additional text information here.Activity additional text information here.Activity additional text information here.Activiormation here.Activity additional text information here.Activity additional text information here.Activity additional text information here.Activiormation here.Activity additional text information here.Activity additional text information here.Activity additional text information here.Activiormation here.Activity additional text information here.Activity additional text information here.Activity additional text information here.Activiormation here.Activity additional text information here.Activity additional text information here.Activity additional text information here.Activiormation here.Activity additional text information here.Activity additional text information here.Activity additional text information here.Activiormation here.Activity additional text information here.Activity additional text information here.Activity additional text information here.Activiormation here.Activity additional text information here.Activity additional text information here.Activity additional text information here.Activity additional text information here.</string>
-
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="first_name_reg">First name</string>
@@ -111,6 +108,5 @@
     <string name="typeAmessageToSend">Type a message to send!</string>
     <string name="coachNotif">Coach Activity</string>
     <string name="coackckak">Coach has posted new activity!</string>
-
 
 </resources>
