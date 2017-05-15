@@ -25,7 +25,7 @@ public class DatePickerFragment extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         final Calendar calendar = Calendar.getInstance();
         int nowYear = calendar.get(Calendar.YEAR);
-        int nowMonth = calendar.get(Calendar.MONTH)+1;
+        int nowMonth = calendar.get(Calendar.MONTH);
         int nowDate = calendar.get(Calendar.DATE);
         return new DatePickerDialog(getActivity(), ondateSet, nowYear, nowMonth, nowDate);
     }
