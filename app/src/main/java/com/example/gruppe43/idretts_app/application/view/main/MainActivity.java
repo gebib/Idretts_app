@@ -230,16 +230,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.toolbar_home) {
-
-            /*FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
+             FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
             mFragmentManager.popBackStack();
-            fragmentTransaction.replace(R.id.containerView, new Tabs()).commit();*/
+            fragmentTransaction.replace(R.id.containerView, new Tabs()).commit();
             return true;
         }
         if (id == R.id.toolbar_messages) {
-
-           /* DataBaseHelperA dbh = new DataBaseHelperA(this);
-            dbh.retrieveAllPlayersNameAndId("chat");*/
+             DataBaseHelperA dbh = new DataBaseHelperA(this);
+            dbh.retrieveAllPlayersNameAndId("chat");
         }
         return super.onOptionsItemSelected(item);
     }
