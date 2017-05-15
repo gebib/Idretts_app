@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,32 +15,16 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.gruppe43.idretts_app.R;
-import com.example.gruppe43.idretts_app.application.controll.DatabaseHelperC;
+import com.example.gruppe43.idretts_app.application.Authentication.DatabaseInterface.DatabaseHelperC;
 import com.example.gruppe43.idretts_app.application.helper_classes.EditProfileDialog;
 import com.example.gruppe43.idretts_app.application.interfaces.FragmentActivityInterface;
-import com.example.gruppe43.idretts_app.application.view.main.MainActivity;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
-import com.theartofdev.edmodo.cropper.CropImage;
-import com.theartofdev.edmodo.cropper.CropImageView;
 
 
 import java.util.ArrayList;
-import java.util.Random;
-
-import static android.app.Activity.RESULT_OK;
 
 public class ProfileView extends Fragment {
     private FragmentActivityInterface mCallback;
@@ -155,6 +138,7 @@ public class ProfileView extends Fragment {
 
         if (!Team.selectedUserIdInTeam.equals(currentUserId)) {
             imageButtonEditProfile.setVisibility(view.GONE);
+            profileViewSaveChange.setVisibility(view.GONE);
         } else {
             profImageIV.setOnClickListener(new View.OnClickListener() {
                 @Override

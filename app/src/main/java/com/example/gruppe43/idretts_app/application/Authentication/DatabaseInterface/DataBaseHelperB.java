@@ -1,9 +1,8 @@
-package com.example.gruppe43.idretts_app.application.controll;
+package com.example.gruppe43.idretts_app.application.Authentication.DatabaseInterface;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
-import android.support.v4.app.FragmentTransaction;
 import android.text.format.Time;
 import android.util.Log;
 import android.widget.Toast;
@@ -12,10 +11,6 @@ import com.example.gruppe43.idretts_app.R;
 import com.example.gruppe43.idretts_app.application.model.PlayerPostsModel;
 import com.example.gruppe43.idretts_app.application.model.TrainerPostsModel;
 import com.example.gruppe43.idretts_app.application.model.UsersModel;
-import com.example.gruppe43.idretts_app.application.view.fragments.FullActivityInfo;
-import com.example.gruppe43.idretts_app.application.view.fragments.ProfileView;
-import com.example.gruppe43.idretts_app.application.view.fragments.Tabs;
-import com.example.gruppe43.idretts_app.application.view.fragments.Team;
 import com.example.gruppe43.idretts_app.application.view.main.MainActivity;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;

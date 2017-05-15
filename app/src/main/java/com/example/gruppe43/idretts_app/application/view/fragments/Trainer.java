@@ -13,7 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.gruppe43.idretts_app.R;
-import com.example.gruppe43.idretts_app.application.controll.DataBaseHelperA;
+import com.example.gruppe43.idretts_app.application.Authentication.DatabaseInterface.DataBaseHelperA;
 import com.example.gruppe43.idretts_app.application.helper_classes.PrefferencesClass;
 import com.example.gruppe43.idretts_app.application.interfaces.FragmentActivityInterface;
 import com.example.gruppe43.idretts_app.application.model.TrainerPostsModel;
@@ -74,7 +74,7 @@ public class Trainer extends Fragment {
                             databaseHelper.getSelectedActivityInfo(postKey);
                             TrainerActivityRegistration.setSelectedActivityPostKey(postKey);
                         } catch (Exception e) {
-                            e.printStackTrace();
+                           System.out.println("///////// trainer RV cache");
                         }
                     }
                 });
@@ -103,7 +103,7 @@ public class Trainer extends Fragment {
         }
 
         public void setActivityTitleDate(String titleDate) {
-            trainerPostTitleDate = (TextView) mView.findViewById(R.id.listTextTrainer);
+            trainerPostTitleDate = (TextView) mView.findViewById(R.id.chatOpponentName);
             trainerPostTitleDate.setText(titleDate);
         }
 
@@ -129,7 +129,7 @@ public class Trainer extends Fragment {
 
         public void setTrainerActivityIcon(String icon) {
             try {
-                trainerPostIcon = (ImageView) mView.findViewById(R.id.listIconTrainer);
+                trainerPostIcon = (ImageView) mView.findViewById(R.id.chatSestionImage);
                 if (icon.equals("camp")) {
                     trainerPostIcon.setImageResource(R.drawable.cmp);
                 } else if (icon.equals("training_f")) {//football

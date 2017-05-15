@@ -1,27 +1,20 @@
-package com.example.gruppe43.idretts_app.application.controll;
+package com.example.gruppe43.idretts_app.application.Authentication.DatabaseInterface;
 
 import android.app.ProgressDialog;
-import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentTransaction;
-import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Toast;
 
 import com.example.gruppe43.idretts_app.R;
 import com.example.gruppe43.idretts_app.application.model.AbcenceControllModel;
 import com.example.gruppe43.idretts_app.application.model.UsersModel;
-import com.example.gruppe43.idretts_app.application.view.fragments.FullActivityInfo;
 import com.example.gruppe43.idretts_app.application.view.fragments.ProfileView;
 import com.example.gruppe43.idretts_app.application.view.fragments.Team;
 import com.example.gruppe43.idretts_app.application.view.fragments.TrainerActivityRegistration;
 import com.example.gruppe43.idretts_app.application.view.main.MainActivity;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -215,7 +208,7 @@ public class DatabaseHelperC extends DataBaseHelperB {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
-                    if (!getTrainerKey) { /////////////////////////////////////////////////////////////////////////////////////////////////TODO should work!!
+                    if (!getTrainerKey) {
                         getTrainerKey = true;
                         Iterable<DataSnapshot> usersNodes = dataSnapshot.getChildren();
                         for (DataSnapshot user : usersNodes) {

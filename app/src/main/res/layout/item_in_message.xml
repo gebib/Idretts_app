@@ -1,0 +1,40 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bubble_in">
+
+
+        <TextView
+            android:id="@+id/message_user_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Hans-Petter-Olebul"
+            android:textStyle="normal|bold"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentStart="true" />
+
+        <TextView
+            android:id="@+id/message_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Message Text here"
+            android:textColor="@color/jet"
+            android:textSize="15sp"
+            android:layout_below="@+id/message_user_name"
+            android:layout_alignParentStart="true" />
+
+        <TextView
+            android:id="@+id/message_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="01.11.2017 20:00"
+            android:textColor="#7b7b7b"
+            android:textSize="12dp"
+            android:layout_below="@+id/message_text"
+            android:layout_alignParentStart="true" />
+    </RelativeLayout>
+</RelativeLayout>

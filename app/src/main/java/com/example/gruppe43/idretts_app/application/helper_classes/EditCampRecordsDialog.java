@@ -13,9 +13,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.gruppe43.idretts_app.R;
-import com.example.gruppe43.idretts_app.application.controll.DataBaseHelperB;
+import com.example.gruppe43.idretts_app.application.Authentication.DatabaseInterface.DataBaseHelperB;
 import com.example.gruppe43.idretts_app.application.interfaces.FragmentActivityInterface;
 
 import java.util.ArrayList;
@@ -86,63 +87,65 @@ public class EditCampRecordsDialog extends DialogFragment {
         accidents = (EditText) view.findViewById(R.id.accidentTV);
 
 
-
-
-        campRecordDialogAddBtn = (Button) view.findViewById(R.id.profileEditBtn);
+        campRecordDialogAddBtn = (Button) view.findViewById(R.id.allUsersSpinner);
         campRecordDialogAddBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                try{
-                    String sNumMinPlayed = minutesPlayed.getText().toString().trim();
-                    String sNumRedCard = redCards.getText().toString().trim();
-                    String sNumYellowCard = yellowCards.getText().toString().trim();
-                    String sNumGreenCard = greenCards.getText().toString().trim();
-                    String sNumPerfectPasses = perfectPasses.getText().toString().trim();
-                    String sNumScores = scores.getText().toString().trim();
-                    String sNumAccidents = accidents.getText().toString().trim();
+                if (playerId.equals("")) {
+                    Toast.makeText(mCallback.getContext(), R.string.campRecordsSelectUserToast, Toast.LENGTH_SHORT).show();
+                } else {
+                    try {
+                        String sNumMinPlayed = minutesPlayed.getText().toString().trim();
+                        String sNumRedCard = redCards.getText().toString().trim();
+                        String sNumYellowCard = yellowCards.getText().toString().trim();
+                        String sNumGreenCard = greenCards.getText().toString().trim();
+                        String sNumPerfectPasses = perfectPasses.getText().toString().trim();
+                        String sNumScores = scores.getText().toString().trim();
+                        String sNumAccidents = accidents.getText().toString().trim();
 
-                    if(!sNumMinPlayed.equals("")){
-                        numMinutPlayed = Integer.parseInt(sNumMinPlayed);
-                    }else{
-                        numMinutPlayed = 0;
-                    }
-                    if(!sNumRedCard.equals("")){
-                        numRedCard = Integer.parseInt(sNumRedCard);
-                    }else{
-                        numRedCard = 0;
-                    }
-                    if(!sNumYellowCard.equals("")){
-                        numYellowCard = Integer.parseInt(sNumYellowCard);
-                    }else{
-                        numYellowCard = 0;
-                    }
-                    if(!sNumGreenCard.equals("")){
-                        numGreenCard = Integer.parseInt(sNumGreenCard);
-                    }else{
-                        numGreenCard = 0;
-                    }
-                    if(!sNumPerfectPasses.equals("")){
-                        numPerfectPasses = Integer.parseInt(sNumPerfectPasses);
-                    }else{
-                        numPerfectPasses = 0;
-                    }
-                    if(!sNumScores.equals("")){
-                        numScores = Integer.parseInt(sNumScores);
-                    }else{
-                        numScores = 0;
-                    }
-                    if(!sNumAccidents.equals("")){
-                        numAccidents = Integer.parseInt(sNumAccidents);
-                    }else{
-                        numAccidents = 0;
-                    }
+                        if (!sNumMinPlayed.equals("")) {
+                            numMinutPlayed = Integer.parseInt(sNumMinPlayed);
+                        } else {
+                            numMinutPlayed = 0;
+                        }
+                        if (!sNumRedCard.equals("")) {
+                            numRedCard = Integer.parseInt(sNumRedCard);
+                        } else {
+                            numRedCard = 0;
+                        }
+                        if (!sNumYellowCard.equals("")) {
+                            numYellowCard = Integer.parseInt(sNumYellowCard);
+                        } else {
+                            numYellowCard = 0;
+                        }
+                        if (!sNumGreenCard.equals("")) {
+                            numGreenCard = Integer.parseInt(sNumGreenCard);
+                        } else {
+                            numGreenCard = 0;
+                        }
+                        if (!sNumPerfectPasses.equals("")) {
+                            numPerfectPasses = Integer.parseInt(sNumPerfectPasses);
+                        } else {
+                            numPerfectPasses = 0;
+                        }
+                        if (!sNumScores.equals("")) {
+                            numScores = Integer.parseInt(sNumScores);
+                        } else {
+                            numScores = 0;
+                        }
+                        if (!sNumAccidents.equals("")) {
+                            numAccidents = Integer.parseInt(sNumAccidents);
+                        } else {
+                            numAccidents = 0;
+                        }
 
-                }catch (Exception e){
+                    } catch (Exception e) {
 
+                    }
+                    getDialog().dismiss();
+                    DataBaseHelperB dbh = new DataBaseHelperB(mCallback.getContext());
+                    dbh.registerPlayerCampDataRecords(numMinutPlayed, numRedCard, numYellowCard, numGreenCard, numAccidents, numPerfectPasses, numScores, playerId);
                 }
-                 getDialog().dismiss();
-                DataBaseHelperB dbh = new DataBaseHelperB(mCallback.getContext());
-                dbh.registerPlayerCampDataRecords(numMinutPlayed,numRedCard,numYellowCard,numGreenCard,numAccidents,numPerfectPasses,numScores,playerId);
             }
         });
 

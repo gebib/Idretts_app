@@ -1,7 +1,6 @@
 package com.example.gruppe43.idretts_app.application.helper_classes;
 
 import android.app.DialogFragment;
-import android.content.Context;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -11,11 +10,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.gruppe43.idretts_app.R;
-import com.example.gruppe43.idretts_app.application.controll.DatabaseHelperC;
-import com.example.gruppe43.idretts_app.application.interfaces.FragmentActivityInterface;
 import com.example.gruppe43.idretts_app.application.view.fragments.ProfileView;
 import com.example.gruppe43.idretts_app.application.view.main.MainActivity;
 
@@ -50,7 +46,7 @@ public class EditProfileDialog extends DialogFragment {
         myPlayerNr = (EditText) view.findViewById(R.id.myPlayerNr);
         myPlayerType = (EditText) view.findViewById(R.id.myPlayerType);
 
-        profileEditBtn = (Button) view.findViewById(R.id.profileEditBtn);
+        profileEditBtn = (Button) view.findViewById(R.id.allUsersSpinner);
 
         textView3PlayerNr = ProfileView.textView3PlayerNr;
         textView8Status =  ProfileView.textView8Status;

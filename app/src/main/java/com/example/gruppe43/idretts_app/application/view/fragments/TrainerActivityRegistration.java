@@ -23,7 +23,7 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 
 import com.example.gruppe43.idretts_app.R;
-import com.example.gruppe43.idretts_app.application.controll.DataBaseHelperA;
+import com.example.gruppe43.idretts_app.application.Authentication.DatabaseInterface.DataBaseHelperA;
 import com.example.gruppe43.idretts_app.application.helper_classes.DatePickerFragment;
 import com.example.gruppe43.idretts_app.application.helper_classes.TimePickerFragment;
 import com.example.gruppe43.idretts_app.application.interfaces.FragmentActivityInterface;

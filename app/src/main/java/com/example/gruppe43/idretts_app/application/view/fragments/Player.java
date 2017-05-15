@@ -14,13 +14,16 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.gruppe43.idretts_app.R;
-import com.example.gruppe43.idretts_app.application.controll.DataBaseHelperA;
+import com.example.gruppe43.idretts_app.application.Authentication.DatabaseInterface.DataBaseHelperA;
 import com.example.gruppe43.idretts_app.application.helper_classes.PrefferencesClass;
 import com.example.gruppe43.idretts_app.application.interfaces.FragmentActivityInterface;
 import com.example.gruppe43.idretts_app.application.model.PlayerPostsModel;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.squareup.picasso.Callback;
+import com.squareup.picasso.NetworkPolicy;
+import com.squareup.picasso.Picasso;
 
 public class Player extends Fragment {
     private DatabaseReference fbDbRef;
@@ -102,9 +105,9 @@ public class Player extends Fragment {
             mView = itemView;
         }
 
-        public void setProfileImage(Context ctx, String image) {
-            profileImage = (ImageView) mView.findViewById(R.id.profImageIV);
-            // Picasso.with(ctx).load(image).into(profileImage); TODO
+        public void setProfileImage(final Context ctx, final String image) {
+            profileImage = (ImageView) mView.findViewById(R.id.playerPostItem);
+            profileImage.setImageResource(R.drawable.activity);
         }
 
         public void setPlayerPostTitle(String pTitle) {

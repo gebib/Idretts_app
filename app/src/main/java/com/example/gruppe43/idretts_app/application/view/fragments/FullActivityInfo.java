@@ -13,8 +13,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.gruppe43.idretts_app.R;
-import com.example.gruppe43.idretts_app.application.controll.DataBaseHelperA;
-import com.example.gruppe43.idretts_app.application.controll.DatabaseHelperC;
+import com.example.gruppe43.idretts_app.application.Authentication.DatabaseInterface.DataBaseHelperA;
+import com.example.gruppe43.idretts_app.application.Authentication.DatabaseInterface.DatabaseHelperC;
 import com.example.gruppe43.idretts_app.application.helper_classes.PrefferencesClass;
 import com.example.gruppe43.idretts_app.application.interfaces.FragmentActivityInterface;
 
@@ -103,7 +103,7 @@ public class FullActivityInfo extends Fragment {
             @Override
             public void onClick(View v) {
                 DataBaseHelperA dbh = new DataBaseHelperA(mCallback.getContext());
-                dbh.retrieveAllPlayersNameAndId();
+                dbh.retrieveAllPlayersNameAndId("campRecords");
             }
         });
 

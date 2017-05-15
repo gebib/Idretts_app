@@ -13,7 +13,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.gruppe43.idretts_app.R;
-import com.example.gruppe43.idretts_app.application.controll.DatabaseHelperC;
 import com.example.gruppe43.idretts_app.application.interfaces.FragmentActivityInterface;
 
 public class Tabs extends Fragment implements TabLayout.OnTabSelectedListener {

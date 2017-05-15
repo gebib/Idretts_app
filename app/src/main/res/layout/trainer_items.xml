@@ -17,7 +17,7 @@
         android:layout_marginRight="5dip">
 
         <ImageView
-            android:id="@+id/listIconTrainer"
+            android:id="@+id/chatSestionImage"
             android:layout_width="60dip"
             android:layout_height="60dip"/>
 
@@ -25,7 +25,7 @@
 
     <!-- Title Of activity-->
     <TextView
-        android:id="@+id/listTextTrainer"
+        android:id="@+id/chatOpponentName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:maxLines="1"
@@ -45,7 +45,7 @@
         android:id="@+id/detailInfo1Trainer"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/listTextTrainer"
+        android:layout_below="@id/chatOpponentName"
         android:textColor="#343434"
         android:maxLines="1"
         android:scrollHorizontally="true"
@@ -88,7 +88,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
-        android:layout_alignTop="@id/listTextTrainer"
+        android:layout_alignTop="@id/chatOpponentName"
         android:gravity="right"
         android:maxLines="1"
         android:scrollHorizontally="true"

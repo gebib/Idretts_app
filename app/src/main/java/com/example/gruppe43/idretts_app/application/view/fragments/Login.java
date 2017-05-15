@@ -16,7 +16,7 @@ import android.widget.TextView;
 
 
 import com.example.gruppe43.idretts_app.R;
-import com.example.gruppe43.idretts_app.application.controll.Authentication;
+import com.example.gruppe43.idretts_app.application.Authentication.Authentication;
 import com.example.gruppe43.idretts_app.application.interfaces.FragmentActivityInterface;
 
 public class Login extends Fragment implements View.OnClickListener {

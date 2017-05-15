@@ -15,7 +15,7 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.example.gruppe43.idretts_app.R;
-import com.example.gruppe43.idretts_app.application.controll.DataBaseHelperA;
+import com.example.gruppe43.idretts_app.application.Authentication.DatabaseInterface.DataBaseHelperA;
 import com.example.gruppe43.idretts_app.application.helper_classes.PrefferencesClass;
 import com.example.gruppe43.idretts_app.application.interfaces.FragmentActivityInterface;
 

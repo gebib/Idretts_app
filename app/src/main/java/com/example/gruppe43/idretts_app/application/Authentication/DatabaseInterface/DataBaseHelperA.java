@@ -1,4 +1,4 @@
-package com.example.gruppe43.idretts_app.application.controll;
+package com.example.gruppe43.idretts_app.application.Authentication.DatabaseInterface;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
@@ -10,6 +10,8 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.example.gruppe43.idretts_app.R;
+import com.example.gruppe43.idretts_app.application.Authentication.Authentication;
+import com.example.gruppe43.idretts_app.application.chat.Chat;
 import com.example.gruppe43.idretts_app.application.helper_classes.EditCampRecordsDialog;
 import com.example.gruppe43.idretts_app.application.helper_classes.PrefferencesClass;
 import com.example.gruppe43.idretts_app.application.model.UsersModel;
@@ -586,9 +588,11 @@ public class DataBaseHelperA extends Authentication {
     }
 
     //get players names and id for all players
-    public void retrieveAllPlayersNameAndId() {
+    public void retrieveAllPlayersNameAndId(final String whoCalls) {
         final ArrayList<String> playerIds = new ArrayList<>();
         final ArrayList<String> firstNameLastNameArray = new ArrayList<>();
+        firstNameLastNameArray.add("");
+        playerIds.add("");
         final DatabaseReference fbUsersDbRef = FirebaseDatabase.getInstance().getReference().child("Users");
         fbUsersDbRef.addValueEventListener(new ValueEventListener() {////////////////////////////////////////////////////////////////////////////////////////////////
             @Override
@@ -609,10 +613,34 @@ public class DataBaseHelperA extends Authentication {
                             firstNameLastNameArray.add(fn + " " + ln);
                             playerIds.add(userId);
                         }
-                        EditCampRecordsDialog ecr = new EditCampRecordsDialog();
-                        ecr.setPlayerNames(firstNameLastNameArray);
-                        ecr.setPlayerIds(playerIds);
-                        ecr.show(mainActivity.getmFragmentManager(), "ecd");
+
+                        if (whoCalls.equals("campRecords")) {
+                            String currentUserId = fbAuth.getCurrentUser().getUid();
+                            int currentUserIdIndex = playerIds.indexOf(currentUserId);
+                            playerIds.remove(currentUserIdIndex);
+                            firstNameLastNameArray.remove(currentUserIdIndex);
+                                //so that a user cant select themself
+                            EditCampRecordsDialog ecr = new EditCampRecordsDialog();
+                            ecr.setPlayerNames(firstNameLastNameArray);
+                            ecr.setPlayerIds(playerIds);
+                            ecr.show(mainActivity.getmFragmentManager(), "ecd");
+
+                        } else if (whoCalls.equals("chat")) {
+                            //so that a user cant select themself
+                            String currentUserId = fbAuth.getCurrentUser().getUid();
+                            int currentUserIdIndex = playerIds.indexOf(currentUserId);
+                            playerIds.remove(currentUserIdIndex);
+                            firstNameLastNameArray.remove(currentUserIdIndex);
+
+                            Chat chat = new Chat();
+                            chat.setPlayerIdsChat(playerIds);
+                            chat.setPlayerNamesChat(firstNameLastNameArray);
+
+                            FragmentTransaction chatFragment = mainActivity.getmFragmentManager().beginTransaction();
+                            chatFragment.addToBackStack("messages");
+                            chatFragment.replace(R.id.containerView, new Chat()).commit();
+
+                        }
                     }
                 }
             }

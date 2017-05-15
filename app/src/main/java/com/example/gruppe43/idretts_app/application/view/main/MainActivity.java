@@ -23,16 +23,16 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.Toast;
 
 import com.example.gruppe43.idretts_app.R;
-import com.example.gruppe43.idretts_app.application.controll.DataBaseHelperA;
-import com.example.gruppe43.idretts_app.application.controll.DataBaseHelperB;
-import com.example.gruppe43.idretts_app.application.controll.DatabaseHelperC;
+import com.example.gruppe43.idretts_app.application.Authentication.DatabaseInterface.DataBaseHelperA;
+import com.example.gruppe43.idretts_app.application.Authentication.DatabaseInterface.DataBaseHelperB;
+import com.example.gruppe43.idretts_app.application.Authentication.DatabaseInterface.DatabaseHelperC;
+import com.example.gruppe43.idretts_app.application.helper_classes.Idretts_App_Service;
 import com.example.gruppe43.idretts_app.application.helper_classes.PrefferencesClass;
 import com.example.gruppe43.idretts_app.application.interfaces.FragmentActivityInterface;
 import com.example.gruppe43.idretts_app.application.view.fragments.Login;
-import com.example.gruppe43.idretts_app.application.view.fragments.Messages;
+import com.example.gruppe43.idretts_app.application.chat.Chat;
 import com.example.gruppe43.idretts_app.application.view.fragments.PlayerActivityRegistration;
 import com.example.gruppe43.idretts_app.application.view.fragments.TrainerActivityRegistration;
 import com.example.gruppe43.idretts_app.application.view.fragments.Player;
@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private Boolean playerIsShowing;
     private FloatingActionButton fab;
     private Boolean isPlayerSignedIn;
-    private Boolean isTrainerSignedIn;
+    public static Boolean isTrainerSignedIn;
     private Boolean editActivityIsShowing;
     private FirebaseAuth mAuth;
     private boolean onNewActivityRegisterPage;
@@ -112,6 +112,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         //dbhb.runPlayerPostMaintenance();
         fab.hide();
 
+        if(!Idretts_App_Service.serviceRunning){
+            startService(new Intent(getBaseContext(), Idretts_App_Service.class));//background service for nitifications.
+            //stopService(new Intent(getBaseContext(), Idretts_App_Service.class)); for sstoping the service!
+        }
+
         fab.setRippleColor(Color.GREEN);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -165,7 +170,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     protected void onResume() {
         super.onResume();
-        System.out.println("//////////// resume");
+        //System.out.println("//////////// resume");
     }
 
     //navigate to appropriate fragment after registration.
@@ -225,16 +230,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.toolbar_home) {
-            FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
+
+            /*FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
             mFragmentManager.popBackStack();
-            fragmentTransaction.replace(R.id.containerView, new Tabs()).commit();
+            fragmentTransaction.replace(R.id.containerView, new Tabs()).commit();*/
             return true;
         }
         if (id == R.id.toolbar_messages) {
-            FragmentTransaction xfragmentTransaction = mFragmentManager.beginTransaction();
-            xfragmentTransaction.addToBackStack("messages");
-            xfragmentTransaction.replace(R.id.containerView, new Messages()).commit();
-            currentShowingFragment("messaging");
+
+           /* DataBaseHelperA dbh = new DataBaseHelperA(this);
+            dbh.retrieveAllPlayersNameAndId("chat");*/
         }
         return super.onOptionsItemSelected(item);
     }
@@ -245,16 +250,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if (menuItem.getItemId() == R.id.nav_signout) {
             onSignOut();
         } else if (menuItem.getItemId() == R.id.nav_profile) {
-            FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
-            fragmentTransaction.addToBackStack("");//TODO goes to only current logged in and EDIT is enabled
-            fragmentTransaction.replace(R.id.containerView, new ProfileView()).commit();
-            fragmentTransaction.addToBackStack("");
+            FirebaseAuth fbAuth = FirebaseAuth.getInstance();
+            String currentUserId = fbAuth.getCurrentUser().getUid();
+            DatabaseHelperC dbhc = new DatabaseHelperC(this);
+            Team.selectedUserIdInTeam = currentUserId;
+            dbhc.getProfileViewDataForUser(currentUserId);
             currentShowingFragment("");
         } else if (menuItem.getItemId() == R.id.nav_messages) {
-            FragmentTransaction xfragmentTransaction = mFragmentManager.beginTransaction();
-            xfragmentTransaction.addToBackStack("");
-            mFragmentManager.popBackStack();
-            xfragmentTransaction.replace(R.id.containerView, new Messages()).commit();
+            DataBaseHelperA dbh = new DataBaseHelperA(this);
+            dbh.retrieveAllPlayersNameAndId("chat");
         } else if (menuItem.getItemId() == R.id.nav_trainer) {
             FragmentTransaction xfragmentTransaction = mFragmentManager.beginTransaction();
             xfragmentTransaction.addToBackStack("");

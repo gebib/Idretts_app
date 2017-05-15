@@ -70,7 +70,7 @@
                 android:layout_alignParentEnd="true" />
 
             <Button
-                android:id="@+id/profileEditBtn"
+                android:id="@+id/allUsersSpinner"
                 android:layout_width="50dp"
                 android:layout_marginTop="10dp"
                 android:layout_height="wrap_content"

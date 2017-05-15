@@ -154,7 +154,7 @@
                 android:layout_alignTop="@+id/myPlayerType"
                 android:layout_alignEnd="@+id/imageView3" />
             <Button
-                android:id="@+id/profileEditBtn"
+                android:id="@+id/allUsersSpinner"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="#ffffff"
@@ -165,7 +165,6 @@
                 android:layout_alignParentEnd="true" />
 
             <ImageView
-                android:id="@+id/imageView7"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 app:srcCompat="@drawable/red_card"
@@ -181,7 +180,6 @@
                 android:layout_alignEnd="@+id/imageView4" />
 
             <ImageView
-                android:id="@+id/imageView6"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 app:srcCompat="@drawable/green_card"

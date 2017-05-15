@@ -1,4 +1,4 @@
-package com.example.gruppe43.idretts_app.application.controll;
+package com.example.gruppe43.idretts_app.application.Authentication;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.gruppe43.idretts_app.R;
+import com.example.gruppe43.idretts_app.application.Authentication.DatabaseInterface.DataBaseHelperA;
 import com.example.gruppe43.idretts_app.application.view.main.MainActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;

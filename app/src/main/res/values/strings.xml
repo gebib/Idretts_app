@@ -55,7 +55,6 @@
     <string name="fullactivityinfo_date">fullactivityinfo date</string>
     <string name="fullactivityinfo_start_end_time">fullactivityinfo start end time</string>
     <string name="showFullActivitiInfoEditBtn">Edit activity </string>
-    <string name="showFullActivitiInfoDeleteBtn">Delete activity</string>
     <string name="activity_details">Activity Details</string>
     <string name="fullActivityShowStartS">Starts:</string>
     <string name="fullActivityShowEndS">Ends:</string>
@@ -95,9 +94,6 @@
     <string name="player_age">Player Age:</string>
     <string name="post_deleted_deletepost">Post Deleted!</string>
     <string name="absentplayersregistered">Abcent players registered!</string>
-    <string name="userAbsenceRegistrationTeamTitle">User absence registration</string>
-    <string name="userAbsenceRegistrationTeamTextInfo">This player has already been registered as absent! do you want to remove absent mark on this player?</string>
-    <string name="playerAbsentRemoved">Player absent removed!</string>
     <string name="noChangesToBeRegisteredToast">There are no changes to be registrered!</string>
     <string name="playerAlreadyAbsent">Player already absent.</string>
     <string name="agreement">Agreement</string>
@@ -108,10 +104,13 @@
     <string name="statusUpdated">Status updated.</string>
     <string name="player_type">Player type:</string>
     <string name="nocahngesTosaveProfileEdit">No changes to save.</string>
-    <string name="profileImageSavedToast">Saved!</string>
     <string name="save_change">Save all</string>
     <string name="status">Status:</string>
     <string name="profileImageSaved">Profile image saved!</string>
+    <string name="campRecordsSelectUserToast">Please select a user first!</string>
+    <string name="typeAmessageToSend">Type a message to send!</string>
+    <string name="coachNotif">Coach Activity</string>
+    <string name="coackckak">Coach has posted new activity!</string>
 
 
 </resources>

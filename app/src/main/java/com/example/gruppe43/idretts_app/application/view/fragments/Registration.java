@@ -18,7 +18,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.gruppe43.idretts_app.R;
-import com.example.gruppe43.idretts_app.application.controll.Authentication;
+import com.example.gruppe43.idretts_app.application.Authentication.Authentication;
 import com.example.gruppe43.idretts_app.application.interfaces.FragmentActivityInterface;
 import com.example.gruppe43.idretts_app.application.helper_classes.DatePickerFragment;
 import com.google.firebase.database.FirebaseDatabase;
