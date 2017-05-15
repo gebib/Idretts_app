@@ -171,11 +171,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
         DatabaseHelperC dbhc = new DatabaseHelperC(this);
         dbhc.initiateDataInRecyclerViewForTeam();
-
-        DataBaseHelperB dbhb = new DataBaseHelperB(this);
-        dbhb.checkOutdatedTrainerPosts();
-
-        dbhb.checkOutdatedPlayerPosts();
     }
 
     @Override
