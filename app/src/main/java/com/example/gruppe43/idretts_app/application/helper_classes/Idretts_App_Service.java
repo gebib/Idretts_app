@@ -80,6 +80,7 @@ public class Idretts_App_Service extends Service {
     @Override//kalles av android system hvis service stoppes av android
     public void onDestroy() {
         serviceRunning = false;
+        System.out.println("////////////////////////// BG stoped");
     }
 
     private void notifyUser(String title, String message){

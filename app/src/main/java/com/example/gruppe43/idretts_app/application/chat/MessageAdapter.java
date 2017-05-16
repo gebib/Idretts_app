@@ -28,13 +28,17 @@ public class MessageAdapter extends FirebaseListAdapter<ChatModel> {
 
     @Override
     protected void populateView(View v, ChatModel model, int position) {
-        TextView messageText = (TextView) v.findViewById(R.id.message_text);
-        TextView messageUser = (TextView) v.findViewById(R.id.message_user_name);
-        TextView messageTime = (TextView) v.findViewById(R.id.message_time);
+        try {
+            TextView messageText = (TextView) v.findViewById(R.id.message_text);
+            TextView messageUser = (TextView) v.findViewById(R.id.message_user_name);
+            TextView messageTime = (TextView) v.findViewById(R.id.message_time);
 
-        messageText.setText(model.getMessage());
-        messageUser.setText(model.getSenderName());
-        messageTime.setText(model.getDate());
+            messageText.setText(model.getMessage());
+            messageUser.setText(model.getSenderName());
+            messageTime.setText(model.getDate());
+        } catch (NullPointerException e) {
+            System.out.println("populate View npe!");
+        }
     }
 
     @Override
@@ -49,10 +53,10 @@ public class MessageAdapter extends FirebaseListAdapter<ChatModel> {
                 view = activity.getLayoutInflater().inflate(R.layout.item_out_message, viewGroup, false);
             } else {
                 view = activity.getLayoutInflater().inflate(R.layout.item_in_message, viewGroup, false);
-            }
-        }
 
-        populateView(view, chatMessage, position);
+            }
+            populateView(view, chatMessage, position);
+        }
         return view;
     }
 

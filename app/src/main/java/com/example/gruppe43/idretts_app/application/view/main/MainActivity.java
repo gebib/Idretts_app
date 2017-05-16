@@ -114,13 +114,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mAuth = FirebaseAuth.getInstance();
         prefs = new PrefferencesClass(this);
         //dbhb.runPlayerPostMaintenance();
-        fab.hide();
 
-        if(!Idretts_App_Service.serviceRunning){
-            startService(new Intent(getBaseContext(), Idretts_App_Service.class));//background service for nitifications.
-            //stopService(new Intent(getBaseContext(), Idretts_App_Service.class)); for sstoping the service!
+
+        if(Idretts_App_Service.serviceRunning){
+           // startService(new Intent(getBaseContext(), Idretts_App_Service.class));//background service for nitifications.
+            stopService(new Intent(getBaseContext(), Idretts_App_Service.class));//stop the service!
         }
 
+
+        fab.hide();
         fab.setRippleColor(Color.GREEN);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -176,7 +178,23 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     protected void onResume() {
         super.onResume();
-        //System.out.println("//////////// resume");
+            //startService(new Intent(getBaseContext(), Idretts_App_Service.class));//background service for nitifications.
+            stopService(new Intent(getBaseContext(), Idretts_App_Service.class));// for sstoping the service!
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+       // if(!Idretts_App_Service.serviceRunning){
+            startService(new Intent(getBaseContext(), Idretts_App_Service.class));//background service for nitifications.
+            //stopService(new Intent(getBaseContext(), Idretts_App_Service.class)); for sstoping the service!
+        //}
+    }
+
+    @Override
+    protected void onDestroy() {
+        //System.out.println("//////////// onDestroy");
+        super.onDestroy();
     }
 
     //navigate to appropriate fragment after registration.
