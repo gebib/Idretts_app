@@ -39,7 +39,7 @@
 
 
             <Spinner
-                android:id="@+id/spinnerCampRecordsSelectPlayer"
+                android:id="@+id/spinnerMatchRecordsSelectPlayer"
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
                 android:layout_below="@+id/textView10"
@@ -56,7 +56,7 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/minutes_played"
                 android:textColorHint="#b1b1b1"
-                android:layout_below="@+id/spinnerCampRecordsSelectPlayer"
+                android:layout_below="@+id/spinnerMatchRecordsSelectPlayer"
                 android:layout_alignStart="@+id/myPlayerNr"
                 android:layout_alignEnd="@+id/myPlayerNr" />
             <ImageView
@@ -64,7 +64,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/stop_watch"
-                android:layout_below="@+id/spinnerCampRecordsSelectPlayer"
+                android:layout_below="@+id/spinnerMatchRecordsSelectPlayer"
                 android:layout_alignEnd="@+id/imageView3" />
             <EditText
                 android:id="@+id/redCards"

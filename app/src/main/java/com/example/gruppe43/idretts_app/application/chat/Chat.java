@@ -98,7 +98,7 @@ public class Chat extends Fragment {
                         break;
                     case MotionEvent.ACTION_UP:
                         if (playerIdSelectedChat.equals("")) {
-                            Toast.makeText(mCallback.getContext(), R.string.campRecordsSelectUserToast, Toast.LENGTH_SHORT).show();
+                            Toast.makeText(mCallback.getContext(), R.string.matchRecordsSelectUserToast, Toast.LENGTH_SHORT).show();
                         } else {
                             if (!inputArea.getText().toString().trim().equals("") && sessionPointer != null) {
                                 postMessage();
@@ -156,7 +156,7 @@ public class Chat extends Fragment {
         String toUserKey = playerIdSelectedChat;
 
         if (playerIdSelectedChat.equals("")) {
-            Toast.makeText(mCallback.getContext(), R.string.campRecordsSelectUserToast, Toast.LENGTH_SHORT).show();
+            Toast.makeText(mCallback.getContext(), R.string.matchRecordsSelectUserToast, Toast.LENGTH_SHORT).show();
             return;
         }
 

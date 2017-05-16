@@ -30,7 +30,7 @@ public class DataBaseHelperB extends DataBaseHelperA {
     private boolean onStartPosArchiveChecked;
     private int nTrainerPosts;
     private int nPlayerPosts;
-    private boolean checkAddEventRecallCampData;
+    private boolean checkAddEventRecallMatchData;
 
     public void setOnStartPosArchiveChecked(boolean onStartPosArchiveChecked) {
         this.onStartPosArchiveChecked = onStartPosArchiveChecked;
@@ -38,7 +38,7 @@ public class DataBaseHelperB extends DataBaseHelperA {
 
     public DataBaseHelperB(MainActivity mainActivity) {
         super(mainActivity);
-        checkAddEventRecallCampData = false;
+        checkAddEventRecallMatchData = false;
     }
 
     //show general loading
@@ -69,15 +69,15 @@ public class DataBaseHelperB extends DataBaseHelperA {
     }
 
 
-    //register player data related to camp matches.asdfasdf
-    public void registerPlayerCampDataRecords(final int numMinutPlayed, final int numRedCard, final int numYellowCard, final int numGreenCard, final int numAccidents, final int numPerfectPasses, final int numScores, final String playerId) {
+    //register player data related to match matches.asdfasdf
+    public void registerPlayerMatchDataRecords(final int numMinutPlayed, final int numRedCard, final int numYellowCard, final int numGreenCard, final int numAccidents, final int numPerfectPasses, final int numScores, final String playerId) {
         DatabaseReference fbUserDbRef = FirebaseDatabase.getInstance().getReference().child("Users");
         fbUserDbRef.child(playerId).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
-                    if (!checkAddEventRecallCampData) {
-                        checkAddEventRecallCampData = true;
+                    if (!checkAddEventRecallMatchData) {
+                        checkAddEventRecallMatchData = true;
                         String rCard = (String) dataSnapshot.child("rCard").getValue();
                         String yCard = (String) dataSnapshot.child("yCard").getValue();
                         String gCard = (String) dataSnapshot.child("gCard").getValue();
@@ -119,14 +119,14 @@ public class DataBaseHelperB extends DataBaseHelperA {
                         intVals[5] = intVals[5] + numPerfectPasses;
                         intVals[6] = intVals[6] + numScores;
                         try {
-                            DatabaseReference nPlayerCampRecords = FirebaseDatabase.getInstance().getReference().child("Users");
-                            nPlayerCampRecords.child(playerId).child("rCard").setValue(intVals[0] + "");
-                            nPlayerCampRecords.child(playerId).child("yCard").setValue(intVals[1] + "");
-                            nPlayerCampRecords.child(playerId).child("gCard").setValue(intVals[2] + "");
-                            nPlayerCampRecords.child(playerId).child("nMinutesPlayed").setValue(intVals[3] + "");
-                            nPlayerCampRecords.child(playerId).child("nAccidents").setValue(intVals[4] + "");
-                            nPlayerCampRecords.child(playerId).child("nGoalGivingPasses").setValue(intVals[5] + "");
-                            nPlayerCampRecords.child(playerId).child("nScores").setValue(intVals[6] + "");
+                            DatabaseReference nPlayerMatchRecords = FirebaseDatabase.getInstance().getReference().child("Users");
+                            nPlayerMatchRecords.child(playerId).child("rCard").setValue(intVals[0] + "");
+                            nPlayerMatchRecords.child(playerId).child("yCard").setValue(intVals[1] + "");
+                            nPlayerMatchRecords.child(playerId).child("gCard").setValue(intVals[2] + "");
+                            nPlayerMatchRecords.child(playerId).child("nMinutesPlayed").setValue(intVals[3] + "");
+                            nPlayerMatchRecords.child(playerId).child("nAccidents").setValue(intVals[4] + "");
+                            nPlayerMatchRecords.child(playerId).child("nGoalGivingPasses").setValue(intVals[5] + "");
+                            nPlayerMatchRecords.child(playerId).child("nScores").setValue(intVals[6] + "");
                         } catch (DatabaseException dbe) {
                             Log.d("//////////", "trainer incr activity record dbe");
                         }
@@ -219,7 +219,7 @@ public class DataBaseHelperB extends DataBaseHelperA {
                                         intVals[1] = intVals[1] - 1;
                                     } else if (activityType.equals("Meet")) {
                                         intVals[2] = intVals[2] - 1;
-                                    } else if (activityType.equals("camp")) {
+                                    } else if (activityType.equals("match")) {
                                         intVals[3] = intVals[3] - 1;
                                     }
 
