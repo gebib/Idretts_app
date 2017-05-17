@@ -25,6 +25,7 @@ import com.google.firebase.database.FirebaseDatabase;
 public class Idretts_App_Service extends Service {
    public static boolean serviceRunning = true;
     static int NOTIFICATION_ID = 1;
+    static boolean hasNotifiedOnce = true;
     //BakgrunnService klassen kan ha flere traader saa vi maa ha id for hver service traad.
 
     @Nullable
@@ -51,6 +52,7 @@ public class Idretts_App_Service extends Service {
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 if(dataSnapshot.exists()){
                    if(!MainActivity.isTrainerSignedIn){ // trainer does not need to have the notification.
+                       hasNotifiedOnce = false;
                        notifyUser(getString(R.string.coachNotif),getString(R.string.coackckak));
                    }
                 }
@@ -85,18 +87,21 @@ public class Idretts_App_Service extends Service {
 
     private void notifyUser(String title, String message){
         System.out.println("////////////////////////// tasking...");
-        NOTIFICATION_ID++;
-        //  if (!message.getUserId().equals("fromKey..blbl")) {
-        NotificationManager mNotificationManager = (NotificationManager)this.getSystemService(Context.NOTIFICATION_SERVICE);
-        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this)
-                .setSmallIcon(R.drawable.ball)
-                .setContentTitle(title)
-                .setContentText(message)
-                .setOnlyAlertOnce(true)
-                .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION));
-        mBuilder.setAutoCancel(true);
-        mBuilder.setLocalOnly(false);
-        mNotificationManager.notify(NOTIFICATION_ID, mBuilder.build());
+        if (!hasNotifiedOnce) {
+            hasNotifiedOnce = true;
+            NOTIFICATION_ID++;
+            //  if (!message.getUserId().equals("fromKey..blbl")) {
+            NotificationManager mNotificationManager = (NotificationManager)this.getSystemService(Context.NOTIFICATION_SERVICE);
+            NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this)
+                    .setSmallIcon(R.drawable.ball)
+                    .setContentTitle(title)
+                    .setContentText(message)
+                    .setOnlyAlertOnce(true)
+                    .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION));
+            mBuilder.setAutoCancel(true);
+            mBuilder.setLocalOnly(false);
+            mNotificationManager.notify(NOTIFICATION_ID, mBuilder.build());
+        }
 
     }
 }

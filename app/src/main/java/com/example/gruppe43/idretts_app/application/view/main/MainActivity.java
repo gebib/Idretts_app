@@ -180,6 +180,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         super.onResume();
             //startService(new Intent(getBaseContext(), Idretts_App_Service.class));//background service for nitifications.
             stopService(new Intent(getBaseContext(), Idretts_App_Service.class));// for sstoping the service!
+
+        if(isTrainerSignedIn){
+            DataBaseHelperB dbhb = new DataBaseHelperB(this);
+            dbhb.checkOutdatedTrainerPosts();
+            System.out.println("////////////main onResum old trainer post checked for deletion!");
+        }
     }
 
     @Override
@@ -254,9 +260,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.toolbar_home) {
-             FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
+
+            ////////////////////////////////////////////////////////////////////////////////////////////////////TEST TODO////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+            /* FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
             mFragmentManager.popBackStack();
-            fragmentTransaction.replace(R.id.containerView, new Tabs()).commit();
+            fragmentTransaction.replace(R.id.containerView, new Tabs()).commit();*/
             return true;
         }
         if (id == R.id.toolbar_messages) {

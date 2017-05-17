@@ -160,6 +160,9 @@ public class DataBaseHelperA extends Authentication {
         }
     }
 
+
+
+
     //set trainer activity record
     public void setTrainerNactivityRecord(final String activityType, final String addOrRemove) {
         final String trainerKey = fbAuth.getCurrentUser().getUid();
@@ -511,12 +514,12 @@ public class DataBaseHelperA extends Authentication {
                 dbPostRef = FirebaseDatabase.getInstance().getReference().child("PlayerPosts");
             }
             if (isTrainerPost) {
-                setTrainerNactivityRecord(activityType, "delete");
+               // setTrainerNactivityRecord(activityType, "delete");
                 dbPostRef.child(postKey).removeValue();
                 Toast.makeText(mainActivity, R.string.post_deleted_deletepost, Toast.LENGTH_SHORT).show();
             } else {
                 dbPostRef.child(postKey).removeValue();
-                setPlayerNactivityRecord("delete");
+               // setPlayerNactivityRecord("delete");
                 Toast.makeText(mainActivity, R.string.post_deleted_deletepost, Toast.LENGTH_SHORT).show();
             }
 

@@ -3,6 +3,7 @@ package com.example.gruppe43.idretts_app.application.Authentication.DatabaseInte
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.support.annotation.NonNull;
 import android.text.format.Time;
 import android.util.Log;
 import android.widget.Toast;
@@ -12,6 +13,8 @@ import com.example.gruppe43.idretts_app.application.model.PlayerPostsModel;
 import com.example.gruppe43.idretts_app.application.model.TrainerPostsModel;
 import com.example.gruppe43.idretts_app.application.model.UsersModel;
 import com.example.gruppe43.idretts_app.application.view.main.MainActivity;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -285,5 +288,60 @@ public class DataBaseHelperB extends DataBaseHelperA {
             progressDialog.dismiss();
             showGeneralDbExceptionAlert();
         }
+    }
+
+    //delete Trainer posts that has the date later than today
+    public void checkOutdatedTrainerPosts() {
+        final DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference().child("TrainerPosts");
+        dbRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    Iterable<DataSnapshot> trainerPostNodes = dataSnapshot.getChildren();
+                    getCurrentDateInt();
+                    for (DataSnapshot trainerPosts : trainerPostNodes) {
+                        TrainerPostsModel tpm = trainerPosts.getValue(TrainerPostsModel.class);
+                        int[] postDateAndTime = parsePosteDate(tpm.getActivityDate(), tpm.getTimePosted());
+                        String title = tpm.getTitle();
+                        String activityType = "";
+                        if (title.equals("Football training") || title.equals("Fotballtrening")) {
+                            activityType = "footballT";
+                        } else if (title.equals("Gym/Strength") || title.equals("Gym/Styrke")) {
+                            activityType = "gymT";
+                        } else if (title.equals("Theory/meeting") || title.equals("Teori/møte")) {
+                            activityType = "Meet";
+                        } else if (title.equals("Football camp") || title.equals("Fotballkamp")) {
+                            activityType = "camp";
+                        }
+
+                        int postYear,postDate,postMonth,postHour,postMinute;
+                        postYear = postDateAndTime[2];
+                        postMonth = postDateAndTime[1];
+                        postHour = postDateAndTime[3];
+                        postDate = postDateAndTime[0];
+                        postMinute = postDateAndTime[4];
+
+
+                        if (nowYear == postYear && nowMonth == postMonth && nowDate == postDate && nowHour == postHour && nowMinute > postMinute) {//trainer post is minutes older
+                            deleteSelectedPost(trainerPosts.getKey(), true, activityType);
+                        } else if (nowYear == postYear && nowMonth == postMonth && nowDate == postDate && nowHour > postHour) {//trainer activity expiered hours a go
+                            deleteSelectedPost(trainerPosts.getKey(), true, activityType);
+                        } else if (nowYear == postYear && nowMonth == postMonth && nowDate > postDate) {//trainer activity expiered days a go
+                            deleteSelectedPost(trainerPosts.getKey(), true, activityType);
+                        } else if (nowYear == postYear && nowMonth > postMonth) {//trainer activity expiered months a go.
+                            deleteSelectedPost(trainerPosts.getKey(), true, activityType);
+                        } else if (nowYear > postYear){//trainer activity expiered years a go!.
+                            deleteSelectedPost(trainerPosts.getKey(), true, activityType);
+                        }
+                    }
+                    dbRef.removeEventListener(this);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
 }
