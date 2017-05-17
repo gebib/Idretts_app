@@ -256,11 +256,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.toolbar_home) {
-
-            ////////////////////////////////////////////////////////////////////////////////////////////////////TEST TODO////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-            /* FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
+            FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
             mFragmentManager.popBackStack();
-            fragmentTransaction.replace(R.id.containerView, new Tabs()).commit();*/
+            fragmentTransaction.replace(R.id.containerView, new Tabs()).commit();
             return true;
         }
         if (id == R.id.toolbar_messages) {
