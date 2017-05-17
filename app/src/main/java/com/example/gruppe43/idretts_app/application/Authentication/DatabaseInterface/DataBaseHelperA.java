@@ -119,11 +119,11 @@ public class DataBaseHelperA extends Authentication {
             trainer_posts.child("infoText").setValue(activityTextInfo);
             trainer_posts.child("timePosted").setValue(timePosted);
             trainer_posts.child("icon").setValue(icon);
+            trainer_posts.child("isNotified").setValue("false");
             if (editedPostKey.equals("")) {
                 trainer_posts.child("postedUserId").setValue(get_current_user_id);
             }
 
-            //TODO add to trainer activity posted counter
             progressDialog.dismiss();
             Toast.makeText(mainActivity, mainActivity.getResources().getString(R.string.toastPostRegSuccess), Toast.LENGTH_SHORT).show();
             mainActivity.showFragmentOfGivenCondition();

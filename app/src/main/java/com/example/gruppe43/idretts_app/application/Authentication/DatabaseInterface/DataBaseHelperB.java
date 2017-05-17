@@ -73,7 +73,10 @@ public class DataBaseHelperB extends DataBaseHelperA {
 
 
     //register player data related to camp matches.asdfasdf
-    public void registerPlayerCampDataRecords(final int numMinutPlayed, final int numRedCard, final int numYellowCard, final int numGreenCard, final int numAccidents, final int numPerfectPasses, final int numScores, final String playerId) {
+    public void registerPlayerCampDataRecords(final int numMinutPlayed, final int numRedCard,
+                                              final int numYellowCard, final int numGreenCard,
+                                              final int numAccidents, final int numPerfectPasses,
+                                              final int numScores, final String playerId) {
         DatabaseReference fbUserDbRef = FirebaseDatabase.getInstance().getReference().child("Users");
         fbUserDbRef.child(playerId).addValueEventListener(new ValueEventListener() {
             @Override
@@ -332,6 +335,40 @@ public class DataBaseHelperB extends DataBaseHelperA {
                             deleteSelectedPost(trainerPosts.getKey(), true, activityType);
                         } else if (nowYear > postYear){//trainer activity expiered years a go!.
                             deleteSelectedPost(trainerPosts.getKey(), true, activityType);
+                        }
+                    }
+                    dbRef.removeEventListener(this);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    public void checkOutdatedPlayerPosts() {  //TODO if activity deleted AUTO no absence update!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        final DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference().child("PlayerPosts");
+       // final ArrayList<DataSnapshot> listOfnodesToBeDeleted = new ArrayList<>();
+        dbRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    Iterable<DataSnapshot> playerPostNodes = dataSnapshot.getChildren();
+                    getCurrentDateInt();
+                    for (DataSnapshot playerPosts : playerPostNodes) {
+                        PlayerPostsModel ppm = playerPosts.getValue(PlayerPostsModel.class);
+                        int[] postDateAndTime = parsePosteDate(ppm.getDatePosted(), ppm.getTimePosted());
+
+                        int postYear,postDate,postMonth;
+                        postYear = postDateAndTime[2];
+                        postMonth = postDateAndTime[1];
+                        postDate = postDateAndTime[0];
+                        if (nowYear == postYear && nowMonth == postMonth && nowDate > postDate +2 ) {//player posts are visible for 2 days from the day they are posted.
+                            deleteSelectedPost(playerPosts.getKey(), false, "");
+                        }else if(nowYear > postYear ){
+                            deleteSelectedPost(playerPosts.getKey(), false, "");
                         }
                     }
                     dbRef.removeEventListener(this);

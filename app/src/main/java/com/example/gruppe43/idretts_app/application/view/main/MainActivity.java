@@ -178,23 +178,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     protected void onResume() {
         super.onResume();
-            //startService(new Intent(getBaseContext(), Idretts_App_Service.class));//background service for nitifications.
-            stopService(new Intent(getBaseContext(), Idretts_App_Service.class));// for sstoping the service!
-
+         startService(new Intent(getBaseContext(), Idretts_App_Service.class));//background service for nitifications.
+        //stopService(new Intent(getBaseContext(), Idretts_App_Service.class));// for sstoping the service!
+        System.out.println("////////////main onResum bg service refreshed!");
         if(isTrainerSignedIn){
             DataBaseHelperB dbhb = new DataBaseHelperB(this);
             dbhb.checkOutdatedTrainerPosts();
-            System.out.println("////////////main onResum old trainer post checked for deletion!");
+            dbhb.checkOutdatedPlayerPosts();
         }
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-       // if(!Idretts_App_Service.serviceRunning){
-            startService(new Intent(getBaseContext(), Idretts_App_Service.class));//background service for nitifications.
-            //stopService(new Intent(getBaseContext(), Idretts_App_Service.class)); for sstoping the service!
-        //}
     }
 
     @Override

@@ -15,6 +15,7 @@ public class TrainerPostsModel {
     private String startTime;
     private String timePosted;
     private String title;
+    private String isNotified;
 
 
     public TrainerPostsModel() {
@@ -22,7 +23,7 @@ public class TrainerPostsModel {
 
     public TrainerPostsModel(String activityDate, String endTime, String icon, String infoText,
                              String intensity, String place, String postedDate, String postedUserId,
-                             String startTime, String timePosted, String title) {
+                             String startTime, String timePosted, String title, String isNotified) {
         this.activityDate = activityDate;
         this.endTime = endTime;
         this.icon = icon;
@@ -34,6 +35,7 @@ public class TrainerPostsModel {
         this.startTime = startTime;
         this.timePosted = timePosted;
         this.title = title;
+        this.isNotified = isNotified;
     }
 
     public String getActivityDate() {
@@ -122,5 +124,13 @@ public class TrainerPostsModel {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public String getIsNotified() {
+        return isNotified;
+    }
+
+    public void setIsNotified(String isNotified) {
+        this.isNotified = isNotified;
     }
 }

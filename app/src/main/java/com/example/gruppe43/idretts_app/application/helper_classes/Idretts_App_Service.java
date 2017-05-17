@@ -11,6 +11,8 @@ import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
 import com.example.gruppe43.idretts_app.R;
+import com.example.gruppe43.idretts_app.application.model.TrainerPostsModel;
+import com.example.gruppe43.idretts_app.application.model.UsersModel;
 import com.example.gruppe43.idretts_app.application.view.main.MainActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
@@ -23,9 +25,10 @@ import com.google.firebase.database.FirebaseDatabase;
 //Ole-Kristian Steiro, Tasmia Faruque, Gebi Beshir
 
 public class Idretts_App_Service extends Service {
-   public static boolean serviceRunning = true;
+    public static boolean serviceRunning = true;
     static int NOTIFICATION_ID = 1;
     static boolean hasNotifiedOnce = true;
+
     //BakgrunnService klassen kan ha flere traader saa vi maa ha id for hver service traad.
 
     @Nullable
@@ -43,18 +46,18 @@ public class Idretts_App_Service extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         serviceRunning = true;
-       // Thread thread = new Thread(new bgThreadKlasse(startId));
-       // thread.start();//start bakgrunn servisen i separat straad
+        // Thread thread = new Thread(new bgThreadKlasse(startId));
+        // thread.start();//start bakgrunn servisen i separat straad
         System.out.println("////////////////////////// BG STARTED");
         DatabaseReference trainerPosts = FirebaseDatabase.getInstance().getReference().child("TrainerPosts");
         trainerPosts.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                if(dataSnapshot.exists()){
-                   if(!MainActivity.isTrainerSignedIn){ // trainer does not need to have the notification.
-                       hasNotifiedOnce = false;
-                       notifyUser(getString(R.string.coachNotif),getString(R.string.coackckak));
-                   }
+                if (dataSnapshot.exists()) {
+                    if(!MainActivity.isTrainerSignedIn){
+                        hasNotifiedOnce = false;
+                        notifyUser(getString(R.string.coachNotif),getString(R.string.coackckak));
+                    }
                 }
             }
 
@@ -62,6 +65,7 @@ public class Idretts_App_Service extends Service {
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
 
             }
+
             @Override
             public void onChildRemoved(DataSnapshot dataSnapshot) {
 
@@ -71,6 +75,7 @@ public class Idretts_App_Service extends Service {
             public void onChildMoved(DataSnapshot dataSnapshot, String s) {
 
             }
+
             @Override
             public void onCancelled(DatabaseError databaseError) {
 
@@ -85,13 +90,12 @@ public class Idretts_App_Service extends Service {
         System.out.println("////////////////////////// BG stoped");
     }
 
-    private void notifyUser(String title, String message){
+    private void notifyUser(String title, String message) {
         System.out.println("////////////////////////// tasking...");
         if (!hasNotifiedOnce) {
             hasNotifiedOnce = true;
-            NOTIFICATION_ID++;
             //  if (!message.getUserId().equals("fromKey..blbl")) {
-            NotificationManager mNotificationManager = (NotificationManager)this.getSystemService(Context.NOTIFICATION_SERVICE);
+            NotificationManager mNotificationManager = (NotificationManager) this.getSystemService(Context.NOTIFICATION_SERVICE);
             NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this)
                     .setSmallIcon(R.drawable.ball)
                     .setContentTitle(title)
