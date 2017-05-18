@@ -1,6 +1,7 @@
 package com.example.gruppe43.idretts_app.application.view.main;
 //Idretts-app bachelor oppgave 2017
 //Ole-Kristian Steiro, Tasmia Faruque, Gebi Beshir
+
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
@@ -115,13 +116,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         prefs = new PrefferencesClass(this);
         //dbhb.runPlayerPostMaintenance();
 
-
-        if(Idretts_App_Service.serviceRunning){
-           // startService(new Intent(getBaseContext(), Idretts_App_Service.class));//background service for nitifications.
-            stopService(new Intent(getBaseContext(), Idretts_App_Service.class));//stop the service!
-        }
-
-
         fab.hide();
         fab.setRippleColor(Color.GREEN);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -178,19 +172,22 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     protected void onResume() {
         super.onResume();
-         startService(new Intent(getBaseContext(), Idretts_App_Service.class));//background service for nitifications.
         //stopService(new Intent(getBaseContext(), Idretts_App_Service.class));// for sstoping the service!
-        System.out.println("////////////main onResum bg service refreshed!");
-        if(isTrainerSignedIn){
-            DataBaseHelperB dbhb = new DataBaseHelperB(this);
-            dbhb.checkOutdatedTrainerPosts();
-            dbhb.checkOutdatedPlayerPosts();
+            startService(new Intent(getBaseContext(), Idretts_App_Service.class));
+
+        if (isTrainerSignedIn != null) {
+            if (isTrainerSignedIn) {
+                DataBaseHelperB dbhb = new DataBaseHelperB(this);
+                dbhb.checkOutdatedTrainerPosts();
+                dbhb.checkOutdatedPlayerPosts();
+            }
         }
     }
 
     @Override
     protected void onPause() {
         super.onPause();
+        startService(new Intent(getBaseContext(), Idretts_App_Service.class));
     }
 
     @Override
@@ -256,13 +253,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.toolbar_home) {
-            FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
+           // startService(new Intent(getBaseContext(), Idretts_App_Service.class));
+             FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
             mFragmentManager.popBackStack();
             fragmentTransaction.replace(R.id.containerView, new Tabs()).commit();
             return true;
         }
         if (id == R.id.toolbar_messages) {
-             DataBaseHelperA dbh = new DataBaseHelperA(this);
+            //stopService(new Intent(getBaseContext(), Idretts_App_Service.class));//
+            DataBaseHelperA dbh = new DataBaseHelperA(this);
             dbh.retrieveAllPlayersNameAndId("chat");
         }
         return super.onOptionsItemSelected(item);

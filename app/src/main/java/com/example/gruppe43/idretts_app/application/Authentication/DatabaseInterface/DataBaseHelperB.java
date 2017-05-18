@@ -325,13 +325,8 @@ public class DataBaseHelperB extends DataBaseHelperA {
                         postMinute = postDateAndTime[4];
 
 
-                        if (nowYear == postYear && nowMonth == postMonth && nowDate == postDate && nowHour == postHour && nowMinute > postMinute) {//trainer post is minutes older
-                            deleteSelectedPost(trainerPosts.getKey(), true, activityType);
-                        } else if (nowYear == postYear && nowMonth == postMonth && nowDate == postDate && nowHour > postHour) {//trainer activity expiered hours a go
-                            deleteSelectedPost(trainerPosts.getKey(), true, activityType);
-                        } else if (nowYear == postYear && nowMonth == postMonth && nowDate > postDate) {//trainer activity expiered days a go
-                            deleteSelectedPost(trainerPosts.getKey(), true, activityType);
-                        } else if (nowYear == postYear && nowMonth > postMonth) {//trainer activity expiered months a go.
+                        //the post date is a particular date that the activity will take place.
+                        if (nowYear == postYear && nowMonth == postMonth && nowDate > postDate +1) {//trainer activity is a day older.
                             deleteSelectedPost(trainerPosts.getKey(), true, activityType);
                         } else if (nowYear > postYear){//trainer activity expiered years a go!.
                             deleteSelectedPost(trainerPosts.getKey(), true, activityType);

@@ -3,6 +3,7 @@ package com.example.gruppe43.idretts_app.application.chat;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.text.format.Time;
 import android.view.LayoutInflater;
@@ -23,6 +24,8 @@ import com.example.gruppe43.idretts_app.application.interfaces.FragmentActivityI
 import com.example.gruppe43.idretts_app.application.model.ChatModel;
 import com.example.gruppe43.idretts_app.application.model.UsersModel;
 import com.firebase.ui.database.FirebaseListAdapter;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -216,22 +219,69 @@ public class Chat extends Fragment {
         final String fromUserKey = fbAuth.getCurrentUser().getUid();
 
         try {
+            chatListView.setAdapter(null);
             getCurrentDate();
             sessionPointer.push();
             DatabaseReference chatNode = sessionPointer.push();
             chatNode.child("senderName").setValue(senderFullName);
             chatNode.child("message").setValue(inputArea.getText().toString().trim());
             chatNode.child("date").setValue(nowDate + "." + nowMonth + "." + nowYear + " " + nowHour + ":" + nowMinute);
-            chatNode.child("userKey").setValue(fromUserKey);
+            chatNode.child("userKey").setValue(fromUserKey).addOnCompleteListener(new OnCompleteListener<Void>() {
+                @Override
+                public void onComplete(@NonNull Task<Void> task) {
+                    if (task.isComplete()) {
+                        //post a notification that the user will be able to read
+                        DatabaseReference chatNotifPointer = FirebaseDatabase.getInstance().getReference().child("ChatNotifications").push();
+                        chatNotifPointer.push();
+
+                        String toUserKey = "";
+                        char[] sessionKey = sessionPointer.getKey().toCharArray();
+
+                        String theFirstSessionKey = "";
+                        String theSecondUserKey = "";
+
+                        boolean isOverMidPoint = false;
+
+                        for (int i = 0; i < sessionKey.length; i++) {//extract the users key from their session key.
+                            if (sessionKey[i] != '_' && !isOverMidPoint) {
+                                theFirstSessionKey += String.valueOf(sessionKey[i]);
+                            } else if(sessionKey[i] == '_') {
+                                isOverMidPoint = true;
+                            }else if(isOverMidPoint){
+                                theSecondUserKey += String.valueOf(sessionKey[i]);
+                            }
+                        }
+
+                        if(theFirstSessionKey.equals(fromUserKey)){
+                            toUserKey = theSecondUserKey;
+                        }else if(theSecondUserKey.equals(fromUserKey)){
+                            toUserKey = theFirstSessionKey;
+                        }
+
+                        chatNotifPointer.child("fromUserKey").setValue(fromUserKey);
+                        chatNotifPointer.child("toUserKey").setValue(toUserKey);
+                        chatNotifPointer.child("senderName").setValue(senderFullName);
+                        chatNotifPointer.child("sessionKey").setValue(sessionPointer.getKey()).addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                if(task.isComplete()){
+                                    setListAdapterOnChatSessionChange(sessionPointer);
+                                }
+                            }
+                        });
+                    }
+                }
+            });
             inputArea.setText("");
         } catch (NullPointerException e) {
             e.printStackTrace();
         }
     }
 
+
     //load the chat sestion where this player is right or left child. if session exist
     private void setListAdapterOnChatSessionChange(DatabaseReference sessionRef) {
-       FirebaseListAdapter<ChatModel> adapter = new MessageAdapter(mCallback.getContext(), ChatModel.class, R.layout.item_in_message, sessionRef);
+        FirebaseListAdapter<ChatModel> adapter = new MessageAdapter(mCallback.getContext(), ChatModel.class, R.layout.item_in_message, sessionRef);
         chatListView.setAdapter(adapter);
 
     }

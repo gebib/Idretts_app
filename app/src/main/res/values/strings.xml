@@ -108,5 +108,7 @@
     <string name="typeAmessageToSend">Type a message to send!</string>
     <string name="coachNotif">Coach Activity</string>
     <string name="coackckak">Coach has posted new activity!</string>
+    <string name="trainerPostNotifTitle">Trainer Post</string>
+    <string name="trainerHasPostedNewPostText">Trainer has posted new post.</string>
 
 </resources>

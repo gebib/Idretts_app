@@ -183,7 +183,7 @@ public class Team extends Fragment {
                                 dbhc.getProfileViewDataForUser(clickedPlayerId);
                             }
                         } catch (NullPointerException npe) {
-                            Log.i("NPE!","Team not fully loaded yet!");
+                            Log.i("NPE!","Team not fully loaded yet!:: this is only the virtual phone emulator problem!");
                             return;
                         }
                     }

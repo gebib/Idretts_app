@@ -60,5 +60,25 @@ public class PrefferencesClass {
     }
 
 
+    public long loadLocallySavedTrainerChildCount() {
+        long locallySavedChildCount = 0;
+        try {
+            SharedPreferences prefs = ctx.getSharedPreferences("trainerNodeNum", Context.MODE_PRIVATE);
+            locallySavedChildCount = prefs.getLong("nTrainerPostKey",0);
+        }catch (NullPointerException npe){
+            Log.e("///////SHARED_PREF_LOAD", "isNullpointing");
+        }
+        return locallySavedChildCount;
+    }
 
+    public void saveUpdateOnTrainerChildCount(long trainerPostNodeCount) {
+        SharedPreferences.Editor editor;
+        try {
+            editor = ctx.getSharedPreferences("trainerNodeNum", Context.MODE_PRIVATE).edit();
+            editor.putLong("nTrainerPostKey", trainerPostNodeCount);
+            editor.commit();
+        } catch (NullPointerException npe) {
+            Log.e("///////SHARED_PREF_SAVE", "isNullpointing");
+        }
+    }
 }

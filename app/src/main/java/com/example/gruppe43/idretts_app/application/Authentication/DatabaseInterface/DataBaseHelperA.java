@@ -550,7 +550,7 @@ public class DataBaseHelperA extends Authentication {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 Toast.makeText(mainActivity, R.string.playerPostDeleteToast, Toast.LENGTH_SHORT).show();
-                                deleteSelectedPost(postKey, false, "");
+                                playerManualDeletePost(postKey);
                             }
                         });
                         AlertDialog alert11 = builder1.create();
@@ -564,6 +564,17 @@ public class DataBaseHelperA extends Authentication {
 
             }
         });
+    }
+
+    //if player manually delete their post, delete the post and set init n post owned
+    public void playerManualDeletePost(String postKey){
+        DatabaseReference dbPostRef  = FirebaseDatabase.getInstance().getReference().child("PlayerPosts");
+
+        Toast.makeText(mainActivity, R.string.post_deleted_deletepost, Toast.LENGTH_SHORT).show();
+                dbPostRef.child(postKey).removeValue();
+                 setPlayerNactivityRecord("delete");
+
+
     }
 
     //save logged in player name locally for use in the app instead of requesting it everytieme.
