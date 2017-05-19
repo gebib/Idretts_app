@@ -125,7 +125,7 @@ public class Idretts_App_Service extends Service {
 
     //check for new messages and notify user.
     private void checkForNewMessageFromUser() {
-        System.out.println("////////////////////////// BG checkMESSAGE");
+       // System.out.println("////////////////////////// BG checkMESSAGE");
         final ArrayList<String> chatNotifDsToBeDeleted = new ArrayList<>();
         final DatabaseReference chatNotifications = FirebaseDatabase.getInstance().getReference().child("ChatNotifications");
         chatNotifications.addValueEventListener(new ValueEventListener() {

@@ -158,8 +158,8 @@ public class Team extends Fragment {
                             final String clickedPlayerId;
                             try {
                                 int clickedPosition = listOfViews.indexOf(v);
-                                clickedPlayerId = listOfAllUsersId.get(clickedPosition);
-                                selectedUserIdInTeam = clickedPlayerId;
+                                clickedPlayerId = listOfAllUsersId.get(clickedPosition);//TODO wtf is this why is this an exception sometimes
+                                selectedUserIdInTeam = clickedPlayerId;//TODO this is null often??
                             } catch (NullPointerException npee) {
                                 Log.i("NPE!","Team not fully loaded yet!");
                                 return;

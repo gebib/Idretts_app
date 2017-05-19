@@ -165,8 +165,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         } else {//isOnSignedOutState
             onSignOut();
         }
-        DatabaseHelperC dbhc = new DatabaseHelperC(this);
-        dbhc.initiateDataInRecyclerViewForTeam();
+
+        if(Team.getListOfAllUsersId() == null){
+            System.out.println("////////////////////////// onCreate TeamInit set");
+            DatabaseHelperC dbhc = new DatabaseHelperC(this);
+            dbhc.initiateDataInRecyclerViewForTeam();
+        }
     }
 
     @Override
@@ -174,6 +178,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         super.onResume();
         //stopService(new Intent(getBaseContext(), Idretts_App_Service.class));// for sstoping the service!
             startService(new Intent(getBaseContext(), Idretts_App_Service.class));
+            DatabaseHelperC dbhc = new DatabaseHelperC(this);
+            dbhc.initiateDataInRecyclerViewForTeam();
 
         if (isTrainerSignedIn != null) {
             if (isTrainerSignedIn) {
@@ -375,6 +381,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         actionBar.show();
         DataBaseHelperA dbha = new DataBaseHelperA(this);
         dbha.saveSignedInUserNameToCache();
+
+        if(Team.getListOfAllUsersId() == null){
+            DatabaseHelperC dbhc = new DatabaseHelperC(this);
+            dbhc.initiateDataInRecyclerViewForTeam();
+        }
     }
 
     //set state sign out!
