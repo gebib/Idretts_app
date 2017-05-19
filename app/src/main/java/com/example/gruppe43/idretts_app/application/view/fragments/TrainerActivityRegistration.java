@@ -90,7 +90,7 @@ public class TrainerActivityRegistration extends Fragment {
         nonFunctionalEditTextForUse = (EditText) view.findViewById(R.id.makeGapAndForFocusShiftingPurpose);
         seekBarPersentageDisplay = (TextView) view.findViewById(R.id.sliderPercentage);
 
-        String[] activityType = {"Football training", "Gym/Strength", "Theory/meeting", "Football camp"};
+        String[] activityType = {"Football training", "Gym/Strength", "Theory/meeting", "Football match"};
         ArrayAdapter<String> actTypeSpinnerArray = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, activityType);
         actTypeSpinnerArray.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         newActSpinnerActivityType.setAdapter(actTypeSpinnerArray);
@@ -113,7 +113,7 @@ public class TrainerActivityRegistration extends Fragment {
                         spinnerIndexToBeSet = 1;
                     } else if (cacheDataForEdit[0].equals("Theory/meeting") || cacheDataForEdit[0].equals("Teori/møte")) {
                         spinnerIndexToBeSet = 2;
-                    } else if (cacheDataForEdit[0].equals("Football camp") || cacheDataForEdit[0].equals("Fotballkamp")) {
+                    } else if (cacheDataForEdit[0].equals("Football match") || cacheDataForEdit[0].equals("Fotballkamp")) {
                         spinnerIndexToBeSet = 3;
                     }
                     newActSpinnerActivityType.setSelection(spinnerIndexToBeSet);
@@ -243,7 +243,7 @@ public class TrainerActivityRegistration extends Fragment {
         } else if (titleSpinnerPos.equals("2")) {
             icon = "meeting";
         } else if (titleSpinnerPos.equals("3")) {
-            icon = "camp";
+            icon = "match";
         }
 
         if (actDate.isEmpty() || timeFrom.isEmpty() || timeTo.isEmpty() || actPlace.isEmpty() || textInfo.isEmpty()) {
@@ -276,7 +276,7 @@ public class TrainerActivityRegistration extends Fragment {
 
     DatePickerDialog.OnDateSetListener ondate = new DatePickerDialog.OnDateSetListener() {
         public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-            newActDate.setText(dayOfMonth + "." + monthOfYear + "." + year);
+            newActDate.setText(dayOfMonth + "." + (monthOfYear+1) + "." + year);
         }
     };
     TimePickerDialog.OnTimeSetListener ontime = new TimePickerDialog.OnTimeSetListener() {

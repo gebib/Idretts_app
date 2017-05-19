@@ -39,7 +39,7 @@ public class FullActivityInfo extends Fragment {
     private static boolean isEditClicked;
     private Button addAbsence;
     private RelativeLayout buttonsHolderRelativeLayout;
-    private Button addCampRecords;
+    private Button addMatchRecords;
     private static String activityType;
 
 
@@ -77,7 +77,7 @@ public class FullActivityInfo extends Fragment {
         isEditClicked = false;
         activityEditButton = (Button) view.findViewById(R.id.showFullActivityInfoEditButton);
         addAbsence = (Button) view.findViewById(R.id.absenceControllButton);
-        addCampRecords = (Button) view.findViewById(R.id.addRemoveCampRecords);
+        addMatchRecords = (Button) view.findViewById(R.id.addRemoveMatchRecords);
 
         fullactivityinfoImageView = (ImageView) view.findViewById(R.id.fullactivityinfoImageView);
 
@@ -100,11 +100,11 @@ public class FullActivityInfo extends Fragment {
             }
         });
 
-        addCampRecords.setOnClickListener(new View.OnClickListener() {
+        addMatchRecords.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 DataBaseHelperA dbh = new DataBaseHelperA(mCallback.getContext());
-                dbh.retrieveAllPlayersNameAndId("campRecords");
+                dbh.retrieveAllPlayersNameAndId("matchRecords");
             }
         });
 
@@ -144,17 +144,17 @@ public class FullActivityInfo extends Fragment {
                 fullactivityinfoImageView.setImageResource(R.drawable.training_s);
                 activityType = "gymT";
                 break;
-            case "camp":
+            case "match":
                 fullactivityinfoImageView.setImageResource(R.drawable.cmp);
-                activityType = "camp";
+                activityType = "match";
                 break;
             default:
                 fullactivityinfoImageView.setImageResource(R.drawable.ia_logo);
         }
-        if (!(postDataToDisplay[0].equals("Football camp") || postDataToDisplay[0].equals("Fotballkamp"))) {
-            addCampRecords.setEnabled(false);
+        if (!(postDataToDisplay[0].equals("Football match") || postDataToDisplay[0].equals("Fotballkamp"))) {
+            addMatchRecords.setEnabled(false);
         } else {
-            addCampRecords.setEnabled(true);
+            addMatchRecords.setEnabled(true);
         }
 
         fulActivityInfoTopBar.setText(postDataToDisplay[0]);

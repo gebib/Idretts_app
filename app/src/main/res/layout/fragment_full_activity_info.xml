@@ -254,12 +254,12 @@
                 android:textColor="#ffffff" />
 
             <Button
-                android:id="@+id/addRemoveCampRecords"
+                android:id="@+id/addRemoveMatchRecords"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
                 android:layout_below="@+id/showFullActivityInfoEditButton"
-                android:text="add camp records"
+                android:text="add match records"
                 android:textColor="#ffffff" />
 
 

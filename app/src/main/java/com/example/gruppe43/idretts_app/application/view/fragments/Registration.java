@@ -164,7 +164,7 @@ public class Registration extends Fragment implements View.OnClickListener{
     //register new user if valid locally
     private boolean validateUser() {
         Boolean isValid = true;
-        String nameRegEx = "^[a-zA-ZæøåÆØÅ-]\\w{2,20}";
+        String nameRegEx = "^[\\p{L} .'-]+$";
         String passRegEx = "^.{6,}$";
         //format = new SimpleDateFormat("dd/MM/YYYY");
         //String ageFormat = ageET.getText().toString();

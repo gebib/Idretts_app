@@ -51,7 +51,7 @@ public class ProfileView extends Fragment {
     private TextView nAbsFb;
     private TextView nGym;
     private TextView nAbsTheor;
-    private TextView nAbsCamp;
+    private TextView nAbsMatch;
     private TextView nAccidents;
     private TextView nTotalAttended;
 
@@ -112,7 +112,7 @@ public class ProfileView extends Fragment {
         nAbsFb = (TextView) view.findViewById(R.id.nAbsFb);
         nGym = (TextView) view.findViewById(R.id.nGym);
         nAbsTheor = (TextView) view.findViewById(R.id.nAbsTheor);
-        nAbsCamp = (TextView) view.findViewById(R.id.nAbsCamp);
+        nAbsMatch = (TextView) view.findViewById(R.id.nAbsMatch);
 
         nAccidents = (TextView) view.findViewById(R.id.nAccidents);
         nTotalAttended = (TextView) view.findViewById(R.id.nTotalAttended);
@@ -180,7 +180,7 @@ public class ProfileView extends Fragment {
                 nAbsFb.setText(selectedUserIfoData.get(12));
                 nGym.setText(selectedUserIfoData.get(13));
                 nAbsTheor.setText(selectedUserIfoData.get(14));
-                nAbsCamp.setText(selectedUserIfoData.get(15));
+                nAbsMatch.setText(selectedUserIfoData.get(15));
 
                 nAccidents.setText(selectedUserIfoData.get(16));
                 nTotalAttended.setText(selectedUserIfoData.get(17));

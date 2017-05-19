@@ -135,7 +135,7 @@ public class Trainer extends Fragment {
         public void setTrainerActivityIcon(String icon) {
             try {
                 trainerPostIcon = (ImageView) mView.findViewById(R.id.chatSestionImage);
-                if (icon.equals("camp")) {
+                if (icon.equals("match")) {
                     trainerPostIcon.setImageResource(R.drawable.cmp);
                 } else if (icon.equals("training_f")) {//football
                     trainerPostIcon.setImageResource(R.drawable.training_f);

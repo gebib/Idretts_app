@@ -12,7 +12,7 @@ import android.widget.Toast;
 import com.example.gruppe43.idretts_app.R;
 import com.example.gruppe43.idretts_app.application.Authentication.Authentication;
 import com.example.gruppe43.idretts_app.application.chat.Chat;
-import com.example.gruppe43.idretts_app.application.helper_classes.EditCampRecordsDialog;
+import com.example.gruppe43.idretts_app.application.helper_classes.EditMatchRecordsDialog;
 import com.example.gruppe43.idretts_app.application.helper_classes.PrefferencesClass;
 import com.example.gruppe43.idretts_app.application.model.UsersModel;
 import com.example.gruppe43.idretts_app.application.view.fragments.FullActivityInfo;
@@ -137,8 +137,8 @@ public class DataBaseHelperA extends Authentication {
                 activityType = "gymT";
             } else if (title.equals("Theory/meeting") || title.equals("Teori/møte")) {
                 activityType = "Meet";
-            } else if (title.equals("Football camp") || title.equals("Fotballkamp")) {
-                activityType = "camp";
+            } else if (title.equals("Football match") || title.equals("Fotballkamp")) {
+                activityType = "match";
             }
             if (hasRun) {
                 hasRun = false;
@@ -189,7 +189,7 @@ public class DataBaseHelperA extends Authentication {
                                 intVals[1] = intVals[1] + 1;
                             } else if (activityType.equals("Meet")) {
                                 intVals[2] = intVals[2] + 1;
-                            } else if (activityType.equals("camp")) {
+                            } else if (activityType.equals("match")) {
                                 intVals[3] = intVals[3] + 1;
                             }
                         } else if (addOrRemove.equals("delete")) {
@@ -199,7 +199,7 @@ public class DataBaseHelperA extends Authentication {
                                 intVals[1] = intVals[1] - 1;
                             } else if (activityType.equals("Meet")) {
                                 intVals[2] = intVals[2] - 1;
-                            } else if (activityType.equals("camp")) {
+                            } else if (activityType.equals("match")) {
                                 intVals[3] = intVals[3] - 1;
                             }
                         }
@@ -273,7 +273,7 @@ public class DataBaseHelperA extends Authentication {
                                     intVals[1] = intVals[1] + 1;
                                 } else if (activityType.equals("Meet")) {
                                     intVals[2] = intVals[2] + 1;
-                                } else if (activityType.equals("camp")) {
+                                } else if (activityType.equals("match")) {
                                     intVals[3] = intVals[3] + 1;
                                 }
                             } else if (addOrRemove.equals("delete")) {
@@ -283,7 +283,7 @@ public class DataBaseHelperA extends Authentication {
                                     intVals[1] = intVals[1] - 1;
                                 } else if (activityType.equals("Meet")) {
                                     intVals[2] = intVals[2] - 1;
-                                } else if (activityType.equals("camp")) {
+                                } else if (activityType.equals("match")) {
                                     intVals[3] = intVals[3] - 1;
                                 }
                             }
@@ -626,13 +626,13 @@ public class DataBaseHelperA extends Authentication {
                             playerIds.add(userId);
                         }
 
-                        if (whoCalls.equals("campRecords")) {
+                        if (whoCalls.equals("matchRecords")) {
                             String currentUserId = fbAuth.getCurrentUser().getUid();
                             int currentUserIdIndex = playerIds.indexOf(currentUserId);
                             playerIds.remove(currentUserIdIndex);
                             firstNameLastNameArray.remove(currentUserIdIndex);
                                 //so that a user cant select themself
-                            EditCampRecordsDialog ecr = new EditCampRecordsDialog();
+                            EditMatchRecordsDialog ecr = new EditMatchRecordsDialog();
                             ecr.setPlayerNames(firstNameLastNameArray);
                             ecr.setPlayerIds(playerIds);
                             ecr.show(mainActivity.getmFragmentManager(), "ecd");
