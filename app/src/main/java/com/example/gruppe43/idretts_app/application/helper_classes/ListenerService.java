@@ -27,7 +27,7 @@ import java.util.ArrayList;
 //Idretts-app bachelor oppgave 2017
 //Ole-Kristian Steiro, Tasmia Faruque, Gebi Beshir
 
-public class Idretts_App_Service extends Service {
+public class ListenerService extends Service {
     public static boolean serviceRunning = true;
     private static int NOTIFICATION_ID = 1;
     private static int loggedInUser;
@@ -92,27 +92,31 @@ public class Idretts_App_Service extends Service {
             public void onDataChange(DataSnapshot dataSnapshot) {
 
                 if (dataSnapshot.exists()) {
-                    PrefferencesClass pc = new PrefferencesClass(getApplicationContext());
+                    if (serviceRunning) {
+                        PrefferencesClass pc = new PrefferencesClass(getApplicationContext());
 
-                    long locallySavedChildCount = pc.loadLocallySavedTrainerChildCount();
-                    long checkedNewTrainerCHildCount = dataSnapshot.getChildrenCount();
+                        long locallySavedChildCount = pc.loadLocallySavedTrainerChildCount();
+                        long checkedNewTrainerCHildCount = dataSnapshot.getChildrenCount();
 
-                    String restore = pc.loadSharedPrefData("isAdmin");
-                   // System.out.println("////////////////////////// newPost " + checkedNewTrainerCHildCount + " Local " + locallySavedChildCount);
+                        String restore = pc.loadSharedPrefData("isAdmin");
+                        // System.out.println("////////////////////////// newPost " + checkedNewTrainerCHildCount + " Local " + locallySavedChildCount);
 
-                    if (checkedNewTrainerCHildCount > locallySavedChildCount && restore.equals("false")) {// will not notify the trainer himself.
-                     //   System.out.println("//////////////////////////NOTIFY!");
-                        notifyUser(getString(R.string.trainerPostNotifTitle), getString(R.string.trainerHasPostedNewPostText));
-                        pc.saveUpdateOnTrainerChildCount(checkedNewTrainerCHildCount);// update local.
-                    } else if (locallySavedChildCount > checkedNewTrainerCHildCount) {
-                        pc.saveUpdateOnTrainerChildCount(checkedNewTrainerCHildCount);// update local.
+                        if (checkedNewTrainerCHildCount > locallySavedChildCount && restore.equals("false")) {// will not notify the trainer himself.
+                         //   System.out.println("//////////////////////////NOTIFY!");
+                            notifyUser(getString(R.string.trainerPostNotifTitle), getString(R.string.trainerHasPostedNewPostText));
+                            pc.saveUpdateOnTrainerChildCount(checkedNewTrainerCHildCount);// update local.
+                        } else if (locallySavedChildCount > checkedNewTrainerCHildCount) {
+                            pc.saveUpdateOnTrainerChildCount(checkedNewTrainerCHildCount);// update local.
+                        }
+
+                        trainerPosts.removeEventListener(this);
+                        checkForNewMessageFromUser();
                     }
-
-                    trainerPosts.removeEventListener(this);
-                    checkForNewMessageFromUser();
                 }else{
-                    trainerPosts.removeEventListener(this);
-                    checkForNewMessageFromUser();
+                    if (serviceRunning) {
+                        trainerPosts.removeEventListener(this);
+                        checkForNewMessageFromUser();
+                    }
                 }
             }
 
@@ -125,7 +129,7 @@ public class Idretts_App_Service extends Service {
 
     //check for new messages and notify user.
     private void checkForNewMessageFromUser() {
-       // System.out.println("////////////////////////// BG checkMESSAGE");
+        //System.out.println("////////////////////////// BG checkMESSAGE");
         final ArrayList<String> chatNotifDsToBeDeleted = new ArrayList<>();
         final DatabaseReference chatNotifications = FirebaseDatabase.getInstance().getReference().child("ChatNotifications");
         chatNotifications.addValueEventListener(new ValueEventListener() {
@@ -133,23 +137,25 @@ public class Idretts_App_Service extends Service {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
 
-                    FirebaseAuth fbAuth = FirebaseAuth.getInstance();
-                    String currentUserId = fbAuth.getCurrentUser().getUid();
+                    if (serviceRunning) {
+                        FirebaseAuth fbAuth = FirebaseAuth.getInstance();
+                        String currentUserId = fbAuth.getCurrentUser().getUid();
 
-                    Iterable<DataSnapshot> chatNotifIterable = dataSnapshot.getChildren();
-                    for (DataSnapshot chatNotifNodes : chatNotifIterable) {
-                        ChatNotificationModel cnm = chatNotifNodes.getValue(ChatNotificationModel.class);
-                        String notifNodeKey = chatNotifNodes.getKey();
-                        String toUser = cnm.getToUserKey();
-                        if (toUser.equals(currentUserId)) {// t hen the notification is for t his user!
-                            notifyUser("Message.", cnm.getSenderName() + " has sent you a new message!");
-                            chatNotifDsToBeDeleted.add(notifNodeKey); // all this users notification nodes need to be deleted after the user is notified.
+                        Iterable<DataSnapshot> chatNotifIterable = dataSnapshot.getChildren();
+                        for (DataSnapshot chatNotifNodes : chatNotifIterable) {
+                            ChatNotificationModel cnm = chatNotifNodes.getValue(ChatNotificationModel.class);
+                            String notifNodeKey = chatNotifNodes.getKey();
+                            String toUser = cnm.getToUserKey();
+                            if (toUser.equals(currentUserId)) {// t hen the notification is for t his user!
+                                notifyUser("Message.", cnm.getSenderName() + " has sent you a new message!");
+                                chatNotifDsToBeDeleted.add(notifNodeKey); // all this users notification nodes need to be deleted after the user is notified.
+                            }
                         }
+                        for (int i = 0; i < chatNotifDsToBeDeleted.size(); i++) {
+                            chatNotifications.child(chatNotifDsToBeDeleted.get(i)).removeValue();
+                        }
+                        chatNotifications.removeEventListener(this);
                     }
-                    for (int i = 0; i < chatNotifDsToBeDeleted.size(); i++) {
-                        chatNotifications.child(chatNotifDsToBeDeleted.get(i)).removeValue();
-                    }
-                    chatNotifications.removeEventListener(this);
                 }
             }
 

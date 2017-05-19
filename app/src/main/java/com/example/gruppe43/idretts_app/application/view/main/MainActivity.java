@@ -30,11 +30,10 @@ import com.example.gruppe43.idretts_app.R;
 import com.example.gruppe43.idretts_app.application.Authentication.DatabaseInterface.DataBaseHelperA;
 import com.example.gruppe43.idretts_app.application.Authentication.DatabaseInterface.DataBaseHelperB;
 import com.example.gruppe43.idretts_app.application.Authentication.DatabaseInterface.DatabaseHelperC;
-import com.example.gruppe43.idretts_app.application.helper_classes.Idretts_App_Service;
+import com.example.gruppe43.idretts_app.application.helper_classes.ListenerService;
 import com.example.gruppe43.idretts_app.application.helper_classes.PrefferencesClass;
 import com.example.gruppe43.idretts_app.application.interfaces.FragmentActivityInterface;
 import com.example.gruppe43.idretts_app.application.view.fragments.Login;
-import com.example.gruppe43.idretts_app.application.chat.Chat;
 import com.example.gruppe43.idretts_app.application.view.fragments.PlayerActivityRegistration;
 import com.example.gruppe43.idretts_app.application.view.fragments.TrainerActivityRegistration;
 import com.example.gruppe43.idretts_app.application.view.fragments.Player;
@@ -176,8 +175,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     protected void onResume() {
         super.onResume();
-        //stopService(new Intent(getBaseContext(), Idretts_App_Service.class));// for sstoping the service!
-            startService(new Intent(getBaseContext(), Idretts_App_Service.class));
+        //stopService(new Intent(getBaseContext(), ListenerService.class));// for sstoping the service!
             DatabaseHelperC dbhc = new DatabaseHelperC(this);
             dbhc.initiateDataInRecyclerViewForTeam();
 
@@ -193,7 +191,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     protected void onPause() {
         super.onPause();
-        startService(new Intent(getBaseContext(), Idretts_App_Service.class));
     }
 
     @Override
@@ -259,14 +256,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.toolbar_home) {
-           // startService(new Intent(getBaseContext(), Idretts_App_Service.class));
+           // startService(new Intent(getBaseContext(), ListenerService.class));
              FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
             mFragmentManager.popBackStack();
             fragmentTransaction.replace(R.id.containerView, new Tabs()).commit();
             return true;
         }
         if (id == R.id.toolbar_messages) {
-            //stopService(new Intent(getBaseContext(), Idretts_App_Service.class));//
+            //stopService(new Intent(getBaseContext(), ListenerService.class));//
             DataBaseHelperA dbh = new DataBaseHelperA(this);
             dbh.retrieveAllPlayersNameAndId("chat");
         }
@@ -386,20 +383,23 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             DatabaseHelperC dbhc = new DatabaseHelperC(this);
             dbhc.initiateDataInRecyclerViewForTeam();
         }
+        startService(new Intent(getBaseContext(), ListenerService.class));
     }
 
     //set state sign out!
     @Override
     public void onSignOut() {
+        ListenerService.serviceRunning = false;
+        stopService(new Intent(getBaseContext(), ListenerService.class));//stop service
+        if (mAuth.getCurrentUser() != null) {
+            mAuth.signOut();
+        }
         prefs.saveSharedPrefData("isAdmin", "default");
         onNewActivityRegisterPage = false;
         actionBar.hide();
         fab.hide();
         isTrainerSignedIn = null;
         isPlayerSignedIn = null;
-        if (mAuth.getCurrentUser() != null) {
-            mAuth.signOut();
-        }
         FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.containerView, new Login()).commit();
     }
