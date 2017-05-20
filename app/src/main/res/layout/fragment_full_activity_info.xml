@@ -49,7 +49,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true"
-                android:text="Title:"
+                android:text="@string/title"
                 android:textColor="@color/black" />
 
 
@@ -60,7 +60,7 @@
                 android:layout_alignBaseline="@+id/fullactivityinfoStartEndTime"
                 android:layout_alignBottom="@+id/fullactivityinfoStartEndTime"
                 android:layout_alignStart="@+id/activityDateTV"
-                android:text="Time:"
+                android:text="@string/time"
                 android:textColor="@color/black" />
 
 
@@ -70,7 +70,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
                 android:layout_below="@+id/activityTitleType"
-                android:text="Date:"
+                android:text="@string/date"
                 android:textColor="@color/black" />
 
             <TextView
@@ -119,7 +119,7 @@
                 android:layout_alignParentStart="true"
                 android:layout_below="@+id/activityTimeTV"
                 android:layout_toStartOf="@+id/fullactivityinfoStartEndTime"
-                android:text="Place:"
+                android:text="@string/place"
                 android:textColor="@color/black" />
 
             <TextView
@@ -130,7 +130,7 @@
                 android:layout_below="@+id/activityPlaceTV"
                 android:layout_toStartOf="@+id/fullactivityinfoPlaceTV"
                 android:alpha="0.5"
-                android:text="Posted:" />
+                android:text="@string/posted" />
 
 
             <TextView

@@ -43,7 +43,7 @@ public class ProfileView extends Fragment {
     public static TextView playerTypeText;
     private TextView numberOfminutePlayedText;
     private TextView numberOfRedCardText;
-    private TextView numberOfGreenCardText;
+    //private TextView numberOfGreenCardText;
     private TextView numberOfYellowCardText;
     private TextView numberOfPerfectPassingsText;
     private TextView personalActivityActivitiesText;
@@ -103,7 +103,7 @@ public class ProfileView extends Fragment {
         playerTypeText = (TextView) view.findViewById(R.id.playerTypeText);
         numberOfminutePlayedText = (TextView) view.findViewById(R.id.numberOfminutePlayedText);
         numberOfRedCardText = (TextView) view.findViewById(R.id.numberOfRedCardText);
-        numberOfGreenCardText = (TextView) view.findViewById(R.id.numberOfGreenCardText);
+        //numberOfGreenCardText = (TextView) view.findViewById(R.id.numberOfGreenCardText);
         numberOfYellowCardText = (TextView) view.findViewById(R.id.numberOfYellowCardText);
         numberOfPerfectPassingsText = (TextView) view.findViewById(R.id.numberOfPerfectPassingsText);
 
@@ -171,7 +171,7 @@ public class ProfileView extends Fragment {
                 playerTypeText.setText(selectedUserIfoData.get(5));
                 numberOfminutePlayedText.setText(selectedUserIfoData.get(6));
                 numberOfRedCardText.setText(selectedUserIfoData.get(7));
-                numberOfGreenCardText.setText(selectedUserIfoData.get(8));
+                //numberOfGreenCardText.setText(selectedUserIfoData.get(8));
                 numberOfYellowCardText.setText(selectedUserIfoData.get(9));
                 numberOfPerfectPassingsText.setText(selectedUserIfoData.get(10));
 

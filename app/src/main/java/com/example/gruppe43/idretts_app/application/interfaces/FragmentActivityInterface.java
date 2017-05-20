@@ -5,9 +5,8 @@ import android.support.v4.app.FragmentManager;
 
 import com.example.gruppe43.idretts_app.application.view.main.MainActivity;
 
-/**
- * Created by gebi9 on 18-Mar-17.
- */
+//Idretts-app bachelor oppgave 2017
+//Ole-Kristian Steiro, Tasmia Faruque, Gebi Beshir
 
 public interface FragmentActivityInterface {
     //void currentShowingFragment(String tabId);

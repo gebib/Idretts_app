@@ -1,13 +1,8 @@
 package com.example.gruppe43.idretts_app.application.helper_classes;
-import android.annotation.SuppressLint;
-import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.app.TimePickerDialog;
 import android.os.Bundle;
-
-import android.text.format.DateFormat;
-import android.widget.TimePicker;
 
 import java.util.Calendar;
 

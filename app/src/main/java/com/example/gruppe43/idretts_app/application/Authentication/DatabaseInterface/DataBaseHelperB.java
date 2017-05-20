@@ -3,7 +3,6 @@ package com.example.gruppe43.idretts_app.application.Authentication.DatabaseInte
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
-import android.support.annotation.NonNull;
 import android.text.format.Time;
 import android.util.Log;
 import android.widget.Toast;
@@ -13,9 +12,6 @@ import com.example.gruppe43.idretts_app.application.model.PlayerPostsModel;
 import com.example.gruppe43.idretts_app.application.model.TrainerPostsModel;
 import com.example.gruppe43.idretts_app.application.model.UsersModel;
 import com.example.gruppe43.idretts_app.application.view.main.MainActivity;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseException;
@@ -270,7 +266,7 @@ public class DataBaseHelperB extends DataBaseHelperA {
 
     }
 
-    /*a user can have more tan ONE register/////////////////////*/
+    /*a user can have more than ONE register/////////////////////*/
     //register absent players to activity id. FOR if TEAM ABS REVISIT SHOW ABSENT PURPoSE
     private void registerAbsenceTableInDb(ArrayList<String> absentPlayersIds, String activityId) {
         ProgressDialog progressDialog = new ProgressDialog(mainActivity);
@@ -343,7 +339,7 @@ public class DataBaseHelperB extends DataBaseHelperA {
         });
     }
 
-    public void checkOutdatedPlayerPosts() {  //TODO if activity deleted AUTO no absence update!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    public void checkOutdatedPlayerPosts() {
         final DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference().child("PlayerPosts");
        // final ArrayList<DataSnapshot> listOfnodesToBeDeleted = new ArrayList<>();
         dbRef.addValueEventListener(new ValueEventListener() {

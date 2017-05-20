@@ -11,23 +11,23 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:id="@+id/teamTopInfo"
-        android:padding="10dp"
+
         android:background="@drawable/gradient_bg"
-        android:layout_height="50dp">
+        android:layout_height="30dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Team: Idrets App team"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentStart="true" />
+            android:text="@string/football_team_members"
+            android:background="#000000"
+            android:gravity="center"
+            android:textColor="#ffffff"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentEnd="true"
-            android:text="More team info" />
     </RelativeLayout>
 
     <android.support.v7.widget.RecyclerView
@@ -37,21 +37,6 @@
         android:layout_below="@+id/teamTopInfo"
         android:layout_alignParentStart="true">
     </android.support.v7.widget.RecyclerView>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="5dp"
-        android:text="Trainer: Abdir Abdirahman"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Adress: Ulevol Stadion"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true" />
 
     <RelativeLayout
         android:id="@+id/adtoAbsentHolderRLayout"
@@ -68,7 +53,7 @@
             android:layout_alignParentEnd="true"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
-            android:text="ADD TO ABSENT LISTS"
+            android:text="@string/add_to_absent_lists"
             android:textColor="#ffffff" />
     </RelativeLayout>
 

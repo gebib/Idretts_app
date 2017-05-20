@@ -34,10 +34,7 @@ import java.util.Random;
 
 public class DatabaseHelperC extends DataBaseHelperB {
     private boolean absenceIteratedOnce;
-    private boolean removedAbsentedNodes;
     private boolean teamDataPulled;
-    private boolean incrementPlayerAbsents;
-    private boolean removeActivityFromAbsenceRecord;
     private boolean getProfileDateRun;
     private boolean getAditionalActivityInfoFromTrainer;
     private boolean getTrainerKey;
@@ -46,10 +43,7 @@ public class DatabaseHelperC extends DataBaseHelperB {
     public DatabaseHelperC(MainActivity mainActivity) {
         super(mainActivity);
         absenceIteratedOnce = false;
-        removedAbsentedNodes = false;
         teamDataPulled = false;
-        incrementPlayerAbsents = false;
-        removeActivityFromAbsenceRecord = false;
         getProfileDateRun = false;
         getAditionalActivityInfoFromTrainer = false;
         getTrainerKey = false;

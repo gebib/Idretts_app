@@ -158,13 +158,15 @@
             android:background="@drawable/gradient_bg"
             android:padding="20dp">
 
+
+
             <TextView
                 android:id="@+id/dateRegistered"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Date registered:"
-                android:layout_alignEnd="@+id/playerPosition"
-                android:layout_alignParentStart="true" />
+                android:text="@string/date_registered"
+                android:layout_alignParentStart="true"
+                android:layout_alignEnd="@+id/textView2" />
 
             <TextView
                 android:id="@+id/dateRegisteredDate"
@@ -181,9 +183,9 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
                 android:layout_below="@+id/dateRegistered"
-                android:text="Player type:"
+                android:text="@string/player_type_profile"
                 android:textColor="@color/black"
-                android:layout_alignEnd="@+id/numberOfminutePlayed" />
+                android:layout_alignEnd="@+id/dateRegistered" />
 
             <TextView
                 android:id="@+id/playerTypeText"
@@ -202,9 +204,9 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
                 android:layout_below="@+id/playerPosition"
-                android:text="Minutes played:"
+                android:text="@string/minutes_played_label"
                 android:textColor="@color/black"
-                android:layout_alignEnd="@+id/numberOfRedCard" />
+                android:layout_alignEnd="@+id/playerPosition" />
 
             <TextView
                 android:id="@+id/numberOfminutePlayedText"
@@ -223,9 +225,9 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
                 android:layout_below="@+id/numberOfminutePlayed"
-                android:text="Red card:"
+                android:text="@string/red_card_label"
                 android:textColor="@color/black"
-                android:layout_alignEnd="@+id/numberOfGreenCard" />
+                android:layout_alignEnd="@+id/numberOfminutePlayed" />
 
             <TextView
                 android:id="@+id/numberOfRedCardText"
@@ -239,55 +241,37 @@
                 android:textColor="#c60000" />
 
             <TextView
-                android:id="@+id/numberOfGreenCard"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_below="@+id/numberOfRedCard"
-                android:text="Green card:"
-                android:textColor="@color/black"
-                android:layout_alignEnd="@+id/numberOfYellowCard" />
-
-            <TextView
-                android:id="@+id/numberOfGreenCardText"
-                android:layout_width="wrap_content"
-                android:gravity="center"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_alignStart="@+id/numberOfRedCardText"
-                android:layout_below="@+id/numberOfRedCardText"
-                android:text="--"
-                android:textColor="#2eb335" />
-
-            <TextView
                 android:id="@+id/numberOfYellowCard"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_below="@+id/numberOfGreenCard"
+
                 android:text="Yellow card:"
                 android:textColor="@color/black"
+                android:layout_below="@+id/numberOfRedCard"
+                android:layout_alignParentStart="true"
                 android:layout_alignEnd="@+id/textView2" />
 
             <TextView
                 android:id="@+id/numberOfYellowCardText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
                 android:gravity="center"
-                android:layout_alignStart="@+id/numberOfGreenCardText"
-                android:layout_below="@+id/numberOfGreenCardText"
+
                 android:text="--"
-                android:textColor="#FFAEA800" />
+                android:textColor="#FFAEA800"
+                android:layout_below="@+id/numberOfRedCard"
+
+                android:layout_alignStart="@+id/numberOfminutePlayedText"
+                android:layout_alignParentEnd="true" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_below="@+id/numberOfYellowCard"
                 android:text="Perfect passings:"
                 android:textColor="@color/black"
-                android:id="@+id/textView2" />
+                android:id="@+id/textView2"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentStart="true" />
 
             <TextView
                 android:id="@+id/numberOfPerfectPassingsText"
@@ -311,7 +295,7 @@
             android:layout_alignTop="@+id/secondRelativeLayout"
             android:background="@color/black"
             android:gravity="center"
-            android:text="Player total match credentials"
+            android:text="@string/player_total_match_credentials"
             android:textColor="#ffffff" />
 
         <TextView
@@ -322,7 +306,7 @@
             android:layout_below="@+id/secondRelativeLayout"
             android:background="@color/black"
             android:gravity="center"
-            android:text="Activity attendance status"
+            android:text="@string/activity_attendance_status"
             android:textColor="#ffffff" />
 
         <RelativeLayout
@@ -340,7 +324,7 @@
 
                 android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true"
-                android:text="Personal activities:"
+                android:text="@string/personal_activities"
                 android:textColor="@color/black" />
 
             <TextView
@@ -381,7 +365,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
                 android:layout_below="@+id/nAbsFb"
-                android:text="Gymnastic activity:"
+                android:text="@string/gymnastic_activity"
                 android:textColor="@color/black" />
 
             <TextView
@@ -402,7 +386,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
                 android:layout_below="@+id/absGym"
-                android:text="Theory/meeting:"
+                android:text="@string/theory_meeting"
                 android:layout_alignEnd="@+id/absGym" />
 
             <TextView
@@ -421,7 +405,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/black"
-                android:text="Match activity:"
+                android:text="@string/match_activity"
                 android:layout_below="@+id/absTheory"
                 android:layout_alignParentStart="true"
                 android:layout_alignEnd="@+id/textView13" />
@@ -444,7 +428,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
                 android:layout_below="@+id/absMatch"
-                android:text="Accidents:"
+                android:text="@string/accidents_label"
                 android:layout_alignEnd="@+id/absGym" />
 
             <TextView
@@ -463,7 +447,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
                 android:layout_below="@+id/textView13"
-                android:text="Total attended:"
+                android:text="@string/total_attended"
                 android:layout_alignEnd="@+id/textView13" />
 
             <TextView

@@ -30,7 +30,7 @@ public class EditMatchRecordsDialog extends DialogFragment {
     private TextView minutesPlayed;
     private TextView redCards;
     private TextView yellowCards;
-    private TextView greenCards;
+   //private TextView greenCards;
     private TextView perfectPasses;
     private TextView scores;
     private TextView accidents;
@@ -39,7 +39,7 @@ public class EditMatchRecordsDialog extends DialogFragment {
     private int numMinutPlayed;
     private int numRedCard;
     private int numYellowCard;
-    private int numGreenCard;
+    //private int numGreenCard;
     private int numPerfectPasses;
     private int numScores;
     private int numAccidents;
@@ -61,7 +61,6 @@ public class EditMatchRecordsDialog extends DialogFragment {
     public void onAttach(Context context) {
         super.onAttach(context);
         try {
-            System.out.print("///////////////////////////////??");
             mCallback = (FragmentActivityInterface) context;
         } catch (ClassCastException e) {
             throw new ClassCastException(context.toString()
@@ -80,7 +79,7 @@ public class EditMatchRecordsDialog extends DialogFragment {
         minutesPlayed = (EditText) view.findViewById(R.id.myStatus);
         redCards = (EditText) view.findViewById(R.id.redCards);
         yellowCards = (EditText) view.findViewById(R.id.yellowCards);
-        greenCards = (EditText) view.findViewById(R.id.greenCards);
+        //greenCards = (EditText) view.findViewById(R.id.greenCards);
         perfectPasses = (EditText) view.findViewById(R.id.myPlayerNr);
         scores = (EditText) view.findViewById(R.id.myPlayerType);
         accidents = (EditText) view.findViewById(R.id.accidentTV);
@@ -97,7 +96,7 @@ public class EditMatchRecordsDialog extends DialogFragment {
                         String sNumMinPlayed = minutesPlayed.getText().toString().trim();
                         String sNumRedCard = redCards.getText().toString().trim();
                         String sNumYellowCard = yellowCards.getText().toString().trim();
-                        String sNumGreenCard = greenCards.getText().toString().trim();
+                        //String sNumGreenCard = greenCards.getText().toString().trim();
                         String sNumPerfectPasses = perfectPasses.getText().toString().trim();
                         String sNumScores = scores.getText().toString().trim();
                         String sNumAccidents = accidents.getText().toString().trim();
@@ -117,11 +116,11 @@ public class EditMatchRecordsDialog extends DialogFragment {
                         } else {
                             numYellowCard = 0;
                         }
-                        if (!sNumGreenCard.equals("")) {
+                        /*if (!sNumGreenCard.equals("")) {
                             numGreenCard = Integer.parseInt(sNumGreenCard);
                         } else {
                             numGreenCard = 0;
-                        }
+                        }*/
                         if (!sNumPerfectPasses.equals("")) {
                             numPerfectPasses = Integer.parseInt(sNumPerfectPasses);
                         } else {
@@ -143,7 +142,7 @@ public class EditMatchRecordsDialog extends DialogFragment {
                     }
                     getDialog().dismiss();
                     DataBaseHelperB dbh = new DataBaseHelperB(mCallback.getContext());
-                    dbh.registerPlayerMatchDataRecords(numMinutPlayed, numRedCard, numYellowCard, numGreenCard, numAccidents, numPerfectPasses, numScores, playerId);
+                    dbh.registerPlayerMatchDataRecords(numMinutPlayed, numRedCard, numYellowCard, 0/*numGreenCard*/, numAccidents, numPerfectPasses, numScores, playerId);
                 }
             }
         });

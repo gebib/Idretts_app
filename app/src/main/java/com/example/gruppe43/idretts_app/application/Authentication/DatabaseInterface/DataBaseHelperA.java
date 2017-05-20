@@ -38,8 +38,6 @@ public class DataBaseHelperA extends Authentication {
     private String postOwnerUserLastName;
     private static String[] activityDataCache;
     private DatabaseReference trainer_posts;
-    private String firstANdLastNameOfPlayerPostOwner;
-    private String nFbAct, nGymAct, nMeetAct, nCmpAct;
     private boolean hasRun;
     private boolean hasBeenCalledOnce;
     private boolean defaultAbsentValuesIsSet;
@@ -606,7 +604,7 @@ public class DataBaseHelperA extends Authentication {
         firstNameLastNameArray.add("");
         playerIds.add("");
         final DatabaseReference fbUsersDbRef = FirebaseDatabase.getInstance().getReference().child("Users");
-        fbUsersDbRef.addValueEventListener(new ValueEventListener() {////////////////////////////////////////////////////////////////////////////////////////////////
+        fbUsersDbRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (!dialogHasRun) {

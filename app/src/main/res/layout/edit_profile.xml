@@ -33,7 +33,7 @@
                 android:inputType="text"
                 android:layout_marginRight="3dp"
                 android:layout_height="wrap_content"
-                android:hint="My Status:"
+                android:hint="@string/my_status"
                 android:textColorHint="#b1b1b1"
                 android:layout_alignParentTop="true"
                 android:layout_alignStart="@+id/myPlayerNr"
@@ -48,7 +48,7 @@
                 android:inputType="numberDecimal"
                 android:layout_marginTop="10dp"
                 android:layout_height="wrap_content"
-                android:hint="My player Nr:"
+                android:hint="@string/my_player_nr"
                 android:textColorHint="#b1b1b1"
                 android:layout_below="@+id/myStatus"
                 android:layout_alignEnd="@+id/myPlayerType"
@@ -91,7 +91,7 @@
             android:layout_alignTop="@+id/secondRelativeLayout"
             android:background="@color/black"
             android:gravity="center"
-            android:text="My status"
+            android:text="@string/my_status_topBar"
             android:textColor="#ffffff" />
 
 

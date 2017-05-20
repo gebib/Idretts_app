@@ -32,7 +32,7 @@ import com.google.firebase.database.ValueEventListener;
 public class Authentication {
     protected FirebaseAuth fbAuth;
     protected String nowDate, nowMonth, nowYear, nowHour, nowMinute;
-    private static final String ONE_TIME_INITIALIZATION_CODE = "1234";
+    private static final String ONE_TIME_INIT_TRAINER_CODE = "2017";
     private String email;
     private String pass;
     private DataBaseHelperA databaseHelper;
@@ -45,8 +45,6 @@ public class Authentication {
         fbAuth = FirebaseAuth.getInstance();
         this.mainActivity = mainActivity;
     }
-
-
 
     public void signIn(String email, String pass) {
         final ProgressDialog progressDialog = new ProgressDialog(mainActivity);
@@ -80,7 +78,7 @@ public class Authentication {
     }
 
     //assign the first user as the adminstrator.
-    public void setIsAdminOrPlayerSignedIn() {//////////////////////////////set value using KEY//////////////////////////
+    public void setIsAdminOrPlayerSignedIn() {
         String currentUserId = fbAuth.getCurrentUser().getUid();
         final DatabaseReference fbUsersDbRef = FirebaseDatabase.getInstance().getReference().child("Users");
         fbUsersDbRef.child(currentUserId).addValueEventListener(new ValueEventListener() {
@@ -129,13 +127,13 @@ public class Authentication {
                     current_user_db.child("firstName").setValue(firstName);
                     current_user_db.child("lastName").setValue(lastName);
                     current_user_db.child("playerAge").setValue(playerAge);
-                    current_user_db.child("image").setValue("default");//TODO registering image
+                    current_user_db.child("image").setValue("default");
                     current_user_db.child("registeredDate").setValue(registeredDate);
-                    current_user_db.child("confirmedByCoach").setValue(confirmation);//TODO coach need to confirm and user is restricted until then, remove auto or manually if not confirmed
+                    current_user_db.child("confirmedByCoach").setValue(confirmation);
                     current_user_db.child("isAdmin").setValue("false");
-                    current_user_db.child("playerNr").setValue("unknown");//TODO
-                    current_user_db.child("playerType").setValue("unknown");//TODO
-                    current_user_db.child("status").setValue("Active");// TODO change when abcence registered
+                    current_user_db.child("playerNr").setValue("unknown");
+                    current_user_db.child("playerType").setValue("unknown");
+                    current_user_db.child("status").setValue("Active");
 
                     //modified separately
                     current_user_db.child("absFb").setValue("0");
@@ -254,7 +252,7 @@ public class Authentication {
         alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
                 String value = input.getText().toString();
-                if (value.equals(ONE_TIME_INITIALIZATION_CODE)) {
+                if (value.equals(ONE_TIME_INIT_TRAINER_CODE)) {
                     mainActivity.initAfterLogin("admin");
                     databaseHelper = new DataBaseHelperA(mainActivity);
                     databaseHelper.setIsAdmin();//only first time.

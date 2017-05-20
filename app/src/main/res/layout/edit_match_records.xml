@@ -84,17 +84,19 @@
                 android:id="@+id/yellowCards"
                 android:layout_width="40dp"
                 android:textSize="20dp"
+                android:layout_marginTop="10dp"
                 android:background="@drawable/round_corners"
                 android:gravity="center"
                 android:inputType="numberDecimal"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
                 android:hint="@string/yellow_card"
                 android:textColorHint="#b1b1b1"
                 android:layout_below="@+id/redCards"
-                android:layout_alignStart="@+id/greenCards"
-                android:layout_alignEnd="@+id/greenCards" />
+                android:layout_alignStart="@+id/accidentTV"
+                android:layout_alignEnd="@+id/accidentTV" />
 
+
+            <!--
             <EditText
                 android:id="@+id/greenCards"
                 android:layout_width="40dp"
@@ -109,6 +111,7 @@
                 android:layout_below="@+id/yellowCards"
                 android:layout_alignStart="@+id/accidentTV"
                 android:layout_alignEnd="@+id/accidentTV" />
+                -->
 
             <EditText
                 android:id="@+id/myPlayerNr"
@@ -141,7 +144,7 @@
                 android:inputType="numberDecimal"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:hint="Score:"
+                android:hint="@string/score"
                 android:textColorHint="#b1b1b1"
                 android:layout_below="@+id/myPlayerNr"
                 android:layout_alignStart="@+id/redCards"
@@ -157,12 +160,12 @@
                 android:id="@+id/allUsersSpinner"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
                 android:textColor="#ffffff"
                 android:text="@string/registerDialog"
-                android:layout_marginTop="10dp"
                 android:layout_below="@+id/accidentTV"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentEnd="true" />
+                android:layout_alignEnd="@+id/myStatus"
+                android:layout_alignStart="@+id/accidentTV" />
 
             <ImageView
                 android:layout_width="20dp"
@@ -172,32 +175,34 @@
                 android:layout_alignEnd="@+id/imageView" />
 
             <ImageView
-                android:id="@+id/imageView5"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 app:srcCompat="@drawable/yellow_card"
                 android:layout_alignTop="@+id/yellowCards"
                 android:layout_alignEnd="@+id/imageView4" />
 
+            <!--
             <ImageView
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 app:srcCompat="@drawable/green_card"
                 android:layout_alignTop="@+id/greenCards"
                 android:layout_alignStart="@+id/imageView5" />
+                -->
+
 
             <EditText
                 android:id="@+id/accidentTV"
                 android:layout_width="170dp"
+                android:layout_marginTop="10dp"
                 android:layout_height="wrap_content"
                 android:background="@drawable/round_corners"
-                android:layout_marginTop="15dp"
-                android:hint="Accidents:"
-                android:textColor="#ffffff"
+                android:hint="@string/accidents"
+                android:textColorHint="#b1b1b1"
                 android:gravity="center"
                 android:ems="10"
                 android:inputType="number"
-                android:layout_below="@+id/greenCards"
+                android:layout_below="@+id/yellowCards"
                 android:layout_centerHorizontal="true" />
 
 

@@ -11,10 +11,7 @@ import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
 import com.example.gruppe43.idretts_app.R;
-import com.example.gruppe43.idretts_app.application.model.ChatModel;
 import com.example.gruppe43.idretts_app.application.model.ChatNotificationModel;
-import com.example.gruppe43.idretts_app.application.model.PlayerPostsModel;
-import com.example.gruppe43.idretts_app.application.model.UsersModel;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -30,7 +27,6 @@ import java.util.ArrayList;
 public class ListenerService extends Service {
     public static boolean serviceRunning = false;
     private static int NOTIFICATION_ID = 1;
-    private static int loggedInUser;
 
     //BakgrunnService klassen kan ha flere traader saa vi maa ha id for hver service traad.
 
@@ -54,7 +50,7 @@ public class ListenerService extends Service {
             synchronized (this) {
                 while (serviceRunning) {
                     try {
-                        wait(2000);//Interval for sjekking i bakgrunn service 1000x = 1 sekund
+                        wait(3000);//Interval for sjekking i bakgrunn service 1000x = 1 sekund
                     } catch (InterruptedException e) {
                         Log.i("bg Servic", "wait interrupted!");
                     }
@@ -147,7 +143,7 @@ public class ListenerService extends Service {
 
                             if(toUser != null && notifNodeKey!=null){
                                 if (toUser.equals(currentUserId)) {// then the notification is for t his user!
-                                    notifyUser("Message.", cnm.getSenderName() + " has sent you a new message!");
+                                    notifyUser("Message", cnm.getSenderName() + getString(R.string.messageNotifText));
                                     chatNotifDsToBeDeleted.add(notifNodeKey); // all this users notification nodes need to be deleted after the user is notified.
                                 }
                             }

@@ -17,24 +17,18 @@ import android.widget.TextView;
 
 import com.example.gruppe43.idretts_app.R;
 import com.example.gruppe43.idretts_app.application.Authentication.DatabaseInterface.DataBaseHelperA;
-import com.example.gruppe43.idretts_app.application.helper_classes.PrefferencesClass;
 import com.example.gruppe43.idretts_app.application.interfaces.FragmentActivityInterface;
 import com.example.gruppe43.idretts_app.application.model.PlayerPostsModel;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseException;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.squareup.picasso.Callback;
-import com.squareup.picasso.NetworkPolicy;
-import com.squareup.picasso.Picasso;
+
 
 public class Player extends Fragment {
     private DatabaseReference fbDbRef;
-    private DatabaseReference fbDbUsersRef;
     private DataBaseHelperA databaseHelper;
     private FragmentActivityInterface mCallback;
-    private PrefferencesClass prefs;
     private RecyclerView recyclerViewPlayerRV;
 
 
@@ -58,7 +52,6 @@ public class Player extends Fragment {
         recyclerViewPlayerRV = (RecyclerView) view.findViewById(R.id.recyclerViewPlayer);
 
         fbDbRef = FirebaseDatabase.getInstance().getReference().child("PlayerPosts");
-        fbDbUsersRef = FirebaseDatabase.getInstance().getReference().child("Users");
 
 
         try {

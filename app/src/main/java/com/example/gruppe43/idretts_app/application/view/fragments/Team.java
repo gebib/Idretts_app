@@ -18,14 +18,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.gruppe43.idretts_app.R;
-import com.example.gruppe43.idretts_app.application.Authentication.DatabaseInterface.DataBaseHelperA;
 import com.example.gruppe43.idretts_app.application.Authentication.DatabaseInterface.DataBaseHelperB;
 import com.example.gruppe43.idretts_app.application.Authentication.DatabaseInterface.DatabaseHelperC;
-import com.example.gruppe43.idretts_app.application.helper_classes.PrefferencesClass;
 import com.example.gruppe43.idretts_app.application.interfaces.FragmentActivityInterface;
 import com.example.gruppe43.idretts_app.application.model.UsersModel;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseException;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -40,11 +37,9 @@ import java.util.ArrayList;
 
 public class Team extends Fragment {
 
-    private DatabaseReference fbDbRef;
+
     private DatabaseReference fbDbUsersRef;
-    private DataBaseHelperA databaseHelper;
     private FragmentActivityInterface mCallback;
-    private PrefferencesClass prefs;
     private RecyclerView recyclerViewTeamRV;
     static boolean isForCheckAbsence;
     private RelativeLayout adtoAbsentHolderRLayout;
@@ -97,8 +92,6 @@ public class Team extends Fragment {
         listOfClicked = new ArrayList<>();
         recyclerViewTeamRV = (RecyclerView) view.findViewById(R.id.recyclerViewTeam);
 
-
-        fbDbRef = FirebaseDatabase.getInstance().getReference().child("PlayerPosts");
         fbDbUsersRef = FirebaseDatabase.getInstance().getReference().child("Users");
 
         adtoAbsentHolderRLayout = (RelativeLayout) view.findViewById(R.id.adtoAbsentHolderRLayout);
