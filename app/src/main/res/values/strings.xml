@@ -145,5 +145,12 @@
     <string name="reset_all_data_to_default_state">Reset all data</string>
     <string name="save_players_data">Save player data</string>
     <string name="coackckak">Trainer has posted new activity!</string>
-
+    <string name="add_absence">add absence</string>
+    <string name="add_match_records">add match records</string>
+    <string-array name="activity_type">
+        <item>Football training</item>
+        <item>Gym/Strength</item>
+        <item>Theory/meeting</item>
+        <item>Football match"</item>
+    </string-array>
 </resources>

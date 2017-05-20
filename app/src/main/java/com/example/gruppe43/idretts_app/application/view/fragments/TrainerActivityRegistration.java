@@ -90,8 +90,8 @@ public class TrainerActivityRegistration extends Fragment {
         nonFunctionalEditTextForUse = (EditText) view.findViewById(R.id.makeGapAndForFocusShiftingPurpose);
         seekBarPersentageDisplay = (TextView) view.findViewById(R.id.sliderPercentage);
 
-        String[] activityType = {"Football training", "Gym/Strength", "Theory/meeting", "Football match"};
-        ArrayAdapter<String> actTypeSpinnerArray = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, activityType);
+        //String[] activityType = {"Football training", "Gym/Strength", "Theory/meeting", "Football match"};
+        ArrayAdapter<CharSequence> actTypeSpinnerArray = ArrayAdapter.createFromResource(getContext(), R.array.activity_type, android.R.layout.simple_spinner_item);
         actTypeSpinnerArray.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         newActSpinnerActivityType.setAdapter(actTypeSpinnerArray);
         newActSpinnerActivityType.setSelection(0);

@@ -137,10 +137,17 @@
     <string name="personal_activities">Egentrening:</string>
     <string name="gymnastic_activity">Gymnastikk aktivitet:</string>
     <string name="theory_meeting">Teori/møte:</string>
-    <string name="match_activity">Kamp aktivitet:</string>
+    <string name="match_activity">Kamp-aktivitet:</string>
     <string name="accidents_label">Skader:</string>
     <string name="total_attended">Totall deltatakelse:</string>
     <string name="football_team_members">Fotball lag medlemmer</string>
-    <string name="add_to_absent_lists">LEGG TIL FRAVÆR</string>
     <string name="intensity">Intensity</string>
+    <string name="add_absence">legg til fravær</string>
+    <string name="add_match_records">Kamp-statistikk</string>
+    <string-array name="activity_type">
+        <item>Fotballtrening</item>
+        <item>Gym/Styrke</item>
+        <item>Teori/Møte</item>
+        <item>Fotballkamp"</item>
+    </string-array>
 </resources>

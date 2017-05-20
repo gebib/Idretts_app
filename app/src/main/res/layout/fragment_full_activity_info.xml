@@ -237,7 +237,7 @@
                 android:id="@+id/absenceControllButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="add absence"
+                android:text="@string/add_absence"
                 android:textColor="#ffffff" />
 
 
@@ -259,7 +259,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
                 android:layout_below="@+id/showFullActivityInfoEditButton"
-                android:text="add match records"
+                android:text="@string/add_match_records"
                 android:textColor="#ffffff" />
 
 
