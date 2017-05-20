@@ -106,7 +106,7 @@
     <string name="trainerHasPostedNewPostText">Trainer has posted new post.</string>
     <string name="messageNotifText">has sent you a new message!</string>
     <string name="score">Score:</string>
-    <string name="accidents">Accidents:</string>
+    <string name="accidents">Fouls:</string>
     <string name="my_status">My Status:</string>
     <string name="my_player_nr">My player Nr:</string>
     <string name="my_status_topBar">My status</string>
@@ -147,6 +147,13 @@
     <string name="coackckak">Trainer has posted new activity!</string>
     <string name="add_absence">add absence</string>
     <string name="add_match_records">add match records</string>
+    <string name="local_gym_outside">Local gym/ outside</string>
+    <string name="logg_out">Logg out</string>
+    <string name="lagvisning">Team</string>
+    <string name="player">Player</string>
+    <string name="trener">Trainer</string>
+    <string name="messages">Messages</string>
+    <string name="my_profile">My Profile</string>
     <string-array name="activity_type">
         <item>Football training</item>
         <item>Gym/Strength</item>
