@@ -96,7 +96,7 @@
     <string name="agreement">Avtale</string>
     <string name="userAgreementTitle">Brukeravtale</string>
     <string name="userAgreementText">Ved å registrere informasjonen din bekrefter du å være en del av Høvik Idrettslag. Dataen som samles inn av denne applikasjonen benyttes til å spore utviklingen din som idrettsutøver, og vil ikke gjøres tilgjengelig til personer eller bedrifter som er utenforstående Høvik IL. Hvis du er under 13 må vi be deg om å drøfte registreringen med dine foreldre/pårørende først. Mens du bruker denne applikasjonen forventer vi at du opptrer i tråd med vanlig høflighet mens du bruker meldingstjenesten. Brudd på atferdsregler kan føre til at kontoen slettes og at handlingen meldes til dine foreldre/pårørende. Denne applikasjonen fungerer best hvis du rapporterer realistisk innsats, så tren smart og ha det gøy underveis.</string>
-    <string name="football_activity">Fotballaktivitet:</string>
+    <string name="football_activity">Fotballtrening:</string>
     <string name="editDialogTitle">Rediger profil</string>
     <string name="statusUpdated">Status oppdatert.</string>
     <string name="player_type">Posisjon:</string>
@@ -134,13 +134,13 @@
     <string name="player_type_profile">Spiller type:</string>
     <string name="minutes_played_label">Minutter spilt:</string>
     <string name="red_card_label">Rød kort:</string>
-    <string name="activity_attendance_status">Aktivitet deltakelses status</string>
+    <string name="activity_attendance_status">Aktivitetsdeltakelse</string>
     <string name="personal_activities">Egentrening:</string>
-    <string name="gymnastic_activity">Gymnastikk aktivitet:</string>
+    <string name="gymnastic_activity">Styrketreninger:</string>
     <string name="theory_meeting">Teori/møte:</string>
-    <string name="match_activity">Kamp-aktivitet:</string>
-    <string name="accidents_label">Skader:</string>
-    <string name="total_attended">Total deltatakelse:</string>
+    <string name="match_activity">Kamper:</string>
+    <string name="accidents_label">Pers feil:</string>
+    <string name="total_attended">Totalt:</string>
     <string name="football_team_members">Lagmedlemmer</string>
     <string name="intensity">Intensitet</string>
     <string name="add_absence">legg til fravær</string>
@@ -152,6 +152,9 @@
     <string name="trener">Trener</string>
     <string name="messages">Meldinger</string>
     <string name="my_profile">Min Profil</string>
+    <string name="team_activity">Lagaktivitet</string>
+    <string name="player_activity">Egentrening</string>
+    <string name="team">Laget</string>
     <string-array name="activity_type">
         <item>Fotballtrening</item>
         <item>Gym/Styrke</item>

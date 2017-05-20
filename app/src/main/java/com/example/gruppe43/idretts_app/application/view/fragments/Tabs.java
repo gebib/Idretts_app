@@ -99,11 +99,11 @@ public class Tabs extends Fragment implements TabLayout.OnTabSelectedListener {
         public CharSequence getPageTitle(int position) {
             switch (position) {
                 case 0:
-                    return "Trainer";
+                    return getString(R.string.team_activity);
                 case 1:
-                    return "Player";
+                    return getString(R.string.player_activity);
                 case 2:
-                    return "Team";
+                    return getString(R.string.team);
             }
             return null;
         }
