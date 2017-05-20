@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +23,8 @@ import com.example.gruppe43.idretts_app.application.helper_classes.PrefferencesC
 import com.example.gruppe43.idretts_app.application.interfaces.FragmentActivityInterface;
 import com.example.gruppe43.idretts_app.application.model.TrainerPostsModel;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseException;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -52,42 +55,48 @@ public class Trainer extends Fragment {
 
         recyclerViewTrainerRV = (RecyclerView) view.findViewById(R.id.recyclerViewTrainer);
 
+
         fbDbRef = FirebaseDatabase.getInstance().getReference().child("TrainerPosts");
 
-        FirebaseRecyclerAdapter<TrainerPostsModel, TrainerViewHolder> trainerAdapter = new FirebaseRecyclerAdapter<TrainerPostsModel, TrainerViewHolder>(
-                TrainerPostsModel.class,
-                R.layout.trainer_items,
-                TrainerViewHolder.class,
-                fbDbRef
-        ) {
-            @Override
-            protected void populateViewHolder(TrainerViewHolder viewHolder, TrainerPostsModel model, final int position) {
 
-                viewHolder.setActivityTitleDate(model.getTitle() + " " + model.getActivityDate());
-                viewHolder.setActivityStartEndTime(getString(R.string.actStarts) +" "+ model.getStartTime() + " " + getString(R.string.actEnds) +" "+ model.getEndTime());
-                viewHolder.setActivityPlace(getString(R.string.actLocation) +" "+ model.getPlace() + " ");
-                viewHolder.setTrainerActivityTime(model.getTimePosted());
-                viewHolder.setTrainerActivityIntensity(model.getIntensity());
-                viewHolder.setTrainerActivityIcon(model.getIcon());
-                viewHolder.mView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
+        try {
+            FirebaseRecyclerAdapter<TrainerPostsModel, TrainerViewHolder> trainerAdapter = new FirebaseRecyclerAdapter<TrainerPostsModel, TrainerViewHolder>(
+                    TrainerPostsModel.class,
+                    R.layout.trainer_items,
+                    TrainerViewHolder.class,
+                    fbDbRef
+            ) {
+                @Override
+                protected void populateViewHolder(TrainerViewHolder viewHolder, TrainerPostsModel model, final int position) {
 
-                        try {
-                            databaseHelper = new DataBaseHelperA(mCallback.getContext());
-                            String postKey = getRef(position).getKey();
-                            databaseHelper.getSelectedActivityInfo(postKey);
-                            TrainerActivityRegistration.setSelectedActivityPostKey(postKey);
-                        } catch (Exception e) {
-                           System.out.println("///////// trainer RV cache");
+                    viewHolder.setActivityTitleDate(model.getTitle() + " " + model.getActivityDate());
+                    viewHolder.setActivityStartEndTime(getString(R.string.actStarts) +" "+ model.getStartTime() + " " + getString(R.string.actEnds) +" "+ model.getEndTime());
+                    viewHolder.setActivityPlace(getString(R.string.actLocation) +" "+ model.getPlace() + " ");
+                    viewHolder.setTrainerActivityTime(model.getTimePosted());
+                    viewHolder.setTrainerActivityIntensity(model.getIntensity());
+                    viewHolder.setTrainerActivityIcon(model.getIcon());
+                    viewHolder.mView.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+
+                            try {
+                                databaseHelper = new DataBaseHelperA(mCallback.getContext());
+                                String postKey = getRef(position).getKey();
+                                databaseHelper.getSelectedActivityInfo(postKey);
+                                TrainerActivityRegistration.setSelectedActivityPostKey(postKey);
+                            } catch (Exception e) {
+                               System.out.println("///////// trainer RV cache");
+                            }
                         }
-                    }
-                });
-            }
-        };
+                    });
+                }
+            };
 
-        recyclerViewTrainerRV.setAdapter(trainerAdapter);
-        recyclerViewTrainerRV.setLayoutManager(new LinearLayoutManager(getActivity()));
+            recyclerViewTrainerRV.setAdapter(trainerAdapter);
+            recyclerViewTrainerRV.setLayoutManager(new LinearLayoutManager(getActivity()));
+        } catch (DatabaseException dbe) {
+            Log.i("RecyclerTrainer//////","dbe!");
+        }
         return view;
     }
 

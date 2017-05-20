@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.net.Uri;
+import android.net.sip.SipAudioCall;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
@@ -43,6 +44,7 @@ import com.example.gruppe43.idretts_app.application.view.fragments.Team;
 import com.example.gruppe43.idretts_app.application.view.fragments.Trainer;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseException;
 import com.google.firebase.database.FirebaseDatabase;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
@@ -165,38 +167,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             onSignOut();
         }
 
-        if(Team.getListOfAllUsersId() == null){
+        if (Team.getListOfAllUsersId() == null) {
             System.out.println("////////////////////////// onCreate TeamInit set");
             DatabaseHelperC dbhc = new DatabaseHelperC(this);
             dbhc.initiateDataInRecyclerViewForTeam();
         }
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        //stopService(new Intent(getBaseContext(), ListenerService.class));// for sstoping the service!
-            DatabaseHelperC dbhc = new DatabaseHelperC(this);
-            dbhc.initiateDataInRecyclerViewForTeam();
-
-        if (isTrainerSignedIn != null) {
-            if (isTrainerSignedIn) {
-                DataBaseHelperB dbhb = new DataBaseHelperB(this);
-                dbhb.checkOutdatedTrainerPosts();
-                dbhb.checkOutdatedPlayerPosts();
-            }
-        }
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-    }
-
-    @Override
-    protected void onDestroy() {
-        //System.out.println("//////////// onDestroy");
-        super.onDestroy();
     }
 
     //navigate to appropriate fragment after registration.
@@ -256,8 +231,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.toolbar_home) {
-           // startService(new Intent(getBaseContext(), ListenerService.class));
-             FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
+            // startService(new Intent(getBaseContext(), ListenerService.class));
+            FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
             mFragmentManager.popBackStack();
             fragmentTransaction.replace(R.id.containerView, new Tabs()).commit();
             return true;
@@ -379,10 +354,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         DataBaseHelperA dbha = new DataBaseHelperA(this);
         dbha.saveSignedInUserNameToCache();
 
-        if(Team.getListOfAllUsersId() == null){
+        if (Team.getListOfAllUsersId() == null) {
             DatabaseHelperC dbhc = new DatabaseHelperC(this);
             dbhc.initiateDataInRecyclerViewForTeam();
         }
+
         startService(new Intent(getBaseContext(), ListenerService.class));
     }
 
@@ -391,15 +367,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public void onSignOut() {
         ListenerService.serviceRunning = false;
         stopService(new Intent(getBaseContext(), ListenerService.class));//stop service
-        if (mAuth.getCurrentUser() != null) {
-            mAuth.signOut();
-        }
         prefs.saveSharedPrefData("isAdmin", "default");
         onNewActivityRegisterPage = false;
         actionBar.hide();
         fab.hide();
         isTrainerSignedIn = null;
         isPlayerSignedIn = null;
+
+            mAuth.signOut();
+
         FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.containerView, new Login()).commit();
     }
@@ -436,5 +412,35 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 Exception error = result.getError();
             }
         }
+    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        //stopService(new Intent(getBaseContext(), ListenerService.class));// for sstoping the service!
+         if(!ListenerService.serviceRunning && FirebaseAuth.getInstance().getCurrentUser() != null){
+            startService(new Intent(getBaseContext(), ListenerService.class));
+        }
+
+        DatabaseHelperC dbhc = new DatabaseHelperC(this);
+        dbhc.initiateDataInRecyclerViewForTeam();
+
+        if (isTrainerSignedIn != null) {
+            if (isTrainerSignedIn) {
+                DataBaseHelperB dbhb = new DataBaseHelperB(this);
+                dbhb.checkOutdatedTrainerPosts();
+                dbhb.checkOutdatedPlayerPosts();
+            }
+        }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+    }
+
+    @Override
+    protected void onDestroy() {
+        System.out.println("//////////// onDestroy");
+        super.onDestroy();
     }
 }

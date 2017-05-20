@@ -28,7 +28,7 @@ import java.util.ArrayList;
 //Ole-Kristian Steiro, Tasmia Faruque, Gebi Beshir
 
 public class ListenerService extends Service {
-    public static boolean serviceRunning = true;
+    public static boolean serviceRunning = false;
     private static int NOTIFICATION_ID = 1;
     private static int loggedInUser;
 
@@ -71,10 +71,12 @@ public class ListenerService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        Thread thread = new Thread(new bgThreadKlasse(startId));
-        thread.start();//start bakgrunn servisen i separat straad
-        serviceRunning = true;
-         System.out.println("////////////////////////// BG onStart");
+        if (!serviceRunning) {
+            Thread thread = new Thread(new bgThreadKlasse(startId));
+            thread.start();//start bakgrunn servisen i separat straad
+            serviceRunning = true;
+            System.out.println("////////////////////////// BG onStart");
+        }
         return START_STICKY;
     }
 
@@ -87,12 +89,12 @@ public class ListenerService extends Service {
     //check for new trainer post then notify all users once per post.
     private void checkNumberOfNodesOnTrainerPost() {
         final DatabaseReference trainerPosts = FirebaseDatabase.getInstance().getReference().child("TrainerPosts");
+
         trainerPosts.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
                 if (dataSnapshot.exists()) {
-                    if (serviceRunning) {
                         PrefferencesClass pc = new PrefferencesClass(getApplicationContext());
 
                         long locallySavedChildCount = pc.loadLocallySavedTrainerChildCount();
@@ -111,12 +113,9 @@ public class ListenerService extends Service {
 
                         trainerPosts.removeEventListener(this);
                         checkForNewMessageFromUser();
-                    }
                 }else{
-                    if (serviceRunning) {
                         trainerPosts.removeEventListener(this);
                         checkForNewMessageFromUser();
-                    }
                 }
             }
 
@@ -129,15 +128,14 @@ public class ListenerService extends Service {
 
     //check for new messages and notify user.
     private void checkForNewMessageFromUser() {
-        //System.out.println("////////////////////////// BG checkMESSAGE");
+        // System.out.println("////////////////////////// BG checkMESSAGE");
         final ArrayList<String> chatNotifDsToBeDeleted = new ArrayList<>();
         final DatabaseReference chatNotifications = FirebaseDatabase.getInstance().getReference().child("ChatNotifications");
+
         chatNotifications.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
-
-                    if (serviceRunning) {
                         FirebaseAuth fbAuth = FirebaseAuth.getInstance();
                         String currentUserId = fbAuth.getCurrentUser().getUid();
 
@@ -146,16 +144,19 @@ public class ListenerService extends Service {
                             ChatNotificationModel cnm = chatNotifNodes.getValue(ChatNotificationModel.class);
                             String notifNodeKey = chatNotifNodes.getKey();
                             String toUser = cnm.getToUserKey();
-                            if (toUser.equals(currentUserId)) {// t hen the notification is for t his user!
-                                notifyUser("Message.", cnm.getSenderName() + " has sent you a new message!");
-                                chatNotifDsToBeDeleted.add(notifNodeKey); // all this users notification nodes need to be deleted after the user is notified.
+
+                            if(toUser != null && notifNodeKey!=null){
+                                if (toUser.equals(currentUserId)) {// then the notification is for t his user!
+                                    notifyUser("Message.", cnm.getSenderName() + " has sent you a new message!");
+                                    chatNotifDsToBeDeleted.add(notifNodeKey); // all this users notification nodes need to be deleted after the user is notified.
+                                }
                             }
-                        }
+
+                        }//end for
                         for (int i = 0; i < chatNotifDsToBeDeleted.size(); i++) {
                             chatNotifications.child(chatNotifDsToBeDeleted.get(i)).removeValue();
                         }
                         chatNotifications.removeEventListener(this);
-                    }
                 }
             }
 

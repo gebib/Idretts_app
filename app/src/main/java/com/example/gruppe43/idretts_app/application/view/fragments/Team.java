@@ -25,6 +25,8 @@ import com.example.gruppe43.idretts_app.application.helper_classes.PrefferencesC
 import com.example.gruppe43.idretts_app.application.interfaces.FragmentActivityInterface;
 import com.example.gruppe43.idretts_app.application.model.UsersModel;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseException;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.squareup.picasso.Callback;
@@ -95,8 +97,10 @@ public class Team extends Fragment {
         listOfClicked = new ArrayList<>();
         recyclerViewTeamRV = (RecyclerView) view.findViewById(R.id.recyclerViewTeam);
 
+
         fbDbRef = FirebaseDatabase.getInstance().getReference().child("PlayerPosts");
         fbDbUsersRef = FirebaseDatabase.getInstance().getReference().child("Users");
+
         adtoAbsentHolderRLayout = (RelativeLayout) view.findViewById(R.id.adtoAbsentHolderRLayout);
         button2AddToAbsentLists = (Button) view.findViewById(R.id.button2AddToAbsentLists);
         adtoAbsentHolderRLayout.setVisibility(view.GONE);
@@ -125,74 +129,78 @@ public class Team extends Fragment {
             Log.e("Bundle::::", "isNull");
         }
 
-        FirebaseRecyclerAdapter<UsersModel, Team.TeamViewHolder> teamAdapter = new FirebaseRecyclerAdapter<UsersModel, Team.TeamViewHolder>(
-                UsersModel.class,
-                R.layout.team_items,
-                Team.TeamViewHolder.class,
-                fbDbUsersRef
-        ) {
-            @Override
-            protected void populateViewHolder(final TeamViewHolder viewHolder, UsersModel model, final int position) {
-                try {
-                    listOfViews.add(viewHolder.getView());
-                    if (isForCheckAbsence) {
-                        String currentPositionPlayerId = listOfAllUsersId.get(countIndex);
-                        countIndex++;
-                        if (listOfPlayersAlreadMarkedAsAbsent.contains(currentPositionPlayerId)) {
-                            viewHolder.getAbsenceIndicatorImageView().setImageResource(R.drawable.x);
-                        } else {
-                            viewHolder.getAbsenceIndicatorImageView().setImageResource(R.drawable.check_black);
+        try {
+            FirebaseRecyclerAdapter<UsersModel, TeamViewHolder> teamAdapter = new FirebaseRecyclerAdapter<UsersModel, TeamViewHolder>(
+                    UsersModel.class,
+                    R.layout.team_items,
+                    TeamViewHolder.class,
+                    fbDbUsersRef
+            ) {
+                @Override
+                protected void populateViewHolder(final TeamViewHolder viewHolder, UsersModel model, final int position) {
+                    try {
+                        listOfViews.add(viewHolder.getView());
+                        if (isForCheckAbsence) {
+                            String currentPositionPlayerId = listOfAllUsersId.get(countIndex);
+                            countIndex++;
+                            if (listOfPlayersAlreadMarkedAsAbsent.contains(currentPositionPlayerId)) {
+                                viewHolder.getAbsenceIndicatorImageView().setImageResource(R.drawable.x);
+                            } else {
+                                viewHolder.getAbsenceIndicatorImageView().setImageResource(R.drawable.check_black);
+                            }
                         }
+                        viewHolder.setProfileImage(mCallback.getContext(), model.getImage());
+                        String nameAndDate = model.getFirstName() + " " + model.getLastName();
+                        viewHolder.setUserNameLastName(nameAndDate);
+                        viewHolder.setProfileImage(mCallback.getContext(), model.getImage());
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
-                    viewHolder.setProfileImage(mCallback.getContext(), model.getImage());
-                    String nameAndDate = model.getFirstName() + " " + model.getLastName();
-                    viewHolder.setUserNameLastName(nameAndDate);
-                    viewHolder.setProfileImage(mCallback.getContext(), model.getImage());
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                viewHolder.mView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(final View v) {
-                        try {
-                            final String clickedPlayerId;
+                    viewHolder.mView.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(final View v) {
                             try {
-                                int clickedPosition = listOfViews.indexOf(v);
-                                clickedPlayerId = listOfAllUsersId.get(clickedPosition);//TODO wtf is this why is this an exception sometimes
-                                selectedUserIdInTeam = clickedPlayerId;//TODO this is null often??
-                            } catch (NullPointerException npee) {
-                                Log.i("NPE!","Team not fully loaded yet!");
+                                final String clickedPlayerId;
+                                try {
+                                    int clickedPosition = listOfViews.indexOf(v);
+                                    clickedPlayerId = listOfAllUsersId.get(clickedPosition);//TODO wtf is this why is this an exception sometimes
+                                    selectedUserIdInTeam = clickedPlayerId;//TODO this is null often??
+                                } catch (NullPointerException npee) {
+                                    Log.i("NPE!","Team not fully loaded yet!");
+                                    return;
+                                }
+
+                                if (isForCheckAbsence && !listOfClicked.contains(v) && !listOfPlayersAlreadMarkedAsAbsent.contains(clickedPlayerId)) {
+                                    viewHolder.getAbsenceIndicatorImageView().setImageResource(R.drawable.x);
+                                    listOfClicked.add(v);
+                                    listOfTobeAddedToAbsent.add(clickedPlayerId);//userIds
+
+                                } else if (isForCheckAbsence && listOfClicked.contains(v)) {
+                                    viewHolder.getAbsenceIndicatorImageView().setImageResource(R.drawable.check_black);
+                                    listOfClicked.remove(v);
+                                    listOfTobeAddedToAbsent.remove(clickedPlayerId);//userIds
+                                } else if (isForCheckAbsence && listOfPlayersAlreadMarkedAsAbsent.contains(clickedPlayerId)) {
+                                    Toast.makeText(mCallback.getContext(), R.string.playerAlreadyAbsent, Toast.LENGTH_SHORT).show();
+                                } else {
+                                    DatabaseHelperC dbhc = new DatabaseHelperC(mCallback.getContext());
+                                    //dbhb.getProfileViewDataForUser(getRef(position).getKey()); sometimes firebase recycler return wrong index!
+                                    //derfor bruker vi egne maate aa finne posisjon av view paa!
+                                    dbhc.getProfileViewDataForUser(clickedPlayerId);
+                                }
+                            } catch (NullPointerException npe) {
+                                Log.i("NPE!","Team not fully loaded yet!:: this is only the virtual phone emulator problem!");
                                 return;
                             }
-
-                            if (isForCheckAbsence && !listOfClicked.contains(v) && !listOfPlayersAlreadMarkedAsAbsent.contains(clickedPlayerId)) {
-                                viewHolder.getAbsenceIndicatorImageView().setImageResource(R.drawable.x);
-                                listOfClicked.add(v);
-                                listOfTobeAddedToAbsent.add(clickedPlayerId);//userIds
-
-                            } else if (isForCheckAbsence && listOfClicked.contains(v)) {
-                                viewHolder.getAbsenceIndicatorImageView().setImageResource(R.drawable.check_black);
-                                listOfClicked.remove(v);
-                                listOfTobeAddedToAbsent.remove(clickedPlayerId);//userIds
-                            } else if (isForCheckAbsence && listOfPlayersAlreadMarkedAsAbsent.contains(clickedPlayerId)) {
-                                Toast.makeText(mCallback.getContext(), R.string.playerAlreadyAbsent, Toast.LENGTH_SHORT).show();
-                            } else {
-                                DatabaseHelperC dbhc = new DatabaseHelperC(mCallback.getContext());
-                                //dbhb.getProfileViewDataForUser(getRef(position).getKey()); sometimes firebase recycler return wrong index!
-                                //derfor bruker vi egne maate aa finne posisjon av view paa!
-                                dbhc.getProfileViewDataForUser(clickedPlayerId);
-                            }
-                        } catch (NullPointerException npe) {
-                            Log.i("NPE!","Team not fully loaded yet!:: this is only the virtual phone emulator problem!");
-                            return;
                         }
-                    }
-                });
-            }
-        };
+                    });
+                }
+            };
 
-        recyclerViewTeamRV.setAdapter(teamAdapter);
-        recyclerViewTeamRV.setLayoutManager(new GridLayoutManager(getActivity(), 4));
+            recyclerViewTeamRV.setAdapter(teamAdapter);
+            recyclerViewTeamRV.setLayoutManager(new GridLayoutManager(getActivity(), 4));
+        } catch (DatabaseException dbe) {
+            Log.i("RecyclerTeam//////","dbe!");
+        }
         return view;
     }
 

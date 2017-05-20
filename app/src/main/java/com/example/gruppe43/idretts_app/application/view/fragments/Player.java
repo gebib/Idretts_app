@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +21,8 @@ import com.example.gruppe43.idretts_app.application.helper_classes.PrefferencesC
 import com.example.gruppe43.idretts_app.application.interfaces.FragmentActivityInterface;
 import com.example.gruppe43.idretts_app.application.model.PlayerPostsModel;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseException;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.squareup.picasso.Callback;
@@ -51,42 +54,47 @@ public class Player extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_player, container, false);
 
+
         recyclerViewPlayerRV = (RecyclerView) view.findViewById(R.id.recyclerViewPlayer);
 
         fbDbRef = FirebaseDatabase.getInstance().getReference().child("PlayerPosts");
         fbDbUsersRef = FirebaseDatabase.getInstance().getReference().child("Users");
 
 
-        FirebaseRecyclerAdapter<PlayerPostsModel, Player.PlayerViewHolder> playerAdapter = new FirebaseRecyclerAdapter<PlayerPostsModel, Player.PlayerViewHolder>(
-                PlayerPostsModel.class,
-                R.layout.player_items,
-                Player.PlayerViewHolder.class,
-                fbDbRef
-        ) {
-            @Override
-            protected void populateViewHolder(Player.PlayerViewHolder viewHolder, PlayerPostsModel model, final int position) {
+        try {
+            FirebaseRecyclerAdapter<PlayerPostsModel, PlayerViewHolder> playerAdapter = new FirebaseRecyclerAdapter<PlayerPostsModel, PlayerViewHolder>(
+                    PlayerPostsModel.class,
+                    R.layout.player_items,
+                    PlayerViewHolder.class,
+                    fbDbRef
+            ) {
+                @Override
+                protected void populateViewHolder(PlayerViewHolder viewHolder, PlayerPostsModel model, final int position) {
 
-                viewHolder.setProfileImage(mCallback.getContext(), model.getPlayerImage());
-                viewHolder.setPlayerPostTitle(model.getTitle());
-                viewHolder.setPlayerPostPlace(model.getPlace());
-                viewHolder.setIntensity(model.getIntensity());
-                String nameAndDate = model.getFirstNAme() + " " + model.getLastName() + " " + model.getDatePosted();
-                viewHolder.setNameAndDate(nameAndDate);
-                viewHolder.setPostedTime(model.getTimePosted());
+                    viewHolder.setProfileImage(mCallback.getContext(), model.getPlayerImage());
+                    viewHolder.setPlayerPostTitle(model.getTitle());
+                    viewHolder.setPlayerPostPlace(model.getPlace());
+                    viewHolder.setIntensity(model.getIntensity());
+                    String nameAndDate = model.getFirstNAme() + " " + model.getLastName() + " " + model.getDatePosted();
+                    viewHolder.setNameAndDate(nameAndDate);
+                    viewHolder.setPostedTime(model.getTimePosted());
 
-                viewHolder.mView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        databaseHelper = new DataBaseHelperA(mCallback.getContext());
-                        String postKey = getRef(position).getKey();
-                        databaseHelper.checkDoesPlayerOwnThePost(postKey);
-                    }
-                });
-            }
-        };
+                    viewHolder.mView.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            databaseHelper = new DataBaseHelperA(mCallback.getContext());
+                            String postKey = getRef(position).getKey();
+                            databaseHelper.checkDoesPlayerOwnThePost(postKey);
+                        }
+                    });
+                }
+            };
 
-        recyclerViewPlayerRV.setAdapter(playerAdapter);
-        recyclerViewPlayerRV.setLayoutManager(new LinearLayoutManager(getActivity()));
+            recyclerViewPlayerRV.setAdapter(playerAdapter);
+            recyclerViewPlayerRV.setLayoutManager(new LinearLayoutManager(getActivity()));
+        } catch (DatabaseException dbe) {
+            Log.i("RecyclerPlayer//////","dbe!");
+        }
         return view;
     }
 
