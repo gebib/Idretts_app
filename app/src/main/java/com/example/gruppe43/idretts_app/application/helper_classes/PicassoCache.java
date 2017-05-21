@@ -16,7 +16,7 @@ public class PicassoCache extends Application{
         super.onCreate();
 
         if (!FirebaseApp.getApps(this).isEmpty()) {
-            FirebaseDatabase.getInstance().setPersistenceEnabled(true); // this inables the offline capabilities of firebase.
+            FirebaseDatabase.getInstance().setPersistenceEnabled(true); // enables Firebase-cache
         }
         Picasso.Builder builder = new Picasso.Builder(this);
         builder.downloader(new OkHttpDownloader(this, Integer.MAX_VALUE));

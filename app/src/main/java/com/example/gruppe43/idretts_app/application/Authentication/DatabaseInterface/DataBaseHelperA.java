@@ -360,7 +360,7 @@ public class DataBaseHelperA extends Authentication {
             player_posts.child("DatePosted").setValue(datePosted);
             player_posts.child("LastName").setValue(lastName);
             player_posts.child("PlayerId").setValue(user_id);
-            player_posts.child("PlayerImage").setValue("TODO"); //TODO picasso..
+            player_posts.child("PlayerImage").setValue("TODO");
 
             progressDialog.dismiss();
 

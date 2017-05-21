@@ -129,14 +129,14 @@
     <string name="login">Login</string>
     <string name="no_account_yet_create_one">Har ikke konto? Lag en</string>
     <string name="school">Skole</string>
-    <string name="player_total_match_credentials">Spiller totall resultat</string>
+    <string name="player_total_match_credentials">Samlet resultat</string>
     <string name="date_registered">Dato registrert:</string>
-    <string name="player_type_profile">Spiller type:</string>
+    <string name="player_type_profile">Posisjon:</string>
     <string name="minutes_played_label">Minutter spilt:</string>
     <string name="red_card_label">Rød kort:</string>
     <string name="activity_attendance_status">Aktivitetsdeltakelse</string>
     <string name="personal_activities">Egentrening:</string>
-    <string name="gymnastic_activity">Styrketreninger:</string>
+    <string name="gymnastic_activity">Styrke/Kondisjon:</string>
     <string name="theory_meeting">Teori/møte:</string>
     <string name="match_activity">Kamper:</string>
     <string name="accidents_label">Pers feil:</string>
