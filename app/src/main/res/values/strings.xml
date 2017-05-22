@@ -136,7 +136,7 @@
     <string name="football_team_members">Team members</string>
     <string name="add_to_absent_lists">ADD TO ABSENT LISTS</string>
     <string name="intensity">Intensity</string>
-
+    <string name="options">Options</string>
     <string name="campRecordsSelectUserToast">Please choose a player</string>
     <string name="coachNotif">Trainer activity</string>
     <string name="dialogCampRecords">Cup-activity</string>
@@ -163,4 +163,5 @@
         <item>Theory/meeting</item>
         <item>Football match"</item>
     </string-array>
+    <string name="exit_and_sign_out">Close and Exit</string>
 </resources>

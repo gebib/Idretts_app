@@ -134,11 +134,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         });
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        NavigationView view = (NavigationView) findViewById(R.id.nav_view);
-        view.setNavigationItemSelectedListener(this);
+        NavigationView navn_view = (NavigationView) findViewById(R.id.nav_view);
+        navn_view.setNavigationItemSelectedListener(this);
         setSupportActionBar(toolbar);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, mDrawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, mDrawerLayout, toolbar,
+                R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         mDrawerLayout.addDrawerListener(toggle);
         toggle.syncState();
         if (actionBar == null) {
@@ -154,8 +155,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             isPlayerSignedIn = false;
             isTrainerSignedIn = true;
             actionBar.show();
-
-
         }
 
         if (isTrainerSignedIn != null || isPlayerSignedIn != null) {//isOnSignedInState
@@ -170,6 +169,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             DatabaseHelperC dbhc = new DatabaseHelperC(this);
             dbhc.initiateDataInRecyclerViewForTeam();
         }
+        Menu menuItems = navn_view.getMenu();
+        menuItems.findItem(R.id.savePlayersData).setVisible(false);
     }
 
     //navigate to appropriate fragment after registration.
@@ -271,6 +272,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             FragmentTransaction xfragmentTransaction = mFragmentManager.beginTransaction();
             xfragmentTransaction.addToBackStack("");
             xfragmentTransaction.replace(R.id.containerView, new Team()).commit();
+        } else if (menuItem.getItemId() == R.id.savePlayersData) {
+        } else if (menuItem.getItemId() == R.id.exitApp) {
+            onSignOut();
+            System.exit(0);//
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -371,11 +376,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         fab.hide();
         isTrainerSignedIn = null;
         isPlayerSignedIn = null;
-
-            mAuth.signOut();
-
         FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.containerView, new Login()).commit();
+        mAuth.signOut();
     }
 
     @Override

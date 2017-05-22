@@ -353,33 +353,6 @@ public class DatabaseHelperC extends DataBaseHelperB {
                 }
             });
 
-
         }
-    }
-
-    //notify a user for a new chat message from another user
-    private void manageChatNodeLengthTo20NodesPerSession() {
-        final DatabaseReference chatRootPointer = FirebaseDatabase.getInstance().getReference().child("Chat");
-        chatRootPointer.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                if (dataSnapshot.exists()) {
-
-                    Iterable<DataSnapshot> chatSessionsIterable = dataSnapshot.getChildren();
-                    for (DataSnapshot aChatSession : chatSessionsIterable) {
-                        boolean thisUserIsInThisChatSession = false;
-
-                        String sessionId = aChatSession.getKey(); //TODO clean up chat.
-
-
-                    }
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
     }
 }

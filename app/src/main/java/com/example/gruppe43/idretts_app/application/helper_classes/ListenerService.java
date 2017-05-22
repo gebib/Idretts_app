@@ -91,27 +91,27 @@ public class ListenerService extends Service {
             public void onDataChange(DataSnapshot dataSnapshot) {
 
                 if (dataSnapshot.exists()) {
-                        PrefferencesClass pc = new PrefferencesClass(getApplicationContext());
+                    PrefferencesClass pc = new PrefferencesClass(getApplicationContext());
 
-                        long locallySavedChildCount = pc.loadLocallySavedTrainerChildCount();
-                        long checkedNewTrainerCHildCount = dataSnapshot.getChildrenCount();
+                    long locallySavedChildCount = pc.loadLocallySavedTrainerChildCount();
+                    long checkedNewTrainerCHildCount = dataSnapshot.getChildrenCount();
 
-                        String restore = pc.loadSharedPrefData("isAdmin");
-                        // System.out.println("////////////////////////// newPost " + checkedNewTrainerCHildCount + " Local " + locallySavedChildCount);
+                    String restore = pc.loadSharedPrefData("isAdmin");
+                    // System.out.println("////////////////////////// newPost " + checkedNewTrainerCHildCount + " Local " + locallySavedChildCount);
 
-                        if (checkedNewTrainerCHildCount > locallySavedChildCount && restore.equals("false")) {// will not notify the trainer himself.
-                         //   System.out.println("//////////////////////////NOTIFY!");
-                            notifyUser(getString(R.string.trainerPostNotifTitle), getString(R.string.trainerHasPostedNewPostText));
-                            pc.saveUpdateOnTrainerChildCount(checkedNewTrainerCHildCount);// update local.
-                        } else if (locallySavedChildCount > checkedNewTrainerCHildCount) {
-                            pc.saveUpdateOnTrainerChildCount(checkedNewTrainerCHildCount);// update local.
-                        }
+                    if (checkedNewTrainerCHildCount > locallySavedChildCount && restore.equals("false")) {// will not notify the trainer himself.
+                        //   System.out.println("//////////////////////////NOTIFY!");
+                        notifyUser(getString(R.string.trainerPostNotifTitle), getString(R.string.trainerHasPostedNewPostText));
+                        pc.saveUpdateOnTrainerChildCount(checkedNewTrainerCHildCount);// update local.
+                    } else if (locallySavedChildCount > checkedNewTrainerCHildCount) {
+                        pc.saveUpdateOnTrainerChildCount(checkedNewTrainerCHildCount);// update local.
+                    }
 
-                        trainerPosts.removeEventListener(this);
-                        checkForNewMessageFromUser();
-                }else{
-                        trainerPosts.removeEventListener(this);
-                        checkForNewMessageFromUser();
+                    trainerPosts.removeEventListener(this);
+                    checkForNewMessageFromUser();
+                } else {
+                    trainerPosts.removeEventListener(this);
+                    checkForNewMessageFromUser();
                 }
             }
 
@@ -132,27 +132,32 @@ public class ListenerService extends Service {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
+                    String currentUserId = "";
+                    if (FirebaseAuth.getInstance().getCurrentUser() != null) {
                         FirebaseAuth fbAuth = FirebaseAuth.getInstance();
-                        String currentUserId = fbAuth.getCurrentUser().getUid();
+                        currentUserId = fbAuth.getCurrentUser().getUid();
+                    } else {
+                        return;
+                    }
 
-                        Iterable<DataSnapshot> chatNotifIterable = dataSnapshot.getChildren();
-                        for (DataSnapshot chatNotifNodes : chatNotifIterable) {
-                            ChatNotificationModel cnm = chatNotifNodes.getValue(ChatNotificationModel.class);
-                            String notifNodeKey = chatNotifNodes.getKey();
-                            String toUser = cnm.getToUserKey();
+                    Iterable<DataSnapshot> chatNotifIterable = dataSnapshot.getChildren();
+                    for (DataSnapshot chatNotifNodes : chatNotifIterable) {
+                        ChatNotificationModel cnm = chatNotifNodes.getValue(ChatNotificationModel.class);
+                        String notifNodeKey = chatNotifNodes.getKey();
+                        String toUser = cnm.getToUserKey();
 
-                            if(toUser != null && notifNodeKey!=null){
-                                if (toUser.equals(currentUserId)) {// then the notification is for t his user!
-                                    notifyUser("Message", cnm.getSenderName() + getString(R.string.messageNotifText));
-                                    chatNotifDsToBeDeleted.add(notifNodeKey); // all this users notification nodes need to be deleted after the user is notified.
-                                }
+                        if (toUser != null && notifNodeKey != null) {
+                            if (toUser.equals(currentUserId)) {// then the notification is for t his user!
+                                notifyUser("Message", cnm.getSenderName() + getString(R.string.messageNotifText));
+                                chatNotifDsToBeDeleted.add(notifNodeKey); // all this users notification nodes need to be deleted after the user is notified.
                             }
-
-                        }//end for
-                        for (int i = 0; i < chatNotifDsToBeDeleted.size(); i++) {
-                            chatNotifications.child(chatNotifDsToBeDeleted.get(i)).removeValue();
                         }
-                        chatNotifications.removeEventListener(this);
+
+                    }//end for
+                    for (int i = 0; i < chatNotifDsToBeDeleted.size(); i++) {
+                        chatNotifications.child(chatNotifDsToBeDeleted.get(i)).removeValue();
+                    }
+                    chatNotifications.removeEventListener(this);
                 }
             }
 

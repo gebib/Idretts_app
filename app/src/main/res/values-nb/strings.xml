@@ -153,6 +153,7 @@
     <string name="messages">Meldinger</string>
     <string name="my_profile">Min Profil</string>
     <string name="team_activity">Lagaktivitet</string>
+    <string name="options">Alternativ</string>
     <string name="player_activity">Egentrening</string>
     <string name="team">Laget</string>
     <string-array name="activity_type">
@@ -161,4 +162,5 @@
         <item>Teori/Møte</item>
         <item>Fotballkamp"</item>
     </string-array>
+    <string name="exit_and_sign_out">Avslutt og loggut</string>
 </resources>

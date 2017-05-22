@@ -30,9 +30,17 @@
                 android:title="@string/logg_out" />
         </menu>
     </item>
-    <!-- alt nedenfor: DETTE SLETTER VI men hjelper oss under utvikling for å navigere!!-->
-    <item android:title="">
+    <item android:title="@string/options">
+        <menu>
+            <item
+                android:id="@+id/savePlayersData"
+                android:icon="@drawable/save_data_cloud"
+                android:title="@string/save_players_data" />
+            <item
+                android:id="@+id/exitApp"
+                android:icon="@drawable/exit"
+                android:title="@string/exit_and_sign_out" />
+        </menu>
     </item>
-    <!-- /////////////////////////////////////////////////////////////////////////////////-->
 
 </menu>

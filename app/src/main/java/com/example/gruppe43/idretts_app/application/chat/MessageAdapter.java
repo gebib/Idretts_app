@@ -44,10 +44,14 @@ public class MessageAdapter extends FirebaseListAdapter<ChatModel> {
     @Override
     public View getView(int position, View view, ViewGroup viewGroup) {
 
-        ChatModel chatMessage = getItem(position);
-        String loggedInUserId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-
-        String chatMessageUserId = chatMessage.getUserKey();
+        ChatModel chatMessage = null;
+        String loggedInUserId = null;
+        String chatMessageUserId = null;
+        if (FirebaseAuth.getInstance().getCurrentUser() != null) {
+            chatMessage = getItem(position);
+            loggedInUserId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+            chatMessageUserId = chatMessage.getUserKey();
+        }
         if(chatMessageUserId != null){
             if (chatMessageUserId.equals(loggedInUserId)) {
                 view = activity.getLayoutInflater().inflate(R.layout.item_out_message, viewGroup, false);
