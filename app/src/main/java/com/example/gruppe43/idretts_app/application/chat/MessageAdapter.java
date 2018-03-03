@@ -26,6 +26,9 @@ public class MessageAdapter extends FirebaseListAdapter<ChatModel> {
         this.activity = activity;
     }
 
+
+
+
     @Override
     protected void populateView(View v, ChatModel model, int position) {
         try {
@@ -40,6 +43,7 @@ public class MessageAdapter extends FirebaseListAdapter<ChatModel> {
             System.out.println("populate View npe!");
         }
     }
+
 
     @Override
     public View getView(int position, View view, ViewGroup viewGroup) {
