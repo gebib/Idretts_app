@@ -11,3 +11,4 @@ Spring of 2017. Oslo.
 ![r](https://user-images.githubusercontent.com/9350798/144773798-f060e904-c796-499c-86a0-f737247cf8f6.JPG)
 ![zk](https://user-images.githubusercontent.com/9350798/144773801-30293ca1-25a4-4298-93a5-bd5ce9cb745f.JPG)
 ![last](https://user-images.githubusercontent.com/9350798/144773805-884f4eec-0cf3-4afc-817b-4395cfac910f.JPG)
+![zy](https://user-images.githubusercontent.com/9350798/144832000-fb620f47-545d-460d-9c03-608defaa22c2.png)
